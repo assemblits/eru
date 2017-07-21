@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="statusLabel" VBox.vgrow="ALWAYS" />
+            <ProgressBar fx:id="progressBar" prefHeight="17.0" prefWidth="484.0" progress="0.0" />
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@background.png" />
+         </image>
+      </ImageView>
+   </center>
+</fx:root>

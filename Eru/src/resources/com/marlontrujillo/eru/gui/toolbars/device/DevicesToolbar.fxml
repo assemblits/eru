@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox spacing="2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TableView style="-fx-font-size: 12px" fx:id="devicesTableView" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Device">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="Status">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <ToolBar nodeOrientation="RIGHT_TO_LEFT" VBox.vgrow="NEVER">
+                    <items>
+                        <Button fx:id="deleteSelectedDevButton" mnemonicParsing="false" prefHeight="30.0" text="Delete" />
+                        <Button fx:id="editDeviceButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" text="Edit" />
+                        <Button fx:id="newDeviceButton" mnemonicParsing="false" prefHeight="30.0" text="Add" />
+                    </items>
+                </ToolBar>
+            </children>
+        </VBox>
+    </children>
+</fx:root>

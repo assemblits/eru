@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <TitledPane fx:id="userSettingsTitledPane" animated="false" collapsible="false" expanded="true" text="User Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <content>
+         <AnchorPane id="Content">
+            <children>
+               <VBox spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label text="General">
+                              <font>
+                                 <Font name="System Bold" size="12.0" fx:id="x3" />
+                              </font>
+                              <HBox.margin>
+                                 <Insets left="5.0" fx:id="x4" />
+                              </HBox.margin>
+                           </Label>
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="Username">
+                              <font>
+                                 <Font size="12.0" fx:id="x1" />
+                              </font>
+                           </Label>
+                           <TextField fx:id="usernameTextField" editable="false" prefWidth="-1.0" promptText="" HBox.hgrow="ALWAYS" />
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="Password" />
+                           <PasswordField fx:id="passwordTextField" HBox.hgrow="ALWAYS" />
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="Level" />
+                           <ChoiceBox fx:id="levelChoiceBox" HBox.hgrow="ALWAYS">
+                              <items>
+                                 <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="OPERATOR" />
+                                    <String fx:value="ENGINEER" />
+                                 </FXCollections>
+                              </items>
+                           </ChoiceBox>
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x3" text="Personal Information" HBox.margin="$x4" />
+                        </children>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="First Name" />
+                           <TextField fx:id="firstNameTextField" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="Last Name" />
+                           <TextField fx:id="lastNameTextField" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <HBox alignment="CENTER_LEFT" prefWidth="-1.0" spacing="30.0" translateX="0.0" VBox.vgrow="ALWAYS">
+                        <children>
+                           <Label font="$x1" minHeight="-Infinity" minWidth="-Infinity" prefWidth="60.0" text="E-mail" />
+                           <TextField id="phoneTextField" fx:id="emailTextField" prefWidth="-1.0" promptText="Typical email pattern" HBox.hgrow="ALWAYS" />
+                        </children>
+                        <padding>
+                           <Insets left="10.0" />
+                        </padding>
+                     </HBox>
+                     <ButtonBar>
+                        <buttons>
+                           <Button contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#handleSave" prefHeight="30.0" text="Save" textAlignment="CENTER" />
+                        </buttons>
+                        <padding>
+                           <Insets top="10.0" />
+                        </padding>
+                     </ButtonBar>
+                  </children>
+               </VBox>
+            </children>
+         </AnchorPane>
+      </content>
+   </TitledPane>
+</fx:root>

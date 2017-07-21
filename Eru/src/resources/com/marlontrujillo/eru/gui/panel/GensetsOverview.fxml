@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import eu.hansolo.tilesfx.Tile?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<fx:root hgap="20.0" type="GridPane" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                <children>
+                    <Tile fx:id="g1VL1" maxValue="4160.0" textSize="BIGGER" title="G1 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1VL2" maxValue="4160.0" textSize="BIGGER" title="G1 - Voltage L2" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1VL3" maxValue="4160.0" textSize="BIGGER" title="G1 - Voltage L3" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1AL1" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G1 - Amperes L1" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1AL2" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G1 - Amperes L2" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1AL3" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G1 - Amperes L3" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1F" skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G1 - Frequency" unit="Hz" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1kW" maxValue="2000.0" skinType="PERCENTAGE" textSize="BIGGER" title="G1 - Active Power" unit="kW" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1PF" skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G1 - Power Factor" value="0.8" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g1OT" maxValue="200.0" skinType="NUMBER" textSize="BIGGER" title="G1 - Oil temperature" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g1CoolantT" skinType="NUMBER" textSize="BIGGER" title="G1 - Coolant Temp" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g1OP" maxValue="60.0" skinType="NUMBER" textSize="BIGGER" title="G1 - Oil Pressure" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" unit="PSI"/>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </AnchorPane>
+        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                <children>
+                    <Tile fx:id="g2VL1" maxValue="4160.0" textSize="BIGGER" title="G2 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2VL2" maxValue="4160.0" textSize="BIGGER" title="G2 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2VL3" maxValue="4160.0" textSize="BIGGER" title="G2 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2AL1" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G2 - Amperes L1" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2AL2" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G2 - Amperes L2" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2AL3" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G2 - Amperes L3" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2F"   skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G2 - Frequency" unit="Hz" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2kW" maxValue="1880.0" skinType="PERCENTAGE" textSize="BIGGER" title="G2 - Active Power" unit="kW" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2PF" skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G2 - Power Factor" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g2OT" maxValue="200.0" skinType="NUMBER" textSize="BIGGER" title="G2 - Oil temp." GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g2CoolantT" skinType="NUMBER" textSize="BIGGER" title="G2 - Coolant Temp" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g2OP" maxValue="60.0" skinType="NUMBER" textSize="BIGGER" title="G2 - Oil Pressure" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" unit="PSI"/>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </AnchorPane>
+        <AnchorPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                <children>
+                    <Tile fx:id="g3VL1" maxValue="4160.0" textSize="BIGGER" title="G3 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3VL2" maxValue="4160.0" textSize="BIGGER" title="G3 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3VL3" maxValue="4160.0" textSize="BIGGER" title="G3 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3AL1" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G3 - Amperes L1" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3AL2" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G3 - Amperes L2" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3AL3" maxValue="326.0" skinType="SPARK_LINE" textSize="BIGGER" title="G3 - Amperes L3" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3F"  skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G3 - Frequency" unit="Hz" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3kW" maxValue="1880.0" skinType="PERCENTAGE" textSize="BIGGER" title="G3 - Active Power" unit="kW" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3PF" skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G3 - Power Factor" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g3OT" maxValue="200.0" skinType="NUMBER" textSize="BIGGER" title="G3 - Oil temp." GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g3CoolantT" skinType="NUMBER" textSize="BIGGER" title="G3 - Coolant Temp" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g3OP" maxValue="60.0" skinType="NUMBER" textSize="BIGGER" title="G3 - Oil Pressure" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" unit="PSI"/>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </AnchorPane>
+        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <GridPane hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+                <children>
+                    <Tile fx:id="g4VL1" maxValue="4160.0" textSize="BIGGER" title="G4 - Voltage L1" unit="V" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4VL2" maxValue="4160.0" textSize="BIGGER" title="G4 - Voltage L2" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4VL3" maxValue="4160.0" textSize="BIGGER" title="G4 - Voltage L3" unit="V" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4AL1" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G4 - Amperes L1" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4AL2" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G4 - Amperes L2" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4AL3" maxValue="346.0" skinType="SPARK_LINE" textSize="BIGGER" title="G4 - Amperes L3" unit="A" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4F"  skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G4 - Frequency" unit="Hz" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4kW" maxValue="2000.0" skinType="PERCENTAGE" textSize="BIGGER" title="G4 - Active Power" unit="kW" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4PF" skinType="CIRCULAR_PROGRESS" textSize="BIGGER" title="G4 - Power Factor" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                    <Tile fx:id="g4OT" maxValue="200.0" skinType="NUMBER" textSize="BIGGER" title="G4 - Oil temperature" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g4CoolantT" skinType="NUMBER" textSize="BIGGER" title="G4 - Coolant Temp" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" unit="&#176;F"/>
+                    <Tile fx:id="g4OP" maxValue="60.0" skinType="NUMBER" textSize="BIGGER" title="G4 - Oil Pressure" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" unit="PSI"/>
+                </children>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </AnchorPane>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+</fx:root>

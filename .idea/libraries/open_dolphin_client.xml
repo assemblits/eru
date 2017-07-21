@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="open-dolphin-client">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-client" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-client" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-client" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-client" recursive="false" type="SOURCES" />
+  </library>
+</component>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import eu.hansolo.medusa.Gauge?>
+<?import eu.hansolo.medusa.Section?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import ve.marlontrujillo.scene.control.Alarm?>
+<?import ve.marlontrujillo.scene.control.Display?>
+<?import ve.marlontrujillo.scene.control.Generator?>
+<?import ve.marlontrujillo.scene.control.LevelBar?>
+<?import ve.marlontrujillo.scene.control.Load?>
+<?import ve.marlontrujillo.scene.control.Switch?>
+<?import ve.marlontrujillo.util.Section?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </padding>
+        <VBox alignment="TOP_CENTER" prefWidth="600.0" spacing="10.0" HBox.hgrow="SOMETIMES">
+            <Label text="---- Synchronization ----" textFill="WHITE">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <VBox prefHeight="150" style="-fx-border-color: GRAY; -fx-border-radius: 10;" VBox.vgrow="SOMETIMES">
+                <children>
+                    <Label text="  Voltages Differences" textFill="WHITE" />
+                    <LineChart fx:id="syncVoltagesLineChart" animated="false" legendVisible="false">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis forceZeroInRange="false" side="LEFT" />
+                        </yAxis>
+                    </LineChart>
+                    <Label text="  Frequencies Differences" textFill="WHITE" />
+                    <LineChart fx:id="syncFrequemcyLineChart" animated="false" legendVisible="false">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis forceZeroInRange="false" side="LEFT" />
+                        </yAxis>
+                    </LineChart>
+                </children>
+            </VBox>
+            <HBox spacing="10.0" style="-fx-border-color: GRAY; -fx-border-radius: 10;" VBox.vgrow="ALWAYS">
+                <VBox spacing="10.0" HBox.hgrow="NEVER">
+                    <Gauge fx:id="genVoltL1L2Gauge" maxValue="4300.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Voltage L1/L2" titleColor="WHITE" unit="V" unitColor="WHITE" valueColor="WHITE" />
+                    <Gauge fx:id="genVoltL2L3Gauge" maxValue="4300.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Voltage L2/L3" titleColor="WHITE" unit="V" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="1" />
+                    <Gauge fx:id="genVoltL3L1Gauge" maxValue="4300.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Voltage L3/L1" titleColor="WHITE" unit="V" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="2" />
+                </VBox>
+                <VBox spacing="10.0" HBox.hgrow="NEVER">
+                    <Gauge fx:id="genAmpL1Gauge" maxValue="350.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Amperes L1" titleColor="WHITE" unit="A" unitColor="WHITE" valueColor="WHITE" GridPane.rowIndex="1" />
+                    <Gauge fx:id="genAmpL2Gauge" maxValue="350.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Amperes L2" titleColor="WHITE" unit="A" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Gauge fx:id="genAmpL3Gauge" maxValue="350.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Amperes L3" titleColor="WHITE" unit="A" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                </VBox>
+                <VBox layoutX="271.0" layoutY="11.0" spacing="10.0" HBox.hgrow="NEVER">
+                    <children>
+                        <Gauge fx:id="pfGauge" maxValue="1.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Power Factor" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.rowIndex="1" />
+                        <Gauge fx:id="actPowerGauge" maxValue="2000.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Active Power" titleColor="WHITE" unit="kW" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Gauge fx:id="reactPowerGauge" maxValue="3500.0" skinType="DIGITAL" tickLabelColor="WHITE" title="Reactive Power" titleColor="WHITE" unit="kVAR" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    </children>
+                </VBox>
+            </HBox>
+        </VBox>
+        <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="SOMETIMES">
+            <Label text="---- Active Power ----" textFill="WHITE" VBox.vgrow="NEVER">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <LineChart fx:id="activePowerLineChart" maxHeight="100.0" VBox.vgrow="SOMETIMES">
+                <xAxis>
+                    <CategoryAxis side="BOTTOM" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="LEFT" />
+                </yAxis>
+            </LineChart>
+            <Label text="---- Pressures ----" textFill="WHITE" VBox.vgrow="NEVER">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <GridPane VBox.vgrow="ALWAYS">
+                <Gauge fx:id="oilPressureGauge" maxValue="120" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Oil Pressure" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" unit="PSI">
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#430400" start="0" stop="30" />
+                        <eu.hansolo.medusa.Section color="#254e25" start="30" stop="75" />
+                    </sections>
+                </Gauge>
+                <Gauge fx:id="fuelPressureGauge" maxValue="100" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Fuel Pressure" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="1" unit="PSI" >
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#430400" start="0" stop="20" />
+                        <eu.hansolo.medusa.Section color="#714a29" start="20" stop="40" />
+                        <eu.hansolo.medusa.Section color="#254E25" start="40" stop="80" />
+                    </sections>
+                </Gauge>
+                <Gauge fx:id="OilPrefilterGauge" maxValue="120" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Oil Pre-filter Pres" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="2" unit="PSI">
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#254e25" start="55" stop="80" />
+                        <eu.hansolo.medusa.Section color="#430400" start="80" stop="90" />
+                    </sections>
+                </Gauge>
+                <Gauge fx:id="airFilterGauge" maxValue="10" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Air Filt. Diff Pres" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.rowIndex="1" unit="PSI">
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#254E25" start="0" stop="2.0" />
+                        <eu.hansolo.medusa.Section color="#714a29" start="2" stop="5.0" />
+                        <eu.hansolo.medusa.Section color="#430400" start="5" stop="10.0" />
+                    </sections>
+                </Gauge>
+                <Gauge fx:id="fuelFilterGauge" maxValue="10" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Fuel Filt. Diff Pres" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" unit="PSI">
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#254E25" start="0" stop="5.0" />
+                        <eu.hansolo.medusa.Section color="#714a29" start="5" stop="8.0" />
+                        <eu.hansolo.medusa.Section color="#430400" start="8" stop="10.0" />
+                    </sections>
+                </Gauge>
+                <Gauge fx:id="fuelRateGauge" maxValue="400" minValue="0" sectionsVisible="true" tickLabelColor="WHITE" title="Fuel Rate" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" unit="L/H">
+                    <sections>
+                        <eu.hansolo.medusa.Section color="#254E25" start="0" stop="300" />
+                    </sections>
+                </Gauge>
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+            <Label text="---- Temperatures ----" textFill="WHITE" VBox.vgrow="NEVER">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <HBox alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="SOMETIMES">
+                <LevelBar fx:id="intercoolerTempLevelBar" maxValue="200.0" minValue="50" title="Intercooler temp" unitVisible="false">
+                    <sections>
+                        <ve.marlontrujillo.util.Section color="#ac484a" start="175" stop="200" stopVisible="false" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="150" stop="175" />
+                        <ve.marlontrujillo.util.Section color="LIGHTGREEN" start="50" startVisible="false" stop="150" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="50" stopVisible="false" />
+                    </sections>
+                </LevelBar>
+                <!--<LevelBar fx:id="windTempALevelBar" maxValue="150.0" minValue="0" title="Wind. Temp A" unitVisible="false">-->
+                <!--<sections>-->
+                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--</sections>-->
+                <!--</LevelBar>-->
+                <!--<LevelBar fx:id="windTempBLevelBar" maxValue="150.0" minValue="0" title="Wind. Temp B" unitVisible="false">-->
+                <!--<sections>-->
+                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--</sections>-->
+                <!--</LevelBar>-->
+                <!--<LevelBar fx:id="windTempCLevelBar" maxValue="150.0" minValue="0.0" title="Wind. Temp C" unitVisible="false">-->
+                <!--<sections>-->
+                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--</sections>-->
+                <!--</LevelBar>-->
+                <LevelBar fx:id="oilTempLevelBar" maxValue="200.0" minValue="160.0" title="Oil Temp" unitVisible="false">
+                    <sections>
+                        <ve.marlontrujillo.util.Section color="#c94b4d" start="194" stop="200" stopVisible="false" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="190" startVisible="false" stop="194" />
+                        <ve.marlontrujillo.util.Section color="LIGHTGREEN" start="176" stop="190" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="160" startVisible="false" stop="176" />
+                    </sections>
+                </LevelBar>
+                <LevelBar fx:id="coolantTempLevelBar" maxValue="230.0" minValue="150.0" title="Coolant Temp" unitVisible="false">
+                    <sections>
+                        <ve.marlontrujillo.util.Section color="#c94b4d" start="216" startVisible="false" stop="230" stopVisible="false" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="210" startVisible="false" stop="216" />
+                        <ve.marlontrujillo.util.Section color="LIGHTGREEN" start="158" stop="210" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="150" startVisible="false" stop="158" />
+                    </sections>
+                </LevelBar>
+                <LevelBar fx:id="exhManTempLeftLevelBar" maxValue="1200.0" minValue="500.0" title="Exh. Gas. Temp. L" unitVisible="false">
+                    <sections>
+                        <ve.marlontrujillo.util.Section color="#c94b4d" start="1036" stop="1200" stopVisible="false" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="1000" startVisible="false" stop="1036" />
+                        <ve.marlontrujillo.util.Section color="LIGHTGREEN" start="568" stop="1000" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="500" startVisible="false" stop="568" />
+                    </sections>
+                </LevelBar>
+                <LevelBar fx:id="exhManTempRightLevelBar" maxValue="1200.0" minValue="500.0" title="Exh. Gas. Temp. R" unitVisible="false">
+                    <sections>
+                        <ve.marlontrujillo.util.Section color="#c94b4d" start="1036" stop="1200" stopVisible="false" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="1000" startVisible="false" stop="1036" />
+                        <ve.marlontrujillo.util.Section color="LIGHTGREEN" start="568" stop="1000" />
+                        <ve.marlontrujillo.util.Section color="#c38145" start="500" startVisible="false" stop="568" />
+                    </sections>
+                </LevelBar>
+            </HBox>
+        </VBox>
+        <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
+            <Label alignment="TOP_CENTER" text="---- Alarms ----" textFill="WHITE" VBox.vgrow="NEVER">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <HBox alignment="TOP_CENTER" spacing="5.0" style="-fx-border-color: GRAY; -fx-border-radius: 10;" VBox.vgrow="ALWAYS">
+                <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                    <Alarm fx:id="alarmPreOverspeed" name="PRE-OVERSPEED" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmOverspeed" name="OVERSPEED" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreUnderspeed" name="PRE-UNDERSPEED" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmUnderspeed" name="UNDERSPEED" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmUnintendedStop" name="UNINTENDED STOP" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmShutdown" name="SHUTDOWN" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmGCBFailToClose" name="GCB FAIL TO CLOSE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmMaintHoursEx" name="MAINT-HOUR EXCEED." VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmHighBat" name="HIGH BATTERY VOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmLowBat" name="LOW BATTERY VOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmGroundFault" name="GROUND FAULT" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmGenPhaseRotMiss" name="GENPHASE ROT. MIS." VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmInvTimeOvCurr" name="INV.TIME OV.CURR." VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmFailStart" name="FAIL START" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmEmergencyButton" name="EMERGENCY BUTTON" VBox.vgrow="ALWAYS" />
+                </VBox>
+                <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+                    <Alarm fx:id="alarmPreOverFreq" name="PRE-OVERFREQUENCY" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmOverFreq" name="OVERFREQUENCY" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreUnderFreq" name="PRE-UNDERFREQUENCY" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmUnderFreq" name="UNDERFREQUENCY" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreOverVolt" name="PRE-OVERVOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmOverVolt" name="OVERVOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreUnderVolt" name="PRE-UNDERVOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmUnderVolt" name="UNDERVOLTAGE" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreOverCurr" name="PRE-OVERCURRENT" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmOverCurr" name="OVERCURRENT" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreRvRdPow" name="PRE-RV/RD POW." VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmRvRdPow"      name="RV/RD POW." VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmPreUnbalancLoad" name="PRE-UNBALANC LOAD" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmUnbalancLoad" name="UNBALANC LOAD" VBox.vgrow="ALWAYS" />
+                    <Alarm fx:id="alarmGenAssym" name="GEN ASYMMETRY" VBox.vgrow="ALWAYS" />
+                </VBox>
+            </HBox>
+            <Label alignment="TOP_CENTER" text="---- Genset Status ----" textFill="WHITE" VBox.vgrow="NEVER">
+                <font>
+                    <Font name="Xolonium" size="14.0" />
+                </font>
+            </Label>
+            <GridPane alignment="TOP_CENTER" hgap="10.0" style="-fx-border-color: GRAY; -fx-border-radius: 10;" vgap="10.0" VBox.vgrow="NEVER">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <Display fx:id="hrsNextMaintDisplay" title="Next. Maint." unit="Hr" GridPane.columnIndex="0" />
+                <Display fx:id="controlModeDisplay" title="Control Mode" GridPane.columnIndex="1" />
+                <Display fx:id="stateDisplay" title="Status" GridPane.columnIndex="2" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="150.0" style="-fx-border-color: GRAY; -fx-border-radius: 10;" VBox.vgrow="NEVER">
+                <Generator fx:id="gensetFigure" VBox.vgrow="NEVER" />
+                <Switch fx:id="switchFigure" VBox.vgrow="ALWAYS" />
+                <Load fx:id="loadFigure" VBox.vgrow="NEVER" />
+            </VBox>
+        </VBox>
+    </HBox>
+</fx:root>

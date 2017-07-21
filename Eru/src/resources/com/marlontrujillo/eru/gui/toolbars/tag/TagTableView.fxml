@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<fx:root type="javafx.scene.control.TableView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" editable="true">
+  <columns>
+
+    <TableColumn text="Name" >
+      <cellValueFactory>
+        <PropertyValueFactory property="name" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Enabled" >
+      <cellValueFactory>
+        <PropertyValueFactory property="enabled" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Description" >
+      <cellValueFactory>
+        <PropertyValueFactory property="description" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Group" >
+      <cellValueFactory>
+        <PropertyValueFactory property="group" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Current Value" >
+      <cellValueFactory>
+        <PropertyValueFactory property="currentValue" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Current text" >
+      <cellValueFactory>
+        <PropertyValueFactory property="currentText" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Decimals" >
+      <cellValueFactory>
+        <PropertyValueFactory property="decimals" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Current logic validated" >
+      <cellValueFactory>
+        <PropertyValueFactory property="currentLogicValidated" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Logical threshold" >
+      <cellValueFactory>
+        <PropertyValueFactory property="logicalThreshold" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Timestamp" >
+      <cellValueFactory>
+        <PropertyValueFactory property="timestamp" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Type" >
+      <cellValueFactory>
+        <PropertyValueFactory property="tagType" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Logical condition" >
+      <cellValueFactory>
+        <PropertyValueFactory property="logicalCondition" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Status" >
+      <cellValueFactory>
+        <PropertyValueFactory property="status" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Address" >
+      <cellValueFactory>
+        <PropertyValueFactory property="address" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Script" >
+      <cellValueFactory>
+        <PropertyValueFactory property="script" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Mask" >
+      <cellValueFactory>
+        <PropertyValueFactory property="mask" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Scale factor" >
+      <cellValueFactory>
+        <PropertyValueFactory property="scaleFactor" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Scale Offset" >
+      <cellValueFactory>
+        <PropertyValueFactory property="scaleOffset" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Alarm Group" >
+      <cellValueFactory>
+        <PropertyValueFactory property="alarmGroupName" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Alarm enabled" >
+      <cellValueFactory>
+        <PropertyValueFactory property="alarmEnabled" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Alarm Script" >
+      <cellValueFactory>
+        <PropertyValueFactory property="alarmScript" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Alarmed" >
+      <cellValueFactory>
+        <PropertyValueFactory property="alarmed" />
+      </cellValueFactory>
+    </TableColumn>
+
+    <TableColumn text="Historical enabled" >
+      <cellValueFactory>
+        <PropertyValueFactory property="historicalEnabled" />
+      </cellValueFactory>
+    </TableColumn>
+  </columns>
+</fx:root>

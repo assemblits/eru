@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration debug="false">
+
+    <!--Notes:-->
+    <!--DEBUG < INFO < WARN < ERROR < FATAL-->
+
+    <!--Requerimientos:-->
+    <!--1) No sobreescribir el archivo log. Crear uno nuevo con la fecha de inicio de la aplicacion.-->
+    <!--2) Crear el archivo en la misma ubicacion del archivo jar (logs/AQUI)-->
+    <!--3) Colocar el archivo de configuracion XML en la carpeta META-INF.-->
+    <!--4) Seguir con la configuracion en XML.-->
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out" />
+        <param name="threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="LoggerConsole" class="com.marlontrujillo.eru.logger.LabelAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="LoggerLive" class="com.marlontrujillo.eru.logger.LiveAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="PSVLogger">
+        <level value="info"/>
+        <appender-ref ref="LoggerConsole"/>
+        <appender-ref ref="LoggerLive"/>
+    </logger>
+
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="console"/>
+    </root>
+</log4j:configuration>

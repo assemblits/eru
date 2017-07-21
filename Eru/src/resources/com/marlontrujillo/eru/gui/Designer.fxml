@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marlontrujillo.eru.gui.DesignerController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <children>
+                  <AnchorPane VBox.vgrow="NEVER">
+               <ButtonBar prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <buttons>
+                              <Button defaultButton="true" onAction="#launchScadaButtonFired" text="Launch SCADA" />
+                              <ToggleButton onAction="#ConnectDevicesButtonFired" text="Connect" />
+                              <Button onAction="#saveButtonFired" text="Save" />
+                  </buttons>
+                  <padding>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </padding>
+               </ButtonBar>
+                  </AnchorPane>
+                  <AnchorPane VBox.vgrow="ALWAYS">
+                      <children>
+                          <SplitPane dividerPositions="0.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <items>
+                                  <AnchorPane>
+                                      <children>
+                                          <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                              <tabs>
+                                                  <Tab fx:id="fieldConnectionsTab" text="Connection" />
+                                                  <Tab fx:id="devicesTab" text="Device" />
+                                                  <Tab fx:id="tagTab" text="Tag" />
+                                                  <Tab fx:id="userTab" text="User" />
+                                                  <Tab fx:id="historianTab" text="Historian" />
+                                              </tabs>
+                                          </TabPane>
+                                      </children>
+                                  </AnchorPane>
+                                  <AnchorPane>
+                                      <children>
+                                          <TabPane fx:id="centralTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                      </children>
+                                  </AnchorPane>
+                              </items>
+                          </SplitPane>
+                      </children>
+                  </AnchorPane>
+              <Label fx:id="statusLabel" graphicTextGap="0.0" VBox.vgrow="NEVER">
+                  <VBox.margin>
+                      <Insets left="5.0" />
+                  </VBox.margin>
+              </Label>
+          </children>
+      </VBox>
+   </children>
+</AnchorPane>

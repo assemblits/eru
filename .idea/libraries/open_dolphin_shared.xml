@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="open-dolphin-shared">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-shared" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-shared" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-shared" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/open-dolphin/open-dolphin-shared" recursive="false" type="SOURCES" />
+  </library>
+</component>
