@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 public class App extends Application {
 
+    private File file;
     private Stage stage;
     private Scene preloaderScene;
     private Scene designerScene;
