@@ -1,4 +1,4 @@
-The open JavaFX SCADA
+**The open JavaFX SCADA**
 
 Currently functions:
 1) Tags
