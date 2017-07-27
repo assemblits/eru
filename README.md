@@ -44,5 +44,5 @@ This software uses code from several open source packages.
 - [Medusa Project](https://github.com/marlontrujillo1080/Medusa)
 - [Groovy](http://groovy-lang.org/)
 - [Rafael Solorzano](https://github.com/Rafaelsk)
-- [Lucio Guerchi](https://www.linkedin.com/in/lucio-claudio-guerchi-05953168/)
+- [Lucio Guerchi](https://github.com/luHub)
 - [Ronald Vera](https://www.linkedin.com/in/ronald-vera-2185b382/)
