@@ -43,6 +43,6 @@ This software uses code from several open source packages.
 - [Open Dolphin](http://open-dolphin.org/dolphin_website/Home.html)
 - [Medusa Project](https://github.com/marlontrujillo1080/Medusa)
 - [Groovy](http://groovy-lang.org/)
-- [Rafael Solorzano](https://github.com/Rafaelsk)
+- [Rafael Robles](https://github.com/Rafaelsk)
 - [Lucio Guerchi](https://github.com/luHub)
 - [Ronald Vera](https://www.linkedin.com/in/ronald-vera-2185b382/)
