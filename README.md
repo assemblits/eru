@@ -4,7 +4,7 @@
 </h1>
 <h4 align="center">An open linux SCADA based on JavaFX.</h4>
 
-[![Take a look!](https://img.youtube.com/vi/8DUAf9TrJuI/0.jpg)](https://www.youtube.com/watch?v=8DUAf9TrJuI&t=47s)
+[![Take a look!](https://img.youtube.com/vi/8DUAf9TrJuI?version=3&vq=hd720/0.jpg)](https://www.youtube.com/watch?v=8DUAf9TrJuI&t=47s)
 
 ## Key Features
 
