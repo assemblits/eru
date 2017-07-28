@@ -2,6 +2,8 @@ package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
+import com.marlontrujillo.eru.gui.toolbars.tree.Group;
+import com.marlontrujillo.eru.persistence.Container;
 import com.marlontrujillo.eru.util.PSVAlert;
 import com.marlontrujillo.eru.util.PSVStageUtil;
 import javafx.application.Application;
@@ -19,6 +21,32 @@ import java.io.IOException;
  */
 
 public class App extends Application {
+
+    public static void connect() {
+        try {
+            FieldBusCommunicator.getInstance().start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void disconnect() {
+        try {
+            FieldBusCommunicator.getInstance().stop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void save() {
+        Container.getInstance().saveDatabase();
+    }
+
+    public static void showInCentralPane(Group item) {
+        System.out.println("Have to show " + item.getName() + " group of " + item.getType());
+    }
+
+    public enum ProjectAction {SHOW_GROUP, DELETE_GROUP}
 
     private Stage stage;
     private Scene preloaderScene;
@@ -63,7 +91,7 @@ public class App extends Application {
 
     private void launchDesigner(){
         try {
-            Parent designerFrame = FXMLLoader.load(DesignerController.class.getResource("Designer.fxml"));
+            Parent designerFrame = FXMLLoader.load(FrameController.class.getResource("Frame.fxml"));
             designerScene = new Scene(designerFrame, 800, 400);
             stage.setScene(designerScene);
             stage.show();
@@ -92,4 +120,9 @@ public class App extends Application {
     public App getSingleton() {
         return singleton;
     }
+
+    private void execute(ProjectAction action, Group group){
+
+    }
+
 }

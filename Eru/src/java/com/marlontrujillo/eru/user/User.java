@@ -12,6 +12,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "USER")
 public class User {
 
+    private int id;
     private String userName;
     private String firstName;
     private String lastName;
@@ -26,7 +27,14 @@ public class User {
         this.userName = userName;
     }
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return id;
+    }
+    private void setId(int id) {
+        this.id = id;
+    }
+
     @Column(name = "user_name")
     public String getUserName() {
         return userName;

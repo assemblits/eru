@@ -15,6 +15,8 @@
         <class>com.marlontrujillo.eru.user.Operator</class>
         <class>com.marlontrujillo.eru.historian.Historic</class>
         <class>com.marlontrujillo.eru.tag.Tag</class>
+        <class>com.marlontrujillo.eru.gui.toolbars.tree.Group</class>
+
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/eru"/>

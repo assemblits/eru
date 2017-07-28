@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<!-- To edit with Scene Builder comment line bellow. -->
+<?import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marlontrujillo.eru.gui.FrameController">
+    <children>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <AnchorPane BorderPane.alignment="CENTER">
+                    <ButtonBar prefHeight="40.0" prefWidth="305.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <buttons>
+                            <Button defaultButton="true" onAction="#launchScadaButtonFired" text="Launch SCADA" />
+                            <ToggleButton onAction="#ConnectDevicesButtonFired" text="Connect" />
+                            <Button onAction="#saveButtonFired" text="Save" />
+                        </buttons>
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </padding>
+                    </ButtonBar>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane fx:id="leftPane" prefWidth="250.0" BorderPane.alignment="CENTER">
+                    <!-- To edit with Scene Builder comment line bellow. -->
+                    <ProjectTree prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                </AnchorPane>
+            </left>
+            <center>
+                <AnchorPane fx:id="centerPane" BorderPane.alignment="CENTER" />
+            </center>
+            <bottom>
+                <AnchorPane fx:id="bottomPane" BorderPane.alignment="CENTER">
+                    <Label fx:id="statusLabel" text="Label" />
+                </AnchorPane>
+            </bottom>
+        </BorderPane>
+    </children>
+</AnchorPane>
