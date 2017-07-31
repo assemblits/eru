@@ -44,6 +44,7 @@ public class JpaUtil {
             LogUtil.logger.info("Entity Manager Factory connected.");
             success = true;
         } catch (Exception e){
+            e.printStackTrace();
             LogUtil.logger.error("Error creating a Entity Manager Factory : " + e.getMessage(), e);
         }
         return success;

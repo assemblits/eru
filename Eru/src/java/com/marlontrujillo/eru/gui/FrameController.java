@@ -1,48 +1,39 @@
 package com.marlontrujillo.eru.gui;
 
-import com.marlontrujillo.eru.logger.LabelAppender;
+import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 /**
  * Created by mtrujillo on 8/31/2015.
  */
-public class FrameController implements Initializable {
+public class FrameController {
 
-    @FXML private AnchorPane leftPane;
-    @FXML private AnchorPane centerPane;
-    @FXML private AnchorPane bottomPane;
-    @FXML private Label      statusLabel;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        LabelAppender.setLabel(statusLabel);
-    }
+    public ProjectTree projectTree;
+    public AnchorPane leftPane;
+    public AnchorPane centerPane;
+    public AnchorPane bottomPane;
+    public Label      statusLabel;
 
     @FXML
     private void launchScadaButtonFired(ActionEvent actionEvent) {
-        App.launchSCADA();
     }
 
     @FXML
     private void ConnectDevicesButtonFired(ActionEvent actionEvent) {
         if (((ToggleButton) actionEvent.getSource()).isSelected()){
-            App.connect();
+            App.getSingleton().execute(App.Action.CONNECT_MODBUS);
         } else {
-            App.disconnect();
+            App.getSingleton().execute(App.Action.DISCONNECT_MODBUS);
         }
     }
 
     @FXML
     private void saveButtonFired(ActionEvent actionEvent) {
-        App.save();
+        App.getSingleton().execute(App.Action.SAVE);
     }
 
 }

@@ -13,7 +13,7 @@ import org.eclipse.jetty.server.Server
  */
 class ServerStartupService extends Service<Void> {
 
-    Server server;
+    private Server server;
 
     /* ********** Static Fields ********** */
     private static final ServerStartupService instance = new ServerStartupService();

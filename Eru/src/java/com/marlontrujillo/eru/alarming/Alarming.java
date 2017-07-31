@@ -66,7 +66,7 @@ public class Alarming {
     /* ********** Methods ********** */
     public synchronized boolean start() {
         if(running) {
-            LogUtil.logger.error("Alarming: detected a start command, but the communications are already started.");
+            LogUtil.logger.error("Alarming: detected a load command, but the communications are already started.");
         } else {
             try {
                 // Check if there is a database connection
@@ -94,7 +94,7 @@ public class Alarming {
                 installAlarmListenerOnTags(Container.getInstance().getTagsAgent().getInstantVal());
                 LogUtil.logger.info("Alarming: alarms loaded.");
             }catch (Exception e){
-                final String errorMSG = "Alarming module cannot start.";
+                final String errorMSG = "Alarming module cannot load.";
                 status.setValue(errorMSG);
                 alarmed.setValue(true);
                 LogUtil.logger.error(errorMSG, e);

@@ -3,14 +3,16 @@ package com.marlontrujillo.eru.gui;
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
-import com.marlontrujillo.eru.persistence.Container;
-import com.marlontrujillo.eru.util.PSVAlert;
-import com.marlontrujillo.eru.util.PSVStageUtil;
+import com.marlontrujillo.eru.logger.LabelAppender;
+import com.marlontrujillo.eru.persistence.Project;
+import com.marlontrujillo.eru.persistence.ProjectLoaderService;
+import com.marlontrujillo.eru.persistence.ProjectSaverService;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,48 +24,21 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    public static void connect() {
-        try {
-            FieldBusCommunicator.getInstance().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private static final App singleton = new App();
 
-    public static void disconnect() {
-        try {
-            FieldBusCommunicator.getInstance().stop();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE, CONNECT_MODBUS, DISCONNECT_MODBUS}
 
-    public static void save() {
-        Container.getInstance().saveDatabase();
-    }
-
-    public static void showInCentralPane(Group item) {
-        System.out.println("Have to show " + item.getName() + " group of " + item.getType());
-    }
-
-    public enum ProjectAction {SHOW_GROUP, DELETE_GROUP}
-
-    private Stage stage;
-    private Scene preloaderScene;
-    private Scene designerScene;
-    private Scene scadaScene;
-    private App   singleton;
-
+    private Project        project;
+    private Stage          stage;
+    private StringProperty status = new SimpleStringProperty();
 
     public App() {
-        assert singleton == null;
-        singleton = this;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        PSVStageUtil.setPSVDesignerTitleAndIcon(stage);
+        LabelAppender.setObservableString(status);
         launchPreloader();
     }
 
@@ -76,53 +51,77 @@ public class App extends Application {
     }
 
     public void launchPreloader(){
-        PreloaderController preloaderController = new PreloaderController(PreloaderController.Type.SERVER);
-        preloaderController.loadedProperty().addListener(observable -> launchDesigner());
-        preloaderController.failedProperty().addListener(observable -> {
-            PSVAlert alert = new PSVAlert(Alert.AlertType.ERROR);
-            alert.setHeaderText("You cannot open two instances of Power Scene Viewer.");
-            alert.showAndWait();
-            stage.close();
+        PreloaderController preloaderWindow = new PreloaderController();
+        ProjectLoaderService pls = new ProjectLoaderService();
+        preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
+        preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
+        pls.setOnSucceeded(event -> {
+            this.project = (Project) event.getSource().getValue();
+            launchApp();
         });
-        preloaderController.start();
-        stage.setScene(new Scene(preloaderController, 500, 250));
+        pls.start();
+        stage.setScene(new Scene(preloaderWindow, 500, 250));
         stage.show();
     }
 
-    private void launchDesigner(){
+    private void launchApp(){
         try {
             Parent designerFrame = FXMLLoader.load(FrameController.class.getResource("Frame.fxml"));
-            designerScene = new Scene(designerFrame, 800, 400);
-            stage.setScene(designerScene);
+            stage.setScene(new Scene(designerFrame, 800, 400));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void launchSCADA(){
-//        try {
-//            if (!FieldBusCommunicator.getInstance().isStarted()) {
-//                FieldBusCommunicator.getInstance().start();
-//            }
-//            ScadaApp scadaApp = new ScadaApp();
-//            scadaApp.setConnectToLocalHost(true);
-//            scadaApp.start(primaryStage);
-//        } catch (Exception e) {
-//            LogUtil.logger.error("Unable to launch SCADA: " + e.getMessage(), e);
-//        }
-    }
-
     public static void main(String[] args){
         launch(args);
     }
 
-    public App getSingleton() {
+    public static App getSingleton() {
         return singleton;
     }
 
-    private void execute(ProjectAction action, Group group){
-
+    public void showGroup(Group item) {
+        System.out.println("Have to show " + item.getName() + " group of " + item.getType());
     }
 
+    public void execute(Action action){
+        switch (action) {
+            case SHOW_GROUP:
+                break;
+            case DELETE_GROUP:
+                break;
+            case SAVE:
+                ProjectSaverService pss = new ProjectSaverService();
+                pss.setProject(this.project);
+                pss.start();
+                break;
+            case CONNECT_MODBUS:
+                try {
+                    FieldBusCommunicator.getInstance().start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case DISCONNECT_MODBUS:
+                try {
+                    FieldBusCommunicator.getInstance().stop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    public String getStatus() {
+        return status.get();
+    }
+    public StringProperty statusProperty() {
+        return status;
+    }
+
+    public Project getProject() {
+        return project;
+    }
 }

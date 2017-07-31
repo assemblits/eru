@@ -38,7 +38,6 @@ public class  Device {
         enabled         = new SimpleBooleanProperty();
         addresses       = new ArrayList<>();
         zeroBased       = new SimpleBooleanProperty(this, "zeroBased", true);
-
     }
 
     /* ********** Setters and Getters ********** */

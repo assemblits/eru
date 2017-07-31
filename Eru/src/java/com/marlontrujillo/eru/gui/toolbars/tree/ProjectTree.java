@@ -1,13 +1,18 @@
 package com.marlontrujillo.eru.gui.toolbars.tree;
 
+import com.marlontrujillo.eru.gui.App;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Created by mtrujillo on 7/27/17.
  */
-public class ProjectTree extends TreeView<Group> {
+public class ProjectTree extends TreeView<Group> implements Initializable {
 
     public ProjectTree() {
         createTreeRoots();
@@ -21,16 +26,22 @@ public class ProjectTree extends TreeView<Group> {
         Group userGroup        = new Group("Users", Group.Type.USER);
         rootGroup.getObservableChildren().addAll(connectionsGroup, devicesGroup, tagsGroup, userGroup);
 
-        TreeItem<Group> root        = new TreeItem<>(rootGroup);
+        TreeItem<Group> r           = new TreeItem<>(rootGroup);
         TreeItem<Group> connections = new TreeItem<>(connectionsGroup);
         TreeItem<Group> devices     = new TreeItem<>(devicesGroup);
         TreeItem<Group> tags        = new TreeItem<>(tagsGroup);
         TreeItem<Group> users       = new TreeItem<>(userGroup);
-        root.getChildren().addAll(connections, devices, tags, users);
-        root.setExpanded(true);
-        this.setRoot(root);
+        r.getChildren().addAll(connections, devices, tags, users);
+
+        this.setRoot(r);
+        this.getRoot().setExpanded(true);
         this.setEditable(true);
         this.setCellFactory(c -> new GroupTreeCell());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.setContent(App.getSingleton().getProject().getGroup());
     }
 
     private TreeItem<Group> createTree(Group group) {
@@ -42,7 +53,8 @@ public class ProjectTree extends TreeView<Group> {
         return treeItem;
     }
 
-    public void setContent(Group content){
+    private void setContent(Group content){
         this.getRoot().getChildren().add(createTree(content));
     }
+
 }

@@ -1,6 +1,7 @@
 package com.marlontrujillo.eru.logger;
 
 import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 import org.apache.log4j.WriterAppender;
 import org.apache.log4j.spi.LoggingEvent;
@@ -9,7 +10,7 @@ import org.apache.log4j.spi.LoggingEvent;
  * Created by mtrujillo on 9/2/2015.
  */
 public class LabelAppender extends WriterAppender {
-    private static volatile Label label;
+    private static volatile StringProperty lastLog;
 
     @Override
     public void append(LoggingEvent event) {
@@ -18,8 +19,8 @@ public class LabelAppender extends WriterAppender {
         try {
             Platform.runLater(() -> {
                 try {
-                    if (label != null) {
-                        label.setText(message);
+                    if (lastLog != null) {
+                        lastLog.setValue(message);
                     }
                 } catch (final Throwable t) {
                     LogUtil.logger.error("TextAreaAppender error:", t);
@@ -30,7 +31,7 @@ public class LabelAppender extends WriterAppender {
         }
     }
 
-    public static void setLabel(Label label){
-        LabelAppender.label = label;
+    public static void setObservableString(StringProperty observableString){
+        LabelAppender.lastLog = observableString;
     }
 }

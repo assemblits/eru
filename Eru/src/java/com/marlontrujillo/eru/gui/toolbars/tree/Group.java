@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mtrujillo on 7/25/17.
@@ -82,6 +83,14 @@ public class Group {
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true) @Column(name = "children")
+    public List<Group> getChildren(){
+        return children;
+    }
+    public void setChildren(List<Group> children){
+        this.children.setAll(children);
+    }
+
+    @Transient
     public ObservableList<Group> getObservableChildren() {
         return children;
     }

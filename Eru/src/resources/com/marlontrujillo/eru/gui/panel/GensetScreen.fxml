@@ -159,26 +159,26 @@
                 </LevelBar>
                 <!--<LevelBar fx:id="windTempALevelBar" maxValue="150.0" minValue="0" title="Wind. Temp A" unitVisible="false">-->
                 <!--<sections>-->
-                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
-                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--<ve.marlontrujillo.util.Section color="#ac48loadtart="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREloadtart="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="0" startVisible="false" stop="20" />-->
                 <!--</sections>-->
                 <!--</LevelBar>-->
                 <!--<LevelBar fx:id="windTempBLevelBar" maxValue="150.0" minValue="0" title="Wind. Temp B" unitVisible="false">-->
                 <!--<sections>-->
-                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
-                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--<ve.marlontrujillo.util.Section color="#ac48loadtart="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREloadtart="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="0" startVisible="false" stop="20" />-->
                 <!--</sections>-->
                 <!--</LevelBar>-->
                 <!--<LevelBar fx:id="windTempCLevelBar" maxValue="150.0" minValue="0.0" title="Wind. Temp C" unitVisible="false">-->
                 <!--<sections>-->
-                <!--<ve.marlontrujillo.util.Section color="#ac484a" start="140" stop="150" stopVisible="false" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="130" stop="140" />-->
-                <!--<ve.marlontrujillo.util.Section color="LIGHTGREEN" start="20" startVisible="false" stop="130" />-->
-                <!--<ve.marlontrujillo.util.Section color="#c38145" start="0" startVisible="false" stop="20" />-->
+                <!--<ve.marlontrujillo.util.Section color="#ac48loadtart="140" stop="150" stopVisible="false" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="130" stop="140" />-->
+                <!--<ve.marlontrujillo.util.Section color="LIGHTGREloadtart="20" startVisible="false" stop="130" />-->
+                <!--<ve.marlontrujillo.util.Section color="#c381loadtart="0" startVisible="false" stop="20" />-->
                 <!--</sections>-->
                 <!--</LevelBar>-->
                 <LevelBar fx:id="oilTempLevelBar" maxValue="200.0" minValue="160.0" title="Oil Temp" unitVisible="false">

@@ -31,7 +31,7 @@
             <left>
                 <AnchorPane fx:id="leftPane" prefWidth="250.0" BorderPane.alignment="CENTER">
                     <!-- To edit with Scene Builder comment line bellow. -->
-                    <ProjectTree prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    <ProjectTree fx:id="projectTree" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                 </AnchorPane>
             </left>
             <center>

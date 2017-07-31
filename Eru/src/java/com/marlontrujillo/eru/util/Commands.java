@@ -15,13 +15,13 @@ public class Commands {
     public static final String SYNCHRONIZE_SYSTEM_PM         = "engine.synchronize.system.pm";
     public static final String ACKNOWLEDGE_ALARMS            = "alarms.acknowledge";
     public static final String CHECK_USER_ENTRY              = "user.check.entry";
-    public static final String START_COMMUNICATIONS          = "user.comm.start";
+    public static final String START_COMMUNICATIONS          = "user.comm.load";
     public static final String STOP_COMMUNICATIONS           = "user.comm.stop";
     public static final String BLOCK_COMMUNICATIONS          = "user.comm.block";
     public static final String RELEASE_COMMUNICATIONS        = "user.comm.release";
-    public static final String START_HISTORIAN               = "user.historian.start";
+    public static final String START_HISTORIAN               = "user.historian.load";
     public static final String STOP_HISTORIAN                = "user.historian.stop";
-    public static final String START_ALARMING                = "user.alarming.start";
+    public static final String START_ALARMING                = "user.alarming.load";
     public static final String STOP_ALARMING                 = "user.alarming.stop";
     public static final String WRITE_TAG                     = "write.tag";
 
