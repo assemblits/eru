@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Optional;
+
 /**
  * Created by mtrujillo on 7/28/17.
  */
@@ -22,10 +24,10 @@ public class GroupTreeCell extends TreeCell<Group> {
     private final ContextMenu usersMenu       = new ContextMenu();
 
     public GroupTreeCell() {
-        connectionsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.CONNECTION), getMenuItemToRename());
-        devicesMenu.getItems().addAll(getMenuItemToAdd(Group.Type.DEVICE), getMenuItemToRename());
-        tagsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.TAG), getMenuItemToRename());
-        usersMenu.getItems().addAll(getMenuItemToAdd(Group.Type.USER), getMenuItemToRename());
+        connectionsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
+        devicesMenu.getItems().addAll(getMenuItemToAdd(Group.Type.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
+        tagsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.TAG), getMenuItemToRename(), getMenuItemToRemove());
+        usersMenu.getItems().addAll(getMenuItemToAdd(Group.Type.USER), getMenuItemToRename(), getMenuItemToRemove());
     }
 
     @Override
@@ -66,11 +68,14 @@ public class GroupTreeCell extends TreeCell<Group> {
     }
 
     private MenuItem getMenuItemToAdd(Group.Type type){
-        MenuItem addMenuItem = new MenuItem("Add new " + type.name().toLowerCase());
+        MenuItem addMenuItem = new MenuItem("New group");
         addMenuItem.setOnAction(event -> {
-            Group newConnectionGroup = new Group("new " + type.name().toLowerCase(), type);
-            getTreeItem().getValue().getObservableChildren().add(newConnectionGroup);
-            getTreeItem().getChildren().add(new TreeItem<>(newConnectionGroup));
+            Group newGroup = new Group();
+            newGroup.setName("new " + type.name().toLowerCase() + " group");
+            newGroup.setType(type);
+            newGroup.setParent(getItem());
+            getTreeItem().getValue().getChildren().add(newGroup);
+            getTreeItem().getChildren().add(new TreeItem<>(newGroup));
         });
         return addMenuItem;
     }
@@ -86,5 +91,28 @@ public class GroupTreeCell extends TreeCell<Group> {
             updateItem(getItem(), isEmpty());
         });
         return renameMenuItem;
+    }
+
+    private MenuItem getMenuItemToRemove(){
+        MenuItem removeMenuItem = new MenuItem("Remove");
+        removeMenuItem.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Deleting " + getItem().getName() + " group. Are you sure");
+            alert.setContentText(null);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                try{
+                    getItem().getParent().getChildren().remove(getItem());
+                    getTreeItem().getParent().getChildren().remove(getTreeItem());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else {
+                // ok np
+            }
+        });
+        return removeMenuItem;
     }
 }

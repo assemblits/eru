@@ -31,7 +31,6 @@ public class Project {
         this.connections = new ArrayList<>();
         this.tags = new ArrayList<>();
         this.users = new ArrayList<>();
-        this.group = new Group();
     }
 
     @Id
@@ -51,7 +50,7 @@ public class Project {
         this.name = name;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     public Group getGroup() {
         return group;
     }

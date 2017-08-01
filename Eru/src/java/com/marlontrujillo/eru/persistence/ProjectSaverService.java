@@ -24,6 +24,7 @@ public class ProjectSaverService extends Service<Void> {
                 updateMessage("Saving");
                 updateProgress(76, 100);
                 Dao<Project> dao = new Dao<>(entityManager, Project.class);
+                System.out.println("Saving " + getProject());
                 dao.update(getProject());
                 updateProgress(100, 100);
                 return null;

@@ -10,12 +10,8 @@ import com.marlontrujillo.eru.persistence.ProjectSaverService;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * Created by mtrujillo on 8/31/2015.
@@ -24,15 +20,17 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    private static final App singleton = new App();
+    private static App singleton;
 
     public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE, CONNECT_MODBUS, DISCONNECT_MODBUS}
 
-    private Project        project;
-    private Stage          stage;
-    private StringProperty status = new SimpleStringProperty();
+    private Project         project;
+    private Stage           stage;
+    private FrameController frame;
+    private StringProperty  status = new SimpleStringProperty();
 
     public App() {
+        App.singleton = this;
     }
 
     @Override
@@ -56,7 +54,7 @@ public class App extends Application {
         preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
-            this.project = (Project) event.getSource().getValue();
+            project = (Project) event.getSource().getValue();
             launchApp();
         });
         pls.start();
@@ -65,13 +63,9 @@ public class App extends Application {
     }
 
     private void launchApp(){
-        try {
-            Parent designerFrame = FXMLLoader.load(FrameController.class.getResource("Frame.fxml"));
-            stage.setScene(new Scene(designerFrame, 800, 400));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.frame = new FrameController();
+        stage.setScene(new Scene(this.frame, 800, 400));
+        stage.show();
     }
 
     public static void main(String[] args){

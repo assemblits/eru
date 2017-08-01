@@ -1,12 +1,7 @@
 package com.marlontrujillo.eru.gui.toolbars.tree;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import javax.persistence.*;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,30 +13,17 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Group {
 
-    enum Type {ROOT, CONNECTION, DEVICE, TAG, USER}
+    public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER}
 
-    private int                   id;
-    private StringProperty        name;
-    private Type                  type;
-    private ObjectProperty<Long>  size;
-    private ObservableList<Group> children;
-    private ObjectProperty<Date>  lastModified;
+    private int         id;
+    private String      name;
+    private Type        type;
+    private Group       parent;
+    private List<Group> children;
+    private Date        lastModified;
 
     public Group() {
-        this("", Type.ROOT);
-    }
-
-    public Group(String name, Type type) {
-        this.name         = new SimpleStringProperty(name);
-        this.size         = new SimpleObjectProperty<>(0L);
-        this.children     = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.lastModified = new SimpleObjectProperty<>(Date.from(Instant.now()));
-        this.type         = type;
-
-        this.children.addListener((InvalidationListener) observable -> {
-            setLastModified(Date.from(Instant.now()));
-            setSize((long) getObservableChildren().size());
-        });
+        this.children = new ArrayList<>();
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -52,18 +34,13 @@ public class Group {
         this.id = id;
     }
 
-    @Column(name = "name")
     public String getName() {
-        return name.get();
-    }
-    public StringProperty nameProperty() {
         return name;
     }
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
-    @Column(name = "type")
     public Type getType() {
         return type;
     }
@@ -71,46 +48,27 @@ public class Group {
         this.type = type;
     }
 
-    @Column(name = "size")
-    public Long getSize() {
-        return size.get();
+    @OneToOne(cascade= CascadeType.ALL, orphanRemoval = true)
+    public Group getParent() {
+        return parent;
     }
-    public ObjectProperty<Long> sizeProperty() {
-        return size;
-    }
-    public void setSize(Long size) {
-        this.size.set(size);
+    public void setParent(Group parent) {
+        this.parent = parent;
     }
 
-    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true) @Column(name = "children")
-    public List<Group> getChildren(){
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
+    public List<Group> getChildren() {
         return children;
     }
-    public void setChildren(List<Group> children){
-        this.children.setAll(children);
-    }
-
-    @Transient
-    public ObservableList<Group> getObservableChildren() {
-        return children;
-    }
-    public void setObservableChildren(ObservableList<Group> children) {
+    public void setChildren(List<Group> children) {
         this.children = children;
     }
 
     @Column(name = "last_modified")
     public Date getLastModified() {
-        return lastModified.get();
-    }
-    public ObjectProperty<Date> lastModifiedProperty() {
         return lastModified;
     }
     public void setLastModified(Date lastModified) {
-        this.lastModified.set(lastModified);
-    }
-
-    @Override
-    public String toString() {
-        return name.getValue();
+        this.lastModified = lastModified;
     }
 }
