@@ -99,7 +99,7 @@ public class TagModificationsController extends AnchorPane implements Initializa
         tagTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener(value -> handleUserSelection("TAG_TYPE"));
         alarmEnableCheckBox.setOnAction(value -> handleUserSelection("ALARM_ENABLE"));
         maskRadixChoiceBox.showingProperty().addListener(value -> handleUserSelection("MASK_RADIX"));
-        saveButton.setOnAction(value -> handleUserSelection("SAVE"));
+        saveButton.setOnAction(value -> handleUserSelection("SAVE_TO_DB"));
     }
 
     /* ********** Methods ********** */
@@ -136,7 +136,7 @@ public class TagModificationsController extends AnchorPane implements Initializa
                     alarmScriptTextArea.setDisable(true);
                 }
                 break;
-            case "SAVE":
+            case "SAVE_TO_DB":
                 saveChanges();
                 break;
             case "MASK_RADIX":

@@ -22,7 +22,7 @@ public class App extends Application {
 
     private static App singleton;
 
-    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE, CONNECT_MODBUS, DISCONNECT_MODBUS}
+    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE_TO_DB, UPDATE_PROJECT_IN_GUI, CONNECT_MODBUS, DISCONNECT_MODBUS}
 
     private Project         project;
     private Stage           stage;
@@ -64,6 +64,7 @@ public class App extends Application {
 
     private void launchApp(){
         this.frame = new FrameController();
+        execute(Action.UPDATE_PROJECT_IN_GUI);
         stage.setScene(new Scene(this.frame, 800, 400));
         stage.show();
     }
@@ -77,6 +78,7 @@ public class App extends Application {
     }
 
     public void showGroup(Group item) {
+        System.out.println("Project: " + project);
         System.out.println("Have to show " + item.getName() + " group of " + item.getType());
     }
 
@@ -86,10 +88,14 @@ public class App extends Application {
                 break;
             case DELETE_GROUP:
                 break;
-            case SAVE:
+            case SAVE_TO_DB:
                 ProjectSaverService pss = new ProjectSaverService();
                 pss.setProject(this.project);
+                pss.setOnSucceeded(event -> execute(Action.UPDATE_PROJECT_IN_GUI)); // Due to changes in DB like PK
                 pss.start();
+                break;
+            case UPDATE_PROJECT_IN_GUI:
+                if (this.frame != null) this.frame.getProjectTree().setContent(this.project.getGroup());
                 break;
             case CONNECT_MODBUS:
                 try {

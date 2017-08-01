@@ -89,4 +89,17 @@ public class Project {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", group=" + group +
+                ", devices=" + devices +
+                ", connections=" + connections +
+                ", tags=" + tags +
+                ", users=" + users +
+                '}';
+    }
 }

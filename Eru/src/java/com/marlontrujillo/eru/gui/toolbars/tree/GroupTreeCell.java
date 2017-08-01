@@ -74,7 +74,8 @@ public class GroupTreeCell extends TreeCell<Group> {
             newGroup.setName("new " + type.name().toLowerCase() + " group");
             newGroup.setType(type);
             newGroup.setParent(getItem());
-            getTreeItem().getValue().getChildren().add(newGroup);
+
+            getItem().getChildren().add(newGroup);
             getTreeItem().getChildren().add(new TreeItem<>(newGroup));
         });
         return addMenuItem;
@@ -98,14 +99,22 @@ public class GroupTreeCell extends TreeCell<Group> {
         removeMenuItem.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
-            alert.setHeaderText("Deleting " + getItem().getName() + " group. Are you sure");
+            alert.setHeaderText("Deleting " + getItem() + " group of " + getItem().getParent() + ". Are you sure");
             alert.setContentText(null);
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 try{
-                    getItem().getParent().getChildren().remove(getItem());
-                    getTreeItem().getParent().getChildren().remove(getTreeItem());
+                    TreeItem parentItem = getTreeItem().getParent();
+                    Group    parentGroup = getItem().getParent();
+
+                    System.out.println("Group " + parentGroup + " contains " + getItem() + "?:" + parentGroup.getChildren().contains(getItem()));
+
+
+                    boolean itemRemoved = parentItem.getChildren().remove(getTreeItem());
+                    boolean groupRemoved = parentGroup.getChildren().remove(getItem());
+
+                    System.out.println("Remove result: " + itemRemoved + groupRemoved);
                 } catch (Exception e){
                     e.printStackTrace();
                 }

@@ -1,11 +1,7 @@
 package com.marlontrujillo.eru.gui.toolbars.tree;
 
-import com.marlontrujillo.eru.gui.App;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Created by mtrujillo on 7/27/17.
@@ -15,7 +11,10 @@ public class ProjectTree extends TreeView<Group> {
     public ProjectTree() {
         this.setEditable(true);
         this.setCellFactory(c -> new GroupTreeCell());
-        this.setRoot(createTree(App.getSingleton().getProject().getGroup()));
+    }
+
+    public void setContent(Group group){
+        this.setRoot(createTree(group));
         this.getRoot().setExpanded(true);
     }
 

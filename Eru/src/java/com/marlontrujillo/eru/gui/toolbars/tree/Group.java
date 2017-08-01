@@ -71,4 +71,9 @@ public class Group {
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
+
+    @Override
+    public String toString() {
+        return getName() + "[" + getId() + "]" + "(" + getChildren() + ")";
+    }
 }

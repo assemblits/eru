@@ -47,7 +47,22 @@ public class FrameController extends AnchorPane {
 
     @FXML
     private void saveButtonFired(ActionEvent actionEvent) {
-        App.getSingleton().execute(App.Action.SAVE);
+        App.getSingleton().execute(App.Action.SAVE_TO_DB);
     }
 
+    public ProjectTree getProjectTree() {
+        return projectTree;
+    }
+    public AnchorPane getLeftPane() {
+        return leftPane;
+    }
+    public AnchorPane getCenterPane() {
+        return centerPane;
+    }
+    public AnchorPane getBottomPane() {
+        return bottomPane;
+    }
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
 }
