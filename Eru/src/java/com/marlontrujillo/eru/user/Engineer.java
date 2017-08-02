@@ -1,5 +1,8 @@
 package com.marlontrujillo.eru.user;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -10,21 +13,21 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue(value = "ENGINEER")
 public class Engineer extends User {
-    @Column(name = "civ_number")
-    private String civNumber;
+
+    private StringProperty licence;
 
     public Engineer() {
+        this.licence = new SimpleStringProperty("");
     }
 
-    public Engineer(String userName) {
-        super(userName);
+    @Column(name = "licence")
+    public String getLicence() {
+        return licence.get();
     }
-
-    public String getCivNumber() {
-        return civNumber;
+    public StringProperty licenceProperty() {
+        return licence;
     }
-
-    public void setCivNumber(String civNumber) {
-        this.civNumber = civNumber;
+    public void setLicence(String licence) {
+        this.licence.set(licence);
     }
 }

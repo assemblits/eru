@@ -91,7 +91,6 @@ public class App extends Application {
             case SAVE_TO_DB:
                 ProjectSaverService pss = new ProjectSaverService();
                 pss.setProject(this.project);
-                pss.setOnSucceeded(event -> execute(Action.UPDATE_PROJECT_IN_GUI)); // Due to changes in DB like PK
                 pss.start();
                 break;
             case UPDATE_PROJECT_IN_GUI:

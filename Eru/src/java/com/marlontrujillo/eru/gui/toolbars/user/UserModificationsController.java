@@ -89,7 +89,8 @@ public class UserModificationsController extends AnchorPane {
                         }
 
                         if (!userFounded) {
-                            User newUser = new User(usernameTextField.getText());
+                            User newUser = new User();
+                            newUser.setUserName(usernameTextField.getText());
                             transferUIToUser(newUser);
                             users.add(newUser);
                         }

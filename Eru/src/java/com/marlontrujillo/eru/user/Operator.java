@@ -1,5 +1,8 @@
 package com.marlontrujillo.eru.user;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -10,21 +13,21 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue(value = "OPERATOR")
 public class Operator extends User {
-    @Column(name = "department_name")
-    private String departmentName;
+
+    private StringProperty departmentName;
 
     public Operator() {
+        this.departmentName = new SimpleStringProperty("");
     }
 
-    public Operator(String userName) {
-        super(userName);
-    }
-
+    @Column(name = "department_name")
     public String getDepartmentName() {
+        return departmentName.get();
+    }
+    public StringProperty departmentNameProperty() {
         return departmentName;
     }
-
     public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+        this.departmentName.set(departmentName);
     }
 }

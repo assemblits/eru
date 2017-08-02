@@ -1,5 +1,7 @@
 package com.marlontrujillo.eru.user;
 
+import javafx.beans.property.*;
+
 import javax.persistence.*;
 
 /**
@@ -12,75 +14,93 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "USER")
 public class User {
 
-    private int id;
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private boolean online;
+    private IntegerProperty id;
+    private StringProperty userName;
+    private StringProperty firstName;
+    private StringProperty lastName;
+    private StringProperty email;
+    private StringProperty password;
+    private BooleanProperty online;
 
     public User() {
-    }
-
-    public User(String userName) {
-        this.userName = userName;
+        this.id = new SimpleIntegerProperty(0);
+        this.userName = new SimpleStringProperty("");
+        this.firstName = new SimpleStringProperty("");
+        this.lastName = new SimpleStringProperty("");
+        this.email = new SimpleStringProperty("");
+        this.password = new SimpleStringProperty("");
+        this.online = new SimpleBooleanProperty(false);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
+        return id.get();
+    }
+    public IntegerProperty idProperty() {
         return id;
     }
-    private void setId(int id) {
-        this.id = id;
+    public void setId(int id) {
+        this.id.set(id);
     }
 
-    @Column(name = "user_name")
     public String getUserName() {
+        return userName.get();
+    }
+    public StringProperty userNameProperty() {
         return userName;
     }
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName.set(userName);
     }
 
-    @Column(name = "first_name")
     public String getFirstName() {
+        return firstName.get();
+    }
+    public StringProperty firstNameProperty() {
         return firstName;
     }
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName.set(firstName);
     }
 
-    @Column(name = "last_name")
     public String getLastName() {
+        return lastName.get();
+    }
+    public StringProperty lastNameProperty() {
         return lastName;
     }
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName.set(lastName);
     }
 
-    @Column(name = "email")
     public String getEmail() {
+        return email.get();
+    }
+    public StringProperty emailProperty() {
         return email;
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 
-    @Column(name = "password")
     public String getPassword() {
+        return password.get();
+    }
+    public StringProperty passwordProperty() {
         return password;
     }
     public void setPassword(String password) {
-        this.password = password;
+        this.password.set(password);
     }
 
-    @Column(name = "online")
     public boolean isOnline() {
+        return online.get();
+    }
+    public BooleanProperty onlineProperty() {
         return online;
     }
     public void setOnline(boolean online) {
-        this.online = online;
+        this.online.set(online);
     }
 
     @Override
