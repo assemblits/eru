@@ -23,14 +23,16 @@ public class Group {
     private StringProperty          name;
     private ObjectProperty<Type>    type;
     private ObjectProperty<Group>   parent;
-    private ObservableList<Group>   children;
+    private ListProperty<Group>     children;
+    private List<Group>             _children;
     private ObjectProperty<Date>    lastModified;
 
     public Group() {
-        this.id = new SimpleIntegerProperty(0);
-        this.name = new SimpleStringProperty("");
-        this.type = new SimpleObjectProperty<>(Type.ROOT);
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.type = new SimpleObjectProperty<>();
         this.parent = new SimpleObjectProperty<>();
+        this._children = new ArrayList<>();
         this.children = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.lastModified = new SimpleObjectProperty<>();
     }
@@ -78,14 +80,15 @@ public class Group {
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    public List<Group> getChildren(){
-        return new ArrayList<>(children);
+    public List<Group> getChildren() {
+        return _children;
     }
-    public ObservableList<Group> childrenProperty() {
+    public ListProperty<Group> childrenProperty() {
         return children;
     }
-    public void setChildren(List<Group> children){
-        this.children.setAll(children);
+    public void setChildren(List<Group> children) {
+        this._children = children;
+        this.children = new SimpleListProperty<>(FXCollections.observableArrayList(children));
     }
 
     @Column(name = "last_modified")

@@ -7,7 +7,6 @@ import com.marlontrujillo.eru.tag.Tag;
 import com.marlontrujillo.eru.user.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,22 +20,26 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Project {
 
-    private IntegerProperty id;
-    private StringProperty name;
-    private ObjectProperty<Group> group;
-    private ObservableList<Device> devices;
-    private ObservableList<Connection> connections;
-    private ObservableList<Tag> tags;
-    private ObservableList<User> users;
+    private IntegerProperty         id;
+    private StringProperty          name;
+    private ObjectProperty<Group>   group;
+    private List<Device>            devices;
+    private List<Connection>        connections;
+    private List<Tag>               tags;
+    private List<User>              users;
 
     public Project() {
-        this.id = new SimpleIntegerProperty(0);
-        this.name = new SimpleStringProperty("");
+        this.id = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
         this.group = new SimpleObjectProperty<>();
         this.devices = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this._devices  = new ArrayList<>();
         this.connections = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this._connections = new ArrayList<>();
         this.tags = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this._tags = new ArrayList<>();
         this.users = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this._users = new ArrayList<>();
     }
 
     @Id
@@ -51,7 +54,6 @@ public class Project {
         this.id.set(id);
     }
 
-    @Column(name = "name")
     public String getName() {
         return name.get();
     }
@@ -75,46 +77,50 @@ public class Project {
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Device> getDevices() {
-        return new ArrayList<>(devices);
+        return this._devices;
     }
-    public ObservableList<Device> devicesProperty(){
+    public ListProperty<Device> devicesProperty() {
         return devices;
     }
     public void setDevices(List<Device> devices) {
-        this.devices.setAll(devices);
+        this._devices = devices;
+        this.devices.setValue(FXCollections.observableArrayList(devices));
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Connection> getConnections() {
-        return new ArrayList<>(connections);
+        return _connections;
     }
-    public ObservableList<Connection> connectionsProperty(){
+    public ListProperty<Connection> connectionsProperty() {
         return connections;
     }
     public void setConnections(List<Connection> connections) {
-        this.connections.setAll(connections);
+        this._connections = connections;
+        this.connections = new SimpleListProperty<>(FXCollections.observableArrayList(connections));
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Tag> getTags() {
-        return new ArrayList<>(tags);
+        return _tags;
     }
-    public ObservableList<Tag> tagsProperty(){
+    public ListProperty<Tag> tagsProperty() {
         return tags;
     }
     public void setTags(List<Tag> tags) {
-        this.tags.setAll(tags);
+        this._tags = tags;
+        this.tags = new SimpleListProperty<>(FXCollections.observableArrayList(tags));
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<User> getUsers() {
-        return new ArrayList<>(users);
+        return _users;
     }
-    public ObservableList<User> usersProperty(){
+    public ListProperty<User> usersProperty() {
         return users;
     }
     public void setUsers(List<User> users) {
-        this.users.setAll(users);
+        this._users = users;
+        this.users = new SimpleListProperty<>(FXCollections.observableArrayList(users));
     }
 
     @Override

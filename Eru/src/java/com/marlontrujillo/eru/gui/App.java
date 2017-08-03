@@ -55,6 +55,7 @@ public class App extends Application {
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
             project = (Project) event.getSource().getValue();
+            System.out.println(project);
             launchApp();
         });
         pls.start();
@@ -92,6 +93,7 @@ public class App extends Application {
                 ProjectSaverService pss = new ProjectSaverService();
                 pss.setProject(this.project);
                 pss.start();
+                execute(Action.UPDATE_PROJECT_IN_GUI);
                 break;
             case UPDATE_PROJECT_IN_GUI:
                 if (this.frame != null) this.frame.getProjectTree().setContent(this.project.getGroup());

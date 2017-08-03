@@ -27,7 +27,7 @@ public class ProjectLoaderService extends Service<Project> {
                     updateProgress(76, 100);
                     Dao<Project> dao = new Dao<>(entityManager, Project.class);
                     List<Project> entities = dao.findEntities();
-                    if(entities.isEmpty()){
+                    if(entities == null || entities.isEmpty()){
                         project = getNewProject();
                         dao.create(project);
                     } else {
