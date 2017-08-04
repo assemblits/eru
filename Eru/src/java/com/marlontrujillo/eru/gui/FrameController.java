@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
  */
 public class FrameController extends AnchorPane {
 
+    @FXML private BorderPane  borderPane;
     @FXML private ProjectTree projectTree;
     @FXML private AnchorPane  leftPane;
     @FXML private AnchorPane  centerPane;
@@ -64,5 +66,8 @@ public class FrameController extends AnchorPane {
     }
     public Label getStatusLabel() {
         return statusLabel;
+    }
+    public BorderPane getBorderPane() {
+        return borderPane;
     }
 }

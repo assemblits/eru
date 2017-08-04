@@ -2,6 +2,7 @@ package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
+import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.logger.LabelAppender;
 import com.marlontrujillo.eru.persistence.Project;
@@ -26,7 +27,8 @@ public class App extends Application {
 
     private Project         project;
     private Stage           stage;
-    private FrameController frame;
+    private Skeleton skeleton;
+//    private FrameController frame;
     private StringProperty  status = new SimpleStringProperty();
 
     public App() {
@@ -36,7 +38,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        this.frame = new FrameController();
+//        this.frame = new FrameController();
         LabelAppender.setObservableString(status);
         launchPreloader();
     }
@@ -65,7 +67,8 @@ public class App extends Application {
     }
 
     private void launchApp(){
-        stage.setScene(new Scene(this.frame, 800, 400));
+//        stage.setScene(new Scene(this.frame, 800, 400));
+        stage.setScene(new Scene(new Skeleton(), 800, 400));
         stage.show();
     }
 
@@ -77,9 +80,23 @@ public class App extends Application {
         return singleton;
     }
 
-    public void showGroup(Group item) {
+    public void showGroup(Group selectedGroup) {
         System.out.println("Project: " + project);
-        System.out.println("Have to show " + item.getName() + " group of " + item.getType());
+        System.out.println("Have to show " + selectedGroup.getName() + " group of " + selectedGroup.getType());
+        switch (selectedGroup.getType()) {
+            case ROOT:
+                break;
+            case CONNECTION:
+                break;
+            case DEVICE:
+                break;
+            case TAG:
+                break;
+            case USER:
+                UserTable userTable = new UserTable(this.project.getUsers());
+//                this.frame.getBorderPane().setCenter(userTable);
+                break;
+        }
     }
 
     public void execute(Action action){
@@ -98,7 +115,7 @@ public class App extends Application {
                 pss.start();
                 break;
             case UPDATE_PROJECT_IN_GUI:
-                this.frame.getProjectTree().setContent(project.getGroup());
+//                this.frame.getProjectTree().setContent(project.getGroup());
                 break;
             case CONNECT_MODBUS:
                 try {
