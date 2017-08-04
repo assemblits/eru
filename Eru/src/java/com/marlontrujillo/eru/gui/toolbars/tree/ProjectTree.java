@@ -14,6 +14,7 @@ public class ProjectTree extends TreeView<Group> {
     }
 
     public void setContent(Group group){
+        if (this.getRoot() != null) this.getRoot().getChildren().clear();
         this.setRoot(createTree(group));
         this.getRoot().setExpanded(true);
     }

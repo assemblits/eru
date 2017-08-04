@@ -40,16 +40,18 @@ public class Dao<T> {
     // supplied entity, and makes the new copy managed. The instance you pass
     // in will not be managed (any changes you make will not be part of the
     // transaction - unless you call merge again).
-    public void update(T t){
+    public T update(T t){
         try {
             //em.clear();
             em.getTransaction().begin();
             t = em.merge(t);
             em.getTransaction().commit();
+            return t;
         }catch (Exception e){
             System.err.println("Exception with " + entityClass.getName());
             e.printStackTrace();
         }
+        return t;
     }
 
     public void delete(T t){

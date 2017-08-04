@@ -23,18 +23,14 @@ public class Group {
     private StringProperty          name;
     private ObjectProperty<Type>    type;
     private ObjectProperty<Group>   parent;
-    private ListProperty<Group>     children;
-    private List<Group>             _children;
-    private ObjectProperty<Date>    lastModified;
+    private List<Group>             children;
 
     public Group() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
         this.type = new SimpleObjectProperty<>();
         this.parent = new SimpleObjectProperty<>();
-        this._children = new ArrayList<>();
         this.children = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.lastModified = new SimpleObjectProperty<>();
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -81,33 +77,17 @@ public class Group {
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Group> getChildren() {
-        return _children;
-    }
-    public ListProperty<Group> childrenProperty() {
         return children;
     }
     public void setChildren(List<Group> children) {
-        this._children = children;
-        this.children = new SimpleListProperty<>(FXCollections.observableArrayList(children));
-    }
-
-    @Column(name = "last_modified")
-    public Date getLastModified() {
-        return lastModified.get();
-    }
-    public ObjectProperty<Date> lastModifiedProperty() {
-        return lastModified;
-    }
-    public void setLastModified(Date lastModified) {
-        this.lastModified.set(lastModified);
+        this.children = children;
     }
 
     @Override
     public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name=" + name +
-                ", children=" + children +
-                '}';
+        return "Group{" + getName() +
+                "=" + super.toString() +
+                ", children= <" + children +
+                "> }";
     }
 }

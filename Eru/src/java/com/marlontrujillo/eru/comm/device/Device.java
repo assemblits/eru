@@ -129,7 +129,6 @@ public class  Device {
     public List<Address> getAddresses(Address.DataModel dataModel){
         return getAddresses().stream().filter(a -> a.getAddressPK().getDataModel().equals(dataModel)).collect(Collectors.toList());
     }
-
     @Transient
     public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){
         return getAddressBlocksFrom(getAddresses(dataModel));

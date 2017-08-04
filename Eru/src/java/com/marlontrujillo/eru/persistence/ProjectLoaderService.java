@@ -21,10 +21,10 @@ public class ProjectLoaderService extends Service<Project> {
                 Project project = null;
                 try {
                     updateMessage("Getting database Connection");
-                    updateProgress(33, 100);
+                    updateProgress(25, 100);
                     EntityManager entityManager = JpaUtil.getGlobalEntityManager();
                     updateMessage("Loading");
-                    updateProgress(76, 100);
+                    updateProgress(50, 100);
                     Dao<Project> dao = new Dao<>(entityManager, Project.class);
                     List<Project> entities = dao.findEntities();
                     if(entities == null || entities.isEmpty()){
@@ -35,6 +35,7 @@ public class ProjectLoaderService extends Service<Project> {
                     }
 
                     updateProgress(100, 100);
+                    updateMessage("Done");
                 } catch (Exception e){
                     e.printStackTrace();
                 }

@@ -36,6 +36,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        this.frame = new FrameController();
         LabelAppender.setObservableString(status);
         launchPreloader();
     }
@@ -55,7 +56,7 @@ public class App extends Application {
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
             project = (Project) event.getSource().getValue();
-            System.out.println(project);
+            execute(Action.UPDATE_PROJECT_IN_GUI);
             launchApp();
         });
         pls.start();
@@ -64,8 +65,6 @@ public class App extends Application {
     }
 
     private void launchApp(){
-        this.frame = new FrameController();
-        execute(Action.UPDATE_PROJECT_IN_GUI);
         stage.setScene(new Scene(this.frame, 800, 400));
         stage.show();
     }
@@ -92,11 +91,14 @@ public class App extends Application {
             case SAVE_TO_DB:
                 ProjectSaverService pss = new ProjectSaverService();
                 pss.setProject(this.project);
+                pss.setOnSucceeded(event -> {
+                    project = (Project) event.getSource().getValue();
+                    execute(Action.UPDATE_PROJECT_IN_GUI);
+                });
                 pss.start();
-                execute(Action.UPDATE_PROJECT_IN_GUI);
                 break;
             case UPDATE_PROJECT_IN_GUI:
-                if (this.frame != null) this.frame.getProjectTree().setContent(this.project.getGroup());
+                this.frame.getProjectTree().setContent(project.getGroup());
                 break;
             case CONNECT_MODBUS:
                 try {

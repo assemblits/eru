@@ -32,14 +32,10 @@ public class Project {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
         this.group = new SimpleObjectProperty<>();
-        this.devices = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this._devices  = new ArrayList<>();
-        this.connections = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this._connections = new ArrayList<>();
-        this.tags = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this._tags = new ArrayList<>();
-        this.users = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this._users = new ArrayList<>();
+        this.devices = new ArrayList<>();
+        this.connections = new ArrayList<>();
+        this.tags = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
     @Id
@@ -77,58 +73,42 @@ public class Project {
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Device> getDevices() {
-        return this._devices;
-    }
-    public ListProperty<Device> devicesProperty() {
         return devices;
     }
     public void setDevices(List<Device> devices) {
-        this._devices = devices;
-        this.devices.setValue(FXCollections.observableArrayList(devices));
+        this.devices = devices;
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Connection> getConnections() {
-        return _connections;
-    }
-    public ListProperty<Connection> connectionsProperty() {
         return connections;
     }
     public void setConnections(List<Connection> connections) {
-        this._connections = connections;
-        this.connections = new SimpleListProperty<>(FXCollections.observableArrayList(connections));
+        this.connections = connections;
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Tag> getTags() {
-        return _tags;
-    }
-    public ListProperty<Tag> tagsProperty() {
         return tags;
     }
     public void setTags(List<Tag> tags) {
-        this._tags = tags;
-        this.tags = new SimpleListProperty<>(FXCollections.observableArrayList(tags));
+        this.tags = tags;
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<User> getUsers() {
-        return _users;
-    }
-    public ListProperty<User> usersProperty() {
         return users;
     }
     public void setUsers(List<User> users) {
-        this._users = users;
-        this.users = new SimpleListProperty<>(FXCollections.observableArrayList(users));
+        this.users = users;
     }
 
     @Override
     public String toString() {
         return "Project{" +
-                "id=" + id +
-                ", name=" + name +
-                ", group=" + group +
+                "id=" + id.get() +
+                ", name=" + name.get() +
+                ", group=" + group.get() +
                 ", devices=" + devices +
                 ", connections=" + connections +
                 ", tags=" + tags +
