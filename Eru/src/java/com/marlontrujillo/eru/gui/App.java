@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -38,7 +39,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-//        this.frame = new FrameController();
+        this.skeleton = new Skeleton();
         LabelAppender.setObservableString(status);
         launchPreloader();
     }
@@ -67,8 +68,7 @@ public class App extends Application {
     }
 
     private void launchApp(){
-//        stage.setScene(new Scene(this.frame, 800, 400));
-        stage.setScene(new Scene(new Skeleton(), 800, 400));
+        stage.setScene(new Scene(this.skeleton, 900, 500));
         stage.show();
     }
 
@@ -94,7 +94,11 @@ public class App extends Application {
                 break;
             case USER:
                 UserTable userTable = new UserTable(this.project.getUsers());
-//                this.frame.getBorderPane().setCenter(userTable);
+                AnchorPane.setTopAnchor(userTable, 0.0);
+                AnchorPane.setBottomAnchor(userTable, 0.0);
+                AnchorPane.setRightAnchor(userTable, 0.0);
+                AnchorPane.setLeftAnchor(userTable, 0.0);
+                this.skeleton.getMainPane().getChildren().add(userTable);
                 break;
         }
     }
@@ -115,7 +119,7 @@ public class App extends Application {
                 pss.start();
                 break;
             case UPDATE_PROJECT_IN_GUI:
-//                this.frame.getProjectTree().setContent(project.getGroup());
+                this.skeleton.getProjectTree().setContent(project.getGroup());
                 break;
             case CONNECT_MODBUS:
                 try {

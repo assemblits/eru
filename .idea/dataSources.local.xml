@@ -10,5 +10,10 @@
       <user-name>postgres</user-name>
       <introspection-schemas>eru:public</introspection-schemas>
     </data-source>
+    <data-source name="com.psv.jpa/Hibernate" uuid="547856c0-1ffe-4f34-8258-67190c8ec6d2">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>postgres</user-name>
+    </data-source>
   </component>
 </project>

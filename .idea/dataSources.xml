@@ -7,5 +7,13 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/eru</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="com.psv.jpa/Hibernate" uuid="547856c0-1ffe-4f34-8258-67190c8ec6d2">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/eru</jdbc-url>
+    </data-source>
   </component>
 </project>
