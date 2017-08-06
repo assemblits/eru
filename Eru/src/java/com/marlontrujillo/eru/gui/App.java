@@ -4,13 +4,10 @@ import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
-import com.marlontrujillo.eru.logger.LabelAppender;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -28,9 +25,7 @@ public class App extends Application {
 
     private Project         project;
     private Stage           stage;
-    private Skeleton skeleton;
-//    private FrameController frame;
-    private StringProperty  status = new SimpleStringProperty();
+    private Skeleton        skeleton;
 
     public App() {
         App.singleton = this;
@@ -40,7 +35,6 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         this.skeleton = new Skeleton();
-        LabelAppender.setObservableString(status);
         launchPreloader();
     }
 
@@ -136,16 +130,5 @@ public class App extends Application {
                 }
                 break;
         }
-    }
-
-    public String getStatus() {
-        return status.get();
-    }
-    public StringProperty statusProperty() {
-        return status;
-    }
-
-    public Project getProject() {
-        return project;
     }
 }
