@@ -7,6 +7,7 @@ import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
+import com.marlontrujillo.eru.user.User;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
