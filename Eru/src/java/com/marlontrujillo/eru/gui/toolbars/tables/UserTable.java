@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * Created by mtrujillo on 8/1/17.
  */
-public class UserTable extends TableView<User> {
+public class UserTable extends EruTable<User> {
 
     public UserTable(List<User> items) {
-        super(FXCollections.observableArrayList(items));
+        this.setItems(FXCollections.observableArrayList(items));
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
         TableColumn<User, String> lastNameColumn = new TableColumn<>("Last name");
@@ -42,6 +42,13 @@ public class UserTable extends TableView<User> {
         onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
 
         this.getColumns().addAll(userNameColumn, firstNameColumn, lastNameColumn, emailColumn, passwordColumn, onlineColumn);
+    }
+
+    @Override
+    public void addNewItem() {
+        User newUser = new User();
+        this.getItems().add(new User());
+        this.getSelectionModel().select(newUser);
     }
 
 }

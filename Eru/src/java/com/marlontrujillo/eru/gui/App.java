@@ -2,16 +2,20 @@ package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
+import com.marlontrujillo.eru.gui.toolbars.tables.EruTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
+import com.marlontrujillo.eru.user.User;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 
 /**
  * Created by mtrujillo on 8/31/2015.
@@ -22,11 +26,24 @@ public class App extends Application {
 
     private static App singleton;
 
-    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE_TO_DB, UPDATE_PROJECT_IN_GUI, CONNECT_MODBUS, DISCONNECT_MODBUS, EXIT_APP}
+    public enum Action {
+        SHOW_GROUP,
+        DELETE_GROUP,
+        SAVE_TO_DB,
+        UPDATE_PROJECT_IN_GUI,
+        ADD_TABLE_ITEM,
+        DELETE_TABLE_ITEM,
+        SELECT_ALL_TABLE_ITEMS,
+        UNSELECT_ALL_TABLE_ITEMS,
+        CONNECT_MODBUS,
+        DISCONNECT_MODBUS,
+        EXIT_APP
+    }
 
-    private Project         project;
-    private Stage           stage;
-    private Skeleton        skeleton;
+    private Project     project;
+    private Stage       stage;
+    private Skeleton    skeleton;
+    private EruTable    table;
 
     public App() {
         App.singleton = this;
@@ -76,8 +93,6 @@ public class App extends Application {
     }
 
     public void showGroup(Group selectedGroup) {
-        System.out.println("Project: " + project);
-        System.out.println("Have to show " + selectedGroup.getName() + " group of " + selectedGroup.getType());
         switch (selectedGroup.getType()) {
             case ROOT:
                 break;
@@ -88,51 +103,71 @@ public class App extends Application {
             case TAG:
                 break;
             case USER:
-                UserTable userTable = new UserTable(this.project.getUsers());
-                AnchorPane.setTopAnchor(userTable, 0.0);
-                AnchorPane.setBottomAnchor(userTable, 0.0);
-                AnchorPane.setRightAnchor(userTable, 0.0);
-                AnchorPane.setLeftAnchor(userTable, 0.0);
-                this.skeleton.getMainPane().getChildren().add(userTable);
+                this.table = new UserTable(this.project.getUsers());
+                AnchorPane.setTopAnchor(table, 0.0);
+                AnchorPane.setBottomAnchor(table, 0.0);
+                AnchorPane.setRightAnchor(table, 0.0);
+                AnchorPane.setLeftAnchor(table, 0.0);
+                this.table.getItems().add(new User());
+                this.table.getItems().add(new User());
+                this.table.getItems().add(new User());
+                this.skeleton.getMainPane().getChildren().add(table);
                 break;
         }
     }
 
     public void execute(Action action){
-        switch (action) {
-            case SHOW_GROUP:
-                break;
-            case DELETE_GROUP:
-                break;
-            case SAVE_TO_DB:
-                ProjectSaverService pss = new ProjectSaverService();
-                pss.setProject(this.project);
-                pss.setOnSucceeded(event -> {
-                    project = (Project) event.getSource().getValue();
-                    execute(Action.UPDATE_PROJECT_IN_GUI);
-                });
-                pss.start();
-                break;
-            case UPDATE_PROJECT_IN_GUI:
-                this.skeleton.getProjectTree().setContent(project.getGroup());
-                break;
-            case CONNECT_MODBUS:
-                try {
-                    FieldBusCommunicator.getInstance().start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case DISCONNECT_MODBUS:
-                try {
-                    FieldBusCommunicator.getInstance().stop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case EXIT_APP:
-                Platform.exit();
-                break;
+        try{
+            switch (action) {
+                case SHOW_GROUP:
+                    break;
+                case DELETE_GROUP:
+                    break;
+                case SAVE_TO_DB:
+                    ProjectSaverService pss = new ProjectSaverService();
+                    pss.setProject(this.project);
+                    pss.setOnSucceeded(event -> {
+                        project = (Project) event.getSource().getValue();
+                        execute(Action.UPDATE_PROJECT_IN_GUI);
+                    });
+                    pss.start();
+                    break;
+                case UPDATE_PROJECT_IN_GUI:
+                    this.skeleton.getProjectTree().setContent(project.getGroup());
+                    break;
+                case ADD_TABLE_ITEM:
+                    if (this.table != null) this.table.addNewItem();
+                    break;
+                case DELETE_TABLE_ITEM:
+                    if (this.table != null) this.table.deleteSelectedItems();
+                    break;
+                case SELECT_ALL_TABLE_ITEMS:
+                    if (this.table != null) this.table.selectAllItems();
+                    break;
+                case UNSELECT_ALL_TABLE_ITEMS:
+                    if (this.table != null) this.table.unselectAllItems();
+                    break;
+                case CONNECT_MODBUS:
+                    try {
+                        FieldBusCommunicator.getInstance().start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case DISCONNECT_MODBUS:
+                    try {
+                        FieldBusCommunicator.getInstance().stop();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case EXIT_APP:
+                    Platform.exit();
+                    break;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 }
