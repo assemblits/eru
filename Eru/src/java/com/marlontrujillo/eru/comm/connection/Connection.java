@@ -1,9 +1,6 @@
 package com.marlontrujillo.eru.comm.connection;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import javax.persistence.*;
 
@@ -16,17 +13,22 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "connection_type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "CONNECTION")
 public abstract class Connection {
-    private int id;
-    private String name;
-    private boolean enabled;
-    private int timeout;
-    private int samplingTime;
+    private IntegerProperty id;
+    private StringProperty  name;
+    private BooleanProperty enabled;
+    private IntegerProperty timeout;
+    private IntegerProperty samplingTime;
     private BooleanProperty connected;
     private StringProperty  status;
 
     public Connection() {
-        this.connected = new SimpleBooleanProperty(this, "Connected", false);
-        this.status    = new SimpleStringProperty(this, "status", "");
+        this.id             = new SimpleIntegerProperty();
+        this.name           = new SimpleStringProperty();
+        this.enabled        = new SimpleBooleanProperty();
+        this.timeout        = new SimpleIntegerProperty();
+        this.samplingTime   = new SimpleIntegerProperty();
+        this.connected      = new SimpleBooleanProperty(this, "Connected", false);
+        this.status         = new SimpleStringProperty(this, "status", "");
     }
 
     @Transient
@@ -37,42 +39,57 @@ public abstract class Connection {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
+        return id.get();
+    }
+    public IntegerProperty idProperty() {
         return id;
     }
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     @Column(name = "name")
     public String getName() {
+        return name.get();
+    }
+    public StringProperty nameProperty() {
         return name;
     }
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     @Column(name = "enabled")
     public boolean isEnabled() {
+        return enabled.get();
+    }
+    public BooleanProperty enabledProperty() {
         return enabled;
     }
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.enabled.set(enabled);
     }
 
     @Column(name = "timeout")
     public int getTimeout() {
+        return timeout.get();
+    }
+    public IntegerProperty timeoutProperty() {
         return timeout;
     }
     public void setTimeout(int timeout) {
-        this.timeout = timeout;
+        this.timeout.set(timeout);
     }
 
     @Column(name = "sampling_time")
     public int getSamplingTime() {
+        return samplingTime.get();
+    }
+    public IntegerProperty samplingTimeProperty() {
         return samplingTime;
     }
     public void setSamplingTime(int samplingTime) {
-        this.samplingTime = samplingTime;
+        this.samplingTime.set(samplingTime);
     }
 
     @Column(name = "connected")
@@ -99,6 +116,6 @@ public abstract class Connection {
 
     @Override
     public String toString() {
-        return  name;
+        return  name.get();
     }
 }

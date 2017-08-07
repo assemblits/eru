@@ -2,6 +2,7 @@ package com.marlontrujillo.eru.gui.toolbars.tables;
 
 import com.marlontrujillo.eru.user.User;
 import javafx.collections.FXCollections;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -14,10 +15,7 @@ import java.util.List;
  */
 public class UserTable extends EruTable<User> {
 
-    private List<User> users;
-
     public UserTable(List<User> users) {
-        this.users = users;
         this.setItems(FXCollections.observableList(users));
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
@@ -51,8 +49,8 @@ public class UserTable extends EruTable<User> {
         onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
 
         this.getColumns().addAll(userNameColumn, firstNameColumn, lastNameColumn, emailColumn, passwordColumn, onlineColumn);
-
         this.setEditable(true);
+        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @Override

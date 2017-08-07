@@ -23,13 +23,13 @@ public class User {
     private BooleanProperty online;
 
     public User() {
-        this.id = new SimpleIntegerProperty(0);
-        this.userName = new SimpleStringProperty("");
-        this.firstName = new SimpleStringProperty("");
-        this.lastName = new SimpleStringProperty("");
-        this.email = new SimpleStringProperty("");
-        this.password = new SimpleStringProperty("");
-        this.online = new SimpleBooleanProperty(false);
+        this.id         = new SimpleIntegerProperty(0);
+        this.userName   = new SimpleStringProperty("");
+        this.firstName  = new SimpleStringProperty("");
+        this.lastName   = new SimpleStringProperty("");
+        this.email      = new SimpleStringProperty("");
+        this.password   = new SimpleStringProperty("");
+        this.online     = new SimpleBooleanProperty(false);
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)

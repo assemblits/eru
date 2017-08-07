@@ -1,6 +1,10 @@
 package com.marlontrujillo.eru.comm.connection;
 
 import com.marlontrujillo.eru.logger.LogUtil;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import net.wimpi.modbus.net.TCPMasterConnection;
 
 import javax.persistence.Column;
@@ -15,11 +19,13 @@ import java.net.InetAddress;
 @Entity
 @DiscriminatorValue(value = "TCPIP")
 public class TcpConnection extends Connection{
-    private String hostname;
-    private int port;
+    private StringProperty hostname;
+    private IntegerProperty port;
     private TCPMasterConnection coreConnection;
 
     public TcpConnection() {
+        this.hostname   = new SimpleStringProperty();
+        this.port       = new SimpleIntegerProperty();
     }
 
     @Override
@@ -27,8 +33,8 @@ public class TcpConnection extends Connection{
         if(!isEnabled() || (coreConnection != null && coreConnection.isConnected())) return;
         try {
             LogUtil.logger.info("Connecting " + getName() + " connection...");
-            coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname));
-            coreConnection.setPort(port);
+            coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname.get()));
+            coreConnection.setPort(port.get());
             coreConnection.setTimeout(getTimeout());
             coreConnection.connect();
             setConnected(true);
@@ -55,18 +61,24 @@ public class TcpConnection extends Connection{
 
     @Column(name = "hostname")
     public String getHostname() {
+        return hostname.get();
+    }
+    public StringProperty hostnameProperty() {
         return hostname;
     }
     public void setHostname(String hostname) {
-        this.hostname = hostname;
+        this.hostname.set(hostname);
     }
 
     @Column(name = "port")
     public int getPort() {
+        return port.get();
+    }
+    public IntegerProperty portProperty() {
         return port;
     }
     public void setPort(int port) {
-        this.port = port;
+        this.port.set(port);
     }
 
     @Transient
