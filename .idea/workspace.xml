@@ -13,7 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
     </list>
     <ignored path="PowerSceneViewer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,7 +77,92 @@
     <favorites_list name="PowerSceneViewer" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Skeleton.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="38" column="50" lean-forward="false" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
+              <folding>
+                <element signature="e#903#904#0" expanded="true" />
+                <element signature="e#968#969#0" expanded="true" />
+                <element signature="e#1033#1034#0" expanded="true" />
+                <element signature="e#1096#1097#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Skeleton.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="28" column="73" lean-forward="false" selection-start-line="28" selection-start-column="73" selection-end-line="28" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrendsGraphicAnalyzer.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/trend/TrendsGraphicAnalyzer.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrendsGraphicAnalyzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/TrendsGraphicAnalyzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="363" column="13" lean-forward="true" selection-start-line="363" selection-start-column="13" selection-end-line="363" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Preloader.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreloaderController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/PreloaderController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -84,9 +173,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Actor</find>
-      <find>Actor R</find>
-      <find>Actor T</find>
       <find>Actor Th</find>
       <find>Actor Thre</find>
       <find>Actor Threa</find>
@@ -114,6 +200,9 @@
       <find>graph</find>
       <find>Dev</find>
       <find>%</find>
+      <find>onA</find>
+      <find>onAc</find>
+      <find>onAction</find>
     </findStrings>
     <replaceStrings>
       <replace>4</replace>
@@ -136,7 +225,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/GensetScreen.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/GensetsOverview.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/StatusToolbar.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/console/StatusBarController.java" />
@@ -184,8 +272,9 @@
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/skeleton/Skeleton.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_i18n.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Frame.fxml" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
+        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
       </list>
     </option>
@@ -204,9 +293,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
+    <option name="x" value="1366" />
     <option name="y" value="25" />
-    <option name="width" value="1366" />
-    <option name="height" value="743" />
+    <option name="width" value="1920" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -1109,11 +1199,12 @@
       <workItem from="1501952286196" duration="76000" />
       <workItem from="1501980088211" duration="4875000" />
       <workItem from="1501985404915" duration="557000" />
+      <workItem from="1502125884381" duration="3189000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="678402000" />
+    <option name="totallyTimeSpent" value="681591000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1125,7 +1216,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <frame x="1366" y="25" width="1920" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1146,10 +1238,10 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24836601" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1511811" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31045407" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24409449" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14635417" sideWeight="0.55944055" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20937042" sideWeight="0.44055945" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14895834" sideWeight="0.44055945" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26456693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14978679" sideWeight="0.5573593" order="7" side_tool="true" content_ui="tabs" />
@@ -1262,14 +1354,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/META-INF/MANIFEST.MF" />
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/META-INF/log4j.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/jetty/jetty-server-9.2.10.v20150310.jar!/org/eclipse/jetty/server/Server.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -1320,20 +1404,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/PreloaderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#864#865#0" expanded="false" />
-            <element signature="e#898#899#0" expanded="false" />
-            <element signature="e#941#942#0" expanded="false" />
-            <element signature="e#975#976#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/console/StatusBarController.java" />
     <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/concurrent/Service.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1364,13 +1434,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/login/Login.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="10" column="168" lean-forward="true" selection-start-line="10" selection-start-column="138" selection-end-line="10" selection-end-column="168" />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TextInputDialog.java">
@@ -1566,67 +1636,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_en.properties" />
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_fr.properties" />
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/FrameController.java" />
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Frame.fxml" />
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/PreloaderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/trend/TrendsGraphicAnalyzer.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_en.properties" />
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_fr.properties" />
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/FrameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="42" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/TrendsGraphicAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="363" column="13" lean-forward="true" selection-start-line="363" selection-start-column="13" selection-end-line="363" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Frame.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="28" column="19" lean-forward="false" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+        <state relative-caret-position="222">
+          <caret line="28" column="73" lean-forward="false" selection-start-line="28" selection-start-column="73" selection-end-line="28" selection-end-column="73" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="35" column="37" lean-forward="false" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+        <state relative-caret-position="459">
+          <caret line="38" column="50" lean-forward="false" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#925#926#0" expanded="false" />
+            <element signature="e#903#904#0" expanded="true" />
+            <element signature="e#968#969#0" expanded="true" />
+            <element signature="e#1033#1034#0" expanded="true" />
+            <element signature="e#1096#1097#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="91" column="27" lean-forward="true" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="192">
+          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>

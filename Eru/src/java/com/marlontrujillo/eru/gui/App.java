@@ -7,8 +7,8 @@ import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
-import com.marlontrujillo.eru.user.User;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -22,7 +22,7 @@ public class App extends Application {
 
     private static App singleton;
 
-    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE_TO_DB, UPDATE_PROJECT_IN_GUI, CONNECT_MODBUS, DISCONNECT_MODBUS}
+    public enum Action {SHOW_GROUP, DELETE_GROUP, SAVE_TO_DB, UPDATE_PROJECT_IN_GUI, CONNECT_MODBUS, DISCONNECT_MODBUS, EXIT_APP}
 
     private Project         project;
     private Stage           stage;
@@ -129,6 +129,9 @@ public class App extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                break;
+            case EXIT_APP:
+                Platform.exit();
                 break;
         }
     }

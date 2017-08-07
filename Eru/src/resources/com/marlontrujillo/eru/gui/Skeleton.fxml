@@ -18,15 +18,15 @@
 
 <?import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Skeleton.css" />
     </stylesheets>
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save" onAction="#saveMenuItemSelected"/>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Exit" />
+            <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitMenuItemSelected"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
             <MenuItem mnemonicParsing="false" text="Preferences" />
