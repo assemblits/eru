@@ -8,11 +8,9 @@ import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
-import com.marlontrujillo.eru.user.User;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -108,9 +106,6 @@ public class App extends Application {
                 AnchorPane.setBottomAnchor(table, 0.0);
                 AnchorPane.setRightAnchor(table, 0.0);
                 AnchorPane.setLeftAnchor(table, 0.0);
-                this.table.getItems().add(new User());
-                this.table.getItems().add(new User());
-                this.table.getItems().add(new User());
                 this.skeleton.getMainPane().getChildren().add(table);
                 break;
         }
@@ -142,6 +137,7 @@ public class App extends Application {
                     if (this.table != null) this.table.deleteSelectedItems();
                     break;
                 case SELECT_ALL_TABLE_ITEMS:
+                    System.out.println(this.project.getUsers());
                     if (this.table != null) this.table.selectAllItems();
                     break;
                 case UNSELECT_ALL_TABLE_ITEMS:

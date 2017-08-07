@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.util.List;
 
@@ -13,8 +14,11 @@ import java.util.List;
  */
 public class UserTable extends EruTable<User> {
 
-    public UserTable(List<User> items) {
-        this.setItems(FXCollections.observableArrayList(items));
+    private List<User> users;
+
+    public UserTable(List<User> users) {
+        this.users = users;
+        this.setItems(FXCollections.observableList(users));
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
         TableColumn<User, String> lastNameColumn = new TableColumn<>("Last name");
@@ -23,18 +27,23 @@ public class UserTable extends EruTable<User> {
         TableColumn<User, Boolean> onlineColumn = new TableColumn<>("Online");
 
         userNameColumn.setCellValueFactory(param -> param.getValue().userNameProperty());
-        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.25));    // type column size
+        userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
 
         firstNameColumn.setCellValueFactory(param -> param.getValue().firstNameProperty());
+        firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         firstNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.20));
 
         lastNameColumn.setCellValueFactory(param -> param.getValue().lastNameProperty());
+        lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lastNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
 
         emailColumn.setCellValueFactory(param -> param.getValue().emailProperty());
+        emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         emailColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
 
         passwordColumn.setCellValueFactory(param -> param.getValue().passwordProperty());
+        passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         passwordColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
 
         onlineColumn.setCellValueFactory(param -> param.getValue().onlineProperty());
@@ -42,6 +51,8 @@ public class UserTable extends EruTable<User> {
         onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
 
         this.getColumns().addAll(userNameColumn, firstNameColumn, lastNameColumn, emailColumn, passwordColumn, onlineColumn);
+
+        this.setEditable(true);
     }
 
     @Override
