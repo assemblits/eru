@@ -28,12 +28,12 @@ public class SerialConnection extends Connection {
     private net.wimpi.modbus.net.SerialConnection coreConnection;
 
     public SerialConnection() {
-        this.port           = new SimpleStringProperty("");
-        this.bitsPerSeconds = new SimpleIntegerProperty(0);
-        this.dataBits       = new SimpleIntegerProperty(0);
-        this.parity         = new SimpleStringProperty("");
-        this.stopsBits      = new SimpleIntegerProperty(0);
-        this.frameEncoding  = new SimpleStringProperty("");
+        this.port           = new SimpleStringProperty("COM1");
+        this.bitsPerSeconds = new SimpleIntegerProperty(19200);
+        this.dataBits       = new SimpleIntegerProperty(8);
+        this.parity         = new SimpleStringProperty("NONE");
+        this.stopsBits      = new SimpleIntegerProperty(1);
+        this.frameEncoding  = new SimpleStringProperty("RTU");
     }
 
     @Override

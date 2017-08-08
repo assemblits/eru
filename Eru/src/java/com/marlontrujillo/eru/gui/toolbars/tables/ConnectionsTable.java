@@ -194,15 +194,15 @@ public class ConnectionsTable extends EruTable<Connection> {
         });
         tcpHostnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        serialStopBitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
-        serialStopBitsColumn.setCellValueFactory(param -> {
+        tcpPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        tcpPortColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof TcpConnection) {
                 cellValue = ((TcpConnection) param.getValue()).portProperty().asObject();
             }
             return cellValue;
         });
-        serialStopBitsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+        tcpPortColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
             public String toString(Integer object) {
                 return object !=null ? object.toString() : "";

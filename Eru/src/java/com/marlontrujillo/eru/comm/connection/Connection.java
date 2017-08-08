@@ -25,8 +25,8 @@ public abstract class Connection {
         this.id             = new SimpleIntegerProperty();
         this.name           = new SimpleStringProperty("");
         this.enabled        = new SimpleBooleanProperty(false);
-        this.timeout        = new SimpleIntegerProperty(0);
-        this.samplingTime   = new SimpleIntegerProperty(0);
+        this.timeout        = new SimpleIntegerProperty(3000);
+        this.samplingTime   = new SimpleIntegerProperty(500);
         this.connected      = new SimpleBooleanProperty(false);
         this.status         = new SimpleStringProperty("");
     }

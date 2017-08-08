@@ -24,8 +24,8 @@ public class TcpConnection extends Connection{
     private TCPMasterConnection coreConnection;
 
     public TcpConnection() {
-        this.hostname   = new SimpleStringProperty("");
-        this.port       = new SimpleIntegerProperty(0);
+        this.hostname   = new SimpleStringProperty("localhost");
+        this.port       = new SimpleIntegerProperty(502);
     }
 
     @Override
