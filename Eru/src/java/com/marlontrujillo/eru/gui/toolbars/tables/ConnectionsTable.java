@@ -4,6 +4,8 @@ import com.marlontrujillo.eru.comm.connection.Connection;
 import com.marlontrujillo.eru.comm.connection.SerialConnection;
 import com.marlontrujillo.eru.comm.connection.TcpConnection;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
@@ -26,6 +28,7 @@ public class ConnectionsTable extends EruTable<Connection> {
 
         // **** Columns **** //
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
+        TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
         TableColumn<Connection, Boolean> enableNameColumn   = new TableColumn<>("Enable");
         TableColumn<Connection, Integer> timeoutColumn      = new TableColumn<>("Timeout");
         TableColumn<Connection, Integer> samplingColumn     = new TableColumn<>("Sampling");
@@ -48,11 +51,14 @@ public class ConnectionsTable extends EruTable<Connection> {
 
 
         // **** General Cells **** //
-        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
+        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        enableNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        typeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
+
+        enableNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         enableNameColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
         enableNameColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enableNameColumn));
 
@@ -88,12 +94,12 @@ public class ConnectionsTable extends EruTable<Connection> {
         connectedColumn.setCellValueFactory(param -> param.getValue().connectedProperty());
         connectedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(connectedColumn));
 
-        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         // **** Serial Cells **** //
-        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialPortColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -103,7 +109,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         });
         serialPortColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        serialBitsPerSecondsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialBitsPerSecondsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialBitsPerSecondsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -183,7 +189,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         });
         serialFrameEncodingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        // **** Serial Cells **** //
+        // **** Tcp Cells **** //
         tcpHostnameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         tcpHostnameColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
@@ -218,6 +224,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         // **** General **** //
         this.getColumns().addAll(
                 nameColumn,
+                typeColumn,
                 enableNameColumn,
                 timeoutColumn,
                 samplingColumn,

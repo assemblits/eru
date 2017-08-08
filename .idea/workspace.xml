@@ -13,9 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/SerialConnection.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/SerialConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
     </list>
     <ignored path="PowerSceneViewer.iws" />
@@ -94,10 +91,23 @@
           <file leaf-file-name="ConnectionsTable.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="288">
-                  <caret line="182" column="11" lean-forward="true" selection-start-line="182" selection-start-column="11" selection-end-line="182" selection-end-column="11" />
+                <state relative-caret-position="500">
+                  <caret line="96" column="80" lean-forward="false" selection-start-line="96" selection-start-column="80" selection-end-line="96" selection-end-column="80" />
                   <folding>
                     <element signature="imports" expanded="true" />
+                    <element signature="class#3886:4217" expanded="false" />
+                    <element signature="class#4489:4820" expanded="false" />
+                    <element signature="e#5511#5766#0" expanded="false" />
+                    <element signature="e#6001#6286#0" expanded="false" />
+                    <element signature="class#6377:6708" expanded="false" />
+                    <element signature="e#6854#7133#0" expanded="false" />
+                    <element signature="class#7218:7549" expanded="false" />
+                    <element signature="e#7691#7948#0" expanded="false" />
+                    <element signature="e#8173#8453#0" expanded="false" />
+                    <element signature="class#8538:8869" expanded="false" />
+                    <element signature="e#9025#9289#0" expanded="false" />
+                    <element signature="e#10012#10281#0" expanded="false" />
+                    <element signature="class#10359:10689" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -1432,12 +1442,12 @@
       <workItem from="1501980088211" duration="4875000" />
       <workItem from="1501985404915" duration="557000" />
       <workItem from="1502125884381" duration="19564000" />
-      <workItem from="1502217072810" duration="2324000" />
+      <workItem from="1502217072810" duration="3336000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="700290000" />
+    <option name="totallyTimeSpent" value="701302000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1947,16 +1957,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="58" column="50" lean-forward="false" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -1983,12 +1983,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="182" column="11" lean-forward="true" selection-start-line="182" selection-start-column="11" selection-end-line="182" selection-end-column="11" />
+        <state relative-caret-position="564">
+          <caret line="58" column="50" lean-forward="false" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="96" column="80" lean-forward="false" selection-start-line="96" selection-start-column="80" selection-end-line="96" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#3886:4217" expanded="false" />
+            <element signature="class#4489:4820" expanded="false" />
+            <element signature="e#5511#5766#0" expanded="false" />
+            <element signature="e#6001#6286#0" expanded="false" />
+            <element signature="class#6377:6708" expanded="false" />
+            <element signature="e#6854#7133#0" expanded="false" />
+            <element signature="class#7218:7549" expanded="false" />
+            <element signature="e#7691#7948#0" expanded="false" />
+            <element signature="e#8173#8453#0" expanded="false" />
+            <element signature="class#8538:8869" expanded="false" />
+            <element signature="e#9025#9289#0" expanded="false" />
+            <element signature="e#10012#10281#0" expanded="false" />
+            <element signature="class#10359:10689" expanded="false" />
           </folding>
         </state>
       </provider>
