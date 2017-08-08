@@ -16,31 +16,30 @@
 
 /* ********** Lists ********** */
 .table-view{
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 .table-view .column-header .label {
-    -fx-alignment: center;
-    -fx-font-weight: bold;
-    -fx-font-size: 11px;
+    /*-fx-alignment: center;*/
+    /*-fx-font-weight: bold;*/
+    /*-fx-font-size: 11px;*/
 }
 .table-row-cell{
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 .table-row-cell:selected.table-cell {
-    -fx-background-color: -fx-base;
-    -fx-background-insets: 0, 0 0 1 0;
+    /*-fx-background-color: -fx-base;*/
+    /*-fx-background-insets: 0, 0 0 1 0;*/
 }
 .table-row-cell:selected {
-    -fx-background-color: #252525;
+    /*-fx-background-color: #252525;*/
 }
 .table-row-cell:selected .text {
-    -fx-fill: white ;
-
+    /*-fx-fill: white ;*/
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: -fx-base;
-    -fx-text-fill: white;
+    /*-fx-background-color: -fx-base;*/
+    /*-fx-text-fill: white;*/
 }
 
 /* ********** Charts ********** */

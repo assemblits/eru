@@ -6,14 +6,12 @@ import com.marlontrujillo.eru.comm.connection.TcpConnection;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -234,17 +232,33 @@ public class ConnectionsTable extends EruTable<Connection> {
 
     @Override
     public void addNewItem() {
-        Alert typeChoicer = new Alert(Alert.AlertType.CONFIRMATION);
-        typeChoicer.setTitle("Select the connection type");
-        Optional<ButtonType> result = typeChoicer.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            System.out.println("Choice 1");
-        } else {
-            System.out.println("Canceling!!!");
-        }
+        final String SERIAL = "Serial";
+        final String TCP = "Tcp";
+        List<String> choices = new ArrayList<>();
+        choices.add(TCP);
+        choices.add(SERIAL);
 
-//        Connection newConnection = new User();
-//        this.getItems().add(new User());
-//        this.getSelectionModel().select(newConnection);
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(SERIAL, choices);
+        dialog.setTitle("Type Selection");
+        dialog.setContentText("Select the comm type:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(selectedType -> {
+            switch (selectedType){
+                case SERIAL:
+                    SerialConnection newSerialConnection = new SerialConnection();
+                    this.getItems().add(newSerialConnection);
+                    this.getSelectionModel().clearSelection();
+                    this.getSelectionModel().select(newSerialConnection);
+                    break;
+                case TCP:
+                    TcpConnection newTcpConnection = new TcpConnection();
+                    this.getItems().add(newTcpConnection);
+                    this.getSelectionModel().clearSelection();
+                    this.getSelectionModel().select(newTcpConnection);
+                    break;
+            }
+        });
     }
 }

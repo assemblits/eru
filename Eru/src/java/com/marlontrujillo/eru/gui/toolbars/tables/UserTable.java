@@ -56,6 +56,7 @@ public class UserTable extends EruTable<User> {
     public void addNewItem() {
         User newUser = new User();
         this.getItems().add(new User());
+        this.getSelectionModel().clearSelection();
         this.getSelectionModel().select(newUser);
     }
 
