@@ -1,9 +1,16 @@
 package com.marlontrujillo.eru.gui.toolbars.tables;
 
 import com.marlontrujillo.eru.comm.connection.Connection;
+import com.marlontrujillo.eru.comm.connection.SerialConnection;
+import com.marlontrujillo.eru.comm.connection.TcpConnection;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 
 import java.util.List;
 
@@ -11,64 +18,221 @@ import java.util.List;
  * Created by mtrujillo on 8/7/17.
  */
 public class ConnectionsTable extends EruTable<Connection> {
+
     public ConnectionsTable(List<Connection> connections) {
         this.setItems(FXCollections.observableList(connections));
-        TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
-        TableColumn<Connection, Boolean> enableNameColumn = new TableColumn<>("Enable");
-        TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
-        TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
-        TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
-        TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
 
-        TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
 
-        TableColumn<Connection, Boolean> serialPortColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Boolean> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
-        TableColumn<Connection, Boolean> serialDatabitsColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Boolean> serialParityColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Boolean> serialStopBitsColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Boolean> serialFrameEncodingColumn = new TableColumn<>("Port");
-        TableColumn serialgroupColumn = new TableColumn<>("Port");
+        // **** Columns **** //
+        TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
+        TableColumn<Connection, Boolean> enableNameColumn   = new TableColumn<>("Enable");
+        TableColumn<Connection, Integer> timeoutColumn      = new TableColumn<>("Timeout");
+        TableColumn<Connection, Integer> samplingColumn     = new TableColumn<>("Sampling");
+        TableColumn<Connection, Boolean> connectedColumn    = new TableColumn<>("Connected");
+        TableColumn<Connection, String> statusColumn        = new TableColumn<>("Status");
+
+        TableColumn<Connection, String> serialPortColumn            = new TableColumn<>("Port");
+        TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
+        TableColumn<Connection, Integer> serialDatabitsColumn       = new TableColumn<>("Databits");
+        TableColumn<Connection, String> serialParityColumn          = new TableColumn<>("Parity");
+        TableColumn<Connection, Integer> serialStopBitsColumn       = new TableColumn<>("Stop bits");
+        TableColumn<Connection, String> serialFrameEncodingColumn   = new TableColumn<>("Frame");
+        TableColumn serialgroupColumn                               = new TableColumn<>("Serial Parameters");
         serialgroupColumn.getColumns().addAll(serialPortColumn, serialBitsPerSecondsColumn, serialDatabitsColumn, serialParityColumn, serialStopBitsColumn, serialFrameEncodingColumn);
 
-        TableColumn<Connection, Boolean> tcpHostnameColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Boolean> tcpportColumn = new TableColumn<>("Port");
-        TableColumn tcpgroupColumn = new TableColumn<>("Tcp");
-        tcpgroupColumn.getColumns().addAll(tcpHostnameColumn, tcpportColumn);
+        TableColumn<Connection, String> tcpHostnameColumn   = new TableColumn<>("Hostname");
+        TableColumn<Connection, Integer> tcpPortColumn      = new TableColumn<>("Port");
+        TableColumn tcpgroupColumn                          = new TableColumn<>("Tcp Parameters");
+        tcpgroupColumn.getColumns().addAll(tcpHostnameColumn, tcpPortColumn);
 
-//        userNameColumn.setCellValueFactory(param -> param.getValue().userNameProperty());
-//        userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.25));
-//
-//        firstNameColumn.setCellValueFactory(param -> param.getValue().firstNameProperty());
-//        firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//        firstNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.20));
-//
-//        lastNameColumn.setCellValueFactory(param -> param.getValue().lastNameProperty());
-//        lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//        lastNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
-//
-//        emailColumn.setCellValueFactory(param -> param.getValue().emailProperty());
-//        emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//        emailColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
-//
-//        passwordColumn.setCellValueFactory(param -> param.getValue().passwordProperty());
-//        passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-//        passwordColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
-//
-//        onlineColumn.setCellValueFactory(param -> param.getValue().onlineProperty());
-//        onlineColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
-//        onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
-//
-//        this.getColumns().addAll(userNameColumn, firstNameColumn, lastNameColumn, emailColumn, passwordColumn, onlineColumn);
+
+        // **** General Cells **** //
+        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
+        nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        enableNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        enableNameColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
+        enableNameColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enableNameColumn));
+
+        timeoutColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        timeoutColumn.setCellValueFactory(param -> param.getValue().timeoutProperty().asObject());
+        timeoutColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+        samplingColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        samplingColumn.setCellValueFactory(param -> param.getValue().samplingTimeProperty().asObject());
+        samplingColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+        connectedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        connectedColumn.setCellValueFactory(param -> param.getValue().connectedProperty());
+        connectedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(connectedColumn));
+
+        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
+        statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        // **** Serial Cells **** //
+        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialPortColumn.setCellValueFactory(param -> {
+            StringProperty cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).portProperty();
+            }
+            return cellValue;
+        });
+        serialPortColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        serialBitsPerSecondsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialBitsPerSecondsColumn.setCellValueFactory(param -> {
+            ObjectProperty<Integer> cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).bitsPerSecondsProperty().asObject();
+            }
+            return cellValue;
+        });
+        serialBitsPerSecondsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+        serialDatabitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialDatabitsColumn.setCellValueFactory(param -> {
+            ObjectProperty<Integer> cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).dataBitsProperty().asObject();
+            }
+            return cellValue;
+        });
+        serialDatabitsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+        serialParityColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialParityColumn.setCellValueFactory(param -> {
+            StringProperty cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).parityProperty();
+            }
+            return cellValue;
+        });
+        serialParityColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        serialStopBitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialStopBitsColumn.setCellValueFactory(param -> {
+            ObjectProperty<Integer> cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).stopsBitsProperty().asObject();
+            }
+            return cellValue;
+        });
+        serialStopBitsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+        serialFrameEncodingColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialFrameEncodingColumn.setCellValueFactory(param -> {
+            StringProperty cellValue = null;
+            if (param.getValue() instanceof SerialConnection) {
+                cellValue = ((SerialConnection) param.getValue()).frameEncodingProperty();
+            }
+            return cellValue;
+        });
+        serialFrameEncodingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        // **** Serial Cells **** //
+        tcpHostnameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        tcpHostnameColumn.setCellValueFactory(param -> {
+            StringProperty cellValue = null;
+            if (param.getValue() instanceof TcpConnection) {
+                cellValue = ((TcpConnection) param.getValue()).hostnameProperty();
+            }
+            return cellValue;
+        });
+        tcpHostnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        serialStopBitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialStopBitsColumn.setCellValueFactory(param -> {
+            ObjectProperty<Integer> cellValue = null;
+            if (param.getValue() instanceof TcpConnection) {
+                cellValue = ((TcpConnection) param.getValue()).portProperty().asObject();
+            }
+            return cellValue;
+        });
+        serialStopBitsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object !=null ? object.toString() : "";
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        }));
+
+
+        // **** General **** //
+        this.getColumns().addAll(
+                nameColumn,
+                enableNameColumn,
+                timeoutColumn,
+                samplingColumn,
+                connectedColumn,
+                statusColumn,
+                serialgroupColumn,
+                tcpgroupColumn);
+
         this.setEditable(true);
         this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @Override
     public void addNewItem() {
-        User newUser = new User();
-        this.getItems().add(new User());
-        this.getSelectionModel().select(newUser);
+//        Connection newConnection = new User();
+//        this.getItems().add(new User());
+//        this.getSelectionModel().select(newConnection);
     }
 }

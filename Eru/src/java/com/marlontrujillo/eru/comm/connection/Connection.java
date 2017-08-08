@@ -23,12 +23,12 @@ public abstract class Connection {
 
     public Connection() {
         this.id             = new SimpleIntegerProperty();
-        this.name           = new SimpleStringProperty();
-        this.enabled        = new SimpleBooleanProperty();
-        this.timeout        = new SimpleIntegerProperty();
-        this.samplingTime   = new SimpleIntegerProperty();
-        this.connected      = new SimpleBooleanProperty(this, "Connected", false);
-        this.status         = new SimpleStringProperty(this, "status", "");
+        this.name           = new SimpleStringProperty("");
+        this.enabled        = new SimpleBooleanProperty(false);
+        this.timeout        = new SimpleIntegerProperty(0);
+        this.samplingTime   = new SimpleIntegerProperty(0);
+        this.connected      = new SimpleBooleanProperty(false);
+        this.status         = new SimpleStringProperty("");
     }
 
     @Transient

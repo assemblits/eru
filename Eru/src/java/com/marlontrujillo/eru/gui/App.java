@@ -1,7 +1,9 @@
 package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
+import com.marlontrujillo.eru.comm.connection.SerialConnection;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
+import com.marlontrujillo.eru.gui.toolbars.tables.ConnectionsTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.EruTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
@@ -95,12 +97,21 @@ public class App extends Application {
             case ROOT:
                 break;
             case CONNECTION:
+                this.skeleton.getMainPane().getChildren().clear();
+                this.table = new ConnectionsTable(this.project.getConnections());
+                this.table.getItems().add(new SerialConnection());
+                AnchorPane.setTopAnchor(table, 0.0);
+                AnchorPane.setBottomAnchor(table, 0.0);
+                AnchorPane.setRightAnchor(table, 0.0);
+                AnchorPane.setLeftAnchor(table, 0.0);
+                this.skeleton.getMainPane().getChildren().add(table);
                 break;
             case DEVICE:
                 break;
             case TAG:
                 break;
             case USER:
+                this.skeleton.getMainPane().getChildren().clear();
                 this.table = new UserTable(this.project.getUsers());
                 AnchorPane.setTopAnchor(table, 0.0);
                 AnchorPane.setBottomAnchor(table, 0.0);
