@@ -6,6 +6,8 @@ import com.marlontrujillo.eru.comm.connection.TcpConnection;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -13,6 +15,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mtrujillo on 8/7/17.
@@ -231,6 +234,15 @@ public class ConnectionsTable extends EruTable<Connection> {
 
     @Override
     public void addNewItem() {
+        Alert typeChoicer = new Alert(Alert.AlertType.CONFIRMATION);
+        typeChoicer.setTitle("Select the connection type");
+        Optional<ButtonType> result = typeChoicer.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.out.println("Choice 1");
+        } else {
+            System.out.println("Canceling!!!");
+        }
+
 //        Connection newConnection = new User();
 //        this.getItems().add(new User());
 //        this.getSelectionModel().select(newConnection);
