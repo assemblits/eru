@@ -99,7 +99,6 @@ public class App extends Application {
             case CONNECTION:
                 this.skeleton.getMainPane().getChildren().clear();
                 this.table = new ConnectionsTable(this.project.getConnections());
-                this.table.getItems().add(new SerialConnection());
                 AnchorPane.setTopAnchor(table, 0.0);
                 AnchorPane.setBottomAnchor(table, 0.0);
                 AnchorPane.setRightAnchor(table, 0.0);

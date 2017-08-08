@@ -45,20 +45,20 @@
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.2, 0.9" focusTraversable="true" VBox.vgrow="ALWAYS">
-        <AnchorPane>
+        <AnchorPane maxWidth="170">
             <ProjectTree fx:id="projectTree" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         </AnchorPane>
         <ScrollPane fitToHeight="true" fitToWidth="true">
             <AnchorPane id="Content" fx:id="mainPane" />
         </ScrollPane>
-        <AnchorPane fx:id="detailsPane">
+        <AnchorPane maxWidth="150">
         </AnchorPane>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
         </padding>
-        <Label fx:id="leftStatusLabel" maxHeight="1.7976931348623157E308" text="Status" HBox.hgrow="ALWAYS">
+        <Label fx:id="leftStatusLabel" maxHeight="1.8" text="Status" HBox.hgrow="ALWAYS">
             <font>
                 <Font size="11.0" fx:id="x3" />
             </font>

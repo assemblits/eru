@@ -4,16 +4,19 @@ import com.marlontrujillo.eru.comm.connection.Connection;
 import com.marlontrujillo.eru.comm.connection.SerialConnection;
 import com.marlontrujillo.eru.comm.connection.TcpConnection;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 import javafx.util.StringConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -241,26 +244,68 @@ public class ConnectionsTable extends EruTable<Connection> {
     public void addNewItem() {
         final String SERIAL = "Serial";
         final String TCP = "Tcp";
-        List<String> choices = new ArrayList<>();
+        ObservableList<String> choices = FXCollections.observableArrayList();
         choices.add(TCP);
         choices.add(SERIAL);
 
+        // Create the custom dialog.
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Create new connection");
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(SERIAL, choices);
-        dialog.setTitle("Type Selection");
-        dialog.setContentText("Select the comm type:");
+        // Set the button types.
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(selectedType -> {
-            switch (selectedType){
+        // Create the dialog pane.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField connectionNameTextField = new TextField();
+        connectionNameTextField.setPromptText("Name");
+        ChoiceBox<String> typeChoiceBox = new ChoiceBox<>(choices);
+        typeChoiceBox.getSelectionModel().select(0);
+
+        grid.add(new Label("Name:"), 0, 0);
+        grid.add(connectionNameTextField, 1, 0);
+        grid.add(new Label("Type:"), 0, 1);
+        grid.add(typeChoiceBox, 1, 1);
+
+        // Enable/Disable login button depending on whether a username was entered.
+        Node okButton = dialog.getDialogPane().lookupButton(okButtonType);
+        okButton.setDisable(true);
+        connectionNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            okButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        // Set content.
+        dialog.getDialogPane().setContent(grid);
+
+        // Convert the result to a username-password-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return new Pair<>(connectionNameTextField.getText(), typeChoiceBox.getSelectionModel().getSelectedItem());
+            }
+            return null;
+        });
+
+        // SHOW!
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+
+        result.ifPresent(results -> {
+            switch (results.getValue()){
                 case SERIAL:
                     SerialConnection newSerialConnection = new SerialConnection();
+                    newSerialConnection.setName(results.getKey());
                     this.getItems().add(newSerialConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newSerialConnection);
                     break;
                 case TCP:
                     TcpConnection newTcpConnection = new TcpConnection();
+                    newTcpConnection.setName(results.getKey());
                     this.getItems().add(newTcpConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newTcpConnection);

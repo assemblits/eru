@@ -19,9 +19,15 @@
     /*-fx-background-color: transparent;*/
 }
 .table-view .column-header .label {
-    /*-fx-alignment: center;*/
-    /*-fx-font-weight: bold;*/
-    /*-fx-font-size: 11px;*/
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+.table-view .table-cell{
+    /*-fx-font-weight:bold;*/
+    -fx-font-size:11px;
+    /* -fx-text-fill:orange; */
+
 }
 .table-row-cell{
     /*-fx-background-color: transparent;*/
