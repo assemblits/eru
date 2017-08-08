@@ -6,17 +6,17 @@
         <!--ADDED MANUALLY-->
         <class>com.marlontrujillo.eru.comm.device.Address</class>
         <class>com.marlontrujillo.eru.alarming.Alarm</class>
-        <class>com.marlontrujillo.eru.comm.device.Device</class>
         <class>com.marlontrujillo.eru.comm.connection.Connection</class>
         <class>com.marlontrujillo.eru.comm.connection.SerialConnection</class>
         <class>com.marlontrujillo.eru.comm.connection.TcpConnection</class>
+        <class>com.marlontrujillo.eru.comm.device.Device</class>
+        <class>com.marlontrujillo.eru.gui.toolbars.tree.Group</class>
+        <class>com.marlontrujillo.eru.historian.Historic</class>
+        <class>com.marlontrujillo.eru.persistence.Project</class>
         <class>com.marlontrujillo.eru.user.User</class>
         <class>com.marlontrujillo.eru.user.Engineer</class>
         <class>com.marlontrujillo.eru.user.Operator</class>
-        <class>com.marlontrujillo.eru.historian.Historic</class>
         <class>com.marlontrujillo.eru.tag.Tag</class>
-        <class>com.marlontrujillo.eru.gui.toolbars.tree.Group</class>
-        <class>com.marlontrujillo.eru.persistence.Project</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/eru"/>

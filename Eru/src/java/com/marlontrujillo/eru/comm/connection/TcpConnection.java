@@ -59,7 +59,6 @@ public class TcpConnection extends Connection{
         }
     }
 
-    @Column(name = "hostname")
     public String getHostname() {
         return hostname.get();
     }
@@ -70,7 +69,6 @@ public class TcpConnection extends Connection{
         this.hostname.set(hostname);
     }
 
-    @Column(name = "port")
     public int getPort() {
         return port.get();
     }

@@ -4,6 +4,7 @@ import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -15,9 +16,11 @@ import java.io.IOException;
 public class Skeleton extends VBox{
 
     @FXML
+    private AnchorPane mainPane;
+    @FXML
     private ProjectTree projectTree;
     @FXML
-    private AnchorPane mainPane;
+    private TextField searchTextField;
 
     public Skeleton() {
         try {
@@ -54,11 +57,13 @@ public class Skeleton extends VBox{
         App.getSingleton().execute(App.Action.UNSELECT_ALL_TABLE_ITEMS);
     }
 
+    public AnchorPane getMainPane() {
+        return mainPane;
+    }
     public ProjectTree getProjectTree() {
         return projectTree;
     }
-
-    public AnchorPane getMainPane() {
-        return mainPane;
+    public TextField getSearchTextField() {
+        return searchTextField;
     }
 }

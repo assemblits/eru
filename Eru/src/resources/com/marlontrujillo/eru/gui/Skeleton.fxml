@@ -9,6 +9,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -18,41 +19,48 @@
 
 <?import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="500.0" prefWidth="500.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Skeleton.css" />
     </stylesheets>
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Save" onAction="#saveMenuItemSelected"/>
+            <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitMenuItemSelected"/>
+            <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
             <MenuItem mnemonicParsing="false" text="Preferences" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Add" onAction="#addMenuItemSelected"/>
+            <MenuItem mnemonicParsing="false" onAction="#addMenuItemSelected" text="Add" />
             <MenuItem mnemonicParsing="false" text="Cut" />
             <MenuItem mnemonicParsing="false" text="Copy" />
             <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" onAction="#deleteMenuItemSelected"/>
+            <MenuItem mnemonicParsing="false" onAction="#deleteMenuItemSelected" text="Delete" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" onAction="#selectAllMenuItemSelected"/>
-            <MenuItem mnemonicParsing="false" text="Unselect All" onAction="#unselectAllMenuItemSelected"/>
+            <MenuItem mnemonicParsing="false" onAction="#selectAllMenuItemSelected" text="Select All" />
+            <MenuItem mnemonicParsing="false" onAction="#unselectAllMenuItemSelected" text="Unselect All" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About" />
         </Menu>
     </MenuBar>
-    <SplitPane dividerPositions="0.2, 0.9" focusTraversable="true" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.2" focusTraversable="true" VBox.vgrow="ALWAYS">
         <AnchorPane maxWidth="170">
             <ProjectTree fx:id="projectTree" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         </AnchorPane>
         <ScrollPane fitToHeight="true" fitToWidth="true">
-            <AnchorPane id="Content" fx:id="mainPane" />
+            <VBox>
+                <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="10.0" VBox.vgrow="NEVER">
+                    <Label text="Search: " />
+                    <TextField fx:id="searchTextField" HBox.hgrow="ALWAYS" />
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+                </HBox>
+                <AnchorPane fx:id="mainPane" VBox.vgrow="ALWAYS"/>
+            </VBox>
         </ScrollPane>
-        <AnchorPane maxWidth="150">
-        </AnchorPane>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
         <padding>

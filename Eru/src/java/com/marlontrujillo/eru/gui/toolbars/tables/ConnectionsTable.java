@@ -25,11 +25,11 @@ import java.util.Optional;
  */
 public class ConnectionsTable extends EruTable<Connection> {
 
-    public ConnectionsTable(List<Connection> connections) {
-        this.setItems(FXCollections.observableList(connections));
-
+    public ConnectionsTable(List<Connection> items) {
+        super(items);
 
         // **** Columns **** //
+        TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
         TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
         TableColumn<Connection, Boolean> enableNameColumn   = new TableColumn<>("Enable");
@@ -54,6 +54,10 @@ public class ConnectionsTable extends EruTable<Connection> {
 
 
         // **** General Cells **** //
+        groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
+        groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+
         nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -226,6 +230,7 @@ public class ConnectionsTable extends EruTable<Connection> {
 
         // **** General **** //
         this.getColumns().addAll(
+                groupColumn,
                 nameColumn,
                 typeColumn,
                 enableNameColumn,
@@ -312,5 +317,16 @@ public class ConnectionsTable extends EruTable<Connection> {
                     break;
             }
         });
+    }
+
+    @Override
+    public void addListenerToFilterTable(StringProperty textToFilter) {
+        textToFilter.addListener(observable ->
+                this.filteredList.setPredicate(connection ->
+                        (textToFilter.getValue() == null
+                        || textToFilter.getValue().isEmpty()
+                        || connection.getName().startsWith(textToFilter.getValue())
+                        || connection.getGroup().startsWith(textToFilter.getValue()))
+        ));
     }
 }
