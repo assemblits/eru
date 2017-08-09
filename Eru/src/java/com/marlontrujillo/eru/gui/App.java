@@ -2,10 +2,7 @@ package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
-import com.marlontrujillo.eru.gui.toolbars.tables.ConnectionsTable;
-import com.marlontrujillo.eru.gui.toolbars.tables.DeviceTable;
-import com.marlontrujillo.eru.gui.toolbars.tables.EruTable;
-import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
+import com.marlontrujillo.eru.gui.toolbars.tables.*;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
@@ -105,18 +102,21 @@ public class App extends Application {
                 this.table = new DeviceTable(this.project.getDevices());
                 break;
             case TAG:
+                this.table = new TagTable(this.project.getTags());
                 break;
             case USER:
                 this.table = new UserTable(this.project.getUsers());
                 break;
         }
-        AnchorPane.setTopAnchor(table, 0.0);
-        AnchorPane.setBottomAnchor(table, 0.0);
-        AnchorPane.setRightAnchor(table, 0.0);
-        AnchorPane.setLeftAnchor(table, 0.0);
-        this.skeleton.getMainPane().getChildren().add(table);
-        this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
-        this.skeleton.getSearchTextField().setText(selectedGroup.getName());
+        if (this.table != null) {
+            AnchorPane.setTopAnchor(table, 0.0);
+            AnchorPane.setBottomAnchor(table, 0.0);
+            AnchorPane.setRightAnchor(table, 0.0);
+            AnchorPane.setLeftAnchor(table, 0.0);
+            this.skeleton.getMainPane().getChildren().add(table);
+            this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
+            this.skeleton.getSearchTextField().setText(selectedGroup.getName());
+        }
     }
 
     public void execute(Action action){

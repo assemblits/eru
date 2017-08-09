@@ -27,7 +27,7 @@ public class UserTable extends EruTable<User> {
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
 
         userNameColumn.setCellValueFactory(param -> param.getValue().userNameProperty());
         userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -69,6 +69,7 @@ public class UserTable extends EruTable<User> {
     @Override
     public void addNewItem() {
         User newUser = new User();
+        newUser.setUserName("newUser");
         this.items.add(newUser);
         this.getSelectionModel().clearSelection();
         this.getSelectionModel().select(newUser);
