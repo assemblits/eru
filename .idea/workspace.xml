@@ -13,12 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
     </list>
     <ignored path="PowerSceneViewer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,7 +96,7 @@
     <favorites_list name="PowerSceneViewer" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.9">
+    <splitter split-orientation="horizontal" split-proportion="0.39753845">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
@@ -151,45 +147,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Skeleton.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="128">
-                  <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Skeleton.fxml" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
-              <provider editor-type-id="JavaFX-Scene-Builder">
-                <state />
-              </provider>
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="384">
-                  <caret line="57" column="30" lean-forward="false" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Device.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Device.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1297">
-                  <caret line="170" column="5" lean-forward="false" selection-start-line="170" selection-start-column="5" selection-end-line="170" selection-end-column="5" />
+                <state relative-caret-position="361">
+                  <caret line="41" column="55" lean-forward="false" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="docComment;class#Device#0" expanded="false" />
                     <element signature="e#385#392#0" expanded="false" />
-                    <element signature="method#Device#0;class#Device#0" expanded="false" />
                     <element signature="method#setConnection#0;class#Device#0" expanded="false" />
-                    <element signature="e#3650#3855#0" expanded="false" />
+                    <element signature="e#3698#3903#0" expanded="false" />
                     <element signature="method#getAddresses#1;class#Device#0" expanded="false" />
                     <element signature="method#getAddressesBlocks#0;class#Device#0" expanded="false" />
                     <element signature="method#getAddressBlocksFrom#0;class#Device#0" expanded="false" />
                     <element signature="method#getLastBlockIn#0;class#Device#0" expanded="false" />
+                    <element signature="e#5293#5294#0" expanded="true" />
+                    <element signature="e#5327#5328#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -228,8 +202,8 @@
           <file leaf-file-name="ConnectionsTable.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1361">
-                  <caret line="312" column="25" lean-forward="true" selection-start-line="312" selection-start-column="25" selection-end-line="312" selection-end-column="25" />
+                <state relative-caret-position="401">
+                  <caret line="150" column="62" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="62" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="class#4890:5221" expanded="false" />
@@ -237,7 +211,8 @@
                     <element signature="e#6402#6687#0" expanded="false" />
                     <element signature="class#6778:7109" expanded="false" />
                     <element signature="e#7255#7534#0" expanded="false" />
-                    <element signature="class#7619:7950" expanded="false" />
+                    <element signature="e#7721#7722#0" expanded="true" />
+                    <element signature="e#7799#7800#0" expanded="true" />
                     <element signature="e#8092#8349#0" expanded="false" />
                     <element signature="e#8574#8854#0" expanded="false" />
                     <element signature="class#8939:9270" expanded="false" />
@@ -252,17 +227,18 @@
           <file leaf-file-name="DeviceTable.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="209">
-                  <caret line="44" column="88" lean-forward="false" selection-start-line="44" selection-start-column="88" selection-end-line="44" selection-end-column="88" />
+                <state relative-caret-position="199">
+                  <caret line="132" column="37" lean-forward="false" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="class#2441:2772" expanded="false" />
                     <element signature="class#3281:3612" expanded="false" />
-                    <element signature="class#4157:4473" expanded="false" />
-                    <element signature="e#5136#5137#0" expanded="true" />
-                    <element signature="e#5191#5192#0" expanded="true" />
-                    <element signature="e#5272#5273#0" expanded="true" />
-                    <element signature="e#5323#5324#0" expanded="true" />
+                    <element signature="e#4271#4272#0" expanded="true" />
+                    <element signature="e#4349#4350#0" expanded="true" />
+                    <element signature="e#5158#5159#0" expanded="true" />
+                    <element signature="e#5236#5237#0" expanded="true" />
+                    <element signature="e#5317#5318#0" expanded="true" />
+                    <element signature="e#5368#5369#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -380,11 +356,11 @@
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" />
       </list>
     </option>
   </component>
@@ -1593,12 +1569,12 @@
       <workItem from="1502125884381" duration="19564000" />
       <workItem from="1502217072810" duration="12022000" />
       <workItem from="1502229531858" duration="7463000" />
-      <workItem from="1502284717280" duration="4441000" />
+      <workItem from="1502284717280" duration="4836000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="721892000" />
+    <option name="totallyTimeSpent" value="722287000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1632,7 +1608,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24836601" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17845829" sideWeight="0.48560768" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3653643" sideWeight="0.48560768" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24409449" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12793177" sideWeight="0.57798165" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15364583" sideWeight="0.42201835" order="0" side_tool="false" content_ui="combo" />
@@ -2058,25 +2034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1297">
-          <caret line="170" column="5" lean-forward="false" selection-start-line="170" selection-start-column="5" selection-end-line="170" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Device#0" expanded="false" />
-            <element signature="e#385#392#0" expanded="false" />
-            <element signature="method#Device#0;class#Device#0" expanded="false" />
-            <element signature="method#setConnection#0;class#Device#0" expanded="false" />
-            <element signature="e#3650#3855#0" expanded="false" />
-            <element signature="method#getAddresses#1;class#Device#0" expanded="false" />
-            <element signature="method#getAddressesBlocks#0;class#Device#0" expanded="false" />
-            <element signature="method#getAddressBlocksFrom#0;class#Device#0" expanded="false" />
-            <element signature="method#getLastBlockIn#0;class#Device#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="464">
@@ -2099,42 +2056,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1361">
-          <caret line="312" column="25" lean-forward="true" selection-start-line="312" selection-start-column="25" selection-end-line="312" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#4890:5221" expanded="false" />
-            <element signature="e#5912#6167#0" expanded="false" />
-            <element signature="e#6402#6687#0" expanded="false" />
-            <element signature="class#6778:7109" expanded="false" />
-            <element signature="e#7255#7534#0" expanded="false" />
-            <element signature="class#7619:7950" expanded="false" />
-            <element signature="e#8092#8349#0" expanded="false" />
-            <element signature="e#8574#8854#0" expanded="false" />
-            <element signature="class#8939:9270" expanded="false" />
-            <element signature="e#9426#9690#0" expanded="false" />
-            <element signature="e#10413#10682#0" expanded="false" />
-            <element signature="class#10760:11090" expanded="false" />
-          </folding>
+        <state relative-caret-position="192">
+          <caret line="57" column="30" lean-forward="false" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java">
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="44" column="88" lean-forward="false" selection-start-line="44" selection-start-column="88" selection-end-line="44" selection-end-column="88" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#2441:2772" expanded="false" />
-            <element signature="class#3281:3612" expanded="false" />
-            <element signature="class#4157:4473" expanded="false" />
-            <element signature="e#5136#5137#0" expanded="true" />
-            <element signature="e#5191#5192#0" expanded="true" />
-            <element signature="e#5272#5273#0" expanded="true" />
-            <element signature="e#5323#5324#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="128">
+          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2148,22 +2085,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css">
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-          <folding />
+        <state relative-caret-position="361">
+          <caret line="41" column="55" lean-forward="false" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#Device#0" expanded="false" />
+            <element signature="e#385#392#0" expanded="false" />
+            <element signature="method#setConnection#0;class#Device#0" expanded="false" />
+            <element signature="e#3698#3903#0" expanded="false" />
+            <element signature="method#getAddresses#1;class#Device#0" expanded="false" />
+            <element signature="method#getAddressesBlocks#0;class#Device#0" expanded="false" />
+            <element signature="method#getAddressBlocksFrom#0;class#Device#0" expanded="false" />
+            <element signature="method#getLastBlockIn#0;class#Device#0" expanded="false" />
+            <element signature="e#5293#5294#0" expanded="true" />
+            <element signature="e#5327#5328#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="57" column="30" lean-forward="false" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
-          <folding />
+        <state relative-caret-position="401">
+          <caret line="150" column="62" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#4890:5221" expanded="false" />
+            <element signature="e#5912#6167#0" expanded="false" />
+            <element signature="e#6402#6687#0" expanded="false" />
+            <element signature="class#6778:7109" expanded="false" />
+            <element signature="e#7255#7534#0" expanded="false" />
+            <element signature="e#7721#7722#0" expanded="true" />
+            <element signature="e#7799#7800#0" expanded="true" />
+            <element signature="e#8092#8349#0" expanded="false" />
+            <element signature="e#8574#8854#0" expanded="false" />
+            <element signature="class#8939:9270" expanded="false" />
+            <element signature="e#9426#9690#0" expanded="false" />
+            <element signature="e#10413#10682#0" expanded="false" />
+            <element signature="class#10760:11090" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="132" column="37" lean-forward="false" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#2441:2772" expanded="false" />
+            <element signature="class#3281:3612" expanded="false" />
+            <element signature="e#4271#4272#0" expanded="true" />
+            <element signature="e#4349#4350#0" expanded="true" />
+            <element signature="e#5158#5159#0" expanded="true" />
+            <element signature="e#5236#5237#0" expanded="true" />
+            <element signature="e#5317#5318#0" expanded="true" />
+            <element signature="e#5368#5369#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

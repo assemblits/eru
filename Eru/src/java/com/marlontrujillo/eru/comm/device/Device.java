@@ -32,13 +32,14 @@ public class  Device {
 
     /* ********** Constructors ********** */
     public Device() {
-        name            = new SimpleStringProperty();
-        unitIdentifier  = new SimpleIntegerProperty();
-        status          = new SimpleStringProperty();
-        retries         = new SimpleIntegerProperty();
-        enabled         = new SimpleBooleanProperty();
+        name            = new SimpleStringProperty("");
+        unitIdentifier  = new SimpleIntegerProperty(0);
+        status          = new SimpleStringProperty("");
+        retries         = new SimpleIntegerProperty(3);
+        enabled         = new SimpleBooleanProperty(false);
         addresses       = new ArrayList<>();
-        zeroBased       = new SimpleBooleanProperty(this, "zeroBased", true);
+        zeroBased       = new SimpleBooleanProperty(true);
+        group           = new SimpleStringProperty("");
     }
 
     /* ********** Setters and Getters ********** */

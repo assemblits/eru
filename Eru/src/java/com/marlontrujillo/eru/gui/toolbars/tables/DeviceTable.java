@@ -83,7 +83,7 @@ public class DeviceTable extends EruTable<Device> {
         addressesColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<List<Address>>() {
             @Override
             public String toString(List<Address> object) {
-                return object.toString();
+                return object != null ? object.toString() : "";
             }
 
             @Override
@@ -101,7 +101,7 @@ public class DeviceTable extends EruTable<Device> {
         connectionColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Connection>() {
             @Override
             public String toString(Connection object) {
-                return object.getName();
+                return object != null ? object.toString() : "";
             }
 
             @Override
@@ -130,6 +130,7 @@ public class DeviceTable extends EruTable<Device> {
     @Override
     public void addNewItem() {
         Device newDevice = new Device();
+        newDevice.setName("New device");
         this.items.add(newDevice);
         this.getSelectionModel().clearSelection();
         this.getSelectionModel().select(newDevice);
