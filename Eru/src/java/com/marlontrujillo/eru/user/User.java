@@ -21,7 +21,7 @@ public class User {
     private StringProperty email;
     private StringProperty password;
     private BooleanProperty online;
-    private StringProperty group;
+    private StringProperty groupName;
 
     public User() {
         this.id         = new SimpleIntegerProperty(0);
@@ -31,7 +31,7 @@ public class User {
         this.email      = new SimpleStringProperty("");
         this.password   = new SimpleStringProperty("");
         this.online     = new SimpleBooleanProperty(false);
-        this.group      = new SimpleStringProperty("");
+        this.groupName  = new SimpleStringProperty("");
     }
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -106,15 +106,15 @@ public class User {
         this.online.set(online);
     }
 
-    @Column (name = "project_group")
-    public String getGroup() {
-        return group.get();
+    @Column(name = "group_name")
+    public String getGroupName() {
+        return groupName.get();
     }
-    public StringProperty groupProperty() {
-        return group;
+    public StringProperty groupNameProperty() {
+        return groupName;
     }
-    public void setGroup(String group) {
-        this.group.set(group);
+    public void setGroupName(String groupName) {
+        this.groupName.set(groupName);
     }
 
     @Override

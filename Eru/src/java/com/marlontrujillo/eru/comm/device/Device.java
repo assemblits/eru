@@ -28,7 +28,7 @@ public class  Device {
     private List<Address>           addresses;
     private BooleanProperty         zeroBased;
     private Connection              connection;
-    private StringProperty          group;
+    private StringProperty          groupName;
 
     /* ********** Constructors ********** */
     public Device() {
@@ -39,7 +39,7 @@ public class  Device {
         enabled         = new SimpleBooleanProperty(false);
         addresses       = new ArrayList<>();
         zeroBased       = new SimpleBooleanProperty(true);
-        group           = new SimpleStringProperty("");
+        groupName       = new SimpleStringProperty("");
     }
 
     /* ********** Setters and Getters ********** */
@@ -160,15 +160,15 @@ public class  Device {
         this.zeroBased.set(zeroBased);
     }
 
-    @Column(name = "project_group")
-    public String getGroup() {
-        return group.get();
+    @Column(name = "group_name")
+    public String getGroupName() {
+        return groupName.get();
     }
-    public StringProperty groupProperty() {
-        return group;
+    public StringProperty groupNameProperty() {
+        return groupName;
     }
-    public void setGroup(String group) {
-        this.group.set(group);
+    public void setGroupName(String groupName) {
+        this.groupName.set(groupName);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class TagUtil {
                     TagCurrentValueListenerForMaskUpdating link = new TagCurrentValueListenerForMaskUpdating(tag, tagSourceFinded);
 
                     // Link
-                    tagSourceFinded.currentTextProperty().addListener(link);
+                    tagSourceFinded.valueProperty().addListener(link);
 
                     // Register
                     registerLink(tagSourceFinded, link);
@@ -57,7 +57,7 @@ public class TagUtil {
                 if (tag.getScript() != null && !tag.getScript().isEmpty()) {
                     try {
                         // Set first value
-                        tag.updateCurrentValue(Double.parseDouble(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tag.getScript()))));
+                        tag.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tag.getScript())));
 
                         // Find tags in the script
                         tagList.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {
@@ -65,7 +65,7 @@ public class TagUtil {
                             TagCurrentValueListenerForScriptUpdating link = new TagCurrentValueListenerForScriptUpdating(tag, tagInScript);
 
                             // Link
-                            tagInScript.currentTextProperty().addListener(link);
+                            tagInScript.valueProperty().addListener(link);
 
                             // Register
                             registerLink(tagInScript, link);
@@ -85,14 +85,14 @@ public class TagUtil {
                     tagList.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSource -> {
 
                         // Create Map number:statusName
-                        Map<Double, String> statusMap = new HashMap<>();
+                        Map<String, String> statusMap = new HashMap<>();
                         StringTokenizer scriptTokenizer = new StringTokenizer(tag.getScript() == null ? "" : tag.getScript(), ",");
                         while (scriptTokenizer.hasMoreElements()) {
                             String pair = scriptTokenizer.nextElement().toString();
                             StringTokenizer pairTokenizer = new StringTokenizer(pair, "=");
                             while (pairTokenizer.hasMoreElements()) {
                                 try {
-                                    double value = Double.parseDouble(pairTokenizer.nextElement().toString());
+                                    String value = pairTokenizer.nextElement().toString();
                                     String status = pairTokenizer.nextElement().toString();
                                     statusMap.put(value, status);
                                 } catch (Exception e) {
@@ -110,7 +110,7 @@ public class TagUtil {
                         TagCurrentValueListenerForStatusUpdating link = new TagCurrentValueListenerForStatusUpdating(tag, tagSource, statusMap);
 
                         // Link
-                        tagSource.currentTextProperty().addListener(link);
+                        tagSource.valueProperty().addListener(link);
 
                         // Register
                         registerLink(tagSource, link);
@@ -124,16 +124,6 @@ public class TagUtil {
             case OUTPUT:
                 break;
             case LOGICAL:
-                // Find the tagSource in Container
-                tagList.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSource -> {
-                    // Create link
-                    TagCurrentValueListenerForLogicalUpdating link = new TagCurrentValueListenerForLogicalUpdating(tag, tagSource);
-
-                    // Link
-                    tagSource.currentTextProperty().addListener(link);
-
-                    // Register link
-                });
                 break;
         }
     }
@@ -171,7 +161,7 @@ class AddressChangeListener implements InvalidationListener{
     @Override
     public void invalidated(Observable observable) {
         if((tagToUpdate.getAddress() != null) && (observable != null)){
-            tagToUpdate.updateCurrentValue(tagToUpdate.getAddress().getCurrentValue());
+            tagToUpdate.setValue(String.valueOf(tagToUpdate.getAddress().getCurrentValue()));
             tagToUpdate.setTimestamp(tagToUpdate.getAddress().getTimestamp());
             if (tagToUpdate.getAlarmEnabled()) {
                 try {
@@ -198,7 +188,11 @@ class TagCurrentValueListenerForMaskUpdating implements InvalidationListener{
 
     @Override
     public void invalidated(Observable observable) {
-        tagToUpdate.updateCurrentValue(((int) tagToListen.getCurrentValue()) & tagToUpdate.getMask());
+        tagToUpdate.setValue(
+                String.valueOf(
+                        (Integer.getInteger(tagToListen.getValue())) & tagToUpdate.getMask()
+                )
+        );
         tagToUpdate.setTimestamp(tagToListen.getTimestamp());
         if (tagToUpdate.getAlarmEnabled()) {
             try {
@@ -224,7 +218,7 @@ class TagCurrentValueListenerForScriptUpdating implements InvalidationListener {
     public void invalidated(Observable observable) {
         if(observable != null && tagToUpdate.getScript() != null && !tagToUpdate.getScript().isEmpty() && tagToListen != null){
             try {
-                tagToUpdate.updateCurrentValue(Double.parseDouble(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getScript()))));
+                tagToUpdate.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getScript())));
                 tagToUpdate.setTimestamp(tagToListen.getTimestamp() == null ? new Timestamp(System.currentTimeMillis()) : tagToListen.getTimestamp());
                 if (tagToUpdate.getAlarmEnabled()) {
                     try {
@@ -247,9 +241,9 @@ class TagCurrentValueListenerForScriptUpdating implements InvalidationListener {
 class TagCurrentValueListenerForStatusUpdating implements InvalidationListener{
     private final Tag tagToUpdate;
     private final Tag tagToListen;
-    private final Map<Double, String> statusMap;
+    private final Map<String, String> statusMap;
 
-    public TagCurrentValueListenerForStatusUpdating(Tag tagToUpdate, Tag tagToListen, Map<Double, String> statusMap) {
+    public TagCurrentValueListenerForStatusUpdating(Tag tagToUpdate, Tag tagToListen, Map<String, String> statusMap) {
         this.tagToUpdate    = tagToUpdate;
         this.tagToListen    = tagToListen;
         this.statusMap      = statusMap;
@@ -259,8 +253,8 @@ class TagCurrentValueListenerForStatusUpdating implements InvalidationListener{
     public void invalidated(Observable observable) {
         try {
             if( (observable != null)){
-                if(statusMap.containsKey(tagToListen.getCurrentValue())){
-                    tagToUpdate.updateCurrentValue(statusMap.get(tagToListen.getCurrentValue()));
+                if(statusMap.containsKey(tagToListen.getValue())){
+                    tagToUpdate.setValue(statusMap.get(tagToListen.getValue()));
                     tagToUpdate.setTimestamp(tagToListen.getTimestamp());
                     if (tagToUpdate.getAlarmEnabled()) {
                         try {
@@ -271,7 +265,7 @@ class TagCurrentValueListenerForStatusUpdating implements InvalidationListener{
                         }
                     }
                 } else {
-                    tagToUpdate.updateCurrentValue("status unknown");
+                    tagToUpdate.setValue("????");
                     tagToUpdate.setStatus("Status unknown");
                     tagToUpdate.setTimestamp(tagToListen.getTimestamp());
                 }
@@ -280,50 +274,6 @@ class TagCurrentValueListenerForStatusUpdating implements InvalidationListener{
             }
         } catch (Exception e){
             LogUtil.logger.error(e);
-        }
-    }
-}
-
-class TagCurrentValueListenerForLogicalUpdating implements InvalidationListener{
-    private final Tag tagToUpdate;
-    private final Tag tagToListen;
-
-    public TagCurrentValueListenerForLogicalUpdating(Tag tagToUpdate, Tag tagToListen) {
-        this.tagToUpdate = tagToUpdate;
-        this.tagToListen = tagToListen;
-    }
-
-    @Override
-    public void invalidated(Observable observable) {
-        if((observable != null) && (tagToListen != null)){
-            switch (tagToUpdate.getLogicalCondition()) {
-                case LESS_THAN:
-                    tagToUpdate.updateCurrentValue(tagToListen.getCurrentValue() < tagToUpdate.getLogicalThreshold());
-                    break;
-                case LESS_THAN_OR_EQUAL:
-                    tagToUpdate.updateCurrentValue(tagToListen.getCurrentValue() <= tagToUpdate.getLogicalThreshold());
-                    break;
-                case GREATER_THAN:
-                    tagToUpdate.updateCurrentValue(tagToListen.getCurrentValue() > tagToUpdate.getLogicalThreshold());
-                    break;
-                case GREATER_THAN_OR_EQUAL:
-                    tagToUpdate.updateCurrentValue(tagToListen.getCurrentValue() >= tagToUpdate.getLogicalThreshold());
-                    break;
-                case EQUAL:
-                    tagToUpdate.updateCurrentValue(tagToListen.getCurrentValue() == tagToUpdate.getLogicalThreshold());
-                    break;
-            }
-            tagToUpdate.setTimestamp(tagToListen.getTimestamp());
-            if (tagToUpdate.getAlarmEnabled()) {
-                try {
-                    tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
-                } catch (ScriptException e) {
-                    final String errorMSG = "Error in alarm script." + e.getLocalizedMessage();
-                    tagToUpdate.setStatus(errorMSG);
-                }
-            }
-        } else {
-            tagToUpdate.setStatus("Null-TagSource");
         }
     }
 }

@@ -25,7 +25,7 @@ public class UserTable extends EruTable<User> {
         TableColumn<User, String> passwordColumn = new TableColumn<>("Password");
         TableColumn<User, Boolean> onlineColumn = new TableColumn<>("Online");
 
-        groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
+        groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
 
@@ -99,7 +99,7 @@ public class UserTable extends EruTable<User> {
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || user.getUserName().startsWith(textToFilter.getValue())
-                                || user.getGroup().startsWith(textToFilter.getValue()))
+                                || user.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
     }

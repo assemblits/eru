@@ -261,14 +261,14 @@ class AlarmListenerToCreateNewAlarms implements InvalidationListener {
                     new Alarm(Timestamp.from(Instant.now()),
                             tagToListen.getDescription().concat(" alarm = ACTIVATED"),
                             "",
-                            tagToListen.getAlarmGroupName(),
+                            tagToListen.getGroupName(),
                             Alarm.Priority.HIHI));
         } else {
             Alarming.getInstance().load(
                     new Alarm(Timestamp.from(Instant.now()),
                             tagToListen.getDescription().concat(" alarm = DEACTIVATED"),
                             "",
-                            tagToListen.getAlarmGroupName(),
+                            tagToListen.getGroupName(),
                             Alarm.Priority.NOMINAL));
         }
     }

@@ -34,7 +34,7 @@ public class DeviceTable extends EruTable<Device> {
         TableColumn<Device, Boolean> zeroBasedColumn        = new TableColumn<>("Zero based");
         TableColumn<Device, Connection> connectionColumn    = new TableColumn<>("Connection");
 
-        groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
+        groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.10));
 
@@ -131,6 +131,7 @@ public class DeviceTable extends EruTable<Device> {
     public void addNewItem() {
         Device newDevice = new Device();
         newDevice.setName("New device");
+        newDevice.setGroupName("Devices");
         this.items.add(newDevice);
         this.getSelectionModel().clearSelection();
         this.getSelectionModel().select(newDevice);
@@ -160,7 +161,7 @@ public class DeviceTable extends EruTable<Device> {
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || device.getName().startsWith(textToFilter.getValue())
-                                || device.getGroup().startsWith(textToFilter.getValue()))
+                                || device.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
     }

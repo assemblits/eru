@@ -20,7 +20,7 @@ public abstract class Connection {
     private IntegerProperty samplingTime;
     private BooleanProperty connected;
     private StringProperty  status;
-    private StringProperty  group;
+    private StringProperty  groupName;
 
     public Connection() {
         this.id             = new SimpleIntegerProperty();
@@ -30,7 +30,7 @@ public abstract class Connection {
         this.samplingTime   = new SimpleIntegerProperty(500);
         this.connected      = new SimpleBooleanProperty(false);
         this.status         = new SimpleStringProperty("");
-        this.group          = new SimpleStringProperty("");
+        this.groupName      = new SimpleStringProperty("");
     }
 
     @Transient
@@ -116,15 +116,15 @@ public abstract class Connection {
         this.status.set(status);
     }
 
-    @Column(name = "project_group")
-    public String getGroup() {
-        return group.get();
+    @Column(name = "group_name")
+    public String getGroupName() {
+        return groupName.get();
     }
-    public StringProperty groupProperty() {
-        return group;
+    public StringProperty groupNameProperty() {
+        return groupName;
     }
-    public void setGroup(String group) {
-        this.group.set(group);
+    public void setGroupName(String groupName) {
+        this.groupName.set(groupName);
     }
 
     @Override

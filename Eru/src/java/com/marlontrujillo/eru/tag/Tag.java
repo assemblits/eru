@@ -18,40 +18,28 @@ public class Tag implements Cloneable {
     /* ********** Static Fields ********** */
     public static final int                         DEFAULT_DECIMALS    = 2;
 
-    public static enum TagType{INPUT, MASK, MATH, STATUS, OUTPUT, LOGICAL}
-    public static enum LogicalCondition{
-        LESS_THAN,
-        LESS_THAN_OR_EQUAL,
-        GREATER_THAN,
-        GREATER_THAN_OR_EQUAL,
-        EQUAL
-    }
+    public enum TagType{INPUT, MASK, MATH, STATUS, OUTPUT, LOGICAL}
 
     /* ********** Dynamic Fields ********** */
     private final StringProperty                    tagSourceName;
     private final StringProperty                    name;
     private final BooleanProperty                   enabled;
     private final StringProperty                    description;
-    private final StringProperty                    tagGroup;
-    private final DoubleProperty                    currentValue;
-    private final StringProperty                    currentText;
+    private final StringProperty                    value;
     private final IntegerProperty                   decimals;
-    private final BooleanProperty                   currentLogicValidated;
-    private final IntegerProperty                   logicalThreshold;
     private final ObjectProperty<Timestamp>         timestamp;
     private final ObjectProperty<TagType>           tagType;
-    private final ObjectProperty<LogicalCondition>  logicalCondition;
     private final StringProperty                    status;
     private final ObjectProperty<Address>           address;
     private final StringProperty                    script;
     private final IntegerProperty                   mask;
     private final DoubleProperty                    scaleFactor;
     private final DoubleProperty                    scaleOffset;
-    private final StringProperty                    alarmGroupName;
     private final BooleanProperty                   alarmEnabled;
     private final StringProperty                    alarmScript;
     private final BooleanProperty                   alarmed;
     private final BooleanProperty                   historicalEnabled;
+    private StringProperty                          groupName;
 
     /* ********** Constructors ********** */
     public Tag() {
@@ -63,26 +51,21 @@ public class Tag implements Cloneable {
         this.name                   = new SimpleStringProperty(this, "name", name);
         this.enabled                = new SimpleBooleanProperty(this, "enabled", true);
         this.description            = new SimpleStringProperty(this, "description", "");
-        this.tagGroup               = new SimpleStringProperty(this, "tagGroup", "");
-        this.currentValue           = new SimpleDoubleProperty(this, "currentValue", 0.0);
-        this.currentText            = new SimpleStringProperty(this, "currentValue", "");
+        this.value                  = new SimpleStringProperty(this, "value", "");
         this.decimals               = new SimpleIntegerProperty(this, "decimals", DEFAULT_DECIMALS);
-        this.currentLogicValidated  = new SimpleBooleanProperty(this, "currentLogicValidated", false);
-        this.logicalThreshold       = new SimpleIntegerProperty(this, "logicalThreshold", 0);
         this.timestamp              = new SimpleObjectProperty<>(this, "timestamp", Timestamp.from(Instant.now()));
         this.tagType                = new SimpleObjectProperty<>();
-        this.logicalCondition       = new SimpleObjectProperty<>();
         this.status                 = new SimpleStringProperty(this, "status", "");
         this.address                = new SimpleObjectProperty<>();
         this.script                 = new SimpleStringProperty(this, "script", "");
         this.mask                   = new SimpleIntegerProperty(this, "mask", 0);
         this.scaleFactor            = new SimpleDoubleProperty(this, "scaleFactor", 1.0);
         this.scaleOffset            = new SimpleDoubleProperty(this, "scaleOffset", 0.0);
-        this.alarmGroupName         = new SimpleStringProperty(this, "alarmGroupName", "");
         this.alarmEnabled           = new SimpleBooleanProperty(this, "alarmEnabled", false);
         this.alarmScript            = new SimpleStringProperty(this, "alarmScript", "");
         this.alarmed                = new SimpleBooleanProperty(this, "alarmed", false);
         this.historicalEnabled      = new SimpleBooleanProperty(this, "historicalEnabled", false);
+        this.groupName              = new SimpleStringProperty(this, "groupName", "");
     }
 
     /* ********** Properties ********** */
@@ -131,37 +114,27 @@ public class Tag implements Cloneable {
         this.description.set(description);
     }
 
-    @Column(name = "tag_group")
-    public String getTagGroup() {
-        return tagGroup.get();
+    @Column(name = "value")
+    public String getValue() {
+        return value.get();
     }
-    public StringProperty tagGroupProperty() {
-        return tagGroup;
+    public StringProperty valueProperty() {
+        return value;
     }
-    public void setTagGroup(String tagGroup) {
-        this.tagGroup.set(tagGroup);
-    }
-
-    @Column(name = "current_value")
-    public double getCurrentValue() {
-        return currentValue.get();
-    }
-    public DoubleProperty currentValueProperty() {
-        return currentValue;
-    }
-    public void setCurrentValue(double currentValue) {
-        this.currentValue.set(currentValue);
-    }
-
-    @Column(name = "current_text")
-    public String getCurrentText() {
-        return currentText.get();
-    }
-    public StringProperty currentTextProperty() {
-        return currentText;
-    }
-    public void setCurrentText(String currentText) {
-        this.currentText.set(currentText);
+    public void setValue(String value) {
+        try{
+            // Is a number
+            double numericValue = Double.parseDouble(value);
+            double roundedValue = MathUtil.round(numericValue * getScaleFactor() + getScaleOffset(), getDecimals());
+            this.value.set(String.valueOf(roundedValue));
+        } catch (NumberFormatException e){
+            // Is not a number
+            this.value.set(value);
+        } catch (Exception e){
+            // Is an error
+            this.status.set(e.getLocalizedMessage());
+            this.value.set("????");
+        }
     }
 
     @Column(name = "decimals")
@@ -173,28 +146,6 @@ public class Tag implements Cloneable {
     }
     public void setDecimals(int decimals) {
         this.decimals.set(decimals);
-    }
-
-    @Column(name = "current_logic_validated")
-    public boolean getCurrentLogicValidated() {
-        return currentLogicValidated.get();
-    }
-    public BooleanProperty currentLogicValidatedProperty() {
-        return currentLogicValidated;
-    }
-    public void setCurrentLogicValidated(boolean currentLogicValidated) {
-        this.currentLogicValidated.set(currentLogicValidated);
-    }
-
-    @Column(name = "logical_threshold")
-    public int getLogicalThreshold() {
-        return logicalThreshold.get();
-    }
-    public IntegerProperty logicalThresholdProperty() {
-        return logicalThreshold;
-    }
-    public void setLogicalThreshold(int logicalThreshold) {
-        this.logicalThreshold.set(logicalThreshold);
     }
 
     @Column(name = "time_stamp")
@@ -224,24 +175,6 @@ public class Tag implements Cloneable {
     }
     public void setTagType(TagType tagType) {
         this.tagType.set(tagType);
-    }
-
-    @Column(name = "logical_condition")
-    public String getLogicalConditionName(){
-        return getLogicalCondition() == null ? "" : getLogicalCondition().name();
-    }
-    public void setLogicalConditionName(String logicalStateName){
-        logicalCondition.set(logicalStateName == null || logicalStateName.isEmpty() ? LogicalCondition.EQUAL : LogicalCondition.valueOf(logicalStateName));
-    }
-    @Transient
-    public LogicalCondition getLogicalCondition() {
-        return logicalCondition.get();
-    }
-    public ObjectProperty<LogicalCondition> logicalConditionProperty() {
-        return logicalCondition;
-    }
-    public void setLogicalCondition(LogicalCondition logicalCondition) {
-        this.logicalCondition.set(logicalCondition);
     }
 
     @Column(name = "status")
@@ -310,17 +243,6 @@ public class Tag implements Cloneable {
         this.scaleOffset.set(scaleOffset);
     }
 
-    @Column(name = "alarm_group_name")
-    public String getAlarmGroupName() {
-        return alarmGroupName.get();
-    }
-    public StringProperty alarmGroupNameProperty() {
-        return alarmGroupName;
-    }
-    public void setAlarmGroupName(String alarmGroupName) {
-        this.alarmGroupName.set(alarmGroupName);
-    }
-
     @Column(name = "alarm_enabled")
     public boolean getAlarmEnabled() {
         return alarmEnabled.get();
@@ -365,32 +287,15 @@ public class Tag implements Cloneable {
         this.historicalEnabled.set(historicalEnabled);
     }
 
-
-    /* ********** Private Methods ********** */
-    public void updateCurrentValue(double value){
-        if(getDecimals() > 0) {
-            try {
-                final Double roundedValue = MathUtil.round(value * getScaleFactor() + getScaleOffset(), getDecimals());
-                currentValue.setValue(roundedValue);
-                currentText.setValue(roundedValue.toString());
-            } catch (Exception e){
-                setStatus(e.getLocalizedMessage());
-                LogUtil.logger.error("Tag with ID:" + getName() + " cannot update value.", e);
-            }
-        } else {
-            final Long roundedValue =Math.round(value * getScaleFactor() + getScaleOffset());
-            currentValue.setValue(roundedValue);
-            currentText.setValue(roundedValue.toString());
-        }
+    @Column(name = "group_name")
+    public String getGroupName() {
+        return groupName.get();
     }
-
-    public void updateCurrentValue(Boolean b) {
-        currentLogicValidated.set(b);
-        currentText.setValue(b.toString());
+    public StringProperty groupNameProperty() {
+        return groupName;
     }
-
-    public void updateCurrentValue(String value){
-        currentText.setValue(value);
+    public void setGroupName(String groupName) {
+        this.groupName.set(groupName);
     }
 
     /* ********** Getters and Setters ********** */

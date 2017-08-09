@@ -122,7 +122,7 @@ public class Historian {
                 // Extract values from JavaFX Thread Objects *** ONLY READ OBJECTS ***
                 for (Tag tag : historicalTagList) {
                     columnNames.append(tag.getName()).append(", ");
-                    columnValues.append(tag.getCurrentValue()).append(", ");
+                    columnValues.append(tag.getValue()).append(", ");
                 }
 
                 // Append timestamp

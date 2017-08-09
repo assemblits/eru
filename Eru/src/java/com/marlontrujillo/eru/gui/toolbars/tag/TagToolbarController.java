@@ -90,7 +90,7 @@ public class TagToolbarController extends AnchorPane implements Initializable {
                     Container.getInstance().getTagsAgent().send(new Closure(this) {
                         void doCall(ObservableList<Tag> tags) {
                             for(Tag tag : tags){
-                                if(tag.getTagGroup().equals(tagGroupsChoiceBox.getValue())) tags.remove(tag);
+//                                if(tag.getTagGroup().equals(tagGroupsChoiceBox.getValue())) tags.remove(tag);
                             }
                         }
                     });
@@ -172,7 +172,7 @@ public class TagToolbarController extends AnchorPane implements Initializable {
         newTagDialog.setResultConverter(param -> {
             if (param == buttonTypeOk) {
                 Tag newTag = new Tag(nameTextField.getText());
-                newTag.setTagGroup(groupSelectionChoiceBox.getValue());
+//                newTag.setTagGroup(groupSelectionChoiceBox.getValue());
                 return newTag;
 
             }
@@ -214,11 +214,11 @@ public class TagToolbarController extends AnchorPane implements Initializable {
         tagsTableView.getItems().removeAll(tagsTableView.getItems());
         try {
             for(Tag tagInContainer : Container.getInstance().getTagsAgent().getVal()){
-                if(selectedGroup == null){
-                    tagsTableView.getItems().add(tagInContainer);
-                } else if(tagInContainer.getTagGroup().equals(selectedGroup)){
-                    tagsTableView.getItems().add(tagInContainer);
-                }
+//                if(selectedGroup == null){
+//                    tagsTableView.getItems().add(tagInContainer);
+//                } else if(tagInContainer.getTagGroup().equals(selectedGroup)){
+//                    tagsTableView.getItems().add(tagInContainer);
+//                }
             }
         } catch (Exception e){
             LogUtil.logger.error("TagToolbar cannot get tag groups from container.", e);
@@ -229,7 +229,7 @@ public class TagToolbarController extends AnchorPane implements Initializable {
         tagGroupsChoiceBox.getItems().clear();
         try {
             for(Tag tagInContainer : Container.getInstance().getTagsAgent().getVal()){
-                if(!tagGroupsChoiceBox.getItems().contains(tagInContainer.getTagGroup())) tagGroupsChoiceBox.getItems().add(tagInContainer.getTagGroup());
+//                if(!tagGroupsChoiceBox.getItems().contains(tagInContainer.getTagGroup())) tagGroupsChoiceBox.getItems().add(tagInContainer.getTagGroup());
             }
         } catch (Exception e){
             LogUtil.logger.error("TagToolbar cannot get tag groups from container.", e);

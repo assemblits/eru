@@ -280,20 +280,12 @@ public class TagModificationsController extends AnchorPane implements Initializa
                                 tagInEdition.setTagSourceName(tagsListView.getSelectionModel().getSelectedItem());
                                 break;
                             case LOGICAL:
-                                tagInEdition.setTagSourceName(tagsListView.getSelectionModel().getSelectedItem());
-                                tagInEdition.setLogicalCondition(
-                                        logicalConditionChoiceBox.getSelectionModel().getSelectedItem().equals("<") ? Tag.LogicalCondition.LESS_THAN :
-                                                logicalConditionChoiceBox.getSelectionModel().getSelectedItem().equals("<=") ? Tag.LogicalCondition.LESS_THAN_OR_EQUAL :
-                                                        logicalConditionChoiceBox.getSelectionModel().getSelectedItem().equals(">") ? Tag.LogicalCondition.GREATER_THAN :
-                                                                logicalConditionChoiceBox.getSelectionModel().getSelectedItem().equals(">=") ? Tag.LogicalCondition.GREATER_THAN_OR_EQUAL :
-                                                                        Tag.LogicalCondition.EQUAL);
-                                tagInEdition.setLogicalThreshold(Integer.parseInt(logicalThresholdTextField.getText()));
                                 break;
                         }
 
                         tagInEdition.setAlarmEnabled(alarmEnableCheckBox.isSelected());
                         if(alarmGroupNameTextField.getText() != null && (!alarmGroupNameTextField.getText().isEmpty())){
-                            tagInEdition.setAlarmGroupName(alarmGroupNameTextField.getText());
+//                            tagInEdition.setAlarmGroupName(alarmGroupNameTextField.getText());
                         }
                         if(alarmScriptTextArea.getText() != null && (!alarmScriptTextArea.getText().isEmpty())){
                             tagInEdition.setAlarmScript(alarmScriptTextArea.getText());
@@ -320,7 +312,7 @@ public class TagModificationsController extends AnchorPane implements Initializa
         enableTagCheckBox.setSelected(tagInEdition.getEnabled());
         disableTagEditor(!tagInEdition.getEnabled());
 
-        groupTextField.setText(tagInEdition.getTagGroup() == null ? "" : tagInEdition.getTagGroup());
+        groupTextField.setText(tagInEdition.getGroupName() == null ? "" : tagInEdition.getGroupName());
         nameTextField.setText(tagInEdition.getName() == null ? "" : tagInEdition.getName());
         descriptionTextArea.setText(tagInEdition.getDescription() == null ? "" : tagInEdition.getDescription());
         maskTextField.setText(Integer.toString(tagInEdition.getMask()));
@@ -331,7 +323,6 @@ public class TagModificationsController extends AnchorPane implements Initializa
 
         alarmEnableCheckBox.setSelected(tagInEdition.getAlarmEnabled());
         alarmGroupNameTextField.setDisable(!tagInEdition.getAlarmEnabled());
-        alarmGroupNameTextField.setText(tagInEdition.getAlarmGroupName() == null ? "" : tagInEdition.getAlarmGroupName());
         alarmScriptTextArea.setDisable(!tagInEdition.getAlarmEnabled());
         alarmScriptTextArea.setText(tagInEdition.getAlarmScript() == null ? "" : tagInEdition.getAlarmScript());
 
@@ -354,28 +345,6 @@ public class TagModificationsController extends AnchorPane implements Initializa
                 }
             }
         }
-
-        if(tagInEdition.getLogicalCondition() != null) {
-            switch (tagInEdition.getLogicalCondition()) {
-                case LESS_THAN:
-                    logicalConditionChoiceBox.getSelectionModel().select("<");
-                    break;
-                case LESS_THAN_OR_EQUAL:
-                    logicalConditionChoiceBox.getSelectionModel().select("<=");
-                    break;
-                case GREATER_THAN:
-                    logicalConditionChoiceBox.getSelectionModel().select(">");
-                    break;
-                case GREATER_THAN_OR_EQUAL:
-                    logicalConditionChoiceBox.getSelectionModel().select(">=");
-                    break;
-                case EQUAL:
-                    logicalConditionChoiceBox.getSelectionModel().select("==");
-                    break;
-            }
-        }
-
-        logicalThresholdTextField.setText(String.valueOf(tagInEdition.getLogicalThreshold()));
     }
 
     private void disableTagEditor(boolean isDisable){

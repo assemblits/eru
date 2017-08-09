@@ -55,7 +55,7 @@ public class ConnectionsTable extends EruTable<Connection> {
 
 
         // **** General Cells **** //
-        groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
+        groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
 
@@ -304,6 +304,7 @@ public class ConnectionsTable extends EruTable<Connection> {
                 case SERIAL:
                     SerialConnection newSerialConnection = new SerialConnection();
                     newSerialConnection.setName(results.getKey());
+                    newSerialConnection.setGroupName("Connections");
                     this.items.add(newSerialConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newSerialConnection);
@@ -311,6 +312,7 @@ public class ConnectionsTable extends EruTable<Connection> {
                 case TCP:
                     TcpConnection newTcpConnection = new TcpConnection();
                     newTcpConnection.setName(results.getKey());
+                    newTcpConnection.setGroupName("Connections");
                     this.items.add(newTcpConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newTcpConnection);
@@ -343,7 +345,7 @@ public class ConnectionsTable extends EruTable<Connection> {
                         (textToFilter.getValue() == null
                         || textToFilter.getValue().isEmpty()
                         || connection.getName().startsWith(textToFilter.getValue())
-                        || connection.getGroup().startsWith(textToFilter.getValue()))
+                        || connection.getGroupName().startsWith(textToFilter.getValue()))
         ));
     }
 }
