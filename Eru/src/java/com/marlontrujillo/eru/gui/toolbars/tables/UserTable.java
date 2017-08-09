@@ -93,14 +93,13 @@ public class UserTable extends EruTable<User> {
 
     @Override
     public void setTextToFilter(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->{
-                    this.filteredItems.setPredicate(user ->
-                            (textToFilter.getValue() == null
-                                    || textToFilter.getValue().isEmpty()
-                                    || user.getUserName().startsWith(textToFilter.getValue())
-                                    || user.getGroup().startsWith(textToFilter.getValue()))
-                    );
-                }
+        textToFilter.addListener(observable ->
+                this.filteredItems.setPredicate(user ->
+                        (textToFilter.getValue() == null
+                                || textToFilter.getValue().isEmpty()
+                                || user.getUserName().startsWith(textToFilter.getValue())
+                                || user.getGroup().startsWith(textToFilter.getValue()))
+                )
         );
     }
 

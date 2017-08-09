@@ -28,6 +28,7 @@ public class  Device {
     private List<Address>           addresses;
     private BooleanProperty         zeroBased;
     private Connection              connection;
+    private StringProperty          group;
 
     /* ********** Constructors ********** */
     public Device() {
@@ -156,6 +157,17 @@ public class  Device {
     }
     public void setZeroBased(boolean zeroBased) {
         this.zeroBased.set(zeroBased);
+    }
+
+    @Column(name = "project_group")
+    public String getGroup() {
+        return group.get();
+    }
+    public StringProperty groupProperty() {
+        return group;
+    }
+    public void setGroup(String group) {
+        this.group.set(group);
     }
 
     @Override

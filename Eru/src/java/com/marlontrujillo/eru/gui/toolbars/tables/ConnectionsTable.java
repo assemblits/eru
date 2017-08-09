@@ -33,7 +33,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
         TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
-        TableColumn<Connection, Boolean> enableNameColumn   = new TableColumn<>("Enable");
+        TableColumn<Connection, Boolean> enabledColumn   = new TableColumn<>("Enable");
         TableColumn<Connection, Integer> timeoutColumn      = new TableColumn<>("Timeout");
         TableColumn<Connection, Integer> samplingColumn     = new TableColumn<>("Sampling");
         TableColumn<Connection, Boolean> connectedColumn    = new TableColumn<>("Connected");
@@ -66,9 +66,9 @@ public class ConnectionsTable extends EruTable<Connection> {
         typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         typeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
 
-        enableNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
-        enableNameColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
-        enableNameColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enableNameColumn));
+        enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
+        enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
         timeoutColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         timeoutColumn.setCellValueFactory(param -> param.getValue().timeoutProperty().asObject());
@@ -234,7 +234,7 @@ public class ConnectionsTable extends EruTable<Connection> {
                 groupColumn,
                 nameColumn,
                 typeColumn,
-                enableNameColumn,
+                enabledColumn,
                 timeoutColumn,
                 samplingColumn,
                 connectedColumn,
