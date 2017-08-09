@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -56,13 +57,13 @@ public class ConnectionsTable extends EruTable<Connection> {
         // **** General Cells **** //
         groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
 
         nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         typeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
 
         enableNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
@@ -106,7 +107,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         // **** Serial Cells **** //
-        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         serialPortColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -136,7 +137,7 @@ public class ConnectionsTable extends EruTable<Connection> {
             }
         }));
 
-        serialDatabitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialDatabitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialDatabitsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -156,7 +157,7 @@ public class ConnectionsTable extends EruTable<Connection> {
             }
         }));
 
-        serialParityColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialParityColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         serialParityColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -186,7 +187,7 @@ public class ConnectionsTable extends EruTable<Connection> {
             }
         }));
 
-        serialFrameEncodingColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        serialFrameEncodingColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialFrameEncodingColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -207,7 +208,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         });
         tcpHostnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        tcpPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        tcpPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         tcpPortColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof TcpConnection) {
@@ -295,28 +296,44 @@ public class ConnectionsTable extends EruTable<Connection> {
             return null;
         });
 
-        // SHOW!
+        // SHOW dialog and get result
         Optional<Pair<String, String>> result = dialog.showAndWait();
-
 
         result.ifPresent(results -> {
             switch (results.getValue()){
                 case SERIAL:
                     SerialConnection newSerialConnection = new SerialConnection();
                     newSerialConnection.setName(results.getKey());
-                    this.getItems().add(newSerialConnection);
+                    this.items.add(newSerialConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newSerialConnection);
                     break;
                 case TCP:
                     TcpConnection newTcpConnection = new TcpConnection();
                     newTcpConnection.setName(results.getKey());
-                    this.getItems().add(newTcpConnection);
+                    this.items.add(newTcpConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newTcpConnection);
                     break;
             }
         });
+
+        // *******************************************************************************
+        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
+        // When a new object is added to the table, a new filteredList has to be created
+        // and the items updated, because the filteredList is non-editable. So, despite the
+        // filtered List is setted to the tableview, a list is used in the background. The
+        // filtered list is only used to be able to filter using the textToFilter.
+        //
+        //Wrap ObservableList into FilteredList
+        super.filteredItems = new FilteredList<>(this.items);
+        super.setItems(this.filteredItems);
+
+        // Check if a textToFilter is setted
+        if (super.textToFilter != null){
+            setTextToFilter(textToFilter);
+        }
+        // *******************************************************************************
     }
 
     @Override

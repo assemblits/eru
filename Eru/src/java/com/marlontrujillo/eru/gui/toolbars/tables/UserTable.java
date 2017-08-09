@@ -27,15 +27,15 @@ public class UserTable extends EruTable<User> {
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
 
         userNameColumn.setCellValueFactory(param -> param.getValue().userNameProperty());
         userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
 
         firstNameColumn.setCellValueFactory(param -> param.getValue().firstNameProperty());
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        firstNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
 
         lastNameColumn.setCellValueFactory(param -> param.getValue().lastNameProperty());
         lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -70,6 +70,8 @@ public class UserTable extends EruTable<User> {
     public void addNewItem() {
         User newUser = new User();
         this.items.add(newUser);
+        this.getSelectionModel().clearSelection();
+        this.getSelectionModel().select(newUser);
 
         // *******************************************************************************
         // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
@@ -81,8 +83,6 @@ public class UserTable extends EruTable<User> {
         //Wrap ObservableList into FilteredList
         super.filteredItems = new FilteredList<>(this.items);
         super.setItems(this.filteredItems);
-        this.getSelectionModel().clearSelection();
-        this.getSelectionModel().select(newUser);
 
         // Check if a textToFilter is setted
         if (super.textToFilter != null){

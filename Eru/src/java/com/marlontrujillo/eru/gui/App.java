@@ -9,6 +9,7 @@ import com.marlontrujillo.eru.gui.toolbars.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
+import com.marlontrujillo.eru.util.JpaUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -92,33 +93,27 @@ public class App extends Application {
     }
 
     public void showGroup(Group selectedGroup) {
+        this.skeleton.getMainPane().getChildren().clear();
         switch (selectedGroup.getType()) {
             case ROOT:
                 break;
             case CONNECTION:
-                this.skeleton.getMainPane().getChildren().clear();
                 this.table = new ConnectionsTable(this.project.getConnections());
-                AnchorPane.setTopAnchor(table, 0.0);
-                AnchorPane.setBottomAnchor(table, 0.0);
-                AnchorPane.setRightAnchor(table, 0.0);
-                AnchorPane.setLeftAnchor(table, 0.0);
-                this.skeleton.getMainPane().getChildren().add(table);
                 break;
             case DEVICE:
                 break;
             case TAG:
                 break;
             case USER:
-                this.skeleton.getMainPane().getChildren().clear();
                 this.table = new UserTable(this.project.getUsers());
-                AnchorPane.setTopAnchor(table, 0.0);
-                AnchorPane.setBottomAnchor(table, 0.0);
-                AnchorPane.setRightAnchor(table, 0.0);
-                AnchorPane.setLeftAnchor(table, 0.0);
-                this.skeleton.getMainPane().getChildren().add(table);
-                this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
                 break;
         }
+        AnchorPane.setTopAnchor(table, 0.0);
+        AnchorPane.setBottomAnchor(table, 0.0);
+        AnchorPane.setRightAnchor(table, 0.0);
+        AnchorPane.setLeftAnchor(table, 0.0);
+        this.skeleton.getMainPane().getChildren().add(table);
+        this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
         this.skeleton.getSearchTextField().setText(selectedGroup.getName());
     }
 
@@ -169,6 +164,7 @@ public class App extends Application {
                     }
                     break;
                 case EXIT_APP:
+                    JpaUtil.getGlobalEntityManager().close();
                     Platform.exit();
                     break;
             }
