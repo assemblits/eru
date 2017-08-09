@@ -13,20 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e/_metadata_/metadata" afterPath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e/_metadata_/metadata" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e/_metadata_/metadata.values.at" afterPath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e/_metadata_/metadata.values.at" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
     </list>
     <ignored path="PowerSceneViewer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,10 +102,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="81">
+                <state relative-caret-position="-104">
                   <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -132,11 +123,21 @@
           <file leaf-file-name="Connection.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-319">
-                  <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+                <state relative-caret-position="145">
+                  <caret line="19" column="41" lean-forward="false" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="416">
+                  <caret line="118" column="42" lean-forward="false" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -145,24 +146,25 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="EruTable.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="EruTable.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="320">
-                  <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+                <state relative-caret-position="464">
+                  <caret line="41" column="40" lean-forward="false" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
                   <folding>
                     <element signature="imports" expanded="true" />
+                    <element signature="method#EruTable#0;class#EruTable#0" expanded="false" />
                     <element signature="method#deleteSelectedItems#0;class#EruTable#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="UserTable.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="UserTable.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="97">
-                  <caret line="52" column="9" lean-forward="false" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
+                <state relative-caret-position="264">
+                  <caret line="78" column="82" lean-forward="false" selection-start-line="78" selection-start-column="82" selection-end-line="78" selection-end-column="82" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -173,8 +175,8 @@
           <file leaf-file-name="ConnectionsTable.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="476">
-                  <caret line="293" column="13" lean-forward="true" selection-start-line="293" selection-start-column="13" selection-end-line="293" selection-end-column="13" />
+                <state relative-caret-position="3034">
+                  <caret line="324" column="34" lean-forward="false" selection-start-line="324" selection-start-column="34" selection-end-line="324" selection-end-column="34" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="class#4247:4578" expanded="false" />
@@ -304,14 +306,14 @@
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
       </list>
     </option>
   </component>
@@ -1463,12 +1465,12 @@
       <workItem from="1501985404915" duration="557000" />
       <workItem from="1502125884381" duration="19564000" />
       <workItem from="1502217072810" duration="12022000" />
-      <workItem from="1502229531858" duration="337000" />
+      <workItem from="1502229531858" duration="5160000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="710325000" />
+    <option name="totallyTimeSpent" value="715148000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1618,16 +1620,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/login/Login.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="10" column="168" lean-forward="true" selection-start-line="10" selection-start-column="138" selection-end-line="10" selection-end-column="168" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TextInputDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1857,6 +1849,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1864,14 +1857,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="124" column="74" lean-forward="false" selection-start-line="124" selection-start-column="74" selection-end-line="124" selection-end-column="74" />
-          <folding />
+          <folding>
+            <element signature="method#deleteMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+            <element signature="method#selectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+            <element signature="method#unselectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1883,13 +1873,6 @@
         <state relative-caret-position="345">
           <caret line="55" column="53" lean-forward="false" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="53" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TableView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="843" column="35" lean-forward="false" selection-start-line="843" selection-start-column="35" selection-end-line="843" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -1929,16 +1912,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-319">
-          <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="448">
@@ -1949,7 +1922,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
+        <state relative-caret-position="-104">
           <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1963,20 +1936,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/collections/transformation/TransformationList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="52" column="9" lean-forward="false" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
+        <state relative-caret-position="251">
+          <caret line="74" column="45" lean-forward="false" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
+          <folding>
+            <element signature="e#2209#2210#0" expanded="false" />
+            <element signature="e#2238#2239#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="19" column="41" lean-forward="false" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TableView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="842" column="22" lean-forward="false" selection-start-line="842" selection-start-column="22" selection-end-line="842" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="293" column="13" lean-forward="true" selection-start-line="293" selection-start-column="13" selection-end-line="293" selection-end-column="13" />
+        <state relative-caret-position="3034">
+          <caret line="324" column="34" lean-forward="false" selection-start-line="324" selection-start-column="34" selection-end-line="324" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#4247:4578" expanded="false" />
@@ -1996,13 +1988,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="118" column="42" lean-forward="false" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        <state relative-caret-position="464">
+          <caret line="41" column="40" lean-forward="false" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#EruTable#0;class#EruTable#0" expanded="false" />
             <element signature="method#deleteSelectedItems#0;class#EruTable#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="78" column="82" lean-forward="false" selection-start-line="78" selection-start-column="82" selection-end-line="78" selection-end-column="82" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

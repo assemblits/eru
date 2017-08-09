@@ -2,6 +2,7 @@ package com.marlontrujillo.eru.gui.toolbars.tables;
 
 import com.marlontrujillo.eru.user.User;
 import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -68,20 +69,39 @@ public class UserTable extends EruTable<User> {
     @Override
     public void addNewItem() {
         User newUser = new User();
-        this.getItems().add(new User());
+        this.items.add(newUser);
+
+        // *******************************************************************************
+        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
+        // When a new object is added to the table, a new filteredList has to be created
+        // and the items updated, because the filteredList is non-editable. So, despite the
+        // filtered List is setted to the tableview, a list is used in the background. The
+        // filtered list is only used to be able to filter using the textToFilter.
+        //
+        //Wrap ObservableList into FilteredList
+        super.filteredItems = new FilteredList<>(this.items);
+        super.setItems(this.filteredItems);
         this.getSelectionModel().clearSelection();
         this.getSelectionModel().select(newUser);
+
+        // Check if a textToFilter is setted
+        if (super.textToFilter != null){
+            setTextToFilter(textToFilter);
+        }
+        // *******************************************************************************
     }
 
     @Override
-    public void addListenerToFilterTable(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->
-                this.filteredList.setPredicate(user ->
-                        (textToFilter.getValue() == null
-                                || textToFilter.getValue().isEmpty()
-                                || user.getUserName().startsWith(textToFilter.getValue())
-                                || user.getGroup().startsWith(textToFilter.getValue()))
-                ));
+    public void setTextToFilter(StringProperty textToFilter) {
+        textToFilter.addListener(observable ->{
+                    this.filteredItems.setPredicate(user ->
+                            (textToFilter.getValue() == null
+                                    || textToFilter.getValue().isEmpty()
+                                    || user.getUserName().startsWith(textToFilter.getValue())
+                                    || user.getGroup().startsWith(textToFilter.getValue()))
+                    );
+                }
+        );
     }
 
 }

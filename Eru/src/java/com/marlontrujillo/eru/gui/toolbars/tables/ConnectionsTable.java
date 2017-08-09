@@ -320,9 +320,9 @@ public class ConnectionsTable extends EruTable<Connection> {
     }
 
     @Override
-    public void addListenerToFilterTable(StringProperty textToFilter) {
+    public void setTextToFilter(StringProperty textToFilter) {
         textToFilter.addListener(observable ->
-                this.filteredList.setPredicate(connection ->
+                this.filteredItems.setPredicate(connection ->
                         (textToFilter.getValue() == null
                         || textToFilter.getValue().isEmpty()
                         || connection.getName().startsWith(textToFilter.getValue())

@@ -2,8 +2,8 @@ package com.marlontrujillo.eru.gui.toolbars.tables;
 
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableView;
 
 import java.util.List;
@@ -13,18 +13,15 @@ import java.util.List;
  */
 public abstract class EruTable<T> extends TableView<T> {
 
-    private StringProperty      textToFilter;
-    protected FilteredList<T>   filteredList;
-    private SortedList<T>       sortedList; // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
+    protected StringProperty    textToFilter;
+    protected ObservableList<T> items;
+    protected FilteredList<T>   filteredItems;
 
     EruTable(List<T> items) {
-        this.filteredList   = new FilteredList<>(FXCollections.observableList(items));
-        this.sortedList     = new SortedList<>(filteredList);
-        this.setItems(this.sortedList);
-//        this.setItems(FXCollections.observableList(items));
+        this.items = FXCollections.observableList(items);
+        this.filteredItems = new FilteredList<>(this.items, t -> true);
+        this.setItems(this.filteredItems);
     }
-
-    public abstract void addNewItem();
 
     public void deleteSelectedItems() {
         final int CURRENT_INDEX = this.getSelectionModel().getSelectedIndex();
@@ -40,5 +37,7 @@ public abstract class EruTable<T> extends TableView<T> {
         this.getSelectionModel().clearSelection();
     }
 
-    public abstract void addListenerToFilterTable(StringProperty textToFilter);
+    public abstract void addNewItem();
+
+    public abstract void setTextToFilter(StringProperty textToFilter);
 }

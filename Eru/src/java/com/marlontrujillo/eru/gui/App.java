@@ -1,7 +1,6 @@
 package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
-import com.marlontrujillo.eru.comm.connection.SerialConnection;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.toolbars.tables.ConnectionsTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.EruTable;
@@ -12,8 +11,6 @@ import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -106,7 +103,6 @@ public class App extends Application {
                 AnchorPane.setRightAnchor(table, 0.0);
                 AnchorPane.setLeftAnchor(table, 0.0);
                 this.skeleton.getMainPane().getChildren().add(table);
-                this.table.addListenerToFilterTable(this.skeleton.getSearchTextField().textProperty());
                 break;
             case DEVICE:
                 break;
@@ -120,6 +116,7 @@ public class App extends Application {
                 AnchorPane.setRightAnchor(table, 0.0);
                 AnchorPane.setLeftAnchor(table, 0.0);
                 this.skeleton.getMainPane().getChildren().add(table);
+                this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
                 break;
         }
         this.skeleton.getSearchTextField().setText(selectedGroup.getName());
