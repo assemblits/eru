@@ -3,6 +3,7 @@ package com.marlontrujillo.eru.gui;
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.toolbars.tables.ConnectionsTable;
+import com.marlontrujillo.eru.gui.toolbars.tables.DeviceTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.EruTable;
 import com.marlontrujillo.eru.gui.toolbars.tables.UserTable;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
@@ -101,6 +102,7 @@ public class App extends Application {
                 this.table = new ConnectionsTable(this.project.getConnections());
                 break;
             case DEVICE:
+                this.table = new DeviceTable(this.project.getDevices());
                 break;
             case TAG:
                 break;
