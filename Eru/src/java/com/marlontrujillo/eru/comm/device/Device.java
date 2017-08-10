@@ -2,6 +2,7 @@ package com.marlontrujillo.eru.comm.device;
 
 import com.marlontrujillo.eru.comm.connection.Connection;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,22 +26,22 @@ public class  Device {
     private final StringProperty        status;
     private final IntegerProperty       retries;
     private final BooleanProperty       enabled;
-    private List<Address>               addresses;
+    private ListProperty<Address>       addresses;
     private BooleanProperty             zeroBased;
     private ObjectProperty<Connection>  connection;
     private StringProperty              groupName;
 
     /* ********** Constructors ********** */
     public Device() {
-        name                = new SimpleStringProperty("");
-        unitIdentifier      = new SimpleIntegerProperty(0);
-        status              = new SimpleStringProperty("");
-        retries             = new SimpleIntegerProperty(3);
-        enabled             = new SimpleBooleanProperty(false);
-        addresses           = new ArrayList<>();
-        zeroBased           = new SimpleBooleanProperty(true);
-        connection          = new SimpleObjectProperty<>();
-        groupName           = new SimpleStringProperty("");
+        name            = new SimpleStringProperty("");
+        unitIdentifier  = new SimpleIntegerProperty(0);
+        status          = new SimpleStringProperty("");
+        retries         = new SimpleIntegerProperty(3);
+        enabled         = new SimpleBooleanProperty(false);
+        addresses       = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<>()));
+        zeroBased       = new SimpleBooleanProperty(true);
+        connection      = new SimpleObjectProperty<>();
+        groupName       = new SimpleStringProperty("");
     }
 
     /* ********** Setters and Getters ********** */
@@ -108,24 +109,23 @@ public class  Device {
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    public List<Address> getAddresses() {
-        System.out.println("Getting: " + addresses.getClass() + " - " + addresses);
-//        System.out.println("Getting: " + observableAddresses.getClass() + " - " + observableAddresses);
+    public List<Address> getAddresses(){
+        return addresses.getValue();
+    }
+    public ListProperty<Address> addressesProperty() {
         return addresses;
     }
     public void setAddresses(List<Address> addresses) {
-        System.out.println("Setting: " + addresses.getClass());
-        this.addresses = addresses;
-//        observableAddresses = FXCollections.observableList(addresses);
+        this.addresses.set(FXCollections.observableList(addresses));
     }
 
     @Transient
-    public List<Address> getAddresses(Address.DataModel dataModel){
-        return getAddresses().stream().filter(a -> a.getAddressPK().getDataModel().equals(dataModel)).collect(Collectors.toList());
+    public List<Address> getAddressesByModel(Address.DataModel dataModel){
+        return getAddresses().stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
     }
     @Transient
     public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){
-        return getAddressBlocksFrom(getAddresses(dataModel));
+        return getAddressBlocksFrom(getAddressesByModel(dataModel));
     }
     @Transient
     private List<AddressesBlock> getAddressBlocksFrom(List<Address> addresses) {

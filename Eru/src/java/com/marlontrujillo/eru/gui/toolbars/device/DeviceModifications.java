@@ -46,9 +46,9 @@ public class DeviceModifications extends Tab implements Initializable {
         addressesTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         TableColumn<Address, String> typeColumn = new TableColumn<>("Type");
-        typeColumn.setCellValueFactory(param -> param.getValue().getAddressPK().dataModelProperty().asString());
+//        typeColumn.setCellValueFactory(param -> param.getValue().getAddressPK().dataModelProperty().asString());
         TableColumn<Address, String> addressColumn = new TableColumn<>("Address");
-        addressColumn.setCellValueFactory(param -> param.getValue().getAddressPK().idProperty().asString());
+//        addressColumn.setCellValueFactory(param -> param.getValue().getAddressPK().idProperty().asString());
 
         TableColumn<Address, String> valueColumn = new TableColumn<>("Value");
         valueColumn.setCellValueFactory(param -> param.getValue().currentValueProperty().asString());
@@ -151,10 +151,10 @@ public class DeviceModifications extends Tab implements Initializable {
                 // Check if is in the table
                 boolean isAlreadyInTable = false;
                 for(Address address : addressesTable.getItems()){
-                    if((address.getAddressPK().getId() == i) && (address.getAddressPK().getDataModel().equals(dataType))){
-                        isAlreadyInTable = true;
-                        break;
-                    }
+//                    if((address.getAddressPK().getId() == i) && (address.getAddressPK().getDataModel().equals(dataType))){
+//                        isAlreadyInTable = true;
+//                        break;
+//                    }
                 }
                 if(isAlreadyInTable){
                     continue;
@@ -162,9 +162,9 @@ public class DeviceModifications extends Tab implements Initializable {
 
                 // Configuring
                 Address newAddress = new Address();
-                newAddress.getAddressPK().setId(i);
-                newAddress.getAddressPK().setDataModel(dataType);
-                addressesTable.getItems().add(newAddress);
+//                newAddress.getAddressPK().setId(i);
+//                newAddress.getAddressPK().setDataModel(dataType);
+//                addressesTable.getItems().add(newAddress);
             }
 
             // Clear the new addresses fields
@@ -199,12 +199,12 @@ public class DeviceModifications extends Tab implements Initializable {
         try {
             device.setName(nameTextField.getText());
             device.getAddresses().retainAll(addressesTable.getItems());
-            addressesTable.getItems().stream()
-                    .filter(addrInTable -> !device.getAddresses().contains(addrInTable))
-                    .forEach(newAddress -> {
-                        newAddress.getAddressPK().setDevice(device);
-                        device.getAddresses().add(newAddress);
-                    });
+//            addressesTable.getItems().stream()
+//                    .filter(addrInTable -> !device.getAddresses().contains(addrInTable))
+//                    .forEach(newAddress -> {
+//                        newAddress.getAddressPK().setDevice(device);
+//                        device.getAddresses().add(newAddress);
+//                    });
             // Overwrite the new device configuration
             device.setEnabled(enableCheckBox.isSelected());
             device.setZeroBased(zeroBasedCheckBox.isSelected());

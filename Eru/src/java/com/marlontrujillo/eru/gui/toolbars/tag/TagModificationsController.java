@@ -115,7 +115,7 @@ public class TagModificationsController extends AnchorPane implements Initializa
                     try{
                         Container.getInstance().getDevicesAgent().getVal().stream()
                                 .filter(dev  -> dev.getName().equals(selecteDevice))
-                                .forEach(dev -> dev.getAddresses().stream().forEach(address -> addressListView.getItems().add(String.valueOf(address.getAddressPK().toString()))));
+                                .forEach(dev -> dev.getAddresses().stream().forEach(address -> addressListView.getItems().add(String.valueOf(address.toString()))));
                         Collections.sort(addressListView.getItems());
                     } catch (Exception e){
                         LogUtil.logger.error("Tag toolbar cannot get the addresses of " + selecteDevice , e);
@@ -260,7 +260,7 @@ public class TagModificationsController extends AnchorPane implements Initializa
                                             .filter(dev -> dev.getName().equals(deviceListView.getSelectionModel().getSelectedItem()))
                                             .forEach(dev -> {
                                                 for (Address addr : dev.getAddresses()) {
-                                                    if (addr.getAddressPK().toString().equals(addressListView.getSelectionModel().getSelectedItem())) {
+                                                    if (addr.toString().equals(addressListView.getSelectionModel().getSelectedItem())) {
                                                         finalTagInEdition.setAddress(addr);
                                                     }
                                                 }
@@ -330,13 +330,13 @@ public class TagModificationsController extends AnchorPane implements Initializa
 
         tagTypeScreenConfig(tagInEdition.getTagType() == null ? Tag.TagType.INPUT : tagInEdition.getTagType());
 
-        if((tagInEdition.getAddress() != null) && (tagInEdition.getAddress().getAddressPK().getDevice() != null)){
-            final Device tagDevice = tagInEdition.getAddress().getAddressPK().getDevice();
-            deviceListView.getSelectionModel().select(tagDevice.getName());
-            tagDevice.getAddresses().stream().forEach(addr -> addressListView.getItems().add(addr.getAddressPK().toString()));
-            Collections.sort(addressListView.getItems());
-            addressListView.getSelectionModel().select(tagInEdition.getAddress().getAddressPK().toString());
-        }
+//        if((tagInEdition.getAddress() != null) && (tagInEdition.getAddress().getDevice() != null)){
+//            final Device tagDevice = tagInEdition.getAddress().getDevice();
+//            deviceListView.getSelectionModel().select(tagDevice.getName());
+//            tagDevice.getAddresses().stream().forEach(addr -> addressListView.getItems().add(addr.toString()));
+//            Collections.sort(addressListView.getItems());
+//            addressListView.getSelectionModel().select(tagInEdition.getAddress().toString());
+//        }
 
         if(tagInEdition.getTagSourceName() != null) {
             for(String tagSourceName : tagsListView.getItems()){

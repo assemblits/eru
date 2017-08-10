@@ -6,12 +6,12 @@ import com.marlontrujillo.eru.comm.device.Device;
 import com.marlontrujillo.eru.gui.App;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -53,7 +53,7 @@ public class DeviceTable extends EruTable<Device> {
         TableColumn<Device, String> statusColumn            = new TableColumn<>("Status");
         TableColumn<Device, Integer> retriesColumn          = new TableColumn<>("Retries");
         TableColumn<Device, Boolean> enabledColumn          = new TableColumn<>("Enabled");
-        TableColumn<Device, List<Address>> addressesColumn  = new TableColumn<>("Addresses");
+        TableColumn<Device, ObservableList<Address>> addressesColumn  = new TableColumn<>("Addresses");
         TableColumn<Device, Boolean> zeroBasedColumn        = new TableColumn<>("Zero based");
         TableColumn<Device, Connection> connectionColumn    = new TableColumn<>("Connection");
 
@@ -102,7 +102,7 @@ public class DeviceTable extends EruTable<Device> {
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
         addressesColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.33));
-        addressesColumn.setCellValueFactory(new PropertyValueFactory<>("addresses"));
+        addressesColumn.setCellValueFactory(param -> param.getValue().addressesProperty());
         addressesColumn.setCellFactory(param -> new AddressTableCell());
 
         zeroBasedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
@@ -172,10 +172,10 @@ public class DeviceTable extends EruTable<Device> {
     }
 }
 
-class AddressTableCell extends TableCell<Device, List<Address>> {
+class AddressTableCell extends TableCell<Device, ObservableList<Address>> {
 
     @Override
-    protected void updateItem(List<Address> item, boolean empty) {
+    protected void updateItem(ObservableList<Address> item, boolean empty) {
         super.updateItem(item, empty);
         updateViewMode();
     }
@@ -189,11 +189,11 @@ class AddressTableCell extends TableCell<Device, List<Address>> {
             addressesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
             TableColumn<Address, String> typeColumn = new TableColumn<>("Type");
-            typeColumn.setCellValueFactory(param -> param.getValue().getAddressPK().dataModelProperty().asString());
+            typeColumn.setCellValueFactory(param -> param.getValue().dataModelProperty().asString());
             typeColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
 
             TableColumn<Address, String> addressColumn = new TableColumn<>("Address");
-            addressColumn.setCellValueFactory(param -> param.getValue().getAddressPK().idProperty().asString());
+            addressColumn.setCellValueFactory(param -> param.getValue().networkIDProperty().asString());
             addressColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
 
             TableColumn<Address, String> valueColumn = new TableColumn<>("Value");
@@ -232,15 +232,15 @@ class AddressTableCell extends TableCell<Device, List<Address>> {
                     for (int i = firstAddress; i <= lastAddress; i++) {
                         boolean isAlreadyInTable = false;
                         for(Address address : addressesTableView.getItems()){
-                            if((address.getAddressPK().getId() == i) && (address.getAddressPK().getDataModel().equals(dataType))){
+                            if((address.getNetworkID() == i) && (address.getDataModel().equals(dataType))){
                                 isAlreadyInTable = true;
                                 break;
                             }
                         }
                         if(!isAlreadyInTable){
                             Address newAddress = new Address();
-                            newAddress.getAddressPK().setId(i);
-                            newAddress.getAddressPK().setDataModel(dataType);
+                            newAddress.setNetworkID(i);
+                            newAddress.setDataModel(dataType);
                             addressesTableView.getItems().add(newAddress);
                         }
                     }
@@ -261,11 +261,7 @@ class AddressTableCell extends TableCell<Device, List<Address>> {
             });
 
             Button okButton = new Button("OK");
-            okButton.setOnAction(event -> {
-                commitEdit(addressesTableView.getItems());
-                getItem().clear();
-                getItem().addAll(addressesTableView.getItems());
-            });
+            okButton.setOnAction(event -> commitEdit(addressesTableView.getItems()));
 
             ToolBar toolBar = new ToolBar(
                     startAddressTextField,
@@ -299,7 +295,7 @@ class AddressTableCell extends TableCell<Device, List<Address>> {
     }
 
     @Override
-    public void commitEdit(List<Address> newValue) {
+    public void commitEdit(ObservableList<Address> newValue) {
         super.commitEdit(newValue);
     }
 }

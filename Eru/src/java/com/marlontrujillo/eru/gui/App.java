@@ -1,6 +1,8 @@
 package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
+import com.marlontrujillo.eru.comm.device.Address;
+import com.marlontrujillo.eru.comm.device.Device;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.toolbars.tables.*;
 import com.marlontrujillo.eru.gui.toolbars.tree.Group;
@@ -13,6 +15,9 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

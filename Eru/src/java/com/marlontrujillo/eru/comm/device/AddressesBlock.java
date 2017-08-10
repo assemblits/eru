@@ -38,13 +38,13 @@ public class AddressesBlock {
         return isNextToTheFirstAddress(address) || isNextToTheLastAddress(address);
     }
     private boolean isNextToTheFirstAddress(Address address) {
-        return (address.getAddressPK().getId() + 1) == getFirstAddressInBlock().getAddressPK().getId();
+        return (address.getNetworkID() + 1) == getFirstAddressInBlock().getNetworkID();
     }
     private boolean isNextToTheLastAddress(Address address) {
-        return (address.getAddressPK().getId() - 1) == getLastAddressInBlock().getAddressPK().getId();
+        return (address.getNetworkID() - 1) == getLastAddressInBlock().getNetworkID();
     }
     private boolean hasSameDataModel(Address address){
-        return getFirstAddressInBlock().getAddressPK().getDataModel().equals(address.getAddressPK().getDataModel());
+        return getFirstAddressInBlock().getDataModel().equals(address.getDataModel());
     }
 
     public List<Address> get(){
@@ -65,7 +65,7 @@ public class AddressesBlock {
     public Address getAddressWithId(int ID){
         Address found = null;
         for(Address address : block){
-            if (address.getAddressPK().getId() == ID) {
+            if (address.getNetworkID() == ID) {
                 found = address;
                 break;
             }

@@ -3,10 +3,7 @@ package com.marlontrujillo.eru.comm.device;
 import com.marlontrujillo.eru.util.TimeStampProperty;
 import javafx.beans.property.*;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -17,31 +14,61 @@ import java.sql.Timestamp;
 public class Address implements Comparable<Address> {
 
     /* ********** Static Fields ********** */
-    public static enum DataModel {BOOLEAN_READ, BOOLEAN_WRITE, ANALOG_READ, ANALOG_WRITE}
+    public enum DataModel {BOOLEAN_READ, BOOLEAN_WRITE, ANALOG_READ, ANALOG_WRITE}
 
     /* ********** Fields ********** */
-    private AddressPK                         addressPK;
-    private final IntegerProperty             currentValue;
-    private final BooleanProperty             connected;
-    private final StringProperty              status;
-    private final TimeStampProperty timestamp;
+    private final IntegerProperty                   id;
+    private final IntegerProperty                   networkID;
+    private final ObjectProperty<Address.DataModel> dataModel;
+    private final IntegerProperty                   currentValue;
+    private final BooleanProperty                   connected;
+    private final StringProperty                    status;
+    private final TimeStampProperty                 timestamp;
 
     /* ********** Constructor ********** */
     public Address() {
-        addressPK    = new AddressPK();
-        currentValue = new SimpleIntegerProperty();
-        connected    = new SimpleBooleanProperty();
-        status       = new SimpleStringProperty();
-        timestamp    = new TimeStampProperty();
+        this.id            = new SimpleIntegerProperty(0);
+        this.networkID     = new SimpleIntegerProperty(0);
+        this.dataModel     = new SimpleObjectProperty<>(DataModel.ANALOG_WRITE);
+        this.currentValue = new SimpleIntegerProperty();
+        this.connected    = new SimpleBooleanProperty();
+        this.status       = new SimpleStringProperty();
+        this.timestamp    = new TimeStampProperty();
     }
 
     /* ********** Setters and Getters ********** */
-    @EmbeddedId
-    public AddressPK getAddressPK() {
-        return addressPK;
+
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return id.get();
     }
-    public void setAddressPK(AddressPK addressPK) {
-        this.addressPK = addressPK;
+    public IntegerProperty idProperty() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    @Column(name = "network_id")
+    public int getNetworkID() {
+        return networkID.get();
+    }
+    public IntegerProperty networkIDProperty() {
+        return networkID;
+    }
+    public void setNetworkID(int networkID) {
+        this.networkID.set(networkID);
+    }
+
+    @Column(name = "data_model")
+    public DataModel getDataModel() {
+        return dataModel.get();
+    }
+    public ObjectProperty<DataModel> dataModelProperty() {
+        return dataModel;
+    }
+    public void setDataModel(DataModel dataModel) {
+        this.dataModel.set(dataModel);
     }
 
     @Column(name = "current_value")
@@ -94,10 +121,10 @@ public class Address implements Comparable<Address> {
     /* ********** Override Methods ********** */
     @Override
     public int compareTo(Address address) {
-        int compareAddr = address.getAddressPK().getId();
+        int compareAddr = address.getNetworkID();
 
         //ascending order
-        return this.getAddressPK().getId() - compareAddr;
+        return this.getNetworkID() - compareAddr;
 
         //descending order
         //return compareAddr - this.address;
@@ -105,6 +132,6 @@ public class Address implements Comparable<Address> {
 
     @Override
     public String toString() {
-        return getAddressPK().toString();
+        return String.valueOf(getNetworkID());
     }
 }

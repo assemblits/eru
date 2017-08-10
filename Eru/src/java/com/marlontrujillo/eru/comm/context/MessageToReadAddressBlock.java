@@ -20,17 +20,16 @@ import java.time.LocalTime;
  */
 public class MessageToReadAddressBlock implements Message {
 
-    private Device device;
-    private AddressesBlock block;
-    private ModbusTransaction       transaction;
-    private ModbusRequest           request;
-    private boolean                 wasSuccessful;
-
-    private DataModel               dataModel;
-    private int                     offset;
-    private int                     firstSlotToRead;
-    private int                     lastSlotToRead;
-    private Timestamp               now;
+    private Device              device;
+    private AddressesBlock      block;
+    private ModbusTransaction   transaction;
+    private ModbusRequest       request;
+    private boolean             wasSuccessful;
+    private DataModel           dataModel;
+    private int                 offset;
+    private int                 firstSlotToRead;
+    private int                 lastSlotToRead;
+    private Timestamp           now;
 
     /* ** Constructor ** */
     public MessageToReadAddressBlock(Device device, AddressesBlock block) {
@@ -43,9 +42,9 @@ public class MessageToReadAddressBlock implements Message {
     @Override
     public void create(){
         offset              = device.isZeroBased() ? 1 : 0;
-        firstSlotToRead     = block.getFirstAddressInBlock().getAddressPK().getId() - offset;
-        lastSlotToRead      = block.getLastAddressInBlock().getAddressPK().getId() - offset;
-        dataModel           = block.get().get(0).getAddressPK().getDataModel();
+        firstSlotToRead     = block.getFirstAddressInBlock().getNetworkID() - offset;
+        lastSlotToRead      = block.getLastAddressInBlock().getNetworkID() - offset;
+        dataModel           = block.get().get(0).getDataModel();
         int totalSlotsToRead = block.getAddressesTotal();
 
         switch (dataModel) {
@@ -116,7 +115,7 @@ public class MessageToReadAddressBlock implements Message {
         return block.getAddressWithId(slot + offset);
     }
     private int extractSlotValueFromResponse(ModbusResponse response, int slot){
-        final int slotInResponse     = slot - firstSlotToRead;
+        final int slotInResponse = slot - firstSlotToRead;
         switch (dataModel) {
             case BOOLEAN_READ:
                 final ReadInputDiscretesResponse booleanWriteResponse = (ReadInputDiscretesResponse) response;
