@@ -1,16 +1,26 @@
 package com.marlontrujillo.eru.gui.toolbars.tables;
 
 import com.marlontrujillo.eru.comm.device.Address;
+import com.marlontrujillo.eru.comm.device.Device;
+import com.marlontrujillo.eru.gui.App;
 import com.marlontrujillo.eru.tag.Tag;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
+import javafx.geometry.Orientation;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +62,7 @@ public class TagTable extends EruTable<Tag> {
 
         tagSourceColumn.setCellValueFactory(param -> param.getValue().tagSourceNameProperty());
         tagSourceColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        tagSourceColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        tagSourceColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
 
         enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
@@ -80,37 +90,19 @@ public class TagTable extends EruTable<Tag> {
             }
         }));
 
-        tagTypeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        tagTypeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         tagTypeColumn.setCellValueFactory(param -> param.getValue().tagTypeProperty());
-        tagTypeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Tag.TagType>() {
-            @Override
-            public String toString(Tag.TagType object) {
-                return object != null ? object.toString() : "";
-            }
-
-            @Override
-            public Tag.TagType fromString(String string) {
-                return Tag.TagType.valueOf(string);
-            }
-        }));
+        tagTypeColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
+                FXCollections.observableArrayList(Tag.TagType.values())
+        ));
 
         statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
         addressColumn.setCellValueFactory(param -> param.getValue().addressProperty());
-        addressColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Address>() {
-            @Override
-            public String toString(Address object) {
-                return object != null ? object.toString() : "";
-            }
-
-            @Override
-            public Address fromString(String string) {
-                return null; // TODO
-            }
-        }));
+        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable());
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -252,5 +244,61 @@ public class TagTable extends EruTable<Tag> {
                                 || device.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
+    }
+}
+
+class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
+
+    @Override
+    protected void updateItem(Address item, boolean empty) {
+        super.updateItem(item, empty);
+        updateViewMode();
+    }
+
+    private void updateViewMode() {
+        setGraphic(null);
+        setText(null);
+        if(isEditing()){
+            VBox box = new VBox();
+
+            ListView<Device> deviceListView = new ListView<>();
+            ListView<Address> addressListView = new ListView<>();
+
+            deviceListView.getItems().addAll(App.getSingleton().getProject().getDevices());
+            deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue!= null) addressListView.getItems().addAll(newValue.addressesProperty());
+            });
+
+            Button okButton = new Button("OK");
+            okButton.setDefaultButton(true);
+            okButton.setOnAction(event -> commitEdit(addressListView.getSelectionModel().getSelectedItem()));
+
+            ToolBar toolBar = new ToolBar(okButton);
+
+            box.getChildren().addAll(new HBox(deviceListView, addressListView), toolBar);
+            setGraphic(box);
+        } else {
+            if(getItem() != null) {
+                setText(getItem().toString());
+            }
+        }
+    }
+
+    @Override
+    public void startEdit() {
+        super.startEdit();
+        updateViewMode();
+    }
+
+    @Override
+    public void cancelEdit() {
+        super.cancelEdit();
+        setText(getItem().toString());
+        setGraphic(null);
+    }
+
+    @Override
+    public void commitEdit(Address newValue) {
+        super.commitEdit(newValue);
     }
 }

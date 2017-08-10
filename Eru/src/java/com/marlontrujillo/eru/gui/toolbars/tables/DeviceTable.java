@@ -103,7 +103,7 @@ public class DeviceTable extends EruTable<Device> {
 
         addressesColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.33));
         addressesColumn.setCellValueFactory(param -> param.getValue().addressesProperty());
-        addressesColumn.setCellFactory(param -> new AddressTableCell());
+        addressesColumn.setCellFactory(param -> new AddressesTableCellForDeviceTable());
 
         zeroBasedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
         zeroBasedColumn.setCellValueFactory(param -> param.getValue().zeroBasedProperty());
@@ -172,7 +172,7 @@ public class DeviceTable extends EruTable<Device> {
     }
 }
 
-class AddressTableCell extends TableCell<Device, ObservableList<Address>> {
+class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<Address>> {
 
     @Override
     protected void updateItem(ObservableList<Address> item, boolean empty) {
@@ -262,6 +262,7 @@ class AddressTableCell extends TableCell<Device, ObservableList<Address>> {
 
             Button okButton = new Button("OK");
             okButton.setOnAction(event -> commitEdit(addressesTableView.getItems()));
+            okButton.setDefaultButton(true);
 
             ToolBar toolBar = new ToolBar(
                     startAddressTextField,

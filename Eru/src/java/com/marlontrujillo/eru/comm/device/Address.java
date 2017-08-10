@@ -6,6 +6,8 @@ import javafx.beans.property.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+import static com.marlontrujillo.eru.comm.device.Address.DataModel.*;
+
 /**
  * Created by mtrujillo on 13/05/14.
  */
@@ -29,7 +31,7 @@ public class Address implements Comparable<Address> {
     public Address() {
         this.id            = new SimpleIntegerProperty(0);
         this.networkID     = new SimpleIntegerProperty(0);
-        this.dataModel     = new SimpleObjectProperty<>(DataModel.ANALOG_WRITE);
+        this.dataModel     = new SimpleObjectProperty<>(ANALOG_WRITE);
         this.currentValue = new SimpleIntegerProperty();
         this.connected    = new SimpleBooleanProperty();
         this.status       = new SimpleStringProperty();
@@ -132,6 +134,22 @@ public class Address implements Comparable<Address> {
 
     @Override
     public String toString() {
-        return String.valueOf(getNetworkID());
+        String dataModelStands = "";
+        switch (this.getDataModel()) {
+            case BOOLEAN_READ:
+                dataModelStands = "BR";
+                break;
+            case BOOLEAN_WRITE:
+                dataModelStands = "BW";
+                break;
+            case ANALOG_READ:
+                dataModelStands = "AR";
+                break;
+            case ANALOG_WRITE:
+                dataModelStands = "AW";
+                break;
+        }
+
+        return String.valueOf(getNetworkID()) + "-" + dataModelStands;
     }
 }
