@@ -1,10 +1,34 @@
 <h1 align="center">
+  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/new-toolboxes/lib/graphic-design/project-icon.png" />
   Eru Server
   <br>
 </h1>
+
 <h4 align="center">An open linux SCADA based on JavaFX.</h4>
 
-![alt text](https://raw.githubusercontent.com/marlontrujillo1080/eru/blob/new-toolboxes/lib/graphic-design/project-icon.png)
+## Resume
+  This app has 4 main things:
+  - Connections.
+  - Devices.
+  - Tags.
+  - Users.
+
+  Basically, in the normal workflow, you:
+  1) Create a "connection" to communicate with remote devices (Like PLC, Solar Panels, Engine controllers, Residence automation (Doors, Lights, Windows, etc) etc).
+  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an address called height in the window device).
+  3) Create a "tag" to represent the actual value of the address of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
+  4) Create a "user" this is to be sure that you have permissions to read the value (in construction).
+  5) Create a "display" to see visualizations linked to the tag. (To draw the windows and see graphically if is closed or open) (in construction)
+
+## Dependencies
+  * Database
+    - Postgresql installed on localhost with the following features:
+      - Username = postgres (Default)
+      - Password = postgres
+      - Port     = 5432 (Default)
+      - A database called "eru" in the public schema.
+  * Modbus:
+    - To be able to connect to the modbus devices (no necessary to run the app) install the drivers on the java lib. (TODO:more details)
 
 ## Key Features
 
