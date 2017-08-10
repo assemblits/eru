@@ -53,7 +53,7 @@ public class Address implements Comparable<Address> {
         this.id.set(id);
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public Device getDevice() {
         return device.get();
     }
@@ -165,4 +165,5 @@ public class Address implements Comparable<Address> {
 
         return String.valueOf(getNetworkID()) + "-" + dataModelStands;
     }
+
 }

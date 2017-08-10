@@ -27,6 +27,7 @@ public class  Device {
     private final IntegerProperty       retries;
     private final BooleanProperty       enabled;
     private ListProperty<Address>       addresses;
+    private List<Address>               _addresses;
     private BooleanProperty             zeroBased;
     private ObjectProperty<Connection>  connection;
     private StringProperty              groupName;
@@ -38,7 +39,7 @@ public class  Device {
         status          = new SimpleStringProperty("");
         retries         = new SimpleIntegerProperty(3);
         enabled         = new SimpleBooleanProperty(false);
-        addresses       = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<>()));
+        _addresses      = new ArrayList<>();
         zeroBased       = new SimpleBooleanProperty(true);
         connection      = new SimpleObjectProperty<>();
         groupName       = new SimpleStringProperty("");
@@ -110,13 +111,21 @@ public class  Device {
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Address> getAddresses(){
-        return addresses.getValue();
+        if(addresses != null){
+            _addresses.clear();
+            _addresses.addAll(addresses.get());
+        }
+        return _addresses;
     }
     public ListProperty<Address> addressesProperty() {
+        this.addresses = new SimpleListProperty<>(FXCollections.observableList(_addresses));
         return addresses;
     }
     public void setAddresses(List<Address> addresses) {
-        this.addresses.set(FXCollections.observableList(addresses));
+        if (this.addresses != null) {
+            this.addresses.set(FXCollections.observableList(addresses));
+        }
+        this._addresses = addresses;
     }
 
     @Transient
