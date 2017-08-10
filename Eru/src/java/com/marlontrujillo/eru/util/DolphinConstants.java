@@ -11,7 +11,7 @@ public class DolphinConstants {
     public static final String ATT_SYSTEM_STATUS            = "system.status";
     public static final String ATT_COMMUNICATIONS_CONNECTED = "system.comm.connected";
     public static final String ATT_COMMUNICATIONS_BLOCKED   = "system.comm.blocked";
-    public static final String ATT_HISTORIAN_RUNNING        = "system.historian.running";
+    public static final String ATT_HISTORIAN_RUNNING        = "system.export.running";
     public static final String ATT_DATABASE_LOADED          = "system.database.loaded";
 
     public static final String TYPE_TO_WRITE                = "to_write";

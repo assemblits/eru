@@ -12,7 +12,97 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="" />
+    <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/about/About.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/AddressPK.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Range.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/login/Login.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/connections/FieldConnModificationsController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/connections/FieldConnToolbarController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/device/DeviceModifications.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/device/DeviceToolbar.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/ConnectionsTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tag/TagModificationsController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tag/TagToolbarController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/Group.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/GroupTreeCell.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/ProjectTree.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/user/UserModificationsController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/login/Login.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/login/key-image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/preloader/Preloader.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/preloader/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/connections/FieldConn.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/connections/FieldConnModifications.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/console/StatusBar.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/device/DeviceModifications.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/device/DevicesToolbar.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tag/TagModifications.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tag/TagTableView.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tag/TagToolbar.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/user/UserModifications.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/user/UsersToolbar.fxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/user/folder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/user/tag.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Capa 1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Copia_de_seguridad_de_Logo.cdr" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Logo.cdr" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Logo.cpt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Logo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/LogoSVG.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Logo_Designer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/Logo_Large.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/bright-style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/dark-style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/psvNameImage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/warningIcon.png" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/PreloaderController.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Preloader.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/GensetScreen.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/hmi/GensetScreen.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/GensetsOverview.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/hmi/GensetsOverview.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/panel/StatusToolbar.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/hmi/StatusToolbar.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/historian/HistorianToolbarController.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/export/HistorianToolbarController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/DatabaseTrendExtractor.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trend/DatabaseTrendExtractor.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/SeriesAnalyzer.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trend/SeriesAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/Trend.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trend/Trend.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/TrendColor.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trend/TrendColor.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trends/TrendsGraphicAnalyzer.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/trend/TrendsGraphicAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/reporting/ReportExportationController.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/export/ReportExportationController.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/GensetScreen.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/GensetScreen.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/GensetsOverview.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/GensetsOverview.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/StatusToolbar.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/StatusToolbar.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/excel.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/excel.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/excelIcon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/excelIcon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/fullscreenIcon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/fullscreenIcon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/pdf.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/pdf.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/pdfIcon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/pdfIcon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/screenshotIcon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/screenshotIcon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/panel/tableIcon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/hmi/tableIcon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/report/ReportExportation.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/export/ReportExportation.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/historian/HistorianToolbar.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/export/HistorianToolbar.fxml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/connection-icon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/connection-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/device-icon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/device-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/folder.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/folder.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/project-icon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/project-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/tag-icon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/tag-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/tree/user-icon.png" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/tree/user-icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/util/About.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/about/About.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Project.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Project.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectLoaderService.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectLoaderService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/Commands.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/Commands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/DolphinConstants.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/DolphinConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" afterPath="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
+    </list>
     <ignored path="PowerSceneViewer.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -93,7 +183,72 @@
     <favorites_list name="PowerSceneViewer" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="172" column="40" lean-forward="false" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="About.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/about/About.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Alert.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/Alert.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Skeleton.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="44" column="75" lean-forward="false" selection-start-line="44" selection-start-column="70" selection-end-line="44" selection-end-column="91" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Skeleton.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="500">
+              <caret line="60" column="55" lean-forward="true" selection-start-line="60" selection-start-column="55" selection-end-line="60" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#deleteMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+                <element signature="method#selectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+                <element signature="method#unselectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+                <element signature="e#1784#1785#0" expanded="true" />
+                <element signature="e#1849#1850#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -105,7 +260,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Histo</find>
       <find>Historic</find>
       <find>fuelPress</find>
       <find>fuelRate</find>
@@ -135,6 +289,7 @@
       <find>AlertType</find>
       <find>ADdre</find>
       <find>setD</find>
+      <find>S</find>
     </findStrings>
     <replaceStrings>
       <replace>4</replace>
@@ -157,20 +312,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Eru/src/resources/META-INF/log4j.xml" />
-        <option value="$PROJECT_DIR$/Eru/src/groovy/com/marlontrujillo/eru/dolphin/ServerStartupService.groovy" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/JpaUtil.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/DatabaseService.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/DatabaseUpdaterService.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/PreloaderController.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/logger/LabelAppender.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/GroupTreeCell.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/Operator.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/Engineer.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/user/UserModificationsController.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Project.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/ProjectTree.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectLoaderService.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/Group.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Dao.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectSaverService.java" />
@@ -181,17 +323,12 @@
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/skeleton/Skeleton.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton_i18n.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Frame.fxml" />
-        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/SerialConnection.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css" />
-        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/Connection.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/alarming/Alarming.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/historian/Historian.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/TagUtil.java" />
@@ -204,10 +341,28 @@
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/context/MessageToReadAddressBlock.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tag/TagModificationsController.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
-        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java" />
         <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Preloader.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/ConnectionsTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/DeviceTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/EruTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/TagTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/UserTable.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/Group.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/GroupTreeCell.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/ProjectTree.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Project.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectLoaderService.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml" />
+        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml" />
+        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/about/About.fxml" />
+        <option value="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java" />
+        <option value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/about/About.java" />
       </list>
     </option>
   </component>
@@ -276,32 +431,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="gui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -324,49 +453,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="gui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
+              <option name="myItemId" value="about" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -411,32 +502,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tag" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -518,74 +583,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="tables" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -616,11 +613,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="toolbars" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
+              <option name="myItemId" value="about" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -646,67 +639,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="comm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="comm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="device" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eru" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="comm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="connection" />
+              <option name="myItemId" value="alarming" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -749,7 +682,7 @@
     <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib/json" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="true" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/skeleton" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/about" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/SQL Dialects" value="PostgreSQL" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="473" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
@@ -770,19 +703,19 @@
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/about" />
+      <recent name="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/export" />
+      <recent name="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui" />
+      <recent name="$PROJECT_DIR$/Eru/src/java/META-INF" />
+      <recent name="$PROJECT_DIR$/Eru/src" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.marlontrujillo.eru.gui.export" />
       <recent name="com.marlontrujillo.eru.gui" />
       <recent name="com.marlontrujillo.eru.gui.toolbars" />
       <recent name="com.eru" />
       <recent name="com.eru.gui" />
-      <recent name="com.psv.engine.util" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Lab/src/resources/META-INF" />
-      <recent name="$PROJECT_DIR$/Designer/src/resources/META-INF" />
-      <recent name="$PROJECT_DIR$/Engine/src/resources/com/psv/engine/gui/report" />
-      <recent name="$PROJECT_DIR$/Designer/src/resources/com/psv/designer/gui/toolbars/connections" />
-      <recent name="C:\Users\RonaldE\workspace\Engine\src\resources\com\psv\engine\util" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.psv.engine.util" />
@@ -791,12 +724,12 @@
       <recent name="com.psv.engine.log" />
       <recent name="com.psv.client.gui.scada" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui" />
-      <recent name="$PROJECT_DIR$/Eru/src/java/META-INF" />
-      <recent name="$PROJECT_DIR$/Eru/src" />
-      <recent name="$PROJECT_DIR$/Engine/src/resources/META-INF" />
-      <recent name="$PROJECT_DIR$/Engine/src/resources" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Lab/src/resources/META-INF" />
+      <recent name="$PROJECT_DIR$/Designer/src/resources/META-INF" />
+      <recent name="$PROJECT_DIR$/Engine/src/resources/com/psv/engine/gui/report" />
+      <recent name="$PROJECT_DIR$/Designer/src/resources/com/psv/designer/gui/toolbars/connections" />
+      <recent name="C:\Users\RonaldE\workspace\Engine\src\resources\com\psv\engine\util" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1447,12 +1380,12 @@
       <workItem from="1502217072810" duration="12022000" />
       <workItem from="1502229531858" duration="7463000" />
       <workItem from="1502284717280" duration="32901000" />
-      <workItem from="1502371670163" duration="8954000" />
+      <workItem from="1502371670163" duration="13449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="759306000" />
+    <option name="totallyTimeSpent" value="763801000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1465,6 +1398,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1366" y="25" width="1920" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1479,17 +1413,17 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4181626" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32920536" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13095239" sideWeight="0.47678572" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22619048" sideWeight="0.47678572" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24836601" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20021646" sideWeight="0.48560768" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24891774" sideWeight="0.48560768" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24409449" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12793177" sideWeight="0.57798165" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18869936" sideWeight="0.42201835" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26399156" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26298702" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14978679" sideWeight="0.5573593" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1592,7 +1526,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1601,209 +1535,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Dynamo/src/java/eu/hansolo/medusa/Gauge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="130" column="33" lean-forward="false" selection-start-line="130" selection-start-column="33" selection-end-line="130" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/90bfb632-be70-46bf-a831-eca67e1dd216/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/TcpConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="71" column="24" lean-forward="false" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
-          <folding>
-            <element signature="method#connect#0;class#TcpConnection#0" expanded="false" />
-            <element signature="method#discconnect#0;class#TcpConnection#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="28" column="65" lean-forward="false" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/collections/transformation/TransformationList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="74" column="45" lean-forward="false" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TableView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="842" column="22" lean-forward="false" selection-start-line="842" selection-start-column="22" selection-end-line="842" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/ProjectTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/layout/Pane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="98" column="16" lean-forward="false" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/layout/AnchorPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="130" column="12" lean-forward="false" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tree/GroupTreeCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="52" column="29" lean-forward="false" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="57" column="30" lean-forward="false" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/alarming/Alarm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="19" column="53" lean-forward="false" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/historian/Historian.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="124" column="54" lean-forward="false" selection-start-line="124" selection-start-column="54" selection-end-line="124" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/alarming/Alarming.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="723">
-          <caret line="270" column="54" lean-forward="false" selection-start-line="270" selection-start-column="54" selection-end-line="270" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/TagUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="94" column="89" lean-forward="true" selection-start-line="94" selection-start-column="89" selection-end-line="94" selection-end-column="89" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tag/TagToolbarController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="232" column="13" lean-forward="true" selection-start-line="232" selection-start-column="13" selection-end-line="232" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/user/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="108" column="4" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="117" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding>
-            <element signature="method#deleteMenuItemSelected#0;class#Skeleton#0" expanded="false" />
-            <element signature="method#selectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
-            <element signature="method#unselectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="101" column="54" lean-forward="false" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/connection/SerialConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding>
-            <element signature="method#connect#0;class#SerialConnection#0" expanded="false" />
-            <element signature="method#discconnect#0;class#SerialConnection#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/cell/CellUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="206" column="20" lean-forward="false" selection-start-line="206" selection-start-column="20" selection-end-line="206" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TableCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="359" column="13" lean-forward="false" selection-start-line="359" selection-start-column="13" selection-end-line="359" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="668" column="19" lean-forward="false" selection-start-line="668" selection-start-column="19" selection-end-line="668" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/TextField.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -1815,24 +1546,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="649">
           <caret line="353" column="0" lean-forward="false" selection-start-line="353" selection-start-column="0" selection-end-line="353" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#4982:5313" expanded="false" />
-            <element signature="e#6004#6259#0" expanded="false" />
-            <element signature="e#6494#6779#0" expanded="false" />
-            <element signature="class#6870:7201" expanded="false" />
-            <element signature="e#7347#7626#0" expanded="false" />
-            <element signature="class#7711:8042" expanded="false" />
-            <element signature="e#8184#8441#0" expanded="false" />
-            <element signature="e#8666#8946#0" expanded="false" />
-            <element signature="class#9031:9362" expanded="false" />
-            <element signature="e#9518#9782#0" expanded="false" />
-            <element signature="e#10042#10295#0" expanded="false" />
-            <element signature="e#10505#10774#0" expanded="false" />
-            <element signature="class#10852:11182" expanded="false" />
-            <element signature="e#13141#13248#0" expanded="false" />
-            <element signature="e#13452#13689#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1847,14 +1561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="407">
           <caret line="190" column="26" lean-forward="false" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Dao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1898,29 +1604,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectSaverService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#403#1077#0" expanded="false" />
-            <element signature="e#1076#1077#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/EruTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="20" column="44" lean-forward="false" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#deleteSelectedItems#0;class#EruTable#0" expanded="false" />
-            <element signature="e#1042#1043#0" expanded="false" />
-            <element signature="e#1094#1095#0" expanded="false" />
-            <element signature="e#1132#1133#0" expanded="false" />
-            <element signature="e#1189#1190#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1936,20 +1624,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
           <caret line="38" column="4" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setDataModelName#0;class#AddressPK#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/AddressesBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1977,17 +1652,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding>
-            <element signature="e#6192#6193#0" expanded="true" />
-            <element signature="e#6222#6223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/toolbars/device/DeviceModifications.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -1996,20 +1660,6 @@
         <state relative-caret-position="16">
           <caret line="82" column="67" lean-forward="false" selection-start-line="82" selection-start-column="67" selection-end-line="82" selection-end-column="67" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="122" column="73" lean-forward="false" selection-start-line="122" selection-start-column="73" selection-end-line="122" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getAddressesByModel#0;class#Device#0" expanded="false" />
-            <element signature="method#getAddressesBlocks#0;class#Device#0" expanded="false" />
-            <element signature="method#getAddressBlocksFrom#0;class#Device#0" expanded="false" />
-            <element signature="method#getLastBlockIn#0;class#Device#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2040,10 +1690,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="272" column="42" lean-forward="false" selection-start-line="272" selection-start-column="42" selection-end-line="272" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="264" column="42" lean-forward="false" selection-start-line="264" selection-start-column="42" selection-end-line="264" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
-          <caret line="136" column="34" lean-forward="false" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
+        <state relative-caret-position="262">
+          <caret line="55" column="40" lean-forward="false" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setTimestampValueAndFireListeners#0;class#Address#0" expanded="false" />
@@ -2052,27 +1718,269 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java">
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Device.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="272" column="42" lean-forward="false" selection-start-line="272" selection-start-column="42" selection-end-line="272" selection-end-column="42" />
+        <state relative-caret-position="337">
+          <caret line="122" column="73" lean-forward="false" selection-start-line="122" selection-start-column="73" selection-end-line="122" selection-end-column="73" />
           <folding>
-            <element signature="class#4546:4877" expanded="false" />
-            <element signature="class#6207:6538" expanded="false" />
-            <element signature="class#6818:7145" expanded="false" />
-            <element signature="class#7425:7752" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#getAddressesByModel#0;class#Device#0" expanded="false" />
+            <element signature="method#getAddressesBlocks#0;class#Device#0" expanded="false" />
+            <element signature="method#getAddressBlocksFrom#0;class#Device#0" expanded="false" />
+            <element signature="method#getLastBlockIn#0;class#Device#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java">
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/UserTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="264" column="42" lean-forward="false" selection-start-line="264" selection-start-column="42" selection-end-line="264" selection-end-column="42" />
+        <state relative-caret-position="177">
+          <caret line="72" column="35" lean-forward="false" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/AddressesBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#3531:3862" expanded="false" />
-            <element signature="class#4371:4702" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Range.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Preloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/UserTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/TagTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="39" lean-forward="true" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/EruTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/DeviceTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="39" lean-forward="true" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tables/ConnectionsTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="27" lean-forward="true" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/ProjectTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/GroupTreeCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="66" column="13" lean-forward="true" selection-start-line="66" selection-start-column="13" selection-end-line="66" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/tree/Group.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Project.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/Dao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/util/JpaUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Preloader.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="10" lean-forward="true" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectSaverService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="e#403#1077#0" expanded="true" />
+            <element signature="e#1076#1077#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/about/About.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="79" lean-forward="false" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" column="52" lean-forward="false" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/persistence/ProjectLoaderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="40" column="17" lean-forward="true" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/Skeleton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="60" column="55" lean-forward="true" selection-start-line="60" selection-start-column="55" selection-end-line="60" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#deleteMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+            <element signature="method#selectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+            <element signature="method#unselectAllMenuItemSelected#0;class#Skeleton#0" expanded="false" />
+            <element signature="e#1784#1785#0" expanded="true" />
+            <element signature="e#1849#1850#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/resources/com/marlontrujillo/eru/gui/Skeleton.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="44" column="75" lean-forward="false" selection-start-line="44" selection-start-column="70" selection-end-line="44" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/HeavyweightDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="152" column="26" lean-forward="false" selection-start-line="152" selection-start-column="26" selection-end-line="152" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/FXDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="300" column="18" lean-forward="true" selection-start-line="300" selection-start-column="18" selection-end-line="300" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/Alert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="111" column="30" lean-forward="true" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="172" column="40" lean-forward="false" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/about/About.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

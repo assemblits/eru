@@ -19,8 +19,8 @@ public class Commands {
     public static final String STOP_COMMUNICATIONS           = "user.comm.stop";
     public static final String BLOCK_COMMUNICATIONS          = "user.comm.block";
     public static final String RELEASE_COMMUNICATIONS        = "user.comm.release";
-    public static final String START_HISTORIAN               = "user.historian.load";
-    public static final String STOP_HISTORIAN                = "user.historian.stop";
+    public static final String START_HISTORIAN               = "user.export.load";
+    public static final String STOP_HISTORIAN                = "user.export.stop";
     public static final String START_ALARMING                = "user.alarming.load";
     public static final String STOP_ALARMING                 = "user.alarming.stop";
     public static final String WRITE_TAG                     = "write.tag";

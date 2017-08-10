@@ -1,6 +1,6 @@
 package com.marlontrujillo.eru.gui;
 
-import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree;
+import com.marlontrujillo.eru.gui.tree.ProjectTree;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,6 +55,10 @@ public class Skeleton extends VBox{
 
     @FXML private void unselectAllMenuItemSelected(ActionEvent event){
         App.getSingleton().execute(App.Action.UNSELECT_ALL_TABLE_ITEMS);
+    }
+
+    @FXML private void aboutMenuItemSelected(ActionEvent event){
+        App.getSingleton().execute(App.Action.SHOW_ABOUT);
     }
 
     public AnchorPane getMainPane() {

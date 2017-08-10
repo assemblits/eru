@@ -1,6 +1,6 @@
 package com.marlontrujillo.eru.persistence;
 
-import com.marlontrujillo.eru.gui.toolbars.tree.Group;
+import com.marlontrujillo.eru.gui.tree.Group;
 import com.marlontrujillo.eru.util.JpaUtil;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;

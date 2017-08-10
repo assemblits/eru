@@ -20,6 +20,7 @@ public class Address implements Comparable<Address> {
 
     /* ********** Fields ********** */
     private final IntegerProperty                   id;
+    private final ObjectProperty<Device>            device;
     private final IntegerProperty                   networkID;
     private final ObjectProperty<Address.DataModel> dataModel;
     private final IntegerProperty                   currentValue;
@@ -30,12 +31,13 @@ public class Address implements Comparable<Address> {
     /* ********** Constructor ********** */
     public Address() {
         this.id            = new SimpleIntegerProperty(0);
+        this.device        = new SimpleObjectProperty<>();
         this.networkID     = new SimpleIntegerProperty(0);
         this.dataModel     = new SimpleObjectProperty<>(ANALOG_WRITE);
-        this.currentValue = new SimpleIntegerProperty();
-        this.connected    = new SimpleBooleanProperty();
-        this.status       = new SimpleStringProperty();
-        this.timestamp    = new TimeStampProperty();
+        this.currentValue  = new SimpleIntegerProperty();
+        this.connected     = new SimpleBooleanProperty();
+        this.status        = new SimpleStringProperty();
+        this.timestamp     = new TimeStampProperty();
     }
 
     /* ********** Setters and Getters ********** */
@@ -49,6 +51,17 @@ public class Address implements Comparable<Address> {
     }
     public void setId(int id) {
         this.id.set(id);
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    public Device getDevice() {
+        return device.get();
+    }
+    public ObjectProperty<Device> deviceProperty() {
+        return device;
+    }
+    public void setDevice(Device device) {
+        this.device.set(device);
     }
 
     @Column(name = "network_id")

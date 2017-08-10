@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <flowRoot
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;letter-spacing:0px;word-spacing:0px"
+       id="flowRoot3680"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3682"><rect
+           y="-1394.6232"
+           x="-348.57144"
+           height="114.28571"
+           width="125.71429"
+           id="rect3684" /></flowRegion><flowPara
+         id="flowPara3686" /></flowRoot>    <g
+       id="g4659"
+       transform="matrix(0.41695042,0,0,0.37017826,-3.6515328,-320.38402)" />
+    <path
+       id="path25-3"
+       transform="scale(0.26458333)"
+       d="M -58.792969 -1416.666 C -59.175015 -1416.6617 -59.559581 -1416.6482 -59.945312 -1416.623 C -71.063585 -1415.8982 -80.175472 -1406.2097 -79.375 -1394.9336 C -78.661459 -1384.8822 -69.866938 -1376.6503 -59.658203 -1377.4473 C -50.673718 -1378.1487 -43.322618 -1386.0502 -44.117188 -1395.1914 L -51.953125 -1395.1328 C -51.142171 -1390.2664 -54.999221 -1385.9189 -59.716797 -1385.2832 C -65.653386 -1384.4833 -70.882646 -1389.2061 -71.539062 -1394.9902 C -72.334077 -1401.9956 -66.737554 -1408.1136 -59.886719 -1408.7871 C -51.813233 -1409.5808 -44.805415 -1403.1091 -44.117188 -1395.1914 L -36.283203 -1395.248 C -36.99583 -1407.0525 -46.949549 -1416.7999 -58.792969 -1416.666 z M -51.953125 -1395.1328 C -52.561563 -1398.784 -56.037272 -1401.7869 -59.830078 -1400.9531 C -62.414535 -1400.3849 -64.588935 -1397.7552 -63.705078 -1395.0469 C -63.210949 -1393.5328 -61.341763 -1392.1027 -59.773438 -1393.1172 C -59.194829 -1393.4915 -58.608628 -1395.0848 -59.787109 -1395.0762 L -51.953125 -1395.1328 z "
+       style="stroke-width:0.94442087" />
+  </g>
+</svg>

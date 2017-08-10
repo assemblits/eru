@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<?import com.marlontrujillo.eru.gui.toolbars.tree.ProjectTree?>
+<?import com.marlontrujillo.eru.gui.tree.ProjectTree?>
 
 <fx:root prefHeight="500.0" prefWidth="500.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
@@ -42,7 +42,7 @@
             <MenuItem mnemonicParsing="false" onAction="#unselectAllMenuItemSelected" text="Unselect All" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About" />
+            <MenuItem mnemonicParsing="false" text="About" onAction="#aboutMenuItemSelected" />
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" VBox.vgrow="ALWAYS">

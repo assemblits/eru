@@ -2,11 +2,10 @@ package com.marlontrujillo.eru.persistence;
 
 import com.marlontrujillo.eru.comm.connection.Connection;
 import com.marlontrujillo.eru.comm.device.Device;
-import com.marlontrujillo.eru.gui.toolbars.tree.Group;
+import com.marlontrujillo.eru.gui.tree.Group;
 import com.marlontrujillo.eru.tag.Tag;
 import com.marlontrujillo.eru.user.User;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
 
 import javax.persistence.*;
 import java.util.ArrayList;

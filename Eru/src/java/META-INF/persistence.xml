@@ -10,7 +10,7 @@
         <class>com.marlontrujillo.eru.comm.connection.SerialConnection</class>
         <class>com.marlontrujillo.eru.comm.connection.TcpConnection</class>
         <class>com.marlontrujillo.eru.comm.device.Device</class>
-        <class>com.marlontrujillo.eru.gui.toolbars.tree.Group</class>
+        <class>com.marlontrujillo.eru.gui.tree.Group</class>
         <class>com.marlontrujillo.eru.historian.Historic</class>
         <class>com.marlontrujillo.eru.persistence.Project</class>
         <class>com.marlontrujillo.eru.user.User</class>

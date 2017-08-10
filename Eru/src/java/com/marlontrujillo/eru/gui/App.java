@@ -1,11 +1,10 @@
 package com.marlontrujillo.eru.gui;
 
 import com.marlontrujillo.eru.comm.FieldBusCommunicator;
-import com.marlontrujillo.eru.comm.device.Address;
-import com.marlontrujillo.eru.comm.device.Device;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
-import com.marlontrujillo.eru.gui.toolbars.tables.*;
-import com.marlontrujillo.eru.gui.toolbars.tree.Group;
+import com.marlontrujillo.eru.gui.about.About;
+import com.marlontrujillo.eru.gui.tables.*;
+import com.marlontrujillo.eru.gui.tree.Group;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
@@ -15,9 +14,6 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -40,13 +36,14 @@ public class App extends Application {
         UNSELECT_ALL_TABLE_ITEMS,
         CONNECT_MODBUS,
         DISCONNECT_MODBUS,
+        SHOW_ABOUT,
         EXIT_APP
     }
 
     private Project     project;
     private Stage       stage;
     private Skeleton    skeleton;
-    private EruTable    table;
+    private EruTable table;
 
     public App() {
         App.singleton = this;
@@ -68,7 +65,7 @@ public class App extends Application {
     }
 
     public void launchPreloader(){
-        PreloaderController preloaderWindow = new PreloaderController();
+        Preloader preloaderWindow = new Preloader();
         ProjectLoaderService pls = new ProjectLoaderService();
         preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
@@ -169,6 +166,11 @@ public class App extends Application {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case SHOW_ABOUT:
+                    Stage aboutStage = new Stage();
+                    aboutStage.setScene(new Scene(new About()));
+                    aboutStage.showAndWait();
                     break;
                 case EXIT_APP:
                     JpaUtil.getGlobalEntityManager().close();
