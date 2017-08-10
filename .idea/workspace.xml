@@ -12,12 +12,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/2d9cd28a-28e7-49cc-83ed-2c274529688e.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/comm/device/Address.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/DeviceTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java" afterPath="$PROJECT_DIR$/Eru/src/java/com/marlontrujillo/eru/gui/toolbars/tables/TagTable.java" />
-    </list>
+    <list default="true" id="de760c83-ac50-4cb4-9bda-895630a7d17f" name="Default" comment="" />
     <ignored path="PowerSceneViewer.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -1452,12 +1447,12 @@
       <workItem from="1502217072810" duration="12022000" />
       <workItem from="1502229531858" duration="7463000" />
       <workItem from="1502284717280" duration="32901000" />
-      <workItem from="1502371670163" duration="8853000" />
+      <workItem from="1502371670163" duration="8954000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="759205000" />
+    <option name="totallyTimeSpent" value="759306000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
