@@ -4,7 +4,7 @@
 </h1>
 <h4 align="center">An open linux SCADA based on JavaFX.</h4>
 
-![alt text](https://raw.githubusercontent.com/marlontrujillo1080/eru/lib/graphic-design/project-icon.svg)
+![alt text](https://raw.githubusercontent.com/marlontrujillo1080/eru/lib/graphic-design/project-icon.png)
 
 ## Key Features
 
