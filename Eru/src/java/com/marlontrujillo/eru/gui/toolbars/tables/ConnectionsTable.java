@@ -3,9 +3,10 @@ package com.marlontrujillo.eru.gui.toolbars.tables;
 import com.marlontrujillo.eru.comm.connection.Connection;
 import com.marlontrujillo.eru.comm.connection.SerialConnection;
 import com.marlontrujillo.eru.comm.connection.TcpConnection;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import com.marlontrujillo.eru.comm.device.Address;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -15,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 
@@ -33,7 +36,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
         TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
-        TableColumn<Connection, Boolean> enabledColumn   = new TableColumn<>("Enable");
+        TableColumn<Connection, Boolean> enabledColumn      = new TableColumn<>("Enable");
         TableColumn<Connection, Integer> timeoutColumn      = new TableColumn<>("Timeout");
         TableColumn<Connection, Integer> samplingColumn     = new TableColumn<>("Sampling");
         TableColumn<Connection, Boolean> connectedColumn    = new TableColumn<>("Connected");
@@ -348,4 +351,5 @@ public class ConnectionsTable extends EruTable<Connection> {
                         || connection.getGroupName().startsWith(textToFilter.getValue()))
         ));
     }
+
 }

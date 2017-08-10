@@ -173,6 +173,9 @@ public class App extends Application {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
 
+    public Project getProject() {
+        return project;
     }
 }

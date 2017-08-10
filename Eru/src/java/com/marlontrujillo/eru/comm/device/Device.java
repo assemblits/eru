@@ -1,12 +1,12 @@
 package com.marlontrujillo.eru.comm.device;
 
-import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.comm.connection.Connection;
-import com.marlontrujillo.eru.comm.member.ModbusDeviceReader;
 import javafx.beans.property.*;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -19,27 +19,28 @@ import java.util.stream.Collectors;
 @DiscriminatorValue(value = "DEVICE")
 public class  Device {
     /* ********** Fields ********** */
-    private int                     id;
-    private final StringProperty    name;
-    private final IntegerProperty   unitIdentifier;
-    private final StringProperty    status;
-    private final IntegerProperty   retries;
-    private final BooleanProperty   enabled;
-    private List<Address>           addresses;
-    private BooleanProperty         zeroBased;
-    private Connection              connection;
-    private StringProperty          groupName;
+    private int                         id;
+    private final StringProperty        name;
+    private final IntegerProperty       unitIdentifier;
+    private final StringProperty        status;
+    private final IntegerProperty       retries;
+    private final BooleanProperty       enabled;
+    private List<Address>               addresses;
+    private BooleanProperty             zeroBased;
+    private ObjectProperty<Connection>  connection;
+    private StringProperty              groupName;
 
     /* ********** Constructors ********** */
     public Device() {
-        name            = new SimpleStringProperty("");
-        unitIdentifier  = new SimpleIntegerProperty(0);
-        status          = new SimpleStringProperty("");
-        retries         = new SimpleIntegerProperty(3);
-        enabled         = new SimpleBooleanProperty(false);
-        addresses       = new ArrayList<>();
-        zeroBased       = new SimpleBooleanProperty(true);
-        groupName       = new SimpleStringProperty("");
+        name                = new SimpleStringProperty("");
+        unitIdentifier      = new SimpleIntegerProperty(0);
+        status              = new SimpleStringProperty("");
+        retries             = new SimpleIntegerProperty(3);
+        enabled             = new SimpleBooleanProperty(false);
+        addresses           = new ArrayList<>();
+        zeroBased           = new SimpleBooleanProperty(true);
+        connection          = new SimpleObjectProperty<>();
+        groupName           = new SimpleStringProperty("");
     }
 
     /* ********** Setters and Getters ********** */
@@ -108,23 +109,14 @@ public class  Device {
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<Address> getAddresses() {
+        System.out.println("Getting: " + addresses.getClass() + " - " + addresses);
+//        System.out.println("Getting: " + observableAddresses.getClass() + " - " + observableAddresses);
         return addresses;
     }
     public void setAddresses(List<Address> addresses) {
+        System.out.println("Setting: " + addresses.getClass());
         this.addresses = addresses;
-    }
-
-    @ManyToOne(cascade= CascadeType.ALL)
-    public Connection getConnection() {
-        return connection;
-    }
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-        this.connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-            if(isConnected && getEnabled()){
-                FieldBusCommunicator.getInstance().subscribe(new ModbusDeviceReader(this));
-            }
-        });
+//        observableAddresses = FXCollections.observableList(addresses);
     }
 
     @Transient
@@ -135,6 +127,7 @@ public class  Device {
     public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){
         return getAddressBlocksFrom(getAddresses(dataModel));
     }
+    @Transient
     private List<AddressesBlock> getAddressBlocksFrom(List<Address> addresses) {
         List<AddressesBlock> addressesBlocks = new ArrayList<>();
         addressesBlocks.add(new AddressesBlock());
@@ -145,6 +138,7 @@ public class  Device {
         }
         return addressesBlocks;
     }
+    @Transient
     private AddressesBlock getLastBlockIn(List<AddressesBlock> blockList){
         return blockList.get(blockList.size() - 1);
     }
@@ -158,6 +152,17 @@ public class  Device {
     }
     public void setZeroBased(boolean zeroBased) {
         this.zeroBased.set(zeroBased);
+    }
+
+    @ManyToOne(cascade= CascadeType.ALL)
+    public Connection getConnection() {
+        return connection.get();
+    }
+    public ObjectProperty<Connection> connectionProperty() {
+        return connection;
+    }
+    public void setConnection(Connection connection) {
+        this.connection.set(connection);
     }
 
     @Column(name = "group_name")
