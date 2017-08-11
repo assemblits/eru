@@ -7,6 +7,7 @@ import com.marlontrujillo.eru.comm.device.Address.DataModel;
 import com.marlontrujillo.eru.comm.device.AddressesBlock;
 import com.marlontrujillo.eru.comm.device.Device;
 import javafx.application.Platform;
+import net.wimpi.modbus.ModbusException;
 import net.wimpi.modbus.io.ModbusSerialTransaction;
 import net.wimpi.modbus.io.ModbusTCPTransaction;
 import net.wimpi.modbus.io.ModbusTransaction;
@@ -76,15 +77,15 @@ public class MessageToReadAddressBlock implements Message {
     }
 
     @Override
-    public void send(){
+    public void send() throws Exception {
         try {
             transaction.execute();
-            updateDeviceStatus("Last update:" + LocalTime.now());
+            updateDeviceStatus("OK");
             wasSuccessful = true;
         } catch (Exception e) {
-            e.printStackTrace();
-            updateDeviceStatus(e.getLocalizedMessage());
             wasSuccessful = false;
+            updateDeviceStatus(e.getLocalizedMessage());
+            throw  e;
         }
     }
 
@@ -107,6 +108,7 @@ public class MessageToReadAddressBlock implements Message {
                 final Address address = getAddressFromBlock(slot);
                 address.setCurrentValue(extractSlotValueFromResponse(response, slot));
                 address.setTimestampValueAndFireListeners(now);
+                System.out.println(address);
             }
         });
     }

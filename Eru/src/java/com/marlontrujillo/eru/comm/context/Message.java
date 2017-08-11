@@ -5,6 +5,6 @@ package com.marlontrujillo.eru.comm.context;
  */
 public interface Message {
     void create();
-    void send();
+    void send() throws Exception;
     void collectResponse();
 }

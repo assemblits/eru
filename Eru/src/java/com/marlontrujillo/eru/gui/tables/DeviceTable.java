@@ -190,23 +190,23 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
 
             TableColumn<Address, String> typeColumn = new TableColumn<>("Type");
             typeColumn.setCellValueFactory(param -> param.getValue().dataModelProperty().asString());
-            typeColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
+            typeColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.14));
 
-            TableColumn<Address, String> addressColumn = new TableColumn<>("Address");
+            TableColumn<Address, String> addressColumn = new TableColumn<>("ID");
             addressColumn.setCellValueFactory(param -> param.getValue().networkIDProperty().asString());
-            addressColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
+            addressColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
             TableColumn<Address, String> valueColumn = new TableColumn<>("Value");
             valueColumn.setCellValueFactory(param -> param.getValue().currentValueProperty().asString());
-            valueColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
+            valueColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
             TableColumn<Address, String> statusColumn = new TableColumn<>("Status");
             statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
-            statusColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
+            statusColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
-            TableColumn<Address, Timestamp> timestampColumn = new TableColumn<>("Value");
+            TableColumn<Address, Timestamp> timestampColumn = new TableColumn<>("Timestamp");
             timestampColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
-            timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.2));
+            timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.40));
 
             addressesTableView.getColumns().addAll(typeColumn, addressColumn, valueColumn, statusColumn, timestampColumn);
 

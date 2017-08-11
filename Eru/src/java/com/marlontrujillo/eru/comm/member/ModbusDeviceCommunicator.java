@@ -12,12 +12,12 @@ import java.util.List;
 /**
  * Created by mtrujillo on 3/9/2016.
  */
-public class ModbusDeviceReader extends Communicator {
+public class ModbusDeviceCommunicator extends Communicator {
 
     private Device          device;
     private List<Message>   messages;
 
-    public ModbusDeviceReader(Device device) {
+    public ModbusDeviceCommunicator(Device device) {
         this.device   = device;
         this.messages = new ArrayList<>();
         this.setSelfRepeatable(true);
@@ -27,7 +27,7 @@ public class ModbusDeviceReader extends Communicator {
     private void createMessagesToReadAllDevice() {
         final List<AddressesBlock> addressesBlocksToRead = new ArrayList<>();
 
-        // Extract All AddressBlocks from device
+        // Extract All AddressBlocks from device in order
         addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.BOOLEAN_READ));
         addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.BOOLEAN_WRITE));
         addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.ANALOG_READ));
@@ -36,7 +36,7 @@ public class ModbusDeviceReader extends Communicator {
         // Create messages to read all that blocks
         for(AddressesBlock addressesBlock : addressesBlocksToRead){
             if(!addressesBlock.get().isEmpty()){
-                MessageToReadAddressBlock messageToReadAddressBlock = new MessageToReadAddressBlock(device, addressesBlock);
+                final MessageToReadAddressBlock messageToReadAddressBlock = new MessageToReadAddressBlock(device, addressesBlock);
                 messageToReadAddressBlock.create();
                 messages.add(messageToReadAddressBlock);
             }
@@ -45,10 +45,13 @@ public class ModbusDeviceReader extends Communicator {
 
     @Override
     public void communicate() throws Exception {
-        if (!device.getConnection().isConnected()) throw new Exception(device.getName() + " is not connected.");
         for (Message msg : messages) {
-            msg.send();
-            msg.collectResponse();
+            try {
+                msg.send();
+                msg.collectResponse();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

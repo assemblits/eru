@@ -28,9 +28,9 @@ public class EngineScriptUtil {
         return scriptEngine;
     }
 
-    public void loadTags(Collection<Tag> tags){
-        tags.stream()
-                .filter(tag -> !scriptEngineManager.getBindings().containsKey(tag.getName()))
-                .forEach(tag -> scriptEngineManager.getBindings().put(tag.getName(), tag));
+    public void loadTag(Tag tag){
+        if (!scriptEngineManager.getBindings().containsKey(tag.getName())) {
+            scriptEngineManager.getBindings().put(tag.getName(), tag);
+        }
     }
 }

@@ -12,7 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "group", schema = "public")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Group {
+public class
+Group {
 
     public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER}
 

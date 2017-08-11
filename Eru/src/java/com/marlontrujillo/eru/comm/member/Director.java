@@ -1,48 +1,46 @@
 package com.marlontrujillo.eru.comm.member;
 
-import com.marlontrujillo.eru.logger.LogUtil;
-
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by mtrujillo on 22/05/17.
  */
 public class Director implements Runnable {
-    private LinkedBlockingQueue<Communicator> communicators = new LinkedBlockingQueue<>();
-    private volatile boolean                   run     = false;
-    private volatile boolean                   running = false;
+    private LinkedBlockingQueue<Communicator>  communicators = new LinkedBlockingQueue<>();
+    private volatile boolean directorRunning = false;
+    private volatile boolean loopRunning     = false;
 
     @Override
     public void run() {
-        run     = true;
-        running = true;
-        while(run){
+        directorRunning = true;
+        loopRunning     = true;
+        while(directorRunning){
             try {
                 Communicator headParticipant = communicators.take();
                 headParticipant.communicate();
                 if (headParticipant.isSelfRepeatable()) communicators.put(headParticipant);
             } catch (Exception e) {
-                LogUtil.logger.error("Director detected a communication error:" + e.toString(), e);
+                e.printStackTrace();
             }
         }
-        running = false;
+        loopRunning = false;
     }
 
     public synchronized void addCommunicator(Communicator participant) throws InterruptedException {
         communicators.put(participant);
     }
 
-    public void stop(){
-        run = false;
-        while (running && !communicators.isEmpty()){
+    public boolean stop(){
+        while (loopRunning && !communicators.isEmpty()){
             try {
                 Thread.sleep(50);
-                LogUtil.logger.info("Waiting for communicators task finishing...");
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                return directorRunning = true;
             }
         }
-        LogUtil.logger.info("Communications stopped...");
+        ;
+        return directorRunning = true;
     }
 
     public void removeAllCommunicators() {

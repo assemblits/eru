@@ -30,7 +30,16 @@
       - Port     = 5432 (Default)
       - A database called "eru" in the public schema.
   * Modbus:
-    - To be able to connect to the modbus devices (no necessary to run the app) install the drivers on the java lib. (TODO:more details)
+    - To be able to connect to the modbus devices (no necessary to run the app) install the drivers in the java environment. Linux (Debian) example:
+      1) Go to: _eru_home_directory / lib / serial / Rxtx-Serial-comms-Drivers /_
+      2) Choose your binary build: x86_64 or i386 (based on which version of the JVM you are installing to)
+      3) Extract.
+      4) For a JDK installation on architecturei386 (For a JDK installation on architecture=x86_64, just change the i386 to amd64)
+         * Copy RXTXcomm.jar        ---> <JAVA_HOME>/jre/lib/ext
+         * Copy librxtxSerial.so    ---> <JAVA_HOME>/jre/lib/i386/
+         * Copy librxtxParallel.so  ---> <JAVA_HOME>/jre/lib/i386/
+         
+         NOTE: You MUST match your architecture.  You can't install the i386version on a 64-bit version of the JDK and vice-versa.
 
 ## Key Features
 
@@ -69,6 +78,9 @@ This software uses code from several open source packages.
 - [Open Dolphin](http://open-dolphin.org/dolphin_website/Home.html)
 - [Medusa Project](https://github.com/marlontrujillo1080/Medusa)
 - [Groovy](http://groovy-lang.org/)
+- [Postgresql](https://www.postgresql.org/)
+- [Jamod](http://jamod.sourceforge.net/index.html)
+- [RXTX for Java](http://mfizz.com/oss/rxtx-for-java). Courtesy of [Mfizz, Inc. ](http://mfizz.com/)  
 - [Rafael Robles](https://github.com/Rafaelsk)
 - [Lucio Guerchi](https://github.com/luHub)
 - [Ronald Vera](https://www.linkedin.com/in/ronald-vera-2185b382/)

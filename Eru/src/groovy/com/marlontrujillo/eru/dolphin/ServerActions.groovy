@@ -1,6 +1,6 @@
 package com.marlontrujillo.eru.dolphin
 
-import com.marlontrujillo.eru.comm.FieldBusCommunicator
+import com.marlontrujillo.eru.comm.CommunicationsManager
 import com.marlontrujillo.eru.tag.Tag
 import com.marlontrujillo.eru.alarming.Alarm
 import com.marlontrujillo.eru.alarming.Alarming
@@ -122,7 +122,7 @@ class ServerActions extends DolphinServerAction {
 
             // Status
             getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_SYSTEM_STATUS).setValue(LiveAppender.getLastLog())
-            getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_COMMUNICATIONS_CONNECTED).setValue(FieldBusCommunicator.getInstance().isStarted() ? "ONLINE" : "OFFLINE")
+            getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_COMMUNICATIONS_CONNECTED).setValue(CommunicationsManager.getInstance().isRunning() ? "ONLINE" : "OFFLINE")
 
 
             // Update Alarms
