@@ -48,7 +48,7 @@ class ServerStartupService extends Service<Void> {
         }
     }
 
-    public void stopServer(){
+    public void stop(){
         Runnable runnable = new Runnable() {
             @Override
             void run() {
@@ -66,6 +66,10 @@ class ServerStartupService extends Service<Void> {
         threadToStopServlet.setName("Thread to Stop Servlet.")
         threadToStopServlet.setDaemon(true);
         threadToStopServlet.start()
+    }
+
+    public boolean serverIsRunning(){
+        return server.isRunning();
     }
 }
 

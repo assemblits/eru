@@ -1,6 +1,9 @@
 package com.marlontrujillo.eru.gui;
 
-import com.marlontrujillo.eru.comm.FieldBusCommunicator;
+import com.marlontrujillo.eru.comm.CommunicationsManager;
+import com.marlontrujillo.eru.comm.connection.Connection;
+import com.marlontrujillo.eru.comm.device.Device;
+import com.marlontrujillo.eru.comm.member.ModbusDeviceCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.about.About;
 import com.marlontrujillo.eru.gui.tables.*;
@@ -18,35 +21,25 @@ import javafx.stage.Stage;
 
 /**
  * Created by mtrujillo on 8/31/2015.
- *
  */
 
 public class App extends Application {
 
     private static App singleton;
-
-    public enum Action {
-        SHOW_GROUP,
-        DELETE_GROUP,
-        SAVE_TO_DB,
-        UPDATE_PROJECT_IN_GUI,
-        ADD_TABLE_ITEM,
-        DELETE_TABLE_ITEM,
-        SELECT_ALL_TABLE_ITEMS,
-        UNSELECT_ALL_TABLE_ITEMS,
-        CONNECT_MODBUS,
-        DISCONNECT_MODBUS,
-        SHOW_ABOUT,
-        EXIT_APP
-    }
-
-    private Project     project;
-    private Stage       stage;
-    private Skeleton    skeleton;
+    private Project project;
+    private Stage stage;
+    private Skeleton skeleton;
     private EruTable table;
-
     public App() {
         App.singleton = this;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public static App getSingleton() {
+        return singleton;
     }
 
     @Override
@@ -56,15 +49,7 @@ public class App extends Application {
         launchPreloader();
     }
 
-    @Override
-    public void stop() throws Exception {
-        if (FieldBusCommunicator.getInstance().isStarted()){
-            FieldBusCommunicator.getInstance().stop();
-        }
-        ServerStartupService.getInstance().stopServer();
-    }
-
-    public void launchPreloader(){
+    private void launchPreloader() {
         Preloader preloaderWindow = new Preloader();
         ProjectLoaderService pls = new ProjectLoaderService();
         preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
@@ -79,17 +64,9 @@ public class App extends Application {
         stage.show();
     }
 
-    private void launchApp(){
+    private void launchApp() {
         stage.setScene(new Scene(this.skeleton, 900, 500));
         stage.show();
-    }
-
-    public static void main(String[] args){
-        launch(args);
-    }
-
-    public static App getSingleton() {
-        return singleton;
     }
 
     public void showGroup(TreeElementsGroup selectedTreeElementsGroup) {
@@ -121,8 +98,8 @@ public class App extends Application {
         }
     }
 
-    public void execute(Action action){
-        try{
+    public void execute(Action action) {
+        try {
             switch (action) {
                 case SHOW_GROUP:
                     break;
@@ -154,16 +131,53 @@ public class App extends Application {
                 case UNSELECT_ALL_TABLE_ITEMS:
                     if (this.table != null) this.table.unselectAllItems();
                     break;
-                case CONNECT_MODBUS:
+                case CONNECT:
                     try {
-                        FieldBusCommunicator.getInstance().start();
+                        // Run connections
+                        this.project.getConnections().forEach(Connection::connect);
+
+                        // Activate script engine in tags TODO: Find a better place to this
+//                        this.project.getTags().forEach(tag -> EngineScriptUtil.getInstance().loadTag(tag));
+
+                        // Link tags each other
+//                        this.project.getTags().forEach(tag -> TagUtil.installLink(tag, project.getTags()));
+
+                        // Start Historian
+//                        Historian.getInstance().start();
+
+                        // Start Alarming
+//                        Alarming.getInstance().start();
+
+                        // Create ModbusDeviceCommunicators to update the device with the connections in a good way
+                        this.project.getDevices().stream().
+                                filter(Device::getEnabled).
+                                forEach(enabledDevice ->
+                                        CommunicationsManager.getInstance().
+                                                getCommunicators().
+                                                add(new ModbusDeviceCommunicator(enabledDevice)));
+
+                        // Start communications with all communicators
+                        CommunicationsManager.getInstance().start();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
-                case DISCONNECT_MODBUS:
+                case DISCONNECT:
                     try {
-                        FieldBusCommunicator.getInstance().stop();
+                        // Link tags each other
+//                        this.project.getTags().forEach(TagUtil::removeLink);
+
+                        // Stop connections
+                        this.project.getConnections().forEach(Connection::discconnect);
+
+                        // Stop Historian
+//                        Historian.getInstance().stop();
+
+                        // Stop Alarming
+//                        Alarming.getInstance().stop();
+
+                        CommunicationsManager.getInstance().stop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -174,16 +188,39 @@ public class App extends Application {
                     aboutStage.showAndWait();
                     break;
                 case EXIT_APP:
+                    if (CommunicationsManager.getInstance().isRunning()) {
+                        CommunicationsManager.getInstance().stop();
+                    }
+
+                    if (ServerStartupService.getInstance().isRunning()) {
+                        ServerStartupService.getInstance().stop();
+                    }
+
                     JpaUtil.getGlobalEntityManager().close();
                     Platform.exit();
                     break;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public Project getProject() {
         return project;
+    }
+
+    public enum Action {
+        SHOW_GROUP,
+        DELETE_GROUP,
+        SAVE_TO_DB,
+        UPDATE_PROJECT_IN_GUI,
+        ADD_TABLE_ITEM,
+        DELETE_TABLE_ITEM,
+        SELECT_ALL_TABLE_ITEMS,
+        UNSELECT_ALL_TABLE_ITEMS,
+        CONNECT,
+        DISCONNECT,
+        SHOW_ABOUT,
+        EXIT_APP
     }
 }

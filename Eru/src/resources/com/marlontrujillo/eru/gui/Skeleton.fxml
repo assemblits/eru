@@ -41,6 +41,10 @@
             <MenuItem mnemonicParsing="false" onAction="#selectAllMenuItemSelected" text="Select All" />
             <MenuItem mnemonicParsing="false" onAction="#unselectAllMenuItemSelected" text="Unselect All" />
         </Menu>
+        <Menu mnemonicParsing="false" text="Run">
+            <MenuItem mnemonicParsing="false" text="Connect" onAction="#connectMenuItemSelected" />
+            <MenuItem mnemonicParsing="false" text="Disconnect" onAction="#disconnectMenuItemSelected" />
+        </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About" onAction="#aboutMenuItemSelected" />
         </Menu>

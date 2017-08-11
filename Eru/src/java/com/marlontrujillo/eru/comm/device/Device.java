@@ -116,9 +116,8 @@ public class  Device {
         return _addresses;
     }
     public ListProperty<Address> addressesProperty() {
-        if (this.addresses == null){
+        if(this.addresses == null) {
             this.addresses = new SimpleListProperty<>(FXCollections.observableList(_addresses));
-            // Listener added for OneToMany Sync relation: https://en.wikibooks.org/wiki/Java_Persistence/OneToMany
             this.addresses.addListener((ListChangeListener<Address>) c -> {
                 while (c.next()) {
                     if (c.wasPermutated()) {
@@ -143,13 +142,12 @@ public class  Device {
         return addresses;
     }
     private void setAddresses(List<Address> addresses) {
-        this.addresses = new SimpleListProperty<>(FXCollections.observableList(addresses));
         this._addresses = addresses;
     }
 
     @Transient
     public List<Address> getAddressesByModel(Address.DataModel dataModel){
-        return getAddresses().stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
+        return this.addresses.getValue().stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
     }
     @Transient
     public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){

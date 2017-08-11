@@ -14,19 +14,13 @@ import java.util.*;
  */
 public class TagUtil {
 
-    public static final Map<Tag, List<InvalidationListener>> tagLinks = new HashMap<>();
+    public static final Map<Tag, List<InvalidationListener>> TAG_LINK_MAP = new HashMap<>();
 
-    public static void linkAll(final List<Tag> tagsToLinkEachOthers){
-        tagsToLinkEachOthers.stream()
-                .filter(Tag::getEnabled)
-                .forEach(tag -> TagUtil.link(tag, tagsToLinkEachOthers));
-    }
-
-    public static void link(final Tag tag, final List<Tag> tagList){
+    public static void installLink(final Tag tag, final List<Tag> allTags){
         switch (tag.getTagType()) {
             case INPUT:
                 if (tag.getAddress() != null) {
-                    // Create link
+                    // Create installLink
                     AddressChangeListener link = new AddressChangeListener(tag);
 
                     // Link
@@ -35,15 +29,15 @@ public class TagUtil {
                     // Register
                     registerLink(tag, link);
                 } else {
-                    final String errorMSG = "Tag with ID:" + tag.getName() + " is an INPUT_TAG but has no Address configured. Cannot link.";
+                    final String errorMSG = "Tag with ID:" + tag.getName() + " is an INPUT_TAG but has no Address configured. Cannot installLink.";
                     LogUtil.logger.error(errorMSG);
                     tag.setStatus(errorMSG);
                 }
                 break;
             case MASK:
                 // Find tag source in the tag list
-                tagList.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSourceFinded -> {
-                    // Create link
+                allTags.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSourceFinded -> {
+                    // Create installLink
                     TagCurrentValueListenerForMaskUpdating link = new TagCurrentValueListenerForMaskUpdating(tag, tagSourceFinded);
 
                     // Link
@@ -60,7 +54,7 @@ public class TagUtil {
                         tag.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tag.getScript())));
 
                         // Find tags in the script
-                        tagList.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {
+                        allTags.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {
                             //Create Link
                             TagCurrentValueListenerForScriptUpdating link = new TagCurrentValueListenerForScriptUpdating(tag, tagInScript);
 
@@ -82,7 +76,7 @@ public class TagUtil {
             case STATUS:
                 if (tag.getScript() != null && !tag.getScript().isEmpty()) {
                     // Find tag source in the tag list
-                    tagList.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSource -> {
+                    allTags.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSource -> {
 
                         // Create Map number:statusName
                         Map<String, String> statusMap = new HashMap<>();
@@ -128,9 +122,9 @@ public class TagUtil {
         }
     }
 
-    public static void unlinkAll() {
-        for(Tag tag : tagLinks.keySet()){
-            for(InvalidationListener link : tagLinks.get(tag)){
+    public static void removeLink(Tag tag) {
+        if (TAG_LINK_MAP.keySet().contains(tag)){
+            for(InvalidationListener link : TAG_LINK_MAP.get(tag)){
                 if(link instanceof AddressChangeListener){
                     tag.getAddress().timestampProperty().removeListener(link);
                 } else {
@@ -138,14 +132,14 @@ public class TagUtil {
                 }
             }
         }
-        tagLinks.clear();
+        TAG_LINK_MAP.clear();
     }
 
     private static void registerLink(Tag tag, InvalidationListener link){
-        if(tagLinks.keySet().contains(tag)){
-            tagLinks.get(tag).add(link);
+        if(TAG_LINK_MAP.keySet().contains(tag)){
+            TAG_LINK_MAP.get(tag).add(link);
         } else {
-            tagLinks.put(tag, new ArrayList<>(Arrays.asList(link)));
+            TAG_LINK_MAP.put(tag, new ArrayList<>(Arrays.asList(link)));
         }
     }
 

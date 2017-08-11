@@ -8,10 +8,10 @@ public abstract class Communicator {
 
     abstract public void communicate() throws Exception;
 
-    public boolean isSelfRepeatable() {
+    boolean isSelfRepeatable() {
         return selfRepeatable;
     }
-    public void setSelfRepeatable(boolean selfRepeatable) {
+    void setSelfRepeatable(boolean selfRepeatable) {
         this.selfRepeatable = selfRepeatable;
     }
 
