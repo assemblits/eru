@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "project", schema = "public")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Project {
 
     private IntegerProperty         id;

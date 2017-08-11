@@ -3,6 +3,7 @@ package com.marlontrujillo.eru.comm.device;
 import com.marlontrujillo.eru.comm.connection.Connection;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,9 +16,6 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "device", schema = "public")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "device_type", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "DEVICE")
 public class  Device {
     /* ********** Fields ********** */
     private int                         id;
@@ -109,8 +107,8 @@ public class  Device {
         this.enabled.set(enabled);
     }
 
-    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    public List<Address> getAddresses(){
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
+    private List<Address> getAddresses(){
         if(addresses != null){
             _addresses.clear();
             _addresses.addAll(addresses.get());
@@ -118,13 +116,34 @@ public class  Device {
         return _addresses;
     }
     public ListProperty<Address> addressesProperty() {
-        this.addresses = new SimpleListProperty<>(FXCollections.observableList(_addresses));
+        if (this.addresses == null){
+            this.addresses = new SimpleListProperty<>(FXCollections.observableList(_addresses));
+            // Listener added for OneToMany Sync relation: https://en.wikibooks.org/wiki/Java_Persistence/OneToMany
+            this.addresses.addListener((ListChangeListener<Address>) c -> {
+                while (c.next()) {
+                    if (c.wasPermutated()) {
+                        for (int i = c.getFrom(); i < c.getTo(); ++i) {
+                            //permutate
+                        }
+                    } else if (c.wasUpdated()) {
+                        //update item
+                    } else {
+                        for (Address remAddress : c.getRemoved()) {
+                            remAddress.setOwner(null);
+                        }
+                        for (Address addAddress : c.getAddedSubList()) {
+                            if (addAddress.getOwner() != this){
+                                addAddress.setOwner(this);
+                            }
+                        }
+                    }
+                }
+            });
+        }
         return addresses;
     }
-    public void setAddresses(List<Address> addresses) {
-        if (this.addresses != null) {
-            this.addresses.set(FXCollections.observableList(addresses));
-        }
+    private void setAddresses(List<Address> addresses) {
+        this.addresses = new SimpleListProperty<>(FXCollections.observableList(addresses));
         this._addresses = addresses;
     }
 
@@ -187,6 +206,9 @@ public class  Device {
 
     @Override
     public String toString() {
-        return this.getName();
+        return this.getName() +
+                "(" +
+                this.addresses +
+                ")";
     }
 }

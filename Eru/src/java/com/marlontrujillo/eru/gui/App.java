@@ -70,7 +70,7 @@ public class App extends Application {
         preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
-            project = (Project) event.getSource().getValue();
+            this.project = (Project) event.getSource().getValue();
             execute(Action.UPDATE_PROJECT_IN_GUI);
             launchApp();
         });
@@ -139,6 +139,7 @@ public class App extends Application {
                     break;
                 case UPDATE_PROJECT_IN_GUI:
                     this.skeleton.getProjectTree().setContent(project.getGroup());
+                    System.out.println(this.project.getDevices());
                     break;
                 case ADD_TABLE_ITEM:
                     if (this.table != null) this.table.addNewItem();

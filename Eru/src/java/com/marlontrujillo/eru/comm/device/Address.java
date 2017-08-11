@@ -20,7 +20,7 @@ public class Address implements Comparable<Address> {
 
     /* ********** Fields ********** */
     private final IntegerProperty                   id;
-    private final ObjectProperty<Device>            device;
+    private final ObjectProperty<Device>            owner;
     private final IntegerProperty                   networkID;
     private final ObjectProperty<Address.DataModel> dataModel;
     private final IntegerProperty                   currentValue;
@@ -31,7 +31,7 @@ public class Address implements Comparable<Address> {
     /* ********** Constructor ********** */
     public Address() {
         this.id            = new SimpleIntegerProperty(0);
-        this.device        = new SimpleObjectProperty<>();
+        this.owner         = new SimpleObjectProperty<>();
         this.networkID     = new SimpleIntegerProperty(0);
         this.dataModel     = new SimpleObjectProperty<>(ANALOG_WRITE);
         this.currentValue  = new SimpleIntegerProperty();
@@ -53,15 +53,15 @@ public class Address implements Comparable<Address> {
         this.id.set(id);
     }
 
-    @ManyToOne
-    public Device getDevice() {
-        return device.get();
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "owner_id")
+    public Device getOwner() {
+        return owner.get();
     }
-    public ObjectProperty<Device> deviceProperty() {
-        return device;
+    public ObjectProperty<Device> ownerProperty() {
+        return owner;
     }
-    public void setDevice(Device device) {
-        this.device.set(device);
+    public void setOwner(Device owner) {
+        this.owner.set(owner);
     }
 
     @Column(name = "network_id")
