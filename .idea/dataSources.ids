@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="dataSourceStorage">
-  <data-source name="PostgreSQL - hibernate@localhost" uuid="0e6d1e4f-23ee-40ed-9783-53af26fdf70e">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-  <data-source name="PostgreSQL - psv@localhost" uuid="f2371b9e-2c4d-4935-8e18-568b1b395618">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-</component>

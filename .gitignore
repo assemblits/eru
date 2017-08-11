@@ -1,3 +1,6 @@
-out/
+### Intellij ###
+# User-specific stuff:
 .idea/
+# Outputs
+out/
 *.class
