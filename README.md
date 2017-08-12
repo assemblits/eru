@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/new-toolboxes/lib/graphic-design/project-icon.png" />
+  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.pnghttps://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.png" />
   Eru Server
   <br>
 </h1>
