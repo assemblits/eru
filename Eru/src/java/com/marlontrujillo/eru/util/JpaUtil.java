@@ -1,17 +1,23 @@
 package com.marlontrujillo.eru.util;
 
 
+import com.marlontrujillo.eru.exception.EntityManagerFactoryCreationException;
 import com.marlontrujillo.eru.logger.LogUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 /**
- *
  * @author marlon
  */
 public class JpaUtil {
+
+    private static final String PERSISTENCE_UNIT = "com.psv.jpa";
 
     private static EntityManagerFactory emf;
     /**
@@ -28,25 +34,35 @@ public class JpaUtil {
         return emf;
     }
 
-    public static EntityManager getGlobalEntityManager(){
-        if (globalEntityManager == null){
-            if(emf == null && createEntityManagerFactory()) {
-                globalEntityManager = emf.createEntityManager();
+    public static EntityManager getGlobalEntityManager() {
+        if (globalEntityManager == null) {
+            if (emf == null) {
+                createEntityManagerFactory();
             }
+            globalEntityManager = emf.createEntityManager();
         }
         return globalEntityManager;
     }
 
-    private static boolean createEntityManagerFactory(){
-        boolean success = false;
-        try{
-            emf = Persistence.createEntityManagerFactory("com.psv.jpa");
-            LogUtil.logger.info("Entity Manager Factory connected.");
-            success = true;
-        } catch (Exception e){
-            e.printStackTrace();
-            LogUtil.logger.error("Error creating a Entity Manager Factory : " + e.getMessage(), e);
+    private static void createEntityManagerFactory() {
+        PropertiesLoader propertiesLoader = new PropertiesLoader();
+        emf = createEntityManagerFactory(PERSISTENCE_UNIT, propertiesLoader.loadPropertiesAsMap("database"))
+                .orElseGet(() -> createEntityManagerFactory(PERSISTENCE_UNIT, propertiesLoader.loadPropertiesAsMap("fallback-database"))
+                        .orElseThrow(() -> {
+                            LogUtil.logger.error("Unable to create entity manager factory");
+                            return new EntityManagerFactoryCreationException();
+                        }));
+    }
+
+    private static Optional<EntityManagerFactory> createEntityManagerFactory(String persistenceUnitName, Map<String, String> properties) {
+        try {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
+            LogUtil.logger.info(format("Entity Manager Factory connected with %s persistence unit.", persistenceUnitName));
+            return Optional.of(entityManagerFactory);
+        } catch (Exception e) {
+            LogUtil.logger.warn(format("Error creating a Entity Manager Factory with %s persistence unit: %s",
+                    persistenceUnitName, e.getMessage()), e);
+            return Optional.empty();
         }
-        return success;
     }
 }

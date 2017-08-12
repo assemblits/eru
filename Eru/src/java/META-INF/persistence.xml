@@ -17,16 +17,5 @@
         <class>com.marlontrujillo.eru.user.Engineer</class>
         <class>com.marlontrujillo.eru.user.Operator</class>
         <class>com.marlontrujillo.eru.tag.Tag</class>
-
-        <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/eru"/>
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="postgres"/>
-            <property name="hibernate.archive.autodetection" value="class"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-        </properties>
     </persistence-unit>
 </persistence>

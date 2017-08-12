@@ -10,7 +10,7 @@ import java.util.List;
  * Created by mtrujillo on 7/25/17.
  */
 @Entity
-@Table(name = "group", schema = "public")
+@Table(name = "group_", schema = "public")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Group {
 
