@@ -2,7 +2,7 @@ package com.marlontrujillo.eru.persistence;
 
 import com.marlontrujillo.eru.comm.connection.Connection;
 import com.marlontrujillo.eru.comm.device.Device;
-import com.marlontrujillo.eru.gui.tree.Group;
+import com.marlontrujillo.eru.gui.tree.TreeElementsGroup;
 import com.marlontrujillo.eru.tag.Tag;
 import com.marlontrujillo.eru.user.User;
 import javafx.beans.property.*;
@@ -20,7 +20,7 @@ public class Project {
 
     private IntegerProperty         id;
     private StringProperty          name;
-    private ObjectProperty<Group>   group;
+    private ObjectProperty<TreeElementsGroup>   group;
     private List<Device>            devices;
     private List<Connection>        connections;
     private List<Tag>               tags;
@@ -59,14 +59,14 @@ public class Project {
     }
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    public Group getGroup() {
+    public TreeElementsGroup getGroup() {
         return group.get();
     }
-    public ObjectProperty<Group> groupProperty() {
+    public ObjectProperty<TreeElementsGroup> groupProperty() {
         return group;
     }
-    public void setGroup(Group group) {
-        this.group.set(group);
+    public void setGroup(TreeElementsGroup treeElementsGroup) {
+        this.group.set(treeElementsGroup);
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)

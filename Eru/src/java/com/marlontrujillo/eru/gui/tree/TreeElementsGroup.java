@@ -10,19 +10,19 @@ import java.util.List;
  * Created by mtrujillo on 7/25/17.
  */
 @Entity
-@Table(name = "group", schema = "public")
+@Table(name = "tree_elements_group", schema = "public")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Group {
+public class TreeElementsGroup {
 
     public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER}
 
     private IntegerProperty         id;
     private StringProperty          name;
     private ObjectProperty<Type>    type;
-    private ObjectProperty<Group>   parent;
-    private List<Group>             children;
+    private ObjectProperty<TreeElementsGroup>   parent;
+    private List<TreeElementsGroup>             children;
 
-    public Group() {
+    public TreeElementsGroup() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
         this.type = new SimpleObjectProperty<>();
@@ -62,27 +62,27 @@ public class Group {
     }
 
     @OneToOne(cascade= CascadeType.ALL, orphanRemoval = true)
-    public Group getParent() {
+    public TreeElementsGroup getParent() {
         return parent.get();
     }
-    public ObjectProperty<Group> parentProperty() {
+    public ObjectProperty<TreeElementsGroup> parentProperty() {
         return parent;
     }
-    public void setParent(Group parent) {
+    public void setParent(TreeElementsGroup parent) {
         this.parent.set(parent);
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    public List<Group> getChildren() {
+    public List<TreeElementsGroup> getChildren() {
         return children;
     }
-    public void setChildren(List<Group> children) {
+    public void setChildren(List<TreeElementsGroup> children) {
         this.children = children;
     }
 
     @Override
     public String toString() {
-        return "Group{" + getName() +
+        return "TreeElementsGroup{" + getName() +
                 "=" + super.toString() +
                 ", children= <" + children +
                 "> }";

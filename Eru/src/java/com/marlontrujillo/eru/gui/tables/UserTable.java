@@ -17,7 +17,7 @@ public class UserTable extends EruTable<User> {
 
     public UserTable(List<User> users) {
         super(users);
-        TableColumn<User, String> groupColumn = new TableColumn<>("Group");
+        TableColumn<User, String> groupColumn = new TableColumn<>("TreeElementsGroup");
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
         TableColumn<User, String> lastNameColumn = new TableColumn<>("Last name");

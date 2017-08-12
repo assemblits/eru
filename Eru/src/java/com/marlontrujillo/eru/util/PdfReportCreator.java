@@ -116,7 +116,7 @@ public class PdfReportCreator {
             REPORT_CREATOR.concat("ALARM REPORT");
             table = new PdfPTable(6);
             table.setWidthPercentage(100);
-            String[] columnTitles = {"Date", "Description","Acknowledge-By","Group","Acknowledge-Status","Priority"};
+            String[] columnTitles = {"Date", "Description","Acknowledge-By","TreeElementsGroup","Acknowledge-Status","Priority"};
             for(String columnTitle: columnTitles){
                 PdfPCell cell = new PdfPCell(new Phrase(columnTitle, TABLE_TITLE_FONT));
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);

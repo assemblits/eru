@@ -4,7 +4,7 @@ import com.marlontrujillo.eru.comm.FieldBusCommunicator;
 import com.marlontrujillo.eru.dolphin.ServerStartupService;
 import com.marlontrujillo.eru.gui.about.About;
 import com.marlontrujillo.eru.gui.tables.*;
-import com.marlontrujillo.eru.gui.tree.Group;
+import com.marlontrujillo.eru.gui.tree.TreeElementsGroup;
 import com.marlontrujillo.eru.persistence.Project;
 import com.marlontrujillo.eru.persistence.ProjectLoaderService;
 import com.marlontrujillo.eru.persistence.ProjectSaverService;
@@ -92,9 +92,9 @@ public class App extends Application {
         return singleton;
     }
 
-    public void showGroup(Group selectedGroup) {
+    public void showGroup(TreeElementsGroup selectedTreeElementsGroup) {
         this.skeleton.getMainPane().getChildren().clear();
-        switch (selectedGroup.getType()) {
+        switch (selectedTreeElementsGroup.getType()) {
             case ROOT:
                 break;
             case CONNECTION:
@@ -117,7 +117,7 @@ public class App extends Application {
             AnchorPane.setLeftAnchor(table, 0.0);
             this.skeleton.getMainPane().getChildren().add(table);
             this.table.setTextToFilter(this.skeleton.getSearchTextField().textProperty());
-            this.skeleton.getSearchTextField().setText(selectedGroup.getName());
+            this.skeleton.getSearchTextField().setText(selectedTreeElementsGroup.getName());
         }
     }
 

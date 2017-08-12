@@ -1,6 +1,6 @@
 package com.marlontrujillo.eru.persistence;
 
-import com.marlontrujillo.eru.gui.tree.Group;
+import com.marlontrujillo.eru.gui.tree.TreeElementsGroup;
 import com.marlontrujillo.eru.util.JpaUtil;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -49,31 +49,31 @@ public class ProjectLoaderService extends Service<Project> {
         Project newProject = new Project();
         newProject.setName("Project");
 
-        Group root = new Group();
+        TreeElementsGroup root = new TreeElementsGroup();
         root.setName("Project");
-        root.setType(Group.Type.ROOT);
+        root.setType(TreeElementsGroup.Type.ROOT);
 
-        Group connections = new Group();
+        TreeElementsGroup connections = new TreeElementsGroup();
         connections.setName("Connections");
-        connections.setType(Group.Type.CONNECTION);
+        connections.setType(TreeElementsGroup.Type.CONNECTION);
         connections.setParent(root);
         root.getChildren().add(connections);
 
-        Group devices = new Group();
+        TreeElementsGroup devices = new TreeElementsGroup();
         devices.setName("Devices");
-        devices.setType(Group.Type.DEVICE);
+        devices.setType(TreeElementsGroup.Type.DEVICE);
         devices.setParent(root);
         root.getChildren().add(devices);
 
-        Group tags = new Group();
+        TreeElementsGroup tags = new TreeElementsGroup();
         tags.setName("Tags");
-        tags.setType(Group.Type.TAG);
+        tags.setType(TreeElementsGroup.Type.TAG);
         tags.setParent(root);
         root.getChildren().add(tags);
 
-        Group users = new Group();
+        TreeElementsGroup users = new TreeElementsGroup();
         users.setName("Users");
-        users.setType(Group.Type.USER);
+        users.setType(TreeElementsGroup.Type.USER);
         users.setParent(root);
         root.getChildren().add(users);
 

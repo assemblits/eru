@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Created by mtrujillo on 7/28/17.
  */
-public class GroupTreeCell extends TreeCell<Group> {
+public class GroupTreeCell extends TreeCell<TreeElementsGroup> {
 
     private final Image rootIcon        = new Image(getClass().getResourceAsStream("project-icon.png"));
     private final Image connectionIcon  = new Image(getClass().getResourceAsStream("connection-icon.png"));
@@ -24,14 +24,14 @@ public class GroupTreeCell extends TreeCell<Group> {
     private final ContextMenu usersMenu       = new ContextMenu();
 
     public GroupTreeCell() {
-        connectionsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
-        devicesMenu.getItems().addAll(getMenuItemToAdd(Group.Type.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
-        tagsMenu.getItems().addAll(getMenuItemToAdd(Group.Type.TAG), getMenuItemToRename(), getMenuItemToRemove());
-        usersMenu.getItems().addAll(getMenuItemToAdd(Group.Type.USER), getMenuItemToRename(), getMenuItemToRemove());
+        connectionsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
+        devicesMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
+        tagsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.TAG), getMenuItemToRename(), getMenuItemToRemove());
+        usersMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.USER), getMenuItemToRename(), getMenuItemToRemove());
     }
 
     @Override
-    protected void updateItem(Group item, boolean empty) {
+    protected void updateItem(TreeElementsGroup item, boolean empty) {
         super.updateItem(item, empty);
         setGraphic(null);
         setText(null);
@@ -67,16 +67,16 @@ public class GroupTreeCell extends TreeCell<Group> {
         App.getSingleton().showGroup(getItem());
     }
 
-    private MenuItem getMenuItemToAdd(Group.Type type){
+    private MenuItem getMenuItemToAdd(TreeElementsGroup.Type type){
         MenuItem addMenuItem = new MenuItem("New group");
         addMenuItem.setOnAction(event -> {
-            Group newGroup = new Group();
-            newGroup.setName("new " + type.name().toLowerCase() + " group");
-            newGroup.setType(type);
-            newGroup.setParent(getItem());
+            TreeElementsGroup newTreeElementsGroup = new TreeElementsGroup();
+            newTreeElementsGroup.setName("new " + type.name().toLowerCase() + " group");
+            newTreeElementsGroup.setType(type);
+            newTreeElementsGroup.setParent(getItem());
 
-            getItem().getChildren().add(newGroup);
-            getTreeItem().getChildren().add(new TreeItem<>(newGroup));
+            getItem().getChildren().add(newTreeElementsGroup);
+            getTreeItem().getChildren().add(new TreeItem<>(newTreeElementsGroup));
         });
         return addMenuItem;
     }
@@ -106,13 +106,13 @@ public class GroupTreeCell extends TreeCell<Group> {
             if (result.get() == ButtonType.OK){
                 try{
                     TreeItem parentItem = getTreeItem().getParent();
-                    Group    parentGroup = getItem().getParent();
+                    TreeElementsGroup parentTreeElementsGroup = getItem().getParent();
 
-                    System.out.println("Group " + parentGroup + " contains " + getItem() + "?:" + parentGroup.getChildren().contains(getItem()));
+                    System.out.println("TreeElementsGroup " + parentTreeElementsGroup + " contains " + getItem() + "?:" + parentTreeElementsGroup.getChildren().contains(getItem()));
 
 
                     boolean itemRemoved = parentItem.getChildren().remove(getTreeItem());
-                    boolean groupRemoved = parentGroup.getChildren().remove(getItem());
+                    boolean groupRemoved = parentTreeElementsGroup.getChildren().remove(getItem());
 
                     System.out.println("Remove result: " + itemRemoved + groupRemoved);
                 } catch (Exception e){

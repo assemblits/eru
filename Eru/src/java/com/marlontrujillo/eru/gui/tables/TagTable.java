@@ -27,7 +27,7 @@ public class TagTable extends EruTable<Tag> {
         super(items);
 
         // **** Columns **** //
-        TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
+        TableColumn<Tag, String> groupColumn             = new TableColumn<>("TreeElementsGroup");
         TableColumn<Tag, String> nameColumn              = new TableColumn<>("Name");
         TableColumn<Tag, String> tagSourceColumn         = new TableColumn<>("Source");
         TableColumn<Tag, Boolean> enabledColumn          = new TableColumn<>("Enabled");

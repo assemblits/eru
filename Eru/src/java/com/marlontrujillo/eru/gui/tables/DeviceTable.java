@@ -47,7 +47,7 @@ public class DeviceTable extends EruTable<Device> {
         super(items);
 
         // **** Columns **** //
-        TableColumn<Device, String> groupColumn             = new TableColumn<>("Group");
+        TableColumn<Device, String> groupColumn             = new TableColumn<>("TreeElementsGroup");
         TableColumn<Device, String> nameColumn              = new TableColumn<>("Name");
         TableColumn<Device, Integer> unitIdentifierColumn   = new TableColumn<>("ID");
         TableColumn<Device, String> statusColumn            = new TableColumn<>("Status");

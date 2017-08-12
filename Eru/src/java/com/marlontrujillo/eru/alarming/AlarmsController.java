@@ -49,7 +49,7 @@ public class AlarmsController implements Initializable {
         table.getColumns().addAll(
                 makeTableColumn("Date",ATT_ALARM_DATE),
                 makeTableColumn("Description",ATT_ALARM_DESCRIPTION),
-                makeTableColumn("Group",ATT_ALARM_GROUP),
+                makeTableColumn("TreeElementsGroup",ATT_ALARM_GROUP),
                 makeTableColumn("Acknowledge",ATT_ALARM_ACK)
         );
     }
