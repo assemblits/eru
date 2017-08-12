@@ -37,7 +37,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import ve.marlontrujillo.fonts.Fonts;
+import com.eru.fonts.Fonts;
 import eu.hansolo.enzo.Clock;
 
 import java.time.LocalTime;

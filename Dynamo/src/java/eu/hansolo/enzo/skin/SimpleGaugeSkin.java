@@ -37,9 +37,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import ve.marlontrujillo.fonts.Fonts;
+import com.eru.fonts.Fonts;
 import eu.hansolo.enzo.SimpleGauge;
-import ve.marlontrujillo.util.Section;
+import com.eru.util.Section;
 
 import java.time.Instant;
 import java.util.Locale;

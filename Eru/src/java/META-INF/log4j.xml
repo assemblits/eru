@@ -19,13 +19,13 @@
         </layout>
     </appender>
 
-    <appender name="LoggerConsole" class="com.marlontrujillo.eru.logger.LabelAppender">
+    <appender name="LoggerConsole" class="com.eru.logger.LabelAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
         </layout>
     </appender>
 
-    <appender name="LoggerLive" class="com.marlontrujillo.eru.logger.LiveAppender">
+    <appender name="LoggerLive" class="com.eru.logger.LiveAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
         </layout>

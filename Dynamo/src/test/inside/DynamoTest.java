@@ -9,9 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ve.marlontrujillo.scene.control.ArcClock;
+import com.eru.scene.control.ArcClock;
 
-import static ve.marlontrujillo.scene.control.ArcClock.*;
+import static com.eru.scene.control.ArcClock.BLUE1;
+import static com.eru.scene.control.ArcClock.BLUE2;
 
 //
 //import java.text.ParseException;

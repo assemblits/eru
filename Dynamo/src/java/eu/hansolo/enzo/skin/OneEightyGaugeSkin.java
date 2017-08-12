@@ -33,7 +33,7 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import ve.marlontrujillo.fonts.Fonts;
+import com.eru.fonts.Fonts;
 import eu.hansolo.enzo.OneEightyGauge;
 
 import java.time.Instant;
