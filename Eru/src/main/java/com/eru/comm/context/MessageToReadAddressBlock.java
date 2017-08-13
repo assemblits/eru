@@ -106,7 +106,6 @@ public class MessageToReadAddressBlock implements Message {
                 final Address address = getAddressFromBlock(slot);
                 address.setCurrentValue(extractSlotValueFromResponse(response, slot));
                 address.setTimestampValueAndFireListeners(now);
-                System.out.println(address);
             }
         });
     }

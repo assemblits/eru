@@ -39,6 +39,7 @@ ext {
     powerMockVersion = '1.6.6'
     jUnitVersion = '4.12'
     cglibNodepVersion = '2.2.2'
+    postgresVersion = '9.4.1207'
 }
 
 dependencies {
@@ -62,6 +63,7 @@ dependencies {
     compile "org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:${jbossSpecJavaTransactionVersion}"
     compile "org.hibernate.common:hibernate-commons-annotations:${hibernateCommonVersion}"
     compile "com.h2database:h2:${h2Version}"
+    compile "org.postgresql:postgresql:${postgresVersion}"
 
     //jetty
     compile "org.eclipse.jetty:jetty-servlets:${jettyVersion}"

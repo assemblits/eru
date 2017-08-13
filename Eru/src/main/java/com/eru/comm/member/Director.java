@@ -1,5 +1,7 @@
 package com.eru.comm.member;
 
+import com.eru.logger.LogUtil;
+
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -31,15 +33,17 @@ public class Director implements Runnable {
     }
 
     public boolean stop(){
-        while (loopRunning && !communicators.isEmpty()){
+        LogUtil.logger.info("Stopping communicators updating...");
+        while (loopRunning){
             try {
+                directorRunning = false;
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return directorRunning = true;
             }
         }
-        ;
+        LogUtil.logger.info("Communicators updating stopped");
         return directorRunning = true;
     }
 

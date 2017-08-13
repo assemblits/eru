@@ -168,6 +168,8 @@ public class App extends Application {
                         // Link tags each other
 //                        this.project.getTags().forEach(TagUtil::removeLink);
 
+                        CommunicationsManager.getInstance().stop();
+
                         // Stop connections
                         this.project.getConnections().forEach(Connection::discconnect);
 
@@ -177,7 +179,6 @@ public class App extends Application {
                         // Stop Alarming
 //                        Alarming.getInstance().stop();
 
-                        CommunicationsManager.getInstance().stop();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
