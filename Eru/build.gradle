@@ -39,7 +39,7 @@ ext {
     powerMockVersion = '1.6.6'
     jUnitVersion = '4.12'
     cglibNodepVersion = '2.2.2'
-    postgresVersion = '9.4.1207'
+    postgresVersion = '9.4.1211'
 }
 
 dependencies {
