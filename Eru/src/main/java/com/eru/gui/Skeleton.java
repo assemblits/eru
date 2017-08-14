@@ -4,6 +4,7 @@ import com.eru.gui.tree.ProjectTree;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -13,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by mtrujillo on 8/4/17.
  */
-public class Skeleton extends VBox{
+public class Skeleton extends VBox {
 
     @FXML
     private AnchorPane mainPane;
@@ -21,6 +22,8 @@ public class Skeleton extends VBox{
     private ProjectTree projectTree;
     @FXML
     private TextField searchTextField;
+    @FXML
+    private Label usedDatabaseText;
 
     public Skeleton() {
         try {
@@ -77,5 +80,8 @@ public class Skeleton extends VBox{
     }
     public TextField getSearchTextField() {
         return searchTextField;
+    }
+    public Label getUsedDatabaseText() {
+        return usedDatabaseText;
     }
 }

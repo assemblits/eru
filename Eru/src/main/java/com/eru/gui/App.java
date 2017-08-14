@@ -1,16 +1,17 @@
 package com.eru.gui;
 
+import com.eru.comm.CommunicationsManager;
 import com.eru.comm.connection.Connection;
+import com.eru.comm.device.Device;
 import com.eru.comm.member.ModbusDeviceCommunicator;
 import com.eru.dolphin.ServerStartupService;
 import com.eru.gui.about.About;
 import com.eru.gui.tables.*;
+import com.eru.gui.tree.TreeElementsGroup;
 import com.eru.persistence.Project;
 import com.eru.persistence.ProjectLoaderService;
-import com.eru.comm.CommunicationsManager;
-import com.eru.comm.device.Device;
-import com.eru.gui.tree.TreeElementsGroup;
 import com.eru.persistence.ProjectSaverService;
+import com.eru.util.DatabaseIdentifier;
 import com.eru.util.JpaUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,8 +31,11 @@ public class App extends Application {
     private Stage stage;
     private Skeleton skeleton;
     private EruTable table;
+    private DatabaseIdentifier databaseIdentifier;
+
     public App() {
         App.singleton = this;
+        databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
     }
 
     public static void main(String[] args) {
@@ -56,6 +60,7 @@ public class App extends Application {
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
             this.project = (Project) event.getSource().getValue();
+            this.skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
             execute(Action.UPDATE_PROJECT_IN_GUI);
             launchApp();
         });

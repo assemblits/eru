@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.eru.gui.tree.ProjectTree?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -17,9 +19,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<?import com.eru.gui.tree.ProjectTree?>
-
-<fx:root prefHeight="500.0" prefWidth="500.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="500.0" prefWidth="500.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Skeleton.css" />
     </stylesheets>
@@ -42,17 +42,17 @@
             <MenuItem mnemonicParsing="false" onAction="#unselectAllMenuItemSelected" text="Unselect All" />
         </Menu>
         <Menu mnemonicParsing="false" text="Run">
-            <MenuItem mnemonicParsing="false" text="Connect" onAction="#connectMenuItemSelected" />
-            <MenuItem mnemonicParsing="false" text="Disconnect" onAction="#disconnectMenuItemSelected" />
+            <MenuItem mnemonicParsing="false" onAction="#connectMenuItemSelected" text="Connect" />
+            <MenuItem mnemonicParsing="false" onAction="#disconnectMenuItemSelected" text="Disconnect" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About" onAction="#aboutMenuItemSelected" />
+            <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.2" focusTraversable="true" VBox.vgrow="ALWAYS">
         <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="180">
             <AnchorPane>
-                <ProjectTree fx:id="projectTree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <ProjectTree fx:id="projectTree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </AnchorPane>
         </ScrollPane>
         <AnchorPane>
@@ -83,6 +83,10 @@
             </textFill>
         </Label>
         <Pane HBox.hgrow="ALWAYS" />
+      <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
+        <Label fx:id="usedDatabaseLabel" font="$x3" text="Database:" textFill="$x4" HBox.hgrow="NEVER" />
+        <Label fx:id="usedDatabaseText" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
+      <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
         <Label fx:id="rightStatusLabel" font="$x3" text="Right Status" textFill="$x4" HBox.hgrow="NEVER" />
     </HBox>
 </fx:root>
