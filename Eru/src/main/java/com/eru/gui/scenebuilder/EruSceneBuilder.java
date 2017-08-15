@@ -1,7 +1,7 @@
 package com.eru.gui.scenebuilder;
 
-import com.eru.gui.App;
-import com.eru.gui.EruScreenStarter;
+import com.eru.exception.FxmlFileReadException;
+import com.eru.gui.EruMainScreenStarter;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneFxmlManager;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import static java.lang.String.format;
+
 @Log4j
 public class EruSceneBuilder extends VBox {
 
@@ -31,32 +33,24 @@ public class EruSceneBuilder extends VBox {
     private final File sceneFxmlFile;
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
-    private EruScreenStarter eruScreenStarter;
+    private EruMainScreenStarter eruMainScreenStarter;
 
-    public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager, EruScreenStarter eruScreenStarter) {
-        log.debug(String.format("Instantiating Eru Scene Builder for %s", scene.getName()));
+    public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager, EruMainScreenStarter eruMainScreenStarter) {
+        log.debug(format("Instantiating Eru Scene Builder for %s", scene.getName()));
         this.scene = scene;
         this.sceneFxmlManager = sceneFxmlManager;
-        this.eruScreenStarter = eruScreenStarter;
+        this.eruMainScreenStarter = eruMainScreenStarter;
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
-        try {
-            initSceneBuilder();
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
-        }
     }
 
-    private void initSceneBuilder() throws IOException {
+    public void init() throws FxmlFileReadException {
         editorController = new EditorController();
         HierarchyTreeViewController componentTree = new HierarchyTreeViewController(editorController);
         ContentPanelController canvas = new ContentPanelController(editorController);
         InspectorPanelController propertyTable = new InspectorPanelController(editorController);
         LibraryPanelController palette = new LibraryPanelController(editorController);
 
-        URL fxmlFileUrl = sceneFxmlFile.toPath().toUri().toURL();
-        String fxmlText = FXOMDocument.readContentFromURL(fxmlFileUrl);
-        editorController.setFxmlTextAndLocation(fxmlText, fxmlFileUrl);
+        setFxmlTextAndLocation();
 
         MenuBar menuBar = new MenuBar();
         menuBar.prefWidthProperty().bind(this.widthProperty());
@@ -65,11 +59,7 @@ public class EruSceneBuilder extends VBox {
         fileMenu.getItems().addAll(goBackToEruMenu);
         menuBar.getMenus().addAll(fileMenu);
 
-        goBackToEruMenu.setOnAction(event -> {
-            eruScreenStarter.startEruScreen();
-        });
-
-
+        goBackToEruMenu.setOnAction(event -> eruMainScreenStarter.startEruScreen());
 
         SplitPane leftPane = new SplitPane();
         leftPane.setOrientation(Orientation.VERTICAL);
@@ -88,10 +78,24 @@ public class EruSceneBuilder extends VBox {
         startChangeListener();
     }
 
+    private void setFxmlTextAndLocation() {
+        try {
+            URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+            String fxmlText = FXOMDocument.readContentFromURL(fxmlFileUrl);
+            editorController.setFxmlTextAndLocation(fxmlText, fxmlFileUrl);
+        } catch (IOException e) {
+            log.error(format("Error trying to read <%s>", sceneFxmlFile.getAbsoluteFile()));
+            throw new FxmlFileReadException(e);
+        }
+    }
+
+    private void initSceneBuilder() {
+
+    }
+
     private void startChangeListener() {
-        updateListener = (observable, oldValue, newValue) -> {
-            sceneFxmlManager.updateContent(sceneFxmlFile, editorController.getFxmlText());
-        };
+        updateListener = (observable, oldValue, newValue) ->
+                sceneFxmlManager.updateContent(sceneFxmlFile, editorController.getFxmlText());
         editorController.getJobManager().revisionProperty().addListener(updateListener);
     }
 }

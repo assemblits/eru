@@ -1,6 +1,6 @@
 package com.eru.gui;
 
-public interface EruScreenStarter {
+public interface EruMainScreenStarter {
 
     void startEruScreen();
 }

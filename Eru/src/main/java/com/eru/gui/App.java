@@ -7,6 +7,7 @@ import com.eru.entities.Connection;
 import com.eru.entities.Device;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
+import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.about.About;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
@@ -30,9 +31,8 @@ import lombok.extern.log4j.Log4j;
 /**
  * Created by mtrujillo on 8/31/2015.
  */
-
 @Log4j
-public class App extends Application implements SceneBuilderStarter, EruScreenStarter {
+public class App extends Application implements SceneBuilderStarter, EruMainScreenStarter {
 
     public static final String NAME = "eru";
 
@@ -74,14 +74,14 @@ public class App extends Application implements SceneBuilderStarter, EruScreenSt
             skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
             eruScene = new Scene(skeleton, 900, 500);
             execute(Action.UPDATE_PROJECT_IN_GUI);
-            launchApp();
+            displayMainEruScreen();
         });
         pls.start();
         stage.setScene(new Scene(preloaderWindow, 500, 250));
         stage.show();
     }
 
-    private void launchApp() {
+    private void displayMainEruScreen() {
         stage.setScene(eruScene);
         stage.show();
     }
@@ -235,9 +235,13 @@ public class App extends Application implements SceneBuilderStarter, EruScreenSt
         log.info(String.format("Starting scene builder for <%s>", scene.getName()));
         SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
         EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(scene, sceneFxmlManager, this);
-
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        try {
+            eruSceneBuilder.init();
+        } catch (FxmlFileReadException e) {
+            //TODO Display dialog with error
+            log.error("Error on Eru Scene Builder init", e);
+        }
+        Rectangle2D bounds = getScreenBounds();
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
 
@@ -245,9 +249,14 @@ public class App extends Application implements SceneBuilderStarter, EruScreenSt
         stage.show();
     }
 
+    private Rectangle2D getScreenBounds() {
+        Screen screen = Screen.getPrimary();
+        return screen.getVisualBounds();
+    }
+
     @Override
     public void startEruScreen() {
-        launchApp();
+        displayMainEruScreen();
     }
 
     public enum Action {
