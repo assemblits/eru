@@ -1,6 +1,6 @@
 package com.eru.gui.tables;
 
-import com.eru.user.User;
+import com.eru.entities.User;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.SelectionMode;

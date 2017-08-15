@@ -1,5 +1,6 @@
 package com.eru.gui.tree;
 
+import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.App;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

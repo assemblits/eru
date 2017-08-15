@@ -1,11 +1,11 @@
 package com.eru.persistence
 
-import com.eru.comm.connection.Connection
-import com.eru.tag.Tag
-import com.eru.comm.device.Device
+import com.eru.entities.Connection
+import com.eru.entities.Tag
+import com.eru.entities.Device
 import com.eru.historian.HistoricDao
 import com.eru.logger.LogUtil
-import com.eru.user.User
+import com.eru.entities.User
 import com.eru.util.JpaUtil
 import groovyx.gpars.agent.Agent
 import javafx.collections.FXCollections

@@ -1,7 +1,7 @@
 package com.eru.gui.export;
 
 import com.eru.logger.LogUtil;
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import com.eru.util.PSVAlert;
 import com.eru.util.PdfReportCreator;
 import com.eru.persistence.Dao;

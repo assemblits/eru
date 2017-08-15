@@ -1,6 +1,6 @@
-package com.eru.tag;
+package com.eru.entities;
 
-import com.eru.comm.device.Address;
+import com.eru.entities.Address;
 import com.eru.util.MathUtil;
 import javafx.beans.property.*;
 

@@ -1,4 +1,4 @@
-package com.eru.user;
+package com.eru.entities;
 
 import javafx.beans.property.*;
 

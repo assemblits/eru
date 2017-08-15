@@ -1,14 +1,14 @@
 package com.eru.gui;
 
 import com.eru.comm.CommunicationsManager;
-import com.eru.comm.connection.Connection;
-import com.eru.comm.device.Device;
+import com.eru.entities.Connection;
+import com.eru.entities.Device;
 import com.eru.comm.member.ModbusDeviceCommunicator;
 import com.eru.dolphin.ServerStartupService;
 import com.eru.gui.about.About;
 import com.eru.gui.tables.*;
-import com.eru.gui.tree.TreeElementsGroup;
-import com.eru.persistence.Project;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.entities.Project;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
 import com.eru.util.DatabaseIdentifier;

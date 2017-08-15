@@ -1,4 +1,4 @@
-package com.eru.gui.tree;
+package com.eru.entities;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

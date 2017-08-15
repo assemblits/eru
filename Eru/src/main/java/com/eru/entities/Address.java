@@ -1,4 +1,4 @@
-package com.eru.comm.device;
+package com.eru.entities;
 
 import com.eru.util.TimeStampProperty;
 import javafx.beans.property.*;
@@ -6,7 +6,7 @@ import javafx.beans.property.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-import static com.eru.comm.device.Address.DataModel.*;
+import static com.eru.entities.Address.DataModel.*;
 
 /**
  * Created by mtrujillo on 13/05/14.

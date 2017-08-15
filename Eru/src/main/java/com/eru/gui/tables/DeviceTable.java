@@ -1,8 +1,8 @@
 package com.eru.gui.tables;
 
-import com.eru.comm.connection.Connection;
-import com.eru.comm.device.Address;
-import com.eru.comm.device.Device;
+import com.eru.entities.Connection;
+import com.eru.entities.Address;
+import com.eru.entities.Device;
 import com.eru.gui.App;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;

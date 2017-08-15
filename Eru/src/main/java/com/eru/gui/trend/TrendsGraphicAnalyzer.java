@@ -1,6 +1,6 @@
 package com.eru.gui.trend;
 
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import com.eru.persistence.Dao;
 import com.eru.util.JpaUtil;
 import com.eru.util.PSVAlert;

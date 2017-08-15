@@ -1,6 +1,6 @@
-package com.eru.comm.device;
+package com.eru.entities;
 
-import com.eru.comm.connection.Connection;
+import com.eru.comm.device.AddressesBlock;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;

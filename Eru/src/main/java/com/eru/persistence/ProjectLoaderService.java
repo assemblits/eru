@@ -1,6 +1,7 @@
 package com.eru.persistence;
 
-import com.eru.gui.tree.TreeElementsGroup;
+import com.eru.entities.Project;
+import com.eru.entities.TreeElementsGroup;
 import com.eru.util.JpaUtil;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;

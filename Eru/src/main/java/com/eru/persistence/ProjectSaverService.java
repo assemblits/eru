@@ -1,5 +1,6 @@
 package com.eru.persistence;
 
+import com.eru.entities.Project;
 import com.eru.util.JpaUtil;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;

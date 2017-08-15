@@ -1,4 +1,4 @@
-package com.eru.alarming;
+package com.eru.entities;
 
 import javafx.beans.property.*;
 
