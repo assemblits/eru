@@ -17,5 +17,6 @@
         <class>com.eru.entities.Engineer</class>
         <class>com.eru.entities.Operator</class>
         <class>com.eru.entities.Tag</class>
+        <class>com.eru.entities.Display</class>
     </persistence-unit>
 </persistence>

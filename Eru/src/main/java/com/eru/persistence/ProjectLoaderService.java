@@ -78,6 +78,12 @@ public class ProjectLoaderService extends Service<Project> {
         users.setParent(root);
         root.getChildren().add(users);
 
+        TreeElementsGroup displays = new TreeElementsGroup();
+        displays.setName("Displays");
+        displays.setType(TreeElementsGroup.Type.DISPLAY);
+        displays.setParent(root);
+        root.getChildren().add(displays);
+
         newProject.setGroup(root);
 
         return newProject;

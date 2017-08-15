@@ -20,6 +20,7 @@ public class Project {
     private List<Connection> connections;
     private List<Tag> tags;
     private List<User> users;
+    private List<Display> displays;
 
     public Project() {
         this.id = new SimpleIntegerProperty();
@@ -29,6 +30,7 @@ public class Project {
         this.connections = new ArrayList<>();
         this.tags = new ArrayList<>();
         this.users = new ArrayList<>();
+        this.displays = new ArrayList<>();
     }
 
     @Id
@@ -106,6 +108,15 @@ public class Project {
         this.users = users;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Display> getDisplays() {
+        return displays;
+    }
+
+    public void setDisplays(List<Display> displays) {
+        this.displays = displays;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -116,6 +127,7 @@ public class Project {
                 ", connections=" + connections +
                 ", tags=" + tags +
                 ", users=" + users +
+                ", displays=" + displays +
                 '}';
     }
 }
