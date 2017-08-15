@@ -91,6 +91,9 @@ public class App extends Application {
             case USER:
                 this.table = new UserTable(this.project.getUsers());
                 break;
+            case DISPLAY:
+                this.table = new DisplayTable(this.project.getDisplays());
+                break;
         }
         if (this.table != null) {
             AnchorPane.setTopAnchor(table, 0.0);

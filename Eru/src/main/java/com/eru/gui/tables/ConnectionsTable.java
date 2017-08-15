@@ -28,7 +28,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         super(items);
 
         // **** Columns **** //
-        TableColumn<Connection, String> groupColumn         = new TableColumn<>("TreeElementsGroup");
+        TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
         TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
         TableColumn<Connection, Boolean> enabledColumn      = new TableColumn<>("Enable");

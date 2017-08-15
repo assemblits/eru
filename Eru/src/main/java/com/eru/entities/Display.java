@@ -19,6 +19,8 @@ public class Display {
     private long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "group_name")
+    private String groupName;
     @Column(name = "location")
     private String location;
     @Column(name = "deleted")
