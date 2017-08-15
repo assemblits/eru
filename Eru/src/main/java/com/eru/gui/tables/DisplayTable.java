@@ -1,6 +1,7 @@
 package com.eru.gui.tables;
 
 import com.eru.entities.Display;
+import com.eru.scenebuilder.SceneBuilderStarter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
@@ -17,8 +18,11 @@ import java.util.Optional;
 @Log4j
 public class DisplayTable extends EruTable<Display> {
 
-    public DisplayTable(List<Display> displays) {
+    private final SceneBuilderStarter sceneBuilderStarter;
+
+    public DisplayTable(List<Display> displays, SceneBuilderStarter sceneBuilderStarter) {
         super(displays);
+        this.sceneBuilderStarter = sceneBuilderStarter;
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> userNameColumn = new TableColumn<>("Name");
 
@@ -39,7 +43,7 @@ public class DisplayTable extends EruTable<Display> {
 
         this.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                log.info(String.format("Opening scene builder for %s", this.getSelectionModel().getSelectedItem().getName()));
+                sceneBuilderStarter.startSceneBuilder(this.getSelectionModel().getSelectedItem());
             }
         });
     }
@@ -78,7 +82,7 @@ public class DisplayTable extends EruTable<Display> {
                 Display newDisplay = new Display();
                 newDisplay.setGroupName("Displays");
                 newDisplay.setName(displayName.getText());
-                newDisplay.setLocation(String.format("~/eru/%s/", newDisplay.getGroupName()));
+                newDisplay.setFxmlLocation(String.format("~/eru/%s/", newDisplay.getGroupName()));
                 return newDisplay;
             }
             return null;

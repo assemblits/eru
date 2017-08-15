@@ -1,16 +1,15 @@
 package com.eru.gui;
 
 import com.eru.comm.CommunicationsManager;
-import com.eru.entities.Connection;
-import com.eru.entities.Device;
 import com.eru.comm.member.ModbusDeviceCommunicator;
 import com.eru.dolphin.ServerStartupService;
+import com.eru.entities.*;
 import com.eru.gui.about.About;
 import com.eru.gui.tables.*;
-import com.eru.entities.TreeElementsGroup;
-import com.eru.entities.Project;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
+import com.eru.scenebuilder.EruScene;
+import com.eru.scenebuilder.SceneBuilderStarter;
 import com.eru.util.DatabaseIdentifier;
 import com.eru.util.JpaUtil;
 import javafx.application.Application;
@@ -18,13 +17,15 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j;
 
 
 /**
  * Created by mtrujillo on 8/31/2015.
  */
 
-public class App extends Application {
+@Log4j
+public class App extends Application implements SceneBuilderStarter {
 
     private static App singleton;
     private Project project;
@@ -92,7 +93,7 @@ public class App extends Application {
                 this.table = new UserTable(this.project.getUsers());
                 break;
             case DISPLAY:
-                this.table = new DisplayTable(this.project.getDisplays());
+                this.table = new DisplayTable(this.project.getDisplays(), this);
                 break;
         }
         if (this.table != null) {
@@ -216,6 +217,11 @@ public class App extends Application {
 
     public Project getProject() {
         return project;
+    }
+
+    @Override
+    public void startSceneBuilder(EruScene scene) {
+        log.info(String.format("Starting scene builder for %s", scene.getName()));
     }
 
     public enum Action {
