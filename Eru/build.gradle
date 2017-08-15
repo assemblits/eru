@@ -10,7 +10,8 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://nexus.gluonhq.com/nexus/content/repositories/releases/' }
 }
 
 sourceSets {
@@ -83,6 +84,9 @@ dependencies {
     compile "net.wimpi:jamod:${wimpiJamodVersion}"
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
+
+    //Scene builder
+    compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
 
     //Testing
     testCompile "junit:junit:${jUnitVersion}"

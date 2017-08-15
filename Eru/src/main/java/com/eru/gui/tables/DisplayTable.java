@@ -18,11 +18,8 @@ import java.util.Optional;
 @Log4j
 public class DisplayTable extends EruTable<Display> {
 
-    private final SceneBuilderStarter sceneBuilderStarter;
-
     public DisplayTable(List<Display> displays, SceneBuilderStarter sceneBuilderStarter) {
         super(displays);
-        this.sceneBuilderStarter = sceneBuilderStarter;
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> userNameColumn = new TableColumn<>("Name");
 
@@ -82,7 +79,6 @@ public class DisplayTable extends EruTable<Display> {
                 Display newDisplay = new Display();
                 newDisplay.setGroupName("Displays");
                 newDisplay.setName(displayName.getText());
-                newDisplay.setFxmlLocation(String.format("~/eru/%s/", newDisplay.getGroupName()));
                 return newDisplay;
             }
             return null;

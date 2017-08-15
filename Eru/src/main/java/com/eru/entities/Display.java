@@ -22,8 +22,6 @@ public class Display implements EruScene {
     private String name;
     @Column(name = "group_name")
     private String groupName;
-    @Column(name = "fxmlLocation")
-    private String fxmlLocation;
     @Column(name = "deleted")
     private boolean deleted;
 }

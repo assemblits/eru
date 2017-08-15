@@ -4,5 +4,4 @@ public interface EruScene {
 
     String getName();
 
-    String getFxmlLocation();
 }
