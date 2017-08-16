@@ -52,6 +52,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         this.skeleton = new Skeleton();
+        LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
         launchPreloader();
     }
 
@@ -64,7 +65,6 @@ public class App extends Application {
             this.project = (Project) event.getSource().getValue();
             final DatabaseIdentifier databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
             this.skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
-            LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
             execute(Action.UPDATE_PROJECT_IN_GUI);
             launchApp();
         });
