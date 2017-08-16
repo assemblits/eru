@@ -3,7 +3,6 @@ package com.eru.gui.hmi;
 import com.eru.alarming.AlarmsController;
 import com.eru.gui.export.ReportExportationController;
 import com.eru.util.Constants;
-import com.eru.util.PSVStageUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +61,7 @@ public class  StatusToolbar extends VBox implements Initializable {
     @FXML private void alarmTableButtonFired(ActionEvent actionEvent) {
         try {
             final Parent alarmsWindow = FXMLLoader.load(AlarmsController.class.getResource("Alarms.fxml"));
-            final PSVStageUtil alarmStage = new PSVStageUtil();
+            final Stage alarmStage = new Stage();
             alarmStage.initStyle(StageStyle.TRANSPARENT);
             alarmStage.setTitle(Constants.SOFTWARE_NAME);
             alarmStage.setScene(new Scene(alarmsWindow, Color.TRANSPARENT));

@@ -16,9 +16,9 @@ public class TreeElementsGroup {
 
     public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER, DISPLAY}
 
-    private IntegerProperty         id;
-    private StringProperty          name;
-    private ObjectProperty<Type>    type;
+    private IntegerProperty                     id;
+    private StringProperty                      name;
+    private ObjectProperty<Type>                type;
     private ObjectProperty<TreeElementsGroup>   parent;
     private List<TreeElementsGroup>             children;
 

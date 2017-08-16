@@ -130,7 +130,7 @@ class ServerActions extends DolphinServerAction {
                 final List<ServerPresentationModel> ALARMS_IN_PRESENTATION_MODEL  = getServerDolphin().findAllPresentationModelsByType(TYPE_ALARM);
 
                 for(Alarm moduleAlarm : ALARMS_IN_ALARMING_MODULE) {
-                    // Look if the module alarm exist in the presentation model. if exist update, if not, add new DTO
+                    // Look if the module alarm exist in the presentation model. if exist updateValueAndTimestamp, if not, add new DTO
                     final String MODULE_ALARM_ID          = moduleAlarm.timeStamp.toString();
                     final ServerPresentationModel alarmPM = ALARMS_IN_PRESENTATION_MODEL.find { it.getAt(ATT_ALARM_DATE).getValue().equals(MODULE_ALARM_ID)}
 

@@ -55,13 +55,13 @@ public class ConnectionsTable extends EruTable<Connection> {
         // **** General Cells **** //
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
 
-        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        typeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
         typeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
 
         enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
@@ -100,12 +100,11 @@ public class ConnectionsTable extends EruTable<Connection> {
         connectedColumn.setCellValueFactory(param -> param.getValue().connectedProperty());
         connectedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(connectedColumn));
 
-        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         // **** Serial Cells **** //
-        serialPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         serialPortColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -114,8 +113,8 @@ public class ConnectionsTable extends EruTable<Connection> {
             return cellValue;
         });
         serialPortColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        serialPortColumn.setVisible(false);
 
-        serialBitsPerSecondsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialBitsPerSecondsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -134,8 +133,8 @@ public class ConnectionsTable extends EruTable<Connection> {
                 return Integer.valueOf(string);
             }
         }));
+        serialBitsPerSecondsColumn.setVisible(false);
 
-        serialDatabitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialDatabitsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -154,8 +153,8 @@ public class ConnectionsTable extends EruTable<Connection> {
                 return Integer.valueOf(string);
             }
         }));
+        serialDatabitsColumn.setVisible(false);
 
-        serialParityColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         serialParityColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -164,8 +163,8 @@ public class ConnectionsTable extends EruTable<Connection> {
             return cellValue;
         });
         serialParityColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        serialParityColumn.setVisible(false);
 
-        serialStopBitsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         serialStopBitsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -184,8 +183,8 @@ public class ConnectionsTable extends EruTable<Connection> {
                 return Integer.valueOf(string);
             }
         }));
+        serialStopBitsColumn.setVisible(false);
 
-        serialFrameEncodingColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         serialFrameEncodingColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -194,9 +193,9 @@ public class ConnectionsTable extends EruTable<Connection> {
             return cellValue;
         });
         serialFrameEncodingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        serialFrameEncodingColumn.setVisible(false);
 
         // **** Tcp Cells **** //
-        tcpHostnameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         tcpHostnameColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof TcpConnection) {
@@ -205,8 +204,8 @@ public class ConnectionsTable extends EruTable<Connection> {
             return cellValue;
         });
         tcpHostnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        tcpHostnameColumn.setVisible(false);
 
-        tcpPortColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         tcpPortColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
             if (param.getValue() instanceof TcpConnection) {
@@ -225,7 +224,7 @@ public class ConnectionsTable extends EruTable<Connection> {
                 return Integer.valueOf(string);
             }
         }));
-
+        tcpPortColumn.setVisible(false);
 
         // **** General **** //
         this.getColumns().addAll(
@@ -242,6 +241,7 @@ public class ConnectionsTable extends EruTable<Connection> {
 
         this.setEditable(true);
         this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.setTableMenuButtonVisible(true);
     }
 
     @Override

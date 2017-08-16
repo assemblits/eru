@@ -28,13 +28,11 @@ public class MessageToReadAddressBlock implements Message {
     private int                 offset;
     private int                 firstSlotToRead;
     private int                 lastSlotToRead;
-    private Timestamp           now;
 
     /* ** Constructor ** */
     public MessageToReadAddressBlock(Device device, AddressesBlock block) {
         this.device     = device;
         this.block      = block;
-        this.now        = new Timestamp(System.currentTimeMillis());
     }
 
     /* ** Methods ** */
@@ -100,12 +98,11 @@ public class MessageToReadAddressBlock implements Message {
     }
     private void updateBlockWithResponse() {
         final ModbusResponse response = transaction.getResponse();
-        now.setTime(System.currentTimeMillis());
         Platform.runLater(() -> {
             for (int slot = firstSlotToRead; slot <= lastSlotToRead; slot++) {
                 final Address address = getAddressFromBlock(slot);
                 address.setCurrentValue(extractSlotValueFromResponse(response, slot));
-                address.setTimestampValueAndFireListeners(now);
+                address.setTimestamp(new Timestamp(System.currentTimeMillis()));    // TODO: This is a memory overwork, has to be fixed
             }
         });
     }

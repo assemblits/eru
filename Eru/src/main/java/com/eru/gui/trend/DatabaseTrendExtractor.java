@@ -2,7 +2,6 @@ package com.eru.gui.trend;
 
 import com.eru.historian.HistoricDao;
 import com.eru.util.JpaUtil;
-import com.eru.util.PSVAlert;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -24,7 +23,7 @@ import java.util.Map;
  */
 public class DatabaseTrendExtractor extends Service<Trend> {
     private String tagName;
-    private PSVAlert popupProgressInformator = new PSVAlert(Alert.AlertType.INFORMATION);
+    private Alert popupProgressInformator = new Alert(Alert.AlertType.INFORMATION);
     private EntityManager entityManager = JpaUtil.getGlobalEntityManager();
 
     public DatabaseTrendExtractor(EntityManager entityManager, String name) {

@@ -13,73 +13,70 @@ import java.time.Instant;
  */
 @Entity
 @Table(name = "tag", schema = "public")
-public class Tag implements Cloneable {
+public class Tag {
     /* ********** Static Fields ********** */
-    public static final int                         DEFAULT_DECIMALS    = 2;
+    private static final int DEFAULT_DECIMALS    = 2;
 
-    public enum TagType{INPUT, MASK, MATH, STATUS, OUTPUT, LOGICAL}
+    public enum Type {INPUT, MASK, MATH, STATUS, OUTPUT, LOGICAL}
 
     /* ********** Dynamic Fields ********** */
-    private final StringProperty                    tagSourceName;
-    private final StringProperty                    name;
-    private final BooleanProperty                   enabled;
-    private final StringProperty                    description;
-    private final StringProperty                    value;
-    private final IntegerProperty                   decimals;
-    private final ObjectProperty<Timestamp>         timestamp;
-    private final ObjectProperty<TagType>           tagType;
-    private final StringProperty                    status;
-    private final ObjectProperty<Address>           address;
-    private final StringProperty                    script;
-    private final IntegerProperty                   mask;
-    private final DoubleProperty                    scaleFactor;
-    private final DoubleProperty                    scaleOffset;
-    private final BooleanProperty                   alarmEnabled;
-    private final StringProperty                    alarmScript;
-    private final BooleanProperty                   alarmed;
-    private final BooleanProperty                   historicalEnabled;
-    private StringProperty                          groupName;
+    private IntegerProperty                 id;
+    private final StringProperty            name;
+    private final BooleanProperty           enabled;
+    private final StringProperty            description;
+    private final StringProperty            value;
+    private final IntegerProperty           decimals;
+    private final ObjectProperty<Timestamp> timestamp;
+    private final ObjectProperty<Type>      type;
+    private final StringProperty            status;
+    private final ObjectProperty<Address>   linkedAddress;
+    private final ObjectProperty<Tag>       linkedTag;
+    private final StringProperty            script;
+    private final IntegerProperty           mask;
+    private final DoubleProperty            scaleFactor;
+    private final DoubleProperty            scaleOffset;
+    private final BooleanProperty           alarmEnabled;
+    private final StringProperty            alarmScript;
+    private final BooleanProperty           alarmed;
+    private final BooleanProperty           historicalEnabled;
+    private StringProperty                  groupName;
 
     /* ********** Constructors ********** */
     public Tag() {
-        this("NEW_TAG_" + System.currentTimeMillis());
-    }
-
-    public Tag(String name) {
-        this.tagSourceName          = new SimpleStringProperty(this, "tagSourceName", "");
-        this.name                   = new SimpleStringProperty(this, "name", name);
-        this.enabled                = new SimpleBooleanProperty(this, "enabled", true);
-        this.description            = new SimpleStringProperty(this, "description", "");
-        this.value                  = new SimpleStringProperty(this, "value", "");
-        this.decimals               = new SimpleIntegerProperty(this, "decimals", DEFAULT_DECIMALS);
-        this.timestamp              = new SimpleObjectProperty<>(this, "timestamp", Timestamp.from(Instant.now()));
-        this.tagType                = new SimpleObjectProperty<>();
-        this.status                 = new SimpleStringProperty(this, "status", "");
-        this.address                = new SimpleObjectProperty<>();
-        this.script                 = new SimpleStringProperty(this, "script", "");
-        this.mask                   = new SimpleIntegerProperty(this, "mask", 0);
-        this.scaleFactor            = new SimpleDoubleProperty(this, "scaleFactor", 1.0);
-        this.scaleOffset            = new SimpleDoubleProperty(this, "scaleOffset", 0.0);
-        this.alarmEnabled           = new SimpleBooleanProperty(this, "alarmEnabled", false);
-        this.alarmScript            = new SimpleStringProperty(this, "alarmScript", "");
-        this.alarmed                = new SimpleBooleanProperty(this, "alarmed", false);
-        this.historicalEnabled      = new SimpleBooleanProperty(this, "historicalEnabled", false);
-        this.groupName              = new SimpleStringProperty(this, "groupName", "");
+        this.id                 = new SimpleIntegerProperty(this, "id", 0);
+        this.name               = new SimpleStringProperty(this, "name", "");
+        this.enabled            = new SimpleBooleanProperty(this, "enabled", true);
+        this.description        = new SimpleStringProperty(this, "description", "");
+        this.value              = new SimpleStringProperty(this, "value", "");
+        this.decimals           = new SimpleIntegerProperty(this, "decimals", DEFAULT_DECIMALS);
+        this.timestamp          = new SimpleObjectProperty<>(this, "timestamp", Timestamp.from(Instant.now()));
+        this.type               = new SimpleObjectProperty<>();
+        this.status             = new SimpleStringProperty(this, "status", "");
+        this.linkedAddress      = new SimpleObjectProperty<>();
+        this.linkedTag          = new SimpleObjectProperty<>();
+        this.script             = new SimpleStringProperty(this, "script", "");
+        this.mask               = new SimpleIntegerProperty(this, "mask", 0);
+        this.scaleFactor        = new SimpleDoubleProperty(this, "scaleFactor", 1.0);
+        this.scaleOffset        = new SimpleDoubleProperty(this, "scaleOffset", 0.0);
+        this.alarmEnabled       = new SimpleBooleanProperty(this, "alarmEnabled", false);
+        this.alarmScript        = new SimpleStringProperty(this, "alarmScript", "");
+        this.alarmed            = new SimpleBooleanProperty(this, "alarmed", false);
+        this.historicalEnabled  = new SimpleBooleanProperty(this, "historicalEnabled", false);
+        this.groupName          = new SimpleStringProperty(this, "groupName", "");
     }
 
     /* ********** Properties ********** */
-    @Column(name = "tag_source_name")
-    public String getTagSourceName() {
-        return tagSourceName.get();
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    public int getId() {
+        return id.get();
     }
-    public StringProperty tagSourceNameProperty(){
-        return tagSourceName;
+    public IntegerProperty idProperty() {
+        return id;
     }
-    public void setTagSourceName(String tagSourceName) {
-        this.tagSourceName.set(tagSourceName);
+    public void setId(int id) {
+        this.id.set(id);
     }
 
-    @Id
     @Column(name = "name")
     public String getName() {
         return name.get();
@@ -159,21 +156,21 @@ public class Tag implements Cloneable {
     }
 
     @Column(name = "tag_type")
-    public String getTagTypeName() {
-        return getTagType() == null ? "" : getTagType().name();
+    public String getTypeName() {
+        return getType() == null ? "" : getType().name();
     }
-    public void setTagTypeName(String name){
-        tagType.set(name == null  || name.isEmpty() ? TagType.INPUT : TagType.valueOf(name));
+    public void setTypeName(String name){
+        type.set(name == null  || name.isEmpty() ? Type.INPUT : Type.valueOf(name));
     }
     @Transient
-    public TagType getTagType() {
-        return tagType.get();
+    public Type getType() {
+        return type.get();
     }
-    public ObjectProperty<TagType> tagTypeProperty() {
-        return tagType;
+    public ObjectProperty<Type> typeProperty() {
+        return type;
     }
-    public void setTagType(TagType tagType) {
-        this.tagType.set(tagType);
+    public void setType(Type type) {
+        this.type.set(type);
     }
 
     @Column(name = "status")
@@ -187,15 +184,26 @@ public class Tag implements Cloneable {
         this.status.set(statusName);
     }
 
-    @OneToOne(orphanRemoval = true)
-    public Address getAddress() {
-        return address.get();
+    @OneToOne(cascade = CascadeType.ALL)
+    public Address getLinkedAddress() {
+        return linkedAddress.get();
     }
-    public ObjectProperty<Address> addressProperty() {
-        return address;
+    public ObjectProperty<Address> linkedAddressProperty() {
+        return linkedAddress;
     }
-    public void setAddress(Address address) {
-        this.address.set(address);
+    public void setLinkedAddress(Address linkedAddress) {
+        this.linkedAddress.set(linkedAddress);
+    }
+
+    @OneToOne
+    public Tag getLinkedTag() {
+        return linkedTag.get();
+    }
+    public ObjectProperty<Tag> linkedTagProperty() {
+        return linkedTag;
+    }
+    public void setLinkedTag(Tag linkedTag) {
+        this.linkedTag.set(linkedTag);
     }
 
     @Column(name = "script", length = 1024)
@@ -300,7 +308,7 @@ public class Tag implements Cloneable {
     /* ********** Getters and Setters ********** */
     @Override
     public String toString() {
-        return getDescription();
+        return getName();
     }
 
 }

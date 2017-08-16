@@ -3,7 +3,6 @@ package com.eru.gui.trend;
 import com.eru.entities.Tag;
 import com.eru.persistence.Dao;
 import com.eru.util.JpaUtil;
-import com.eru.util.PSVAlert;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.Observable;
@@ -73,7 +72,7 @@ public class TrendsGraphicAnalyzer extends AnchorPane implements Initializable {
     public void addNewTrend(Trend... trendsToAdd) {
         for (Trend t : trendsToAdd) {
             if (trends.size() >= CAPACITY) {
-                PSVAlert alert = new PSVAlert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Trend Graphic Analyzer has reached the capacity (" + CAPACITY + ")");
                 alert.showAndWait();
                 break;
@@ -86,7 +85,7 @@ public class TrendsGraphicAnalyzer extends AnchorPane implements Initializable {
 
     public void removeTrend(Trend trendToRemove) {
         if (trendToRemove == null) {
-            PSVAlert alert = new PSVAlert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Please select a tag history to remove...");
             alert.showAndWait();
         } else {
@@ -341,13 +340,13 @@ public class TrendsGraphicAnalyzer extends AnchorPane implements Initializable {
                 Tag selectedTag = tagsWithHistorianEnabled.getSelectionModel().getSelectedItem();
 
                 if(selectedTag == null){
-                    PSVAlert alert = new PSVAlert(Alert.AlertType.ERROR);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setHeaderText("Please, select a tag to insert.");
                     alert.show();
                 } else {
                     boolean alreadyInserted = !trends.stream().filter(trend -> trend.getName().equals(selectedTag.getName())).collect(Collectors.toList()).isEmpty();
                     if(alreadyInserted) {
-                        PSVAlert alert = new PSVAlert(Alert.AlertType.ERROR);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setHeaderText(selectedTag.getName() + " is already inserted.");
                         alert.show();
                     }  else {

@@ -1,5 +1,6 @@
 package com.eru.util;
 
+import com.eru.exception.TagLinkException;
 import com.eru.logger.LogUtil;
 import com.eru.entities.Tag;
 import javafx.beans.InvalidationListener;
@@ -14,106 +15,43 @@ import java.util.*;
  */
 public class TagUtil {
 
-    public static final Map<Tag, List<InvalidationListener>> TAG_LINK_MAP = new HashMap<>();
+    public static final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
 
-    public static void installLink(final Tag tag, final List<Tag> allTags){
-        switch (tag.getTagType()) {
+    public static void installLink(final Tag tag, final List<Tag> allTags) {
+        TagLink link;
+        switch (tag.getType()) {
             case INPUT:
-                if (tag.getAddress() != null) {
-                    // Create installLink
-                    AddressChangeListener link = new AddressChangeListener(tag);
-
-                    // Link
-                    tag.getAddress().timestampProperty().addListener(link);
-
-                    // Register
-                    registerLink(tag, link);
-                } else {
-                    final String errorMSG = "Tag with ID:" + tag.getName() + " is an INPUT_TAG but has no Address configured. Cannot installLink.";
-                    LogUtil.logger.error(errorMSG);
-                    tag.setStatus(errorMSG);
-                }
+                link = new AddressChangeLink(tag);
+                tag.getLinkedAddress().timestampProperty().addListener(link);
+                registerLink(tag, link);
                 break;
             case MASK:
-                // Find tag source in the tag list
-                allTags.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSourceFinded -> {
-                    // Create installLink
-                    TagCurrentValueListenerForMaskUpdating link = new TagCurrentValueListenerForMaskUpdating(tag, tagSourceFinded);
-
-                    // Link
-                    tagSourceFinded.valueProperty().addListener(link);
-
-                    // Register
-                    registerLink(tagSourceFinded, link);
-                });
+                link = new TagCurrentValueLinkForMaskUpdating(tag.getLinkedTag(), tag);
+                tag.getLinkedTag().valueProperty().addListener(link);
+                registerLink(tag.getLinkedTag(), link);
                 break;
             case MATH:
-                if (tag.getScript() != null && !tag.getScript().isEmpty()) {
-                    try {
-                        // Set first value
-                        tag.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tag.getScript())));
-
-                        // Find tags in the script
-                        allTags.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {
-                            //Create Link
-                            TagCurrentValueListenerForScriptUpdating link = new TagCurrentValueListenerForScriptUpdating(tag, tagInScript);
-
-                            // Link
-                            tagInScript.valueProperty().addListener(link);
-
-                            // Register
-                            registerLink(tagInScript, link);
-                        });
-                    } catch (ScriptException e) {
-                        LogUtil.logger.error("There is something wrong with the " + tag.getName() + " script.", e);
-                    }
-                } else {
-                    final String errorMSG = "Tag with ID:" + tag.getName() + " cannot evaluate math script because the script is null";
-                    LogUtil.logger.error(errorMSG);
-                    tag.setStatus(errorMSG);
-                }
+                allTags.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {            // Find tags in the script
+                    TagLink scriptUpdating = new TagCurrentValueLinkForScriptUpdating(tagInScript, tag);
+                    tagInScript.valueProperty().addListener(scriptUpdating);
+                    registerLink(tagInScript, scriptUpdating);
+                });
                 break;
             case STATUS:
-                if (tag.getScript() != null && !tag.getScript().isEmpty()) {
-                    // Find tag source in the tag list
-                    allTags.stream().filter(t -> t.getName().equals(tag.getTagSourceName())).forEach(tagSource -> {
-
-                        // Create Map number:statusName
-                        Map<String, String> statusMap = new HashMap<>();
-                        StringTokenizer scriptTokenizer = new StringTokenizer(tag.getScript() == null ? "" : tag.getScript(), ",");
-                        while (scriptTokenizer.hasMoreElements()) {
-                            String pair = scriptTokenizer.nextElement().toString();
-                            StringTokenizer pairTokenizer = new StringTokenizer(pair, "=");
-                            while (pairTokenizer.hasMoreElements()) {
-                                try {
-                                    String value = pairTokenizer.nextElement().toString();
-                                    String status = pairTokenizer.nextElement().toString();
-                                    statusMap.put(value, status);
-                                } catch (Exception e) {
-                                    final String errorMSG = "Script for status is not \"number=status\"";
-                                    tag.setStatus(errorMSG);
-                                    statusMap.clear();
-                                    LogUtil.logger.error(errorMSG, e);
-                                    return;
-                                }
-
-                            }
-                        }
-
-                        //Create Link
-                        TagCurrentValueListenerForStatusUpdating link = new TagCurrentValueListenerForStatusUpdating(tag, tagSource, statusMap);
-
-                        // Link
-                        tagSource.valueProperty().addListener(link);
-
-                        // Register
-                        registerLink(tagSource, link);
-                    });
-                } else {
-                    final String errorMSG = "Tag with ID:" + tag.getName() + " is a STATUS_TAG but the script is empty or null. Cannot set on.";
-                    LogUtil.logger.error(errorMSG);
-                    tag.setStatus(errorMSG);
+                Map<String, String> statusMap   = new HashMap<>();                                                      // Create Map value:statusName
+                StringTokenizer scriptTokenizer = new StringTokenizer(tag.getScript() == null ? "" : tag.getScript(), ",");
+                while (scriptTokenizer.hasMoreElements()) {
+                    String pair = scriptTokenizer.nextElement().toString();
+                    StringTokenizer pairTokenizer = new StringTokenizer(pair, "=");
+                    while (pairTokenizer.hasMoreElements()) {
+                        String value = pairTokenizer.nextElement().toString();
+                        String status = pairTokenizer.nextElement().toString();
+                        statusMap.put(value, status);
+                    }
                 }
+                link= new TagCurrentValueLinkForStatusUpdating(tag.getLinkedTag(), tag, statusMap);
+                tag.getLinkedTag().valueProperty().addListener(link);
+                registerLink(tag.getLinkedTag(), link);
                 break;
             case OUTPUT:
                 break;
@@ -124,9 +62,9 @@ public class TagUtil {
 
     public static void removeLink(Tag tag) {
         if (TAG_LINK_MAP.keySet().contains(tag)){
-            for(InvalidationListener link : TAG_LINK_MAP.get(tag)){
-                if(link instanceof AddressChangeListener){
-                    tag.getAddress().timestampProperty().removeListener(link);
+            for(TagLink link : TAG_LINK_MAP.get(tag)){
+                if(link instanceof AddressChangeLink){
+                    tag.getLinkedAddress().timestampProperty().removeListener(link);
                 } else {
                     tag.timestampProperty().removeListener(link);
                 }
@@ -135,7 +73,7 @@ public class TagUtil {
         TAG_LINK_MAP.clear();
     }
 
-    private static void registerLink(Tag tag, InvalidationListener link){
+    private static void registerLink(Tag tag, TagLink link){
         if(TAG_LINK_MAP.keySet().contains(tag)){
             TAG_LINK_MAP.get(tag).add(link);
         } else {
@@ -145,129 +83,81 @@ public class TagUtil {
 
 }
 
-class AddressChangeListener implements InvalidationListener{
-    private Tag tagToUpdate;
+abstract class TagLink implements InvalidationListener {
+    Tag tagToListen;
+    Tag tagToUpdate;
 
-    public AddressChangeListener(Tag tagToUpdate) {
-        this.tagToUpdate = tagToUpdate;
-    }
-
-    @Override
-    public void invalidated(Observable observable) {
-        if((tagToUpdate.getAddress() != null) && (observable != null)){
-            tagToUpdate.setValue(String.valueOf(tagToUpdate.getAddress().getCurrentValue()));
-            tagToUpdate.setTimestamp(tagToUpdate.getAddress().getTimestamp());
-            if (tagToUpdate.getAlarmEnabled()) {
-                try {
-                    tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
-                } catch (ScriptException e) {
-                    final String errorMSG = "Error in alarm script." + e.getLocalizedMessage();
-                    tagToUpdate.setStatus(errorMSG);
-                }
-            }
-        } else {
-            tagToUpdate.setStatus("Null-Address");
-        }
-    }
-}
-
-class TagCurrentValueListenerForMaskUpdating implements InvalidationListener{
-    private final Tag tagToUpdate;
-    private final Tag tagToListen;
-
-    public TagCurrentValueListenerForMaskUpdating(Tag tagToUpdate, Tag tagToListen) {
-        this.tagToUpdate = tagToUpdate;
+    TagLink(Tag tagToListen, Tag tagToUpdate) {
         this.tagToListen = tagToListen;
-    }
-
-    @Override
-    public void invalidated(Observable observable) {
-        tagToUpdate.setValue(
-                String.valueOf(
-                        (Integer.getInteger(tagToListen.getValue())) & tagToUpdate.getMask()
-                )
-        );
-        tagToUpdate.setTimestamp(tagToListen.getTimestamp());
-        if (tagToUpdate.getAlarmEnabled()) {
-            try {
-                tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
-            } catch (ScriptException e) {
-                final String errorMSG = "Error in alarm script." + e.getLocalizedMessage();
-                tagToUpdate.setStatus(errorMSG);
-            }
-        }
-    }
-}
-
-class TagCurrentValueListenerForScriptUpdating implements InvalidationListener {
-    private final Tag           tagToUpdate;
-    private final Tag           tagToListen;
-
-    public TagCurrentValueListenerForScriptUpdating(Tag tagToUpdate, Tag tagToListen) {
-        this.tagToUpdate    = tagToUpdate;
-        this.tagToListen   = tagToListen;
-    }
-
-    @Override
-    public void invalidated(Observable observable) {
-        if(observable != null && tagToUpdate.getScript() != null && !tagToUpdate.getScript().isEmpty() && tagToListen != null){
-            try {
-                tagToUpdate.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getScript())));
-                tagToUpdate.setTimestamp(tagToListen.getTimestamp() == null ? new Timestamp(System.currentTimeMillis()) : tagToListen.getTimestamp());
-                if (tagToUpdate.getAlarmEnabled()) {
-                    try {
-                        tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
-                    } catch (ScriptException e) {
-                        final String errorMSG = "Error in alarm script." + e.getLocalizedMessage();
-                        tagToUpdate.setStatus(errorMSG);
-                    }
-                }
-            } catch (ScriptException e) {
-                final String errorMSG = "Error in tag script." + e.getLocalizedMessage();
-                tagToUpdate.setStatus(errorMSG);
-            }
-        } else {
-            tagToUpdate.setStatus("Error: Null-Script");
-        }
-    }
-}
-
-class TagCurrentValueListenerForStatusUpdating implements InvalidationListener{
-    private final Tag tagToUpdate;
-    private final Tag tagToListen;
-    private final Map<String, String> statusMap;
-
-    public TagCurrentValueListenerForStatusUpdating(Tag tagToUpdate, Tag tagToListen, Map<String, String> statusMap) {
-        this.tagToUpdate    = tagToUpdate;
-        this.tagToListen    = tagToListen;
-        this.statusMap      = statusMap;
+        this.tagToUpdate = tagToUpdate;
     }
 
     @Override
     public void invalidated(Observable observable) {
         try {
-            if( (observable != null)){
-                if(statusMap.containsKey(tagToListen.getValue())){
-                    tagToUpdate.setValue(statusMap.get(tagToListen.getValue()));
-                    tagToUpdate.setTimestamp(tagToListen.getTimestamp());
-                    if (tagToUpdate.getAlarmEnabled()) {
-                        try {
-                            tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
-                        } catch (ScriptException e) {
-                            final String errorMSG = "Error in alarm script." + e.getLocalizedMessage();
-                            tagToUpdate.setStatus(errorMSG);
-                        }
-                    }
-                } else {
-                    tagToUpdate.setValue("????");
-                    tagToUpdate.setStatus("Status unknown");
-                    tagToUpdate.setTimestamp(tagToListen.getTimestamp());
-                }
-            } else {
-                tagToUpdate.setStatus("Null-Source");
-            }
+            updateValueAndTimestamp();
+            updateAlarmStatus();
+            tagToUpdate.setStatus("OK");
         } catch (Exception e){
+            tagToUpdate.setStatus(e.getLocalizedMessage());
             LogUtil.logger.error(e);
         }
+    }
+
+    private void updateAlarmStatus() throws ScriptException {
+        if (tagToUpdate.getAlarmEnabled()) {
+            tagToUpdate.setAlarmed(Boolean.parseBoolean(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getAlarmScript()))));
+        }
+    }
+    protected abstract void updateValueAndTimestamp() throws Exception;
+}
+
+class AddressChangeLink extends TagLink {
+
+    AddressChangeLink(Tag tagToUpdate) {
+        super(null, tagToUpdate);
+    }
+
+    @Override
+    protected void updateValueAndTimestamp() throws Exception {
+        if ((tagToUpdate.getLinkedAddress() == null)) throw new TagLinkException(tagToUpdate + "has a no address");
+        tagToUpdate.setValue(String.valueOf(tagToUpdate.getLinkedAddress().getCurrentValue()));
+        tagToUpdate.setTimestamp(tagToUpdate.getLinkedAddress().getTimestamp());
+    }
+}
+
+class TagCurrentValueLinkForMaskUpdating extends TagLink {
+    TagCurrentValueLinkForMaskUpdating(Tag tagToListen, Tag tagToUpdate) {
+        super(tagToListen, tagToUpdate);
+    }
+    @Override
+    protected void updateValueAndTimestamp() throws Exception {
+        tagToUpdate.setValue(String.valueOf( (Integer.getInteger(tagToListen.getValue())) & tagToUpdate.getMask() ));
+        tagToUpdate.setTimestamp(tagToListen.getTimestamp());
+    }
+}
+
+class TagCurrentValueLinkForScriptUpdating extends TagLink {
+    TagCurrentValueLinkForScriptUpdating(Tag tagToListen, Tag tagToUpdate) {
+        super(tagToListen, tagToUpdate);
+    }
+    @Override
+    protected void updateValueAndTimestamp() throws Exception {
+        if (tagToUpdate.getScript() == null || tagToUpdate.getScript().isEmpty() || tagToListen == null) throw new TagLinkException(tagToUpdate + "has a null script");
+        tagToUpdate.setValue(String.valueOf(EngineScriptUtil.getInstance().getScriptEngine().eval(tagToUpdate.getScript())));
+        tagToUpdate.setTimestamp(tagToListen.getTimestamp() == null ? new Timestamp(System.currentTimeMillis()) : tagToListen.getTimestamp());
+    }
+}
+
+class TagCurrentValueLinkForStatusUpdating extends TagLink {
+    private final Map<String, String> statusMap;
+    TagCurrentValueLinkForStatusUpdating(Tag tagToListen, Tag tagToUpdate, Map<String, String> statusMap) {
+        super(tagToListen, tagToUpdate);
+        this.statusMap      = statusMap;
+    }
+    @Override
+    protected void updateValueAndTimestamp() throws Exception {
+        tagToUpdate.setValue(statusMap.get(tagToListen.getValue()));
+        tagToUpdate.setTimestamp(tagToListen.getTimestamp());
     }
 }

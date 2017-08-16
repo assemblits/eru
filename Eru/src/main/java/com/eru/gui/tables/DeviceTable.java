@@ -4,8 +4,11 @@ import com.eru.entities.Connection;
 import com.eru.entities.Address;
 import com.eru.entities.Device;
 import com.eru.gui.App;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Orientation;
@@ -22,24 +25,6 @@ import java.util.List;
 
 /**
  * Created by mtrujillo on 8/8/17.
- *
- * Hay un problema con Hibernate vs JavaFX.
- * Lado del bean:
- *  1- Si addresses es ListProperty   => ListProperty cambia la instancia del persistence context y Hibernate no lo soporta.
- *  2- Si addresses es observableList => ""
- *  3 - Si es List = Es aceptado porque la instancia se mantiene
- *
- * En el lado de la celda:
- *  1- Si es List, los cambios en la celda no son reflejados en el bean.
- *  2- Si es observableList (refleja cambios en List), hay que envolverlo en ObjectProperty o ListProperty. No refleja cambios
- *      a menos que el bean sea un property tambien.
- *
- * Si los dos son property. Funcionan los cambios pero Hibernate no tolera que se cambie la instancia en el bean y esto es
- * hecho cuando en el bean se usa un property.
- *
- * Puede ser que se usen properties en el bean (para hacer funcionar la celda de tabla) y se soluciona el cambio de instancia
- * en la lista para Hibernate
- *
  */
 public class DeviceTable extends EruTable<Device> {
 
@@ -102,7 +87,30 @@ public class DeviceTable extends EruTable<Device> {
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
         addressesColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.33));
-        addressesColumn.setCellValueFactory(param -> param.getValue().addressesProperty());
+        addressesColumn.setCellValueFactory(param -> {
+            final ListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableArrayList(param.getValue().getAddresses())); // Set initial values
+            addressesInDevice.addListener((ListChangeListener<Address>) c -> {                                                                            // Set updater
+                while (c.next()) {
+                    if (c.wasPermutated()) {
+                        // Nothing
+                    } else if (c.wasUpdated()) {
+                        // Nothing
+                    } else {
+                        for (Address remAddress : c.getRemoved()) {
+                            remAddress.setOwner(null);
+                            param.getValue().getAddresses().remove(remAddress);
+                        }
+                        for (Address addAddress : c.getAddedSubList()) {
+                            if (addAddress.getOwner() != getSelectionModel().getSelectedItem()){
+                                addAddress.setOwner(getSelectionModel().getSelectedItem());
+                            }
+                            param.getValue().getAddresses().add(addAddress);
+                        }
+                    }
+                }
+            });
+            return addressesInDevice;
+        });
         addressesColumn.setCellFactory(param -> new AddressesTableCellForDeviceTable());
 
         zeroBasedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
@@ -130,6 +138,7 @@ public class DeviceTable extends EruTable<Device> {
 
         this.setEditable(true);
         this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.setTableMenuButtonVisible(true);
     }
 
     @Override
@@ -291,7 +300,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText(getItem().toString());
+        setText(getItem() == null ? null : getItem().toString());
         setGraphic(null);
     }
 

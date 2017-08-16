@@ -9,14 +9,14 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Director implements Runnable {
     private LinkedBlockingQueue<Communicator>  communicators = new LinkedBlockingQueue<>();
-    private volatile boolean directorRunning = false;
+    private volatile boolean directorShallRun = false;
     private volatile boolean loopRunning     = false;
 
     @Override
     public void run() {
-        directorRunning = true;
-        loopRunning     = true;
-        while(directorRunning){
+        directorShallRun = !communicators.isEmpty();
+        loopRunning      = true;
+        while(directorShallRun){
             try {
                 Communicator headParticipant = communicators.take();
                 headParticipant.communicate();
@@ -36,15 +36,16 @@ public class Director implements Runnable {
         LogUtil.logger.info("Stopping communicators updating...");
         while (loopRunning){
             try {
-                directorRunning = false;
+                directorShallRun = false;
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                return directorRunning = true;
+                return loopRunning = true;
             }
         }
-        LogUtil.logger.info("Communicators updating stopped");
-        return directorRunning = true;
+        if (!loopRunning) LogUtil.logger.info("Communicators updating stopped");
+        else LogUtil.logger.info("Communicators updating cannot be stopped");
+        return loopRunning;
     }
 
     public void removeAllCommunicators() {
