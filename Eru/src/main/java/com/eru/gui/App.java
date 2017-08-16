@@ -9,6 +9,7 @@ import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.about.About;
+import com.eru.gui.preferences.EruPreferences;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
 import com.eru.logger.LabelAppender;
@@ -76,7 +77,6 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
             DatabaseIdentifier databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
             project = (Project) event.getSource().getValue();
             skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
-            LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
             eruScene = new Scene(skeleton, 900, 500);
             execute(Action.UPDATE_PROJECT_IN_GUI);
             displayMainEruScreen();
@@ -127,6 +127,11 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         try {
             switch (action) {
                 case SHOW_GROUP:
+                    break;
+                case SHOW_PREFERENCES:
+                    Stage preferencesStage = new Stage();
+                    preferencesStage.setScene(new Scene(new EruPreferences()));
+                    preferencesStage.showAndWait();
                     break;
                 case DELETE_GROUP:
                     break;
@@ -246,6 +251,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
 
     public enum Action {
         SHOW_GROUP,
+        SHOW_PREFERENCES,
         DELETE_GROUP,
         SAVE_TO_DB,
         UPDATE_PROJECT_IN_GUI,

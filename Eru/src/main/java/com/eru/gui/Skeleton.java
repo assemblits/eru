@@ -85,6 +85,10 @@ public class Skeleton extends VBox {
         App.getSingleton().execute(App.Action.DISCONNECT);
     }
 
+    @FXML private void preferencesMenuItemSelected(ActionEvent event){
+        App.getSingleton().execute(App.Action.SHOW_PREFERENCES);
+    }
+
     public AnchorPane getMainPane() {
         return mainPane;
     }
