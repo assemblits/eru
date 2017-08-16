@@ -6,6 +6,7 @@ import com.eru.comm.device.Device;
 import com.eru.comm.member.ModbusDeviceCommunicator;
 import com.eru.dolphin.ServerStartupService;
 import com.eru.gui.about.About;
+import com.eru.gui.preferences.EruPreferences;
 import com.eru.gui.tables.*;
 import com.eru.gui.tree.TreeElementsGroup;
 import com.eru.logger.LabelAppender;
@@ -112,6 +113,11 @@ public class App extends Application {
             switch (action) {
                 case SHOW_GROUP:
                     break;
+                case SHOW_PREFERENCES:
+                    Stage preferencesStage = new Stage();
+                    preferencesStage.setScene(new Scene(new EruPreferences()));
+                    preferencesStage.showAndWait();
+                    break;
                 case DELETE_GROUP:
                     break;
                 case SAVE_TO_DB:
@@ -201,6 +207,7 @@ public class App extends Application {
 
     public enum Action {
         SHOW_GROUP,
+        SHOW_PREFERENCES,
         DELETE_GROUP,
         SAVE_TO_DB,
         UPDATE_PROJECT_IN_GUI,

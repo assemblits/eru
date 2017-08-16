@@ -22,7 +22,6 @@ public class ProjectLoaderService extends Service<Project> {
             protected Project call() throws Exception {
                 Project project = null;
                 try {
-                    System.out.println("Is in JavaFX thread: " + Platform.isFxApplicationThread());
                     updateMessage("Getting database Connection");
                     updateProgress(25, 100);
                     EntityManager entityManager = JpaUtil.getGlobalEntityManager();
