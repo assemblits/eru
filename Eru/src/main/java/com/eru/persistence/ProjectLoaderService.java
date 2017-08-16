@@ -30,7 +30,7 @@ public class ProjectLoaderService extends Service<Project> {
                     updateProgress(50, 100);
                     Dao<Project> dao = new Dao<>(entityManager, Project.class);
                     List<Project> entities = dao.findEntities();
-                    if(entities == null || entities.isEmpty()){
+                    if (entities == null || entities.isEmpty()) {
                         project = getNewProject();
                         dao.create(project);
                     } else {
@@ -39,7 +39,7 @@ public class ProjectLoaderService extends Service<Project> {
 
                     updateProgress(100, 100);
                     updateMessage("Done");
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

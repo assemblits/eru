@@ -11,6 +11,7 @@ import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.about.About;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
+import com.eru.logger.LabelAppender;
 import com.eru.logger.LogUtil;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
@@ -45,11 +46,9 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     private Skeleton skeleton;
     private EruTable table;
     private Scene eruScene;
-    private DatabaseIdentifier databaseIdentifier;
 
     public App() {
         App.singleton = this;
-        databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
     }
 
     public static void main(String[] args) {
@@ -73,8 +72,10 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
+            DatabaseIdentifier databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
             project = (Project) event.getSource().getValue();
             skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
+            LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
             eruScene = new Scene(skeleton, 900, 500);
             execute(Action.UPDATE_PROJECT_IN_GUI);
             displayMainEruScreen();
@@ -168,7 +169,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
                                 filter(device -> device.getConnection() != null).
                                 forEach(enabledAndConnectedDevice -> CommunicationsManager.getInstance().getCommunicators().add(new ModbusDeviceCommunicator(enabledAndConnectedDevice)));
                         CommunicationsManager.getInstance().start();
-                        this.skeleton.getLeftStatusLabel().setText("Connected");
+                        this.skeleton.getRightStatusLabel().setText("Connected");
                     } catch (Exception e) {
                         LogUtil.logger.error(e);
                     }
@@ -182,7 +183,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
                         this.project.getTags().forEach(TagUtil::removeLink);
                         this.project.getConnections().forEach(Connection::discconnect);
                         this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
-                        this.skeleton.getLeftStatusLabel().setText("Disconnected");
+                        this.skeleton.getRightStatusLabel().setText("Disconnected");
                     } catch (InterruptedException e) {
                         LogUtil.logger.error(e);
                     }
@@ -197,11 +198,9 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
                     if (CommunicationsManager.getInstance().isRunning()) {
                         CommunicationsManager.getInstance().stop();
                     }
-
                     if (ServerStartupService.getInstance().isRunning()) {
                         ServerStartupService.getInstance().stop();
                     }
-
                     JpaUtil.getGlobalEntityManager().close();
                     Platform.exit();
                     break;
