@@ -65,10 +65,21 @@
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (which comes with [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm)) installed on your computer. From your command line:
 
 ```bash
+# Go to your workspace
+cd ~/Workspace
+# Create a folder called "eru" (Recommended)
+mkdir eru
+# Go there
+cd eru/
 # Clone this repository
-$ git clone https://github.com/marlontrujillo1080/eru
+git clone https://github.com/marlontrujillo1080/eru
 ```
-You can use IntelliJ IDE to have the same experience of the developers...
+You can use IntelliJ IDE to have the same experience of the developers:
+
+1) Launch IJ.
+2) Click import project.
+3) Select the Gradle Build file in the eru workspace.
+4) Let IJ do the magic.
 
 ## Credits
 
