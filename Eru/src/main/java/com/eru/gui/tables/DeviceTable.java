@@ -215,7 +215,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
 
             TableColumn<Address, Timestamp> timestampColumn = new TableColumn<>("Timestamp");
             timestampColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
-            timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.40));
+            timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.45));
 
             addressesTableView.getColumns().addAll(typeColumn, addressColumn, valueColumn, statusColumn, timestampColumn);
 
