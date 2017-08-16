@@ -8,6 +8,7 @@ import com.eru.dolphin.ServerStartupService;
 import com.eru.gui.about.About;
 import com.eru.gui.tables.*;
 import com.eru.gui.tree.TreeElementsGroup;
+import com.eru.logger.LabelAppender;
 import com.eru.logger.LogUtil;
 import com.eru.persistence.Project;
 import com.eru.persistence.ProjectLoaderService;
@@ -34,11 +35,9 @@ public class App extends Application {
     private Stage stage;
     private Skeleton skeleton;
     private EruTable table;
-    private DatabaseIdentifier databaseIdentifier;
 
     public App() {
         App.singleton = this;
-        databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
     }
 
     public static void main(String[] args) {
@@ -63,7 +62,9 @@ public class App extends Application {
         preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
         pls.setOnSucceeded(event -> {
             this.project = (Project) event.getSource().getValue();
+            final DatabaseIdentifier databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
             this.skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
+            LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
             execute(Action.UPDATE_PROJECT_IN_GUI);
             launchApp();
         });
@@ -153,7 +154,7 @@ public class App extends Application {
                                 filter(device -> device.getConnection() != null).
                                 forEach(enabledAndConnectedDevice -> CommunicationsManager.getInstance().getCommunicators().add(new ModbusDeviceCommunicator(enabledAndConnectedDevice)));
                         CommunicationsManager.getInstance().start();
-                        this.skeleton.getLeftStatusLabel().setText("Connected");
+                        this.skeleton.getRightStatusLabel().setText("Connected");
                     } catch (Exception e) {
                         LogUtil.logger.error(e);
                     }
@@ -167,7 +168,7 @@ public class App extends Application {
                         this.project.getTags().forEach(TagUtil::removeLink);
                         this.project.getConnections().forEach(Connection::discconnect);
                         this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
-                        this.skeleton.getLeftStatusLabel().setText("Disconnected");
+                        this.skeleton.getRightStatusLabel().setText("Disconnected");
                     } catch (InterruptedException e) {
                         LogUtil.logger.error(e);
                     }
