@@ -63,6 +63,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         skeleton = new Skeleton();
+        LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
         launchPreloader();
     }
 
