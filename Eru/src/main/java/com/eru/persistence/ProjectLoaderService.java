@@ -2,6 +2,7 @@ package com.eru.persistence;
 
 import com.eru.gui.tree.TreeElementsGroup;
 import com.eru.util.JpaUtil;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -20,6 +21,7 @@ public class ProjectLoaderService extends Service<Project> {
             protected Project call() throws Exception {
                 Project project = null;
                 try {
+                    System.out.println("Is in JavaFX thread: " + Platform.isFxApplicationThread());
                     updateMessage("Getting database Connection");
                     updateProgress(25, 100);
                     EntityManager entityManager = JpaUtil.getGlobalEntityManager();

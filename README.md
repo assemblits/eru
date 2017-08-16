@@ -17,8 +17,8 @@
 
   Basically, in the normal workflow, you:
   1) Create a "connection" to communicate with remote devices (Like PLC, Solar Panels, Engine controllers, Residence automation (Doors, Lights, Windows, etc) etc).
-  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an address called height in the window device).
-  3) Create a "tag" to represent the actual value of the address of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
+  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an linkedAddress called height in the window device).
+  3) Create a "tag" to represent the actual value of the linkedAddress of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
   4) Create a "user" this is to be sure that you have permissions to read the value (in construction).
   5) Create a "display" to see visualizations linked to the tag. (To draw the windows and see graphically if is closed or open) (in construction)
 

@@ -83,10 +83,10 @@
             </textFill>
         </Label>
         <Pane HBox.hgrow="ALWAYS" />
-      <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
+        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
         <Label fx:id="usedDatabaseLabel" font="$x3" text="Database:" textFill="$x4" HBox.hgrow="NEVER" />
         <Label fx:id="usedDatabaseText" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
-      <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
+        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
         <Label fx:id="rightStatusLabel" font="$x3" text="Right Status" textFill="$x4" HBox.hgrow="NEVER" />
     </HBox>
 </fx:root>

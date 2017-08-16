@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 /**
  * Created by mtrujillo on 14/02/14.
  *
- * This class is created to create the table in DataBase using the <property name="hibernate.hbm2ddl.auto" value="update"/>
+ * This class is created to create the table in DataBase using the <property name="hibernate.hbm2ddl.auto" value="updateValueAndTimestamp"/>
  *
  */
 @Entity

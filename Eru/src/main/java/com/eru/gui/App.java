@@ -8,11 +8,14 @@ import com.eru.dolphin.ServerStartupService;
 import com.eru.gui.about.About;
 import com.eru.gui.tables.*;
 import com.eru.gui.tree.TreeElementsGroup;
+import com.eru.logger.LogUtil;
 import com.eru.persistence.Project;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
 import com.eru.util.DatabaseIdentifier;
+import com.eru.util.EngineScriptUtil;
 import com.eru.util.JpaUtil;
+import com.eru.util.TagUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -138,54 +141,35 @@ public class App extends Application {
                     break;
                 case CONNECT:
                     try {
-                        // Run connections
+                        // START STUFF
                         this.project.getConnections().forEach(Connection::connect);
+                        this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
+                        this.project.getTags().forEach(tag -> EngineScriptUtil.getInstance().loadTag(tag));
+                        this.project.getTags().forEach(tag -> TagUtil.installLink(tag, project.getTags()));
 
-                        // Activate script engine in tags TODO: Find a better place to this
-//                        this.project.getTags().forEach(tag -> EngineScriptUtil.getInstance().loadTag(tag));
-
-                        // Link tags each other
-//                        this.project.getTags().forEach(tag -> TagUtil.installLink(tag, project.getTags()));
-
-                        // Start Historian
-//                        Historian.getInstance().start();
-
-                        // Start Alarming
-//                        Alarming.getInstance().start();
-
-                        // Create ModbusDeviceCommunicators to update the device with the connections in a good way
+                        // COMMUNICATION MANAGER
                         this.project.getDevices().stream().
                                 filter(Device::getEnabled).
-                                forEach(enabledDevice ->
-                                        CommunicationsManager.getInstance().
-                                                getCommunicators().
-                                                add(new ModbusDeviceCommunicator(enabledDevice)));
-
-                        // Start communications with all communicators
+                                filter(device -> device.getConnection() != null).
+                                forEach(enabledAndConnectedDevice -> CommunicationsManager.getInstance().getCommunicators().add(new ModbusDeviceCommunicator(enabledAndConnectedDevice)));
                         CommunicationsManager.getInstance().start();
-
+                        this.skeleton.getLeftStatusLabel().setText("Connected");
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LogUtil.logger.error(e);
                     }
                     break;
                 case DISCONNECT:
                     try {
-                        // Link tags each other
-//                        this.project.getTags().forEach(TagUtil::removeLink);
-
+                        // COMMUNICATION MANAGER
                         CommunicationsManager.getInstance().stop();
 
-                        // Stop connections
+                        // STOP STUFF
+                        this.project.getTags().forEach(TagUtil::removeLink);
                         this.project.getConnections().forEach(Connection::discconnect);
-
-                        // Stop Historian
-//                        Historian.getInstance().stop();
-
-                        // Stop Alarming
-//                        Alarming.getInstance().stop();
-
+                        this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
+                        this.skeleton.getLeftStatusLabel().setText("Disconnected");
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LogUtil.logger.error(e);
                     }
                     break;
                 case SHOW_ABOUT:
@@ -194,14 +178,13 @@ public class App extends Application {
                     aboutStage.showAndWait();
                     break;
                 case EXIT_APP:
+                    this.project.getConnections().forEach(Connection::discconnect);
                     if (CommunicationsManager.getInstance().isRunning()) {
                         CommunicationsManager.getInstance().stop();
                     }
-
                     if (ServerStartupService.getInstance().isRunning()) {
                         ServerStartupService.getInstance().stop();
                     }
-
                     JpaUtil.getGlobalEntityManager().close();
                     Platform.exit();
                     break;

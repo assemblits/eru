@@ -2,6 +2,8 @@ package com.eru.comm;
 
 import com.eru.comm.member.Communicator;
 import com.eru.comm.member.Director;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class CommunicationsManager {
     }
 
     // Director
-    private Director director;
+    private Director            director;
     private List<Communicator>  communicators;
     private boolean             running;
 
@@ -59,5 +61,4 @@ public class CommunicationsManager {
     public void setRunning(boolean running) {
         this.running = running;
     }
-
 }

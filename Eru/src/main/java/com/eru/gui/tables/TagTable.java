@@ -27,14 +27,14 @@ public class TagTable extends EruTable<Tag> {
         super(items);
 
         // **** Columns **** //
-        TableColumn<Tag, String> groupColumn             = new TableColumn<>("TreeElementsGroup");
+        TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
         TableColumn<Tag, String> nameColumn              = new TableColumn<>("Name");
-        TableColumn<Tag, String> tagSourceColumn         = new TableColumn<>("Source");
+        TableColumn<Tag, Tag> linkedTagColumn            = new TableColumn<>("Source");
         TableColumn<Tag, Boolean> enabledColumn          = new TableColumn<>("Enabled");
         TableColumn<Tag, String> descriptionColumn       = new TableColumn<>("Description");
         TableColumn<Tag, String> valueColumn             = new TableColumn<>("Value");
         TableColumn<Tag, Integer> decimalsColumn         = new TableColumn<>("Decimals");
-        TableColumn<Tag, Tag.TagType> tagTypeColumn      = new TableColumn<>("Type");
+        TableColumn<Tag, Tag.Type> tagTypeColumn         = new TableColumn<>("Type");
         TableColumn<Tag, String> statusColumn            = new TableColumn<>("Status");
         TableColumn<Tag, Address> addressColumn          = new TableColumn<>("Address");
         TableColumn<Tag, String> scriptColumn            = new TableColumn<>("Script");
@@ -49,27 +49,41 @@ public class TagTable extends EruTable<Tag> {
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
 
         nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        tagSourceColumn.setCellValueFactory(param -> param.getValue().tagSourceNameProperty());
-        tagSourceColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        tagSourceColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
+        linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
+        linkedTagColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
 
         enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
-        descriptionColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        descriptionColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
         descriptionColumn.setCellValueFactory(param -> param.getValue().descriptionProperty());
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         valueColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         valueColumn.setCellValueFactory(param -> param.getValue().valueProperty());
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        timestampTableColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
+        timestampTableColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
+        timestampTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Timestamp>() {
+            @Override
+            public String toString(Timestamp object) {
+                return object != null ? object.toString() : "";
+            }
+
+            @Override
+            public Timestamp fromString(String string) {
+                return null;
+            }
+        }));
 
         decimalsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         decimalsColumn.setCellValueFactory(param -> param.getValue().decimalsProperty().asObject());
@@ -84,24 +98,26 @@ public class TagTable extends EruTable<Tag> {
                 return Integer.valueOf(string);
             }
         }));
+        decimalsColumn.setVisible(false);
 
         tagTypeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
-        tagTypeColumn.setCellValueFactory(param -> param.getValue().tagTypeProperty());
+        tagTypeColumn.setCellValueFactory(param -> param.getValue().typeProperty());
         tagTypeColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
-                FXCollections.observableArrayList(Tag.TagType.values())
+                FXCollections.observableArrayList(Tag.Type.values())
         ));
 
-        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
-        addressColumn.setCellValueFactory(param -> param.getValue().addressProperty());
+        addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.12));
+        addressColumn.setCellValueFactory(param -> param.getValue().linkedAddressProperty());
         addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable());
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         scriptColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        scriptColumn.setVisible(false);
 
         maskColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         maskColumn.setCellValueFactory(param -> param.getValue().maskProperty().asObject());
@@ -116,8 +132,9 @@ public class TagTable extends EruTable<Tag> {
                 return Integer.valueOf(string);
             }
         }));
+        maskColumn.setVisible(false);
 
-        scaleFactorColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        scaleFactorColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
         scaleFactorColumn.setCellValueFactory(param -> param.getValue().scaleFactorProperty().asObject());
         scaleFactorColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
             @Override
@@ -130,8 +147,9 @@ public class TagTable extends EruTable<Tag> {
                 return Double.valueOf(string);
             }
         }));
+        scaleFactorColumn.setVisible(false);
 
-        scaleOffsetColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        scaleOffsetColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
         scaleOffsetColumn.setCellValueFactory(param -> param.getValue().scaleOffsetProperty().asObject());
         scaleOffsetColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
             @Override
@@ -144,45 +162,35 @@ public class TagTable extends EruTable<Tag> {
                 return Double.valueOf(string);
             }
         }));
+        scaleOffsetColumn.setVisible(false);
 
         alarmEnabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         alarmEnabledColumn.setCellValueFactory(param -> param.getValue().alarmEnabledProperty());
         alarmEnabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(alarmEnabledColumn));
+        alarmEnabledColumn.setVisible(false);
 
         alarmColumn.setCellValueFactory(param -> param.getValue().alarmScriptProperty());
         alarmColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         alarmColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        alarmColumn.setVisible(false);
 
         alarmedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         alarmedColumn.setCellValueFactory(param -> param.getValue().alarmedProperty());
         alarmedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(alarmedColumn));
 
-        historianColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        historianColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
         historianColumn.setCellValueFactory(param -> param.getValue().historicalEnabledProperty());
         historianColumn.setCellFactory(CheckBoxTableCell.forTableColumn(historianColumn));
-
-        timestampTableColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
-        timestampTableColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
-        timestampTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Timestamp>() {
-            @Override
-            public String toString(Timestamp object) {
-                return object != null ? object.toString() : "";
-            }
-
-            @Override
-            public Timestamp fromString(String string) {
-                return null; //TODO
-            }
-        }));
 
         // **** General **** //
         this.getColumns().addAll(
                 groupColumn,
                 nameColumn,
-                tagSourceColumn,
+                linkedTagColumn,
                 enabledColumn,
                 descriptionColumn,
                 valueColumn,
+                timestampTableColumn,
                 decimalsColumn,
                 tagTypeColumn,
                 statusColumn,
@@ -194,12 +202,12 @@ public class TagTable extends EruTable<Tag> {
                 alarmEnabledColumn,
                 alarmColumn,
                 alarmedColumn,
-                historianColumn,
-                timestampTableColumn
+                historianColumn
         );
 
         this.setEditable(true);
         this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.setTableMenuButtonVisible(true);
     }
 
     @Override
@@ -261,7 +269,7 @@ class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
 
             deviceListView.getItems().addAll(App.getSingleton().getProject().getDevices());
             deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue!= null) addressListView.getItems().addAll(newValue.addressesProperty());
+                if (newValue!= null) addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
             });
 
             Button okButton = new Button("OK");
@@ -288,7 +296,7 @@ class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText(getItem().toString());
+        setText(getItem() == null ? null : getItem().toString());
         setGraphic(null);
     }
 

@@ -24,6 +24,8 @@ public class Skeleton extends VBox {
     private TextField searchTextField;
     @FXML
     private Label usedDatabaseText;
+    @FXML
+    private Label leftStatusLabel;
 
     public Skeleton() {
         try {
@@ -83,5 +85,8 @@ public class Skeleton extends VBox {
     }
     public Label getUsedDatabaseText() {
         return usedDatabaseText;
+    }
+    public Label getLeftStatusLabel() {
+        return leftStatusLabel;
     }
 }

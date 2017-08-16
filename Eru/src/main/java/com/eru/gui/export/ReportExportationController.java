@@ -2,7 +2,6 @@ package com.eru.gui.export;
 
 import com.eru.logger.LogUtil;
 import com.eru.tag.Tag;
-import com.eru.util.PSVAlert;
 import com.eru.util.PdfReportCreator;
 import com.eru.persistence.Dao;
 import com.eru.util.JpaUtil;
@@ -218,7 +217,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
 
         // If is empty the selected list, or is not selected any checkbox Return!
         if((selectedTagsListView.getItems().isEmpty())){
-            PSVAlert exportAllConfirmation = new PSVAlert(Alert.AlertType.CONFIRMATION);
+            Alert exportAllConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             exportAllConfirmation.setTitle("The list is empty. Do you want to export only time stamp?");
             Optional<ButtonType> result = exportAllConfirmation.showAndWait();
             if (result.get() != ButtonType.OK) {
@@ -227,7 +226,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
                 return;
             }
         } else if(!checkBoxAllTags.isSelected() & !checkBoxTodayTags.isSelected() & !checkBoxRangeTags.isSelected()) {
-            PSVAlert exportAllConfirmation = new PSVAlert(Alert.AlertType.CONFIRMATION);
+            Alert exportAllConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             exportAllConfirmation.setTitle("Please, select a tag date checkbox.");
             return;
         }
@@ -259,7 +258,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             try {
                 pdfReport.makePDF("Historic Report");
             } catch (Exception e) {
-                PSVAlert errorWindow = new PSVAlert(Alert.AlertType.ERROR);
+                Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
                 LogUtil.logger.error("Error exporting historic.", e);
             }
@@ -274,7 +273,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             try {
                 pdfReport.makePDF("Complete Historic Report");
             } catch (Exception e) {
-                PSVAlert errorWindow = new PSVAlert(Alert.AlertType.ERROR);
+                Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
                 LogUtil.logger.error("Error exporting historic.", e);
             }

@@ -1,6 +1,5 @@
 package com.eru.comm.device;
 
-import com.eru.util.TimeStampProperty;
 import javafx.beans.property.*;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ public class Address implements Comparable<Address> {
     private final IntegerProperty                   currentValue;
     private final BooleanProperty                   connected;
     private final StringProperty                    status;
-    private final TimeStampProperty timestamp;
+    private final SimpleObjectProperty<Timestamp>   timestamp;
 
     /* ********** Constructor ********** */
     public Address() {
@@ -37,7 +36,7 @@ public class Address implements Comparable<Address> {
         this.currentValue  = new SimpleIntegerProperty();
         this.connected     = new SimpleBooleanProperty();
         this.status        = new SimpleStringProperty();
-        this.timestamp     = new TimeStampProperty();
+        this.timestamp     = new SimpleObjectProperty<>();
     }
 
     /* ********** Setters and Getters ********** */
@@ -128,9 +127,6 @@ public class Address implements Comparable<Address> {
     }
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp.set(timestamp);
-    }
-    public void setTimestampValueAndFireListeners(Timestamp newValue){
-        this.timestamp.setValueAndFireListeners(newValue);
     }
 
     /* ********** Override Methods ********** */

@@ -2,8 +2,6 @@ package com.eru.comm.device;
 
 import com.eru.comm.connection.Connection;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,23 +22,22 @@ public class  Device {
     private final StringProperty        status;
     private final IntegerProperty       retries;
     private final BooleanProperty       enabled;
-    private ListProperty<Address>       addresses;
-    private List<Address>               _addresses;
+    private List<Address>               addresses;
     private BooleanProperty             zeroBased;
     private ObjectProperty<Connection>  connection;
     private StringProperty              groupName;
 
     /* ********** Constructors ********** */
     public Device() {
-        name            = new SimpleStringProperty("");
-        unitIdentifier  = new SimpleIntegerProperty(0);
-        status          = new SimpleStringProperty("");
-        retries         = new SimpleIntegerProperty(3);
-        enabled         = new SimpleBooleanProperty(false);
-        _addresses      = new ArrayList<>();
-        zeroBased       = new SimpleBooleanProperty(true);
-        connection      = new SimpleObjectProperty<>();
-        groupName       = new SimpleStringProperty("");
+        name                = new SimpleStringProperty("");
+        unitIdentifier      = new SimpleIntegerProperty(0);
+        status              = new SimpleStringProperty("");
+        retries             = new SimpleIntegerProperty(3);
+        enabled             = new SimpleBooleanProperty(false);
+        addresses           = new ArrayList<>();
+        zeroBased           = new SimpleBooleanProperty(true);
+        connection          = new SimpleObjectProperty<>();
+        groupName           = new SimpleStringProperty("");
     }
 
     /* ********** Setters and Getters ********** */
@@ -108,46 +105,16 @@ public class  Device {
     }
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
-    private List<Address> getAddresses(){
-        if(addresses != null){
-            _addresses.clear();
-            _addresses.addAll(addresses.get());
-        }
-        return _addresses;
-    }
-    public ListProperty<Address> addressesProperty() {
-        if(this.addresses == null) {
-            this.addresses = new SimpleListProperty<>(FXCollections.observableList(_addresses));
-            this.addresses.addListener((ListChangeListener<Address>) c -> {
-                while (c.next()) {
-                    if (c.wasPermutated()) {
-                        for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                            //permutate
-                        }
-                    } else if (c.wasUpdated()) {
-                        //update item
-                    } else {
-                        for (Address remAddress : c.getRemoved()) {
-                            remAddress.setOwner(null);
-                        }
-                        for (Address addAddress : c.getAddedSubList()) {
-                            if (addAddress.getOwner() != this){
-                                addAddress.setOwner(this);
-                            }
-                        }
-                    }
-                }
-            });
-        }
+    public List<Address> getAddresses() {
         return addresses;
     }
-    private void setAddresses(List<Address> addresses) {
-        this._addresses = addresses;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     @Transient
     public List<Address> getAddressesByModel(Address.DataModel dataModel){
-        return this.addresses.getValue().stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
+        return addresses.stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
     }
     @Transient
     public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){
@@ -204,9 +171,6 @@ public class  Device {
 
     @Override
     public String toString() {
-        return this.getName() +
-                "(" +
-                this.addresses +
-                ")";
+        return this.getName();
     }
 }
