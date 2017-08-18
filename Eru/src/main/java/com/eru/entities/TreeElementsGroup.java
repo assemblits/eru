@@ -1,4 +1,4 @@
-package com.eru.gui.tree;
+package com.eru.entities;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -14,7 +14,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class TreeElementsGroup {
 
-    public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER}
+    public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER, DISPLAY}
 
     private IntegerProperty                     id;
     private StringProperty                      name;

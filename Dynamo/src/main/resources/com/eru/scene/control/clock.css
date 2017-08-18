@@ -18,7 +18,7 @@
  * CLOCK class                                                                *
  *****************************************************************************/
 .clock {
-    -fx-skin             : "ve.marlontrujillo.scene.control.skin.ClockSkin";
+    -fx-skin             : "com.eru.scene.control.skin.ClockSkin";
     -clock-background    : white;
     -hour-pointer-color  : rgb(44, 44, 44);
     -minute-pointer-color: rgb(44, 44, 44);

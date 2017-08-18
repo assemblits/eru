@@ -1,6 +1,6 @@
 package com.eru.gui.tables;
 
-import com.eru.user.User;
+import com.eru.entities.User;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.SelectionMode;
@@ -17,7 +17,7 @@ public class UserTable extends EruTable<User> {
 
     public UserTable(List<User> users) {
         super(users);
-        TableColumn<User, String> groupColumn = new TableColumn<>("TreeElementsGroup");
+        TableColumn<User, String> groupColumn = new TableColumn<>("Group");
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
         TableColumn<User, String> lastNameColumn = new TableColumn<>("Last name");

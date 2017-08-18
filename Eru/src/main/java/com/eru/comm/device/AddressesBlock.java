@@ -1,5 +1,6 @@
 package com.eru.comm.device;
 
+import com.eru.entities.Address;
 import com.eru.util.Preferences;
 
 import java.util.ArrayList;

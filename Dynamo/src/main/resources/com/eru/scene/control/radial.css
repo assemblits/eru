@@ -1,5 +1,5 @@
 .radial {
-    -fx-skin          : "ve.marlontrujillo.scene.control.skin.RadialSkin";
+    -fx-skin          : "com.eru.scene.control.skin.RadialSkin";
     -radial-body-color: rgb(50, 50, 50);
     -outer-frame-color: rgb(132, 132, 132);
     -main-frame-color : linear-gradient(from 50% 0% to 50% 100%,

@@ -18,7 +18,7 @@
  * SIMPLEGAUGE class                                                          *
  *****************************************************************************/
 .simple-gauge {
-    -fx-skin           : "ve.marlontrujillo.scene.control.skin.SimpleGaugeSkin";
+    -fx-skin           : "com.eru.scene.control.skin.SimpleGaugeSkin";
     -needle-color      : #5a615f;
     -value-text        : white;
     -title-text        : white;

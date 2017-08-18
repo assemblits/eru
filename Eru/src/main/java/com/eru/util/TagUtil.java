@@ -2,7 +2,7 @@ package com.eru.util;
 
 import com.eru.exception.TagLinkException;
 import com.eru.logger.LogUtil;
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 

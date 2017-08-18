@@ -1,6 +1,8 @@
 package com.eru.persistence;
 
-import com.eru.gui.tree.TreeElementsGroup;
+import com.eru.entities.Project;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.scenebuilder.library.CustomLibraryLoader;
 import com.eru.util.JpaUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -13,7 +15,6 @@ import java.util.List;
  * Created by mtrujillo on 7/30/17.
  */
 public class ProjectLoaderService extends Service<Project> {
-
 
     @Override
     protected Task<Project> createTask() {
@@ -29,16 +30,19 @@ public class ProjectLoaderService extends Service<Project> {
                     updateProgress(50, 100);
                     Dao<Project> dao = new Dao<>(entityManager, Project.class);
                     List<Project> entities = dao.findEntities();
-                    if(entities == null || entities.isEmpty()){
+                    if (entities == null || entities.isEmpty()) {
                         project = getNewProject();
                         dao.create(project);
                     } else {
                         project = entities.get(0);
                     }
+                    updateMessage("Loading custom components");
+                    updateProgress(75, 100);
+                    CustomLibraryLoader.getInstance().loadFromClassPath();
 
                     updateProgress(100, 100);
                     updateMessage("Done");
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -78,6 +82,12 @@ public class ProjectLoaderService extends Service<Project> {
         users.setType(TreeElementsGroup.Type.USER);
         users.setParent(root);
         root.getChildren().add(users);
+
+        TreeElementsGroup displays = new TreeElementsGroup();
+        displays.setName("Displays");
+        displays.setType(TreeElementsGroup.Type.DISPLAY);
+        displays.setParent(root);
+        root.getChildren().add(displays);
 
         newProject.setGroup(root);
 

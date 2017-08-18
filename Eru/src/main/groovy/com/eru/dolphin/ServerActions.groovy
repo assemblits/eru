@@ -1,12 +1,12 @@
 package com.eru.dolphin
 
 import com.eru.comm.CommunicationsManager
-import com.eru.tag.Tag
-import com.eru.alarming.Alarm
+import com.eru.entities.Tag
+import com.eru.entities.Alarm
 import com.eru.alarming.Alarming
 import com.eru.logger.LiveAppender
 import com.eru.persistence.Container
-import com.eru.user.User
+import com.eru.entities.User
 import org.opendolphin.LogConfig
 import org.opendolphin.core.comm.NamedCommand
 import org.opendolphin.core.server.DTO

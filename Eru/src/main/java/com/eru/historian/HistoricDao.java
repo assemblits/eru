@@ -2,7 +2,7 @@ package com.eru.historian;
 
 import com.eru.logger.LogUtil;
 import com.eru.util.Constants;
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;

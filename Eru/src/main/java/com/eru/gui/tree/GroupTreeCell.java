@@ -1,5 +1,6 @@
 package com.eru.gui.tree;
 
+import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.App;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,17 +18,20 @@ public class GroupTreeCell extends TreeCell<TreeElementsGroup> {
     private final Image deviceIcon      = new Image(getClass().getResourceAsStream("device-icon.png"));
     private final Image tagIcon         = new Image(getClass().getResourceAsStream("tag-icon.png"));
     private final Image userIcon        = new Image(getClass().getResourceAsStream("user-icon.png"));
+    private final Image displayIcon        = new Image(getClass().getResourceAsStream("display-icon.png"));
 
     private final ContextMenu connectionsMenu = new ContextMenu();
     private final ContextMenu devicesMenu     = new ContextMenu();
     private final ContextMenu tagsMenu        = new ContextMenu();
     private final ContextMenu usersMenu       = new ContextMenu();
+    private final ContextMenu displaysMenu       = new ContextMenu();
 
     public GroupTreeCell() {
         connectionsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
         devicesMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
         tagsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.TAG), getMenuItemToRename(), getMenuItemToRemove());
         usersMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.USER), getMenuItemToRename(), getMenuItemToRemove());
+        displaysMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.DISPLAY), getMenuItemToRename(), getMenuItemToRemove());
     }
 
     @Override
@@ -56,6 +60,10 @@ public class GroupTreeCell extends TreeCell<TreeElementsGroup> {
                 case USER:
                     setGraphic(new ImageView(userIcon));
                     if (getTreeItem().getParent()!= null) setContextMenu(usersMenu);
+                    break;
+                case DISPLAY:
+                    setGraphic(new ImageView(displayIcon));
+                    if (getTreeItem().getParent()!= null) setContextMenu(displaysMenu);
                     break;
             }
         }

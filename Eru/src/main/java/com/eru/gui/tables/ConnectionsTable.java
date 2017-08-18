@@ -1,8 +1,8 @@
 package com.eru.gui.tables;
 
-import com.eru.comm.connection.Connection;
-import com.eru.comm.connection.SerialConnection;
-import com.eru.comm.connection.TcpConnection;
+import com.eru.entities.Connection;
+import com.eru.entities.SerialConnection;
+import com.eru.entities.TcpConnection;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

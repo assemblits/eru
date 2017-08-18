@@ -1,9 +1,10 @@
 package com.eru.alarming;
 
+import com.eru.entities.Alarm;
 import com.eru.logger.LogUtil;
 import com.eru.persistence.Container;
 import com.eru.persistence.Dao;
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import com.eru.util.JpaUtil;
 import com.eru.util.Preferences;
 import groovy.lang.Closure;

@@ -1,8 +1,8 @@
 package com.eru.util;
 
-import com.eru.alarming.Alarm;
+import com.eru.entities.Alarm;
 import com.eru.historian.HistoricDao;
-import com.eru.tag.Tag;
+import com.eru.entities.Tag;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;

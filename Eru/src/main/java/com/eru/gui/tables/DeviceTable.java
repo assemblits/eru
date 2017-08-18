@@ -1,8 +1,8 @@
 package com.eru.gui.tables;
 
-import com.eru.comm.connection.Connection;
-import com.eru.comm.device.Address;
-import com.eru.comm.device.Device;
+import com.eru.entities.Connection;
+import com.eru.entities.Address;
+import com.eru.entities.Device;
 import com.eru.gui.App;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -32,15 +32,15 @@ public class DeviceTable extends EruTable<Device> {
         super(items);
 
         // **** Columns **** //
-        TableColumn<Device, String> groupColumn                       = new TableColumn<>("Group");
-        TableColumn<Device, String> nameColumn                        = new TableColumn<>("Name");
-        TableColumn<Device, Integer> unitIdentifierColumn             = new TableColumn<>("ID");
-        TableColumn<Device, String> statusColumn                      = new TableColumn<>("Status");
-        TableColumn<Device, Integer> retriesColumn                    = new TableColumn<>("Retries");
-        TableColumn<Device, Boolean> enabledColumn                    = new TableColumn<>("Enabled");
+        TableColumn<Device, String> groupColumn             = new TableColumn<>("Group");
+        TableColumn<Device, String> nameColumn              = new TableColumn<>("Name");
+        TableColumn<Device, Integer> unitIdentifierColumn   = new TableColumn<>("ID");
+        TableColumn<Device, String> statusColumn            = new TableColumn<>("Status");
+        TableColumn<Device, Integer> retriesColumn          = new TableColumn<>("Retries");
+        TableColumn<Device, Boolean> enabledColumn          = new TableColumn<>("Enabled");
         TableColumn<Device, ObservableList<Address>> addressesColumn  = new TableColumn<>("Addresses");
-        TableColumn<Device, Boolean> zeroBasedColumn                  = new TableColumn<>("Zero based");
-        TableColumn<Device, Connection> connectionColumn              = new TableColumn<>("Connection");
+        TableColumn<Device, Boolean> zeroBasedColumn        = new TableColumn<>("Zero based");
+        TableColumn<Device, Connection> connectionColumn    = new TableColumn<>("Connection");
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());

@@ -1,5 +1,5 @@
 .load {
-    -fx-skin            : "ve.marlontrujillo.scene.control.skin.LoadSkin";
+    -fx-skin            : "com.eru.scene.control.skin.LoadSkin";
     -background-color   : TRANSPARENT;
     -de-energized-color : BLACK;
     -energized-color    : #c94b4d;

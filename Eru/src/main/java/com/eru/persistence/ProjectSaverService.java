@@ -1,14 +1,14 @@
 package com.eru.persistence;
 
+import com.eru.entities.Project;
 import com.eru.util.JpaUtil;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 
-/**
- * Created by mtrujillo on 7/30/17.
- */
+@Log4j
 public class ProjectSaverService extends Service<Project> {
 
     private Project project;
@@ -24,7 +24,7 @@ public class ProjectSaverService extends Service<Project> {
                 updateMessage("Saving");
                 updateProgress(76, 100);
                 Dao<Project> dao = new Dao<>(entityManager, Project.class);
-                System.out.println("Saving " + getProject());
+                log.debug("Saving " + getProject());
                 Project updatedProject = dao.update(getProject());
                 updateProgress(100, 100);
                 return updatedProject;

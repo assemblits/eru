@@ -10,7 +10,8 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://nexus.gluonhq.com/nexus/content/repositories/releases/' }
 }
 
 sourceSets {
@@ -40,6 +41,7 @@ ext {
     jUnitVersion = '4.12'
     cglibNodepVersion = '2.2.2'
     postgresVersion = '9.4.1211'
+    lombokVersion = '1.16.18'
 }
 
 dependencies {
@@ -64,6 +66,7 @@ dependencies {
     compile "org.hibernate.common:hibernate-commons-annotations:${hibernateCommonVersion}"
     compile "com.h2database:h2:${h2Version}"
     compile "org.postgresql:postgresql:${postgresVersion}"
+    compile "org.projectlombok:lombok:${lombokVersion}"
 
     //jetty
     compile "org.eclipse.jetty:jetty-servlets:${jettyVersion}"
@@ -81,6 +84,9 @@ dependencies {
     compile "net.wimpi:jamod:${wimpiJamodVersion}"
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
+
+    //Scene builder
+    compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
 
     //Testing
     testCompile "junit:junit:${jUnitVersion}"
