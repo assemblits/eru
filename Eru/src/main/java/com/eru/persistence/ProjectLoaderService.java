@@ -2,6 +2,7 @@ package com.eru.persistence;
 
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
+import com.eru.scenebuilder.library.CustomLibraryLoader;
 import com.eru.util.JpaUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -35,6 +36,9 @@ public class ProjectLoaderService extends Service<Project> {
                     } else {
                         project = entities.get(0);
                     }
+                    updateMessage("Loading custom components");
+                    updateProgress(75, 100);
+                    CustomLibraryLoader.getInstance().loadFromClassPath();
 
                     updateProgress(100, 100);
                     updateMessage("Done");

@@ -11,7 +11,6 @@ import com.oracle.javafx.scenebuilder.kit.editor.panel.hierarchy.treeview.Hierar
 import com.oracle.javafx.scenebuilder.kit.editor.panel.inspector.InspectorPanelController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.library.LibraryPanelController;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument;
-import com.oracle.javafx.scenebuilder.kit.library.Library;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Menu;
@@ -46,10 +45,8 @@ public class EruSceneBuilder extends VBox {
     }
 
     public void init() {
-        CustomLibraryLoader customLibraryLoader = new CustomLibraryLoader();
         editorController = new EditorController();
-        Library library = customLibraryLoader.loadFromClassPath();
-        editorController.setLibrary(library);
+        editorController.setLibrary(CustomLibraryLoader.getInstance().getLibrary());
 
         HierarchyTreeViewController componentTree = new HierarchyTreeViewController(editorController);
         ContentPanelController canvas = new ContentPanelController(editorController);

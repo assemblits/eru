@@ -23,30 +23,50 @@ public class CustomLibraryLoader {
         add("%scom%seru%sscene%scontrol".replaceAll("%s", separator));
         add("%seu%shansolo".replaceAll("%s", separator));
     }};
-
     private static final List<String> TOP_PACKAGES = new ArrayList<String>() {{
         add("main");
         add("target");
         add("classes");
     }};
+    private static CustomLibraryLoader instance;
+    private Library library;
 
-    public Library loadFromClassPath() {
+    private CustomLibraryLoader() {
+
+    }
+
+    public static CustomLibraryLoader getInstance() {
+        if (instance == null) {
+            instance = new CustomLibraryLoader();
+        }
+        return instance;
+    }
+
+    public void loadFromClassPath() {
+        log.info("Loading custom components from classpath");
         Set<ClassInfo> classesInfo = scanClassPathAndGetClassesInfo();
 
         List<EruComponent> eruComponents = classesInfo.stream()
                 .filter(this::isJFXComponentClass)
                 .map(classInfo -> {
                     EruComponent eruComponent = new EruComponent(classInfo.getName(), classInfo.getClazz());
-                    log.info(format("Component '%s' loaded", eruComponent.getName()));
+                    log.debug(format("Component '%s' loaded", eruComponent.getName()));
                     return eruComponent;
                 }).collect(Collectors.toList());
+        log.info(String.format("%d custom components loaded successfully", eruComponents.size()));
+        library = new EruLibrary(eruComponents);
+    }
 
-        return new EruLibrary(eruComponents);
-
+    public Library getLibrary() {
+        if (library == null) {
+            throw new IllegalStateException("Library should be loaded before");
+        }
+        return library;
     }
 
     private Set<ClassInfo> scanClassPathAndGetClassesInfo() {
         Stack<File> directories = new Stack<>();
+        log.debug(String.format("Scanning packages %s", DYNAMO_CLASSES_LOCATION));
         for (String location : DYNAMO_CLASSES_LOCATION) {
             directories.push(new File(getClass().getResource(location).getPath()));
         }
