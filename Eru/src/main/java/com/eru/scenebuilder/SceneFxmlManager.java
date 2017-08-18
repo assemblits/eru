@@ -21,38 +21,38 @@ public class SceneFxmlManager {
     private static final String CHARSET_NAME = "utf-8";
 
     public File createSceneFxmlFile(EruScene scene) {
-        String fxmlFilesDirectoryPath = System.getProperty("user.home") + separator + "." + separator
+        String fxmlFilesDirectoryPath = System.getProperty("user.home") + separator + "."
                 + App.NAME + separator + "displays";
 
         String formattedSceneName = formatName(scene);
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);
         File fxmlFile = new File(fxmlFilesDirectory.getAbsolutePath() + separator + formattedSceneName + ".fxml");
         if (!fxmlFile.exists()) {
-            log.debug(format("Creating fxml file for scene <%s>", scene.getName()));
+            log.debug(format("Creating fxml file for scene '%s'", scene.getName()));
             try {
                 if (fxmlFilesDirectory.mkdirs() && fxmlFile.createNewFile()) {
                     updateContent(fxmlFile, NEW_FXML_FILE_CONTENT);
                 }
             } catch (IOException e) {
-                log.error(format("Error creating fxml file for scene <%s>", scene.getName()));
+                log.error(format("Error creating fxml file for scene '%s'", scene.getName()));
                 throw new FxmlFileWriteException(e);
             }
         }
-        log.debug(format("fxml file for scene <%s> was created successfully in <%s>",
+        log.debug(format("fxml file for scene '%s' was created successfully in '%s'",
                 scene.getName(), fxmlFile.getAbsolutePath()));
         return fxmlFile;
     }
 
     public void updateContent(File fxmlFile, String content) {
-        log.debug(format("Updating <%s>", fxmlFile.getAbsolutePath()));
+        log.debug(format("Updating '%s'", fxmlFile.getAbsolutePath()));
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(fxmlFile), CHARSET_NAME))) {
             writer.write(content);
         } catch (IOException e) {
-            log.error(format("Error updating fxml file <%s>", fxmlFile.getAbsolutePath()));
+            log.error(format("Error updating fxml file '%s'", fxmlFile.getAbsolutePath()));
             throw new FxmlFileWriteException(e);
         }
-        log.debug(format("File <%s> updated successfully", fxmlFile.getAbsolutePath()));
+        log.debug(format("File '%s' updated successfully", fxmlFile.getAbsolutePath()));
     }
 
     private String formatName(EruScene scene) {

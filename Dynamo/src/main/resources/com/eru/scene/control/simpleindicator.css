@@ -18,7 +18,7 @@
 * INDICATOR class                                           *
 ************************************************************/
 .indicator {
-    -fx-skin                 : "ve.marlontrujillo.scene.control.skin.SimpleIndicatorSkin";
+    -fx-skin                 : "com.eru.scene.control.skin.SimpleIndicatorSkin";
     -fx-indicator-inner-color: #fcfcfc;
     -fx-indicator-outer-color: #cccccc;
     -fx-indicator-glow-color : transparent;

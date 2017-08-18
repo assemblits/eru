@@ -15,7 +15,7 @@
  */
 
 .one-eighty-gauge {
-    -fx-skin             : "ve.marlontrujillo.scene.control.skin.OneEightyGaugeSkin";
+    -fx-skin             : "com.eru.scene.control.skin.OneEightyGaugeSkin";
     -bar-background-color: #eff3f3;
     -bar-color           : #3221c9;
     -title-color         : black;

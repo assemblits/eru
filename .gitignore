@@ -7,3 +7,4 @@ out/
 *.iml
 build/
 .gradle/
+classes/

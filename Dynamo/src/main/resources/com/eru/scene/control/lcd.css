@@ -18,7 +18,7 @@
 * LCD class                                                 *
 ************************************************************/
 .lcd {
-    -fx-skin    : "ve.marlontrujillo.scene.control.skin.LcdSkin";
+    -fx-skin    : "com.eru.scene.control.skin.LcdSkin";
     -lcd-frame  : linear-gradient(from 0% 0% to 0% 99%,
                                   rgb(26, 26, 26) 0%,
                                   rgb(77, 77, 77) 1%,

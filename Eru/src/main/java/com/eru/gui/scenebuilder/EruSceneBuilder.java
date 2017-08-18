@@ -4,12 +4,14 @@ import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.EruMainScreenStarter;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneFxmlManager;
+import com.eru.scenebuilder.library.CustomLibraryLoader;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.content.ContentPanelController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.hierarchy.treeview.HierarchyTreeViewController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.inspector.InspectorPanelController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.library.LibraryPanelController;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument;
+import com.oracle.javafx.scenebuilder.kit.library.Library;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Menu;
@@ -43,8 +45,12 @@ public class EruSceneBuilder extends VBox {
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
     }
 
-    public void init() throws FxmlFileReadException {
+    public void init() {
+        CustomLibraryLoader customLibraryLoader = new CustomLibraryLoader();
         editorController = new EditorController();
+        Library library = customLibraryLoader.loadFromClassPath();
+        editorController.setLibrary(library);
+
         HierarchyTreeViewController componentTree = new HierarchyTreeViewController(editorController);
         ContentPanelController canvas = new ContentPanelController(editorController);
         InspectorPanelController propertyTable = new InspectorPanelController(editorController);
@@ -87,10 +93,6 @@ public class EruSceneBuilder extends VBox {
             log.error(format("Error trying to read <%s>", sceneFxmlFile.getAbsoluteFile()));
             throw new FxmlFileReadException(e);
         }
-    }
-
-    private void initSceneBuilder() {
-
     }
 
     private void startChangeListener() {

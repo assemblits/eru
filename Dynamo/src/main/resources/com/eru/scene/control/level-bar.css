@@ -1,5 +1,5 @@
 .level-bar {
-    -fx-skin           : "ve.marlontrujillo.scene.control.skin.LevelBarSkin";
+    -fx-skin           : "com.eru.scene.control.skin.LevelBarSkin";
 }
 
 .level-bar .main {

@@ -232,7 +232,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
 
     @Override
     public void startSceneBuilder(EruScene scene) {
-        log.info(String.format("Starting scene builder for <%s>", scene.getName()));
+        log.info(String.format("Starting scene builder for '%s'", scene.getName()));
         SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
         EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(scene, sceneFxmlManager, this);
         try {
