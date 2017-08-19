@@ -1,12 +1,13 @@
 package com.eru.comm.member;
 
-import com.eru.logger.LogUtil;
+import lombok.extern.log4j.Log4j;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by mtrujillo on 22/05/17.
  */
+@Log4j
 public class Director implements Runnable {
     private LinkedBlockingQueue<Communicator>  communicators = new LinkedBlockingQueue<>();
     private volatile boolean directorShallRun = false;
@@ -33,7 +34,7 @@ public class Director implements Runnable {
     }
 
     public boolean stop(){
-        LogUtil.logger.info("Stopping communicators updating...");
+        log.info("Stopping communicators updating...");
         while (loopRunning){
             try {
                 directorShallRun = false;
@@ -43,8 +44,8 @@ public class Director implements Runnable {
                 return loopRunning = true;
             }
         }
-        if (!loopRunning) LogUtil.logger.info("Communicators updating stopped");
-        else LogUtil.logger.info("Communicators updating cannot be stopped");
+        if (!loopRunning) log.info("Communicators updating stopped");
+        else log.info("Communicators updating cannot be stopped");
         return loopRunning;
     }
 

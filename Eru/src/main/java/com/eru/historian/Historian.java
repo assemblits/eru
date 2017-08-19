@@ -1,6 +1,5 @@
 package com.eru.historian;
 
-import com.eru.logger.LogUtil;
 import com.eru.persistence.Container;
 import com.eru.entities.Tag;
 import com.eru.util.Constants;
@@ -8,6 +7,7 @@ import com.eru.util.Preferences;
 import com.eru.util.JpaUtil;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import java.sql.SQLException;
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Created by mtrujillo on 14/07/2014.
  */
+@Log4j
 public class Historian {
 
     /* ********** Static Fields ********** */
@@ -71,7 +72,7 @@ public class Historian {
                     .filter(Tag::getHistoricalEnabled)
                     .collect(Collectors.toList()));
         } catch (InterruptedException e) {
-            LogUtil.logger.error("Cannot load tags for historical daemon.", e);
+            log.error("Cannot load tags for historical daemon.", e);
         }
         return historicalTagList.toArray(new Tag[historicalTagList.size()]);
     }
@@ -102,17 +103,17 @@ public class Historian {
         public void run() {
             Thread.currentThread().setName("Historian Thread");
 
-            LogUtil.logger.info("Historian: Linking...");
+            log.info("Historian: Linking...");
             em          = JpaUtil.getEntityManagerFactory().createEntityManager();
             historicDao = new HistoricDao(em);
             running     = true;
 
             if(historicalTagList.length == 0){
-                LogUtil.logger.error("Historian: There is no tags to record. List size: " + historicalTagList.length);
+                log.error("Historian: There is no tags to record. List size: " + historicalTagList.length);
                 running = false;
             }
 
-            LogUtil.logger.info("Historian: Recording tags history of: " + historicalTagList.length + " tags. Daemon:");
+            log.info("Historian: Recording tags history of: " + historicalTagList.length + " tags. Daemon:");
 
             while (running) {
                 // Clear buffers
@@ -138,10 +139,10 @@ public class Historian {
                 } catch (InterruptedException e) {
                     running = false;
                 } catch (SQLException e) {
-                    LogUtil.logger.error("Historian: SQL error: ", e);
+                    log.error("Historian: SQL error: ", e);
                 }
             }
-            LogUtil.logger.info("Historian was stopped.");
+            log.info("Historian was stopped.");
         }
 
     }

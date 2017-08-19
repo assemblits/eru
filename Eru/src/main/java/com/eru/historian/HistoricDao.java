@@ -1,8 +1,8 @@
 package com.eru.historian;
 
-import com.eru.logger.LogUtil;
 import com.eru.util.Constants;
 import com.eru.entities.Tag;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@Log4j
 public class HistoricDao {
     /* ********** Fields ********** */
     private Connection conn = null;
@@ -35,7 +36,7 @@ public class HistoricDao {
         StringBuilder columnNames  = new StringBuilder();
 
         if (tags.isEmpty()) {
-            LogUtil.logger.info("Trying to get Historic data from database, but there is no tags configured");
+            log.info("Trying to get Historic data from database, but there is no tags configured");
             return tagHistoric;
         } else {
             for(Tag t : tags){
@@ -69,7 +70,7 @@ public class HistoricDao {
         StringBuilder columnNames  = new StringBuilder();
 
         if (tagName.isEmpty()) {
-            LogUtil.logger.info("Trying to get Historic data from database, but there is no tags configured");
+            log.info("Trying to get Historic data from database, but there is no tags configured");
             return tagHistoric;
         } else {
             columnNames.append(tagName).append(",");

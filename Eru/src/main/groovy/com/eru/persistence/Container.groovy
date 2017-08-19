@@ -4,7 +4,7 @@ import com.eru.entities.Connection
 import com.eru.entities.Tag
 import com.eru.entities.Device
 import com.eru.historian.HistoricDao
-import com.eru.logger.LogUtil
+
 import com.eru.entities.User
 import com.eru.util.JpaUtil
 import groovyx.gpars.agent.Agent

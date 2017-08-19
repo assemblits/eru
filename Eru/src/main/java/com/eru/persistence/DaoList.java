@@ -1,9 +1,9 @@
 package com.eru.persistence;
 
-import com.eru.logger.LogUtil;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by mtrujillo on 16/05/14.
  */
+@Log4j
 public class DaoList<T> {
 
     private final String            orderBy;
@@ -32,7 +33,7 @@ public class DaoList<T> {
             }
         } catch (Exception e) {
             value.clear();
-            LogUtil.logger.error("Error in Dao Service", e);
+            log.error("Error in Dao Service", e);
         }
     }
 
@@ -40,7 +41,7 @@ public class DaoList<T> {
         try {
             dao.create(o);
         } catch (Exception e) {
-            LogUtil.logger.error("Error in Dao Service", e);
+            log.error("Error in Dao Service", e);
         }
     }
 
@@ -48,7 +49,7 @@ public class DaoList<T> {
         try {
             dao.update(o);
         } catch (Exception e) {
-            LogUtil.logger.error("Error in Dao Service", e);
+            log.error("Error in Dao Service", e);
         }
     }
 
@@ -56,7 +57,7 @@ public class DaoList<T> {
         try {
             dao.delete(o);
         } catch (Exception e) {
-            LogUtil.logger.error("Error in Dao Service", e);
+            log.error("Error in Dao Service", e);
         }
     }
 

@@ -1,10 +1,10 @@
 package com.eru.util;
 
 import com.eru.exception.TagLinkException;
-import com.eru.logger.LogUtil;
 import com.eru.entities.Tag;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import lombok.extern.log4j.Log4j;
 
 import javax.script.ScriptException;
 import java.sql.Timestamp;
@@ -13,6 +13,7 @@ import java.util.*;
 /**
  * Created by mtrujillo on 9/9/2015.
  */
+@Log4j
 public class TagUtil {
 
     public static final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
@@ -83,6 +84,7 @@ public class TagUtil {
 
 }
 
+@Log4j
 abstract class TagLink implements InvalidationListener {
     Tag tagToListen;
     Tag tagToUpdate;
@@ -100,7 +102,7 @@ abstract class TagLink implements InvalidationListener {
             tagToUpdate.setStatus("OK");
         } catch (Exception e){
             tagToUpdate.setStatus(e.getLocalizedMessage());
-            LogUtil.logger.error(e);
+            log.error(e);
         }
     }
 

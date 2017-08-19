@@ -2,7 +2,7 @@ package com.eru.util;
 
 
 import com.eru.exception.EntityManagerFactoryCreationException;
-import com.eru.logger.LogUtil;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +15,7 @@ import static java.lang.String.format;
 /**
  * @author marlon
  */
+@Log4j
 public class JpaUtil {
 
     private static final String PERSISTENCE_UNIT = "com.psv.jpa";
@@ -49,7 +50,7 @@ public class JpaUtil {
         emf = createEntityManagerFactory(PERSISTENCE_UNIT, propertiesLoader.loadPropertiesAsMap("database"))
                 .orElseGet(() -> createEntityManagerFactory(PERSISTENCE_UNIT, propertiesLoader.loadPropertiesAsMap("fallback-database"))
                         .orElseThrow(() -> {
-                            LogUtil.logger.error("Unable to create entity manager factory");
+                            log.error("Unable to create entity manager factory");
                             return new EntityManagerFactoryCreationException();
                         }));
     }
@@ -57,10 +58,10 @@ public class JpaUtil {
     private static Optional<EntityManagerFactory> createEntityManagerFactory(String persistenceUnitName, Map<String, String> properties) {
         try {
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);
-            LogUtil.logger.info(format("Entity Manager Factory connected with %s persistence unit.", persistenceUnitName));
+            log.info(format("Entity Manager Factory connected with %s persistence unit.", persistenceUnitName));
             return Optional.of(entityManagerFactory);
         } catch (Exception e) {
-            LogUtil.logger.warn(format("Error creating a Entity Manager Factory with %s persistence unit: %s",
+            log.warn(format("Error creating a Entity Manager Factory with %s persistence unit: %s",
                     persistenceUnitName, e.getMessage()), e);
             return Optional.empty();
         }

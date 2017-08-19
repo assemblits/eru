@@ -1,7 +1,6 @@
 package com.eru.alarming;
 
 import com.eru.entities.Alarm;
-import com.eru.logger.LogUtil;
 import com.eru.persistence.Container;
 import com.eru.persistence.Dao;
 import com.eru.entities.Tag;
@@ -17,6 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import java.sql.Timestamp;
@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by mtrujillo on 15/10/2014.
  */
-
+@Log4j
 public class Alarming {
     /* ********** Static Fields ********** */
     private static final Alarming ourInstance = new Alarming();
@@ -67,7 +67,7 @@ public class Alarming {
     /* ********** Methods ********** */
     public synchronized boolean start() {
         if(running) {
-            LogUtil.logger.error("Alarming: detected a load command, but the communications are already started.");
+            log.error("Alarming: detected a load command, but the communications are already started.");
         } else {
             try {
                 // Check if there is a database connection
@@ -85,7 +85,7 @@ public class Alarming {
                 final int firstResult = alarmTableCount - alarmsToShowLimit < 0 ? 0 : alarmTableCount - alarmsToShowLimit;
 
                 // Loading alarms from database
-                LogUtil.logger.info("Loading " + alarmsToShowLimit  + " of " + alarmTableCount + "  alarms from database.");
+                log.info("Loading " + alarmsToShowLimit  + " of " + alarmTableCount + "  alarms from database.");
                 final ObservableList<Alarm> databaseAlarms = FXCollections.observableArrayList(alarmDao.findEntities("timeStamp", Dao.Order.ASC, alarmsToShowLimit, firstResult));
                 alarmsAgent.updateValue(databaseAlarms);
                 updateStatus();
@@ -93,12 +93,12 @@ public class Alarming {
                 running = true;
 
                 installAlarmListenerOnTags(Container.getInstance().getTagsAgent().getInstantVal());
-                LogUtil.logger.info("Alarming: alarms loaded.");
+                log.info("Alarming: alarms loaded.");
             }catch (Exception e){
                 final String errorMSG = "Alarming module cannot load.";
                 status.setValue(errorMSG);
                 alarmed.setValue(true);
-                LogUtil.logger.error(errorMSG, e);
+                log.error(errorMSG, e);
             }
         }
         return running;
@@ -139,7 +139,7 @@ public class Alarming {
     }
 
     public void installAlarmListenerOnTags(List<Tag> tagsToListen){
-        LogUtil.logger.info("Alarming: Installing listeners on tags:");
+        log.info("Alarming: Installing listeners on tags:");
 
         if(tagsRegisteredListeners.size()>0){
             removeAlarmListenerOnRegisteredTags();
@@ -154,23 +154,23 @@ public class Alarming {
                         alarmEnabledTag.alarmedProperty().addListener(listener);
                         tagsRegisteredListeners.put(alarmEnabledTag, listener);
                     });
-            LogUtil.logger.info("Alarming: listeners on tags installed.");
+            log.info("Alarming: listeners on tags installed.");
         } else {
-            LogUtil.logger.error("Alarming: Tags cannot be listen because there are no db connection in Alarming module.");
+            log.error("Alarming: Tags cannot be listen because there are no db connection in Alarming module.");
         }
     }
 
     public void removeAlarmListenerOnRegisteredTags() {
-        LogUtil.logger.info("Alarming: Removing listeners on tags...");
+        log.info("Alarming: Removing listeners on tags...");
         for(Tag tag : tagsRegisteredListeners.keySet()){
             tag.alarmedProperty().removeListener(tagsRegisteredListeners.get(tag));
         }
         tagsRegisteredListeners.clear();
-        LogUtil.logger.info("Alarming: listeners on tags removed.");
+        log.info("Alarming: listeners on tags removed.");
     }
 
     public void setAcknowledgeAllAlarms(String userInCharge){
-        LogUtil.logger.info("Acknowledging all alarms...");
+        log.info("Acknowledging all alarms...");
         alarmsAgent.send(new Closure(this) {
             void doCall(ObservableList<Alarm> alarms){
                 alarms.forEach(alarm -> {

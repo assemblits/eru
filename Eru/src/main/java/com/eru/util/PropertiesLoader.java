@@ -1,7 +1,7 @@
 package com.eru.util;
 
 import com.eru.exception.LoadPropertiesFileException;
-import com.eru.logger.LogUtil;
+import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,7 @@ import java.util.Properties;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toMap;
 
+@Log4j
 public class PropertiesLoader {
 
     public Map<String, String> loadPropertiesAsMap(String name) {
@@ -29,7 +30,7 @@ public class PropertiesLoader {
             return properties;
         } catch (IOException e) {
             String errorMessage = format("Error trying to load properties file <%s>", propertiesFileName);
-            LogUtil.logger.error(errorMessage);
+            log.error(errorMessage);
             throw new LoadPropertiesFileException(errorMessage);
         }
     }
@@ -40,7 +41,7 @@ public class PropertiesLoader {
                 .getResource(propertiesFileName))
                 .orElseThrow(() -> {
                     String errorMessage = format("Properties file <%s> not found", propertiesFileName);
-                    LogUtil.logger.error(errorMessage);
+                    log.error(errorMessage);
                     return new LoadPropertiesFileException(errorMessage);
                 })
                 .openStream();

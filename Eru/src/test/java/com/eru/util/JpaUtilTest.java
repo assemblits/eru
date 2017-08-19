@@ -1,6 +1,5 @@
 package com.eru.util;
 
-import com.eru.logger.LogUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +19,7 @@ import static org.mockito.Matchers.matches;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Persistence.class, LogUtil.class})
+@PrepareForTest({Persistence.class})
 public class JpaUtilTest {
 
     @Mock
@@ -31,7 +30,6 @@ public class JpaUtilTest {
     @Before
     public void setUp() throws Exception {
         PowerMockito.mockStatic(Persistence.class);
-        PowerMockito.mockStatic(LogUtil.class);
 
         when(Persistence.createEntityManagerFactory(matches("com.psv.jpa"), anyMap()))
                 .thenReturn(entityManagerFactory);

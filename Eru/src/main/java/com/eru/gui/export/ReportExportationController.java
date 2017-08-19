@@ -1,6 +1,5 @@
 package com.eru.gui.export;
 
-import com.eru.logger.LogUtil;
 import com.eru.entities.Tag;
 import com.eru.util.PdfReportCreator;
 import com.eru.persistence.Dao;
@@ -15,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import lombok.extern.log4j.Log4j;
 
 import javax.persistence.EntityManager;
 import javax.swing.filechooser.FileSystemView;
@@ -40,6 +40,7 @@ import java.util.ResourceBundle;
  * <li> 2014-07-15 (MT) Creation </li>*
  * <ul>
  */
+@Log4j
 public class ReportExportationController extends AnchorPane implements Initializable {
 
     /* ********** Fields ********** */
@@ -88,7 +89,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             }
 
         } catch (Exception e) {
-            LogUtil.logger.error("Report exportation GUI cannot load", e);
+            log.error("Report exportation GUI cannot load", e);
         }
 
         // Customize the datePickers
@@ -221,7 +222,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             exportAllConfirmation.setTitle("The list is empty. Do you want to export only time stamp?");
             Optional<ButtonType> result = exportAllConfirmation.showAndWait();
             if (result.get() != ButtonType.OK) {
-                LogUtil.logger.warn("The report is printing a empty list");
+                log.warn("The report is printing a empty list");
             } else {
                 return;
             }
@@ -260,7 +261,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             } catch (Exception e) {
                 Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
-                LogUtil.logger.error("Error exporting historic.", e);
+                log.error("Error exporting historic.", e);
             }
         } else if (checkBoxAllTags.isSelected()) {
             PdfReportCreator pdfReport = new PdfReportCreator();
@@ -275,7 +276,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             } catch (Exception e) {
                 Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
-                LogUtil.logger.error("Error exporting historic.", e);
+                log.error("Error exporting historic.", e);
             }
         }
 

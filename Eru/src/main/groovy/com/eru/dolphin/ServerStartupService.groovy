@@ -1,6 +1,6 @@
 package com.eru.dolphin
 
-import com.eru.logger.LogUtil
+
 import com.eru.persistence.Container
 import javafx.concurrent.Service
 import javafx.concurrent.Task

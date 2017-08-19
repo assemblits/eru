@@ -1,10 +1,10 @@
 package com.eru.entities;
 
-import com.eru.logger.LogUtil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import lombok.extern.log4j.Log4j;
 import net.wimpi.modbus.net.TCPMasterConnection;
 
 import javax.persistence.DiscriminatorValue;
@@ -17,6 +17,7 @@ import java.net.InetAddress;
  */
 @Entity
 @DiscriminatorValue(value = "TCPIP")
+@Log4j
 public class TcpConnection extends Connection{
     private StringProperty hostname;
     private IntegerProperty port;
@@ -31,30 +32,30 @@ public class TcpConnection extends Connection{
     public void connect() {
         if(!isEnabled() || (coreConnection != null && coreConnection.isConnected())) return;
         try {
-            LogUtil.logger.info("Connecting " + getName() + " connection...");
+            log.info("Connecting " + getName() + " connection...");
             coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname.get()));
             coreConnection.setPort(port.get());
             coreConnection.setTimeout(getTimeout());
             coreConnection.connect();
             setConnected(true);
             setStatus("Connected");
-            LogUtil.logger.info(getName() + " connected.");
+            log.info(getName() + " connected.");
         } catch (Exception e) {
             e.printStackTrace();
             setStatus(e.getLocalizedMessage());
             setConnected(false);
-            LogUtil.logger.error(getName() + " connection failure.", e);
+            log.error(getName() + " connection failure.", e);
         }
     }
 
     @Override
     public void discconnect() {
         if(coreConnection != null && coreConnection.isConnected()){
-            LogUtil.logger.info("Disconnecting TCP connection:\t" + getName());
+            log.info("Disconnecting TCP connection:\t" + getName());
             coreConnection.close();
             setConnected(false);
             setStatus("Disconnected");
-            LogUtil.logger.info(getName() + " disconnected.");
+            log.info(getName() + " disconnected.");
         }
     }
 

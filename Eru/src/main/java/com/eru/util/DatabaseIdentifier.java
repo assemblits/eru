@@ -1,6 +1,6 @@
 package com.eru.util;
 
-import com.eru.logger.LogUtil;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
@@ -8,7 +8,7 @@ import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
 import javax.persistence.EntityManager;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+@Log4j
 public class DatabaseIdentifier {
 
     private final EntityManager entityManager;
@@ -21,7 +21,7 @@ public class DatabaseIdentifier {
         try (Connection connection = getConnection(entityManager)) {
             return connection.getMetaData().getDatabaseProductName();
         } catch (SQLException e) {
-            LogUtil.logger.error("Error trying to get database product name", e);
+            log.error("Error trying to get database product name", e);
             return "ERROR";
         }
     }

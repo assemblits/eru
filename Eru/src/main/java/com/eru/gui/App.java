@@ -13,7 +13,6 @@ import com.eru.gui.preferences.EruPreferences;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
 import com.eru.logger.LabelAppender;
-import com.eru.logger.LogUtil;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
 import com.eru.scenebuilder.EruScene;
@@ -177,7 +176,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
                         CommunicationsManager.getInstance().start();
                         this.skeleton.getRightStatusLabel().setText("Connected");
                     } catch (Exception e) {
-                        LogUtil.logger.error(e);
+                        log.error(e);
                     }
                     break;
                 case DISCONNECT:
@@ -191,7 +190,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
                         this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
                         this.skeleton.getRightStatusLabel().setText("Disconnected");
                     } catch (InterruptedException e) {
-                        LogUtil.logger.error(e);
+                        log.error(e);
                     }
                     break;
                 case SHOW_ABOUT:
