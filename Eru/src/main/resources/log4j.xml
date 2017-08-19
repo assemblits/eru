@@ -13,7 +13,7 @@
         </layout>
     </appender>
 
-    <appender name="LoggerConsole" class="com.eru.logger.LabelAppender">
+    <appender name="LabelAppender" class="com.eru.logger.LabelAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{ISO8601} %-5p [%c{1}] - %m%n" />
         </layout>
@@ -34,5 +34,6 @@
     <root>
         <priority value="debug"/>
         <appender-ref ref="console"/>
+        <appender-ref ref="LabelAppender"/>
     </root>
 </log4j:configuration>
