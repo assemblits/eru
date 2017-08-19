@@ -7,6 +7,10 @@
 <h4 align="center">An open linux SCADA based on JavaFX.</h4>
 
 [![Join the chat at https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby](https://badges.gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby.svg)](https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+| dev    |  master   |
+|:------:|:---------:|
+| [![Build Status](https://travis-ci.org/eru-scada/eru.svg?branch=develop)](https://travis-ci.org/eru-scada/eru)  | [![Build Status](https://travis-ci.org/eru-scada/eru.svg?branch=master)](https://travis-ci.org/eru-scada/eru)  |
   
 ## Resume
   This app has 4 main things:
