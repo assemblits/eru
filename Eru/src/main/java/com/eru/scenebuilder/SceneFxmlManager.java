@@ -12,12 +12,7 @@ import static java.lang.String.format;
 @Log4j
 public class SceneFxmlManager {
 
-    private static final String NEW_FXML_FILE_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "\n" +
-            "<?import javafx.scene.layout.BorderPane?>\n" +
-            "\n" +
-            "<fx:root fx:id=\"root\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"250.0\" prefWidth=\"500.0\" styleClass=\"-fx-base: #444444;\" type=\"javafx.scene.layout.BorderPane\" xmlns=\"http://javafx.com/javafx/8.0.112\" xmlns:fx=\"http://javafx.com/fxml/1\">\n" +
-            "</fx:root>\n";
+    private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 
     public File createSceneFxmlFile(EruScene scene) {
@@ -30,9 +25,13 @@ public class SceneFxmlManager {
         if (!fxmlFile.exists()) {
             log.debug(format("Creating fxml file for scene '%s'", scene.getName()));
             try {
-                if (fxmlFilesDirectory.mkdirs() && fxmlFile.createNewFile()) {
+                if (!fxmlFilesDirectory.exists()) {
+                    fxmlFilesDirectory.mkdirs();
+                }
+                if (!fxmlFile.exists() && fxmlFile.createNewFile()) {
                     updateContent(fxmlFile, NEW_FXML_FILE_CONTENT);
                 }
+
             } catch (IOException e) {
                 log.error(format("Error creating fxml file for scene '%s'", scene.getName()));
                 throw new FxmlFileWriteException(e);

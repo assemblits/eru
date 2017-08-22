@@ -1,5 +1,6 @@
 package com.eru.scene.control;
 
+import com.eru.scene.control.annotation.TagValue;
 import com.eru.scene.control.skin.GeneratorSkin;
 import javafx.beans.property.*;
 import javafx.scene.control.Skin;
@@ -33,9 +34,13 @@ public class Generator extends Dynamo {
     private DoubleProperty              currentPhaseALL;
     private DoubleProperty              currentPhaseBLL;
     private DoubleProperty              currentPhaseCLL;
+    @TagValue("frequency")
     private DoubleProperty              frequency;
+    @TagValue("engineRuntime")
     private IntegerProperty             engineRuntime;
+    @TagValue("temperature")
     private DoubleProperty              temperature;
+    @TagValue("frequency")
     private DoubleProperty              oilPressure;
     private BooleanProperty             alarmed;
     private StringProperty              easyGenStatus;

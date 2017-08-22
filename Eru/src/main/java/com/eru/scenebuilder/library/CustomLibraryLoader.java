@@ -1,10 +1,11 @@
 package com.eru.scenebuilder.library;
 
+import com.eru.util.SceneBuilderUtil;
 import com.oracle.javafx.scenebuilder.kit.library.Library;
 import com.oracle.javafx.scenebuilder.kit.library.util.JarExplorer;
 import javafx.scene.Node;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 import lombok.extern.log4j.Log4j;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 
 import static java.io.File.separator;
 import static java.lang.String.format;
-
 
 @Log4j
 public class CustomLibraryLoader {
@@ -77,7 +77,7 @@ public class CustomLibraryLoader {
                 if (file.isDirectory()) {
                     directories.push(file);
                 } else {
-                    String className = makeClassName(file.getName());
+                    String className = SceneBuilderUtil.getSimpleNameFromClassName(file.getName());
                     if (className != null) {
                         String canonicalPackage = getCanonicalPackage(className, file);
                         try {
@@ -128,21 +128,7 @@ public class CustomLibraryLoader {
         return CustomLibraryLoader.class.getClassLoader().loadClass(className);
     }
 
-    private String makeClassName(String entryName) {
-        String result;
-        if (!entryName.endsWith(".class")) {
-            result = null;
-        } else if (entryName.contains("$")) {
-            result = null;
-        } else {
-            int endIndex = entryName.length() - 6;
-            result = entryName.substring(0, endIndex).replace(separator, ".");
-        }
-
-        return result;
-    }
-
-    @Data
+    @Value
     @AllArgsConstructor
     private static class ClassInfo {
         String name;
