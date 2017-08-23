@@ -1,6 +1,5 @@
 package com.eru.scene.control;
 
-import com.eru.scene.control.annotation.TagValue;
 import com.eru.scene.control.skin.DisplaySkin;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -41,7 +40,6 @@ public class Display extends Control {
 
     /* ********** Fields ********** */
     private ObjectProperty<Paint>               textFill;
-    @TagValue("currentText")
     private StringProperty                      currentText;
     private ObjectProperty<DisplayFont>         valueFont;
     private BooleanProperty                     alarmed;

@@ -77,11 +77,11 @@ public class CustomLibraryLoader {
                 if (file.isDirectory()) {
                     directories.push(file);
                 } else {
-                    String className = SceneBuilderUtil.getSimpleNameFromClassName(file.getName());
-                    if (className != null) {
-                        String canonicalPackage = getCanonicalPackage(className, file);
+                    Optional<String> className = SceneBuilderUtil.makeClassNameFromCompiledClassName(file.getName());
+                    if (className.isPresent()) {
+                        String canonicalPackage = getCanonicalPackage(className.get(), file);
                         try {
-                            classesInfo.add(new ClassInfo(className, canonicalPackage, file, loadClass(canonicalPackage)));
+                            classesInfo.add(new ClassInfo(className.get(), canonicalPackage, file, loadClass(canonicalPackage)));
                         } catch (ClassNotFoundException ignore) {
 
                         }
@@ -105,9 +105,7 @@ public class CustomLibraryLoader {
     private boolean isJFXComponentClass(ClassInfo dynamoClassFile) {
         if (!dynamoClassFile.getFile().isDirectory()) {
             String className = dynamoClassFile.getName();
-            if (className != null && !className.startsWith("java.") && !className.startsWith("javax.")
-                    && !className.startsWith("javafx.") && !className.startsWith("com.oracle.javafx.scenebuilder.")
-                    && !className.startsWith("com.javafx.")) {
+            if (className != null && SceneBuilderUtil.isNotJavaFxComponent(className)) {
                 try {
                     Class<?> jfxComponentClass = loadClass(dynamoClassFile.getAbsolutePackage());
                     if (!Modifier.isAbstract(jfxComponentClass.getModifiers()) && Node.class.isAssignableFrom(jfxComponentClass)) {

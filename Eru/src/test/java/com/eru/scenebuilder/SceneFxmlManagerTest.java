@@ -11,12 +11,7 @@ import java.nio.file.Files;
 
 public class SceneFxmlManagerTest {
 
-    private static final String NEW_FXML_FILE_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "\n" +
-            "<?import javafx.scene.layout.BorderPane?>\n" +
-            "\n" +
-            "<fx:root fx:id=\"root\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"250.0\" prefWidth=\"500.0\" styleClass=\"-fx-base: #444444;\" type=\"javafx.scene.layout.BorderPane\" xmlns=\"http://javafx.com/javafx/8.0.112\" xmlns:fx=\"http://javafx.com/fxml/1\">\n" +
-            "</fx:root>\n";
+    private static final String NEW_FXML_FILE_CONTENT = "";
 
     private SceneFxmlManager sceneFxmlManager;
 

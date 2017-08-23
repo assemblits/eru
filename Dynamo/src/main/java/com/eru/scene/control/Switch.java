@@ -1,6 +1,5 @@
 package com.eru.scene.control;
 
-import com.eru.scene.control.annotation.TagValue;
 import javafx.beans.property.*;
 import javafx.scene.control.Skin;
 import com.eru.scene.control.skin.SwitchSkin;
@@ -16,7 +15,6 @@ public class Switch extends Dynamo {
     private BooleanProperty     animated;
     private IntegerProperty     animationDuration;
     private StringProperty      name;
-    @TagValue("energized")
     private BooleanProperty     energized;
     private BooleanProperty     closed;
 
