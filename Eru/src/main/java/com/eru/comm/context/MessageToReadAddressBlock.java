@@ -45,16 +45,16 @@ public class MessageToReadAddressBlock implements Message {
         int totalSlotsToRead = block.getAddressesTotal();
 
         switch (dataModel) {
-            case BOOLEAN_READ:
-                request = new ReadInputDiscretesRequest(firstSlotToRead, totalSlotsToRead);
-                break;
-            case BOOLEAN_WRITE:
+            case COIL:
                 request = new ReadCoilsRequest(firstSlotToRead, totalSlotsToRead);
                 break;
-            case ANALOG_READ:
+            case DISCRETE_INPUT:
+                request = new ReadInputDiscretesRequest(firstSlotToRead, totalSlotsToRead);
+                break;
+            case INPUT_REGISTER:
                 request = new ReadInputRegistersRequest(firstSlotToRead, totalSlotsToRead);
                 break;
-            case ANALOG_WRITE:
+            case HOLDING_REGISTER:
                 request = new ReadMultipleRegistersRequest(firstSlotToRead, totalSlotsToRead);
                 break;
         }
@@ -113,16 +113,16 @@ public class MessageToReadAddressBlock implements Message {
     private int extractSlotValueFromResponse(ModbusResponse response, int slot){
         final int slotInResponse = slot - firstSlotToRead;
         switch (dataModel) {
-            case BOOLEAN_READ:
+            case COIL:
                 final ReadInputDiscretesResponse booleanWriteResponse = (ReadInputDiscretesResponse) response;
                 return booleanWriteResponse.getDiscretes().getBit(slotInResponse) ? 1: 0;
-            case BOOLEAN_WRITE:
+            case DISCRETE_INPUT:
                 final ReadCoilsResponse booleanReadResponse = (ReadCoilsResponse) response;
                 return booleanReadResponse.getCoilStatus(slotInResponse) ? 1 : 0;
-            case ANALOG_READ:
+            case INPUT_REGISTER:
                 final ReadInputRegistersResponse analogReadResponse = (ReadInputRegistersResponse) response;
                 return analogReadResponse.getRegisterValue(slotInResponse);
-            case ANALOG_WRITE:
+            case HOLDING_REGISTER:
                 final ReadMultipleRegistersResponse analogWriteResponse = (ReadMultipleRegistersResponse) response;
                 return analogWriteResponse.getRegisterValue(slotInResponse);
             default:

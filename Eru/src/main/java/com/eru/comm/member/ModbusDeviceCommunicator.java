@@ -28,10 +28,10 @@ public class ModbusDeviceCommunicator extends Communicator {
         final List<AddressesBlock> addressesBlocksToRead = new ArrayList<>();
 
         // Extract All AddressBlocks from device in order
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.BOOLEAN_READ));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.BOOLEAN_WRITE));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.ANALOG_READ));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.ANALOG_WRITE));
+        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.COIL));
+        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.DISCRETE_INPUT));
+        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.INPUT_REGISTER));
+        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.HOLDING_REGISTER));
 
         // Create messages to read all that blocks
         for(AddressesBlock addressesBlock : addressesBlocksToRead){

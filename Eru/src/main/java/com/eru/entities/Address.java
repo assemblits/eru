@@ -15,7 +15,9 @@ import static com.eru.entities.Address.DataModel.*;
 public class Address implements Comparable<Address> {
 
     /* ********** Static Fields ********** */
-    public enum DataModel {BOOLEAN_READ, BOOLEAN_WRITE, ANALOG_READ, ANALOG_WRITE}
+    public enum DataModel {
+        COIL, DISCRETE_INPUT, INPUT_REGISTER, HOLDING_REGISTER
+    }
 
     /* ********** Fields ********** */
     private final IntegerProperty                   id;
@@ -32,7 +34,7 @@ public class Address implements Comparable<Address> {
         this.id            = new SimpleIntegerProperty(0);
         this.owner         = new SimpleObjectProperty<>();
         this.networkID     = new SimpleIntegerProperty(0);
-        this.dataModel     = new SimpleObjectProperty<>(ANALOG_WRITE);
+        this.dataModel     = new SimpleObjectProperty<>(HOLDING_REGISTER);
         this.currentValue  = new SimpleIntegerProperty();
         this.connected     = new SimpleBooleanProperty();
         this.status        = new SimpleStringProperty();
@@ -145,17 +147,17 @@ public class Address implements Comparable<Address> {
     public String toString() {
         String dataModelStands = "";
         switch (this.getDataModel()) {
-            case BOOLEAN_READ:
-                dataModelStands = "BR";
+            case COIL:
+                dataModelStands = "COIL";
                 break;
-            case BOOLEAN_WRITE:
-                dataModelStands = "BW";
+            case DISCRETE_INPUT:
+                dataModelStands = "DI";
                 break;
-            case ANALOG_READ:
-                dataModelStands = "AR";
+            case INPUT_REGISTER:
+                dataModelStands = "IR";
                 break;
-            case ANALOG_WRITE:
-                dataModelStands = "AW";
+            case HOLDING_REGISTER:
+                dataModelStands = "HR";
                 break;
         }
 
