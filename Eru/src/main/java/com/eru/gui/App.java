@@ -87,12 +87,8 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
             //TODO Display dialog with error
             log.error("Error on Eru Scene Builder init", e);
         }
-        Rectangle2D bounds = getScreenBounds();
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
 
-        stage.setScene(new Scene(eruSceneBuilder, bounds.getWidth(), bounds.getHeight()));
-        stage.show();
+        this.skeleton.getCenterPane().getChildren().add(eruSceneBuilder);
     }
 
     @Override

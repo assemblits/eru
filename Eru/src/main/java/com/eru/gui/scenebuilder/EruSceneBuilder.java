@@ -18,6 +18,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.extern.log4j.Log4j;
 
@@ -45,6 +46,12 @@ public class EruSceneBuilder extends VBox {
         this.eruMainScreenStarter = eruMainScreenStarter;
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
         componentsIdsGenerator = new ComponentsIdsGenerator();
+
+        // Always fit the Anchor Pane parent
+        AnchorPane.setTopAnchor(this, 0.0);
+        AnchorPane.setBottomAnchor(this, 0.0);
+        AnchorPane.setRightAnchor(this, 0.0);
+        AnchorPane.setLeftAnchor(this, 0.0);
     }
 
     public void init() {
