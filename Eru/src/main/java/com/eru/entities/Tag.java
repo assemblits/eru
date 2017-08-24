@@ -36,9 +36,6 @@ public class Tag {
     /* ********** Dynamic Fields ********** */
     private IntegerProperty id;
     private StringProperty groupName;
-    private String fxId;
-    private Display display;
-    private String componentFieldName;
 
     /* ********** Constructors ********** */
     public Tag() {
@@ -62,7 +59,6 @@ public class Tag {
         this.alarmed = new SimpleBooleanProperty(this, "alarmed", false);
         this.historicalEnabled = new SimpleBooleanProperty(this, "historicalEnabled", false);
         this.groupName = new SimpleStringProperty(this, "groupName", "");
-        fxId = "";
     }
 
     /* ********** Properties ********** */
@@ -346,34 +342,6 @@ public class Tag {
 
     public StringProperty groupNameProperty() {
         return groupName;
-    }
-
-    @Column(name = "component_id")
-    public String getFxId() {
-        return fxId;
-    }
-
-    public void setFxId(String fxId) {
-        this.fxId = fxId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "display_id")
-    public Display getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(Display display) {
-        this.display = display;
-    }
-
-    @Column(name = "component_field_name")
-    public String getComponentFieldName() {
-        return componentFieldName;
-    }
-
-    public void setComponentFieldName(String componentFieldName) {
-        this.componentFieldName = componentFieldName;
     }
 
     /* ********** Getters and Setters ********** */

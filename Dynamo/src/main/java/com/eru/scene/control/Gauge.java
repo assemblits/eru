@@ -1,6 +1,5 @@
 package com.eru.scene.control;
 
-import com.eru.scene.control.annotation.TagValue;
 import com.eru.scene.control.skin.GaugeSkin;
 import com.eru.util.Section;
 import javafx.beans.property.*;
@@ -41,12 +40,9 @@ public class Gauge extends Dynamo{
     public static final int DEFAULT_ANIMATION_DURATION = 300;
 
     /* ********** Fields ********** */
-    @TagValue("currentValue")
     private final DoubleProperty                          currentValue;
     private final ObjectProperty<DisplayFont>             valueFont;
-    @TagValue("minValue")
     private final DoubleProperty                          minValue;
-    @TagValue("maxValue")
     private final DoubleProperty                          maxValue;
     private final DoubleProperty                          threshold;
     private final DoubleProperty                          minMeasuredValue;

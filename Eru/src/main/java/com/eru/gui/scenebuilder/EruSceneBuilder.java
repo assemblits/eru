@@ -1,12 +1,10 @@
 package com.eru.gui.scenebuilder;
 
-import com.eru.entities.Display;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.EruMainScreenStarter;
-import com.eru.scenebuilder.ComponentIdGenerator;
+import com.eru.scenebuilder.ComponentsIdsGenerator;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneFxmlManager;
-import com.eru.scenebuilder.TagGenerator;
 import com.eru.scenebuilder.library.CustomLibraryLoader;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.content.ContentPanelController;
@@ -38,7 +36,7 @@ public class EruSceneBuilder extends VBox {
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
     private EruMainScreenStarter eruMainScreenStarter;
-    private TagGenerator tagGenerator;
+    private ComponentsIdsGenerator componentsIdsGenerator;
 
     public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager, EruMainScreenStarter eruMainScreenStarter) {
         log.debug(format("Instantiating Eru Scene Builder for %s", scene.getName()));
@@ -46,7 +44,7 @@ public class EruSceneBuilder extends VBox {
         this.sceneFxmlManager = sceneFxmlManager;
         this.eruMainScreenStarter = eruMainScreenStarter;
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
-        tagGenerator = new TagGenerator(new ComponentIdGenerator());
+        componentsIdsGenerator = new ComponentsIdsGenerator();
     }
 
     public void init() {
@@ -99,7 +97,7 @@ public class EruSceneBuilder extends VBox {
 
     private void startChangeListener() {
         updateListener = (observable, oldValue, newValue) -> {
-            tagGenerator.generateTags(editorController.getFxomDocument(), (Display) scene);
+            componentsIdsGenerator.generateComponentsId(editorController.getFxomDocument());
             sceneFxmlManager.updateContent(sceneFxmlFile, editorController.getFxmlText());
         };
 

@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -26,7 +24,4 @@ public class Display implements EruScene {
     private String groupName;
     @Column(name = "deleted")
     private boolean deleted;
-    @OneToMany(mappedBy = "display")
-    @ElementCollection(targetClass = Tag.class)
-    private Set<Tag> tags;
 }

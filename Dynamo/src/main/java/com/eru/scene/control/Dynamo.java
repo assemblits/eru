@@ -1,6 +1,5 @@
 package com.eru.scene.control;
 
-import com.eru.scene.control.annotation.TagValue;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.DoubleProperty;
@@ -16,7 +15,6 @@ public class Dynamo extends Control implements Highlighted {
     private FadeTransition fadeTransitionForHighlight;
     private Boolean        highlighted;
     private DynamoMenu     dynamoMenu;
-    @TagValue("currentValue")
     private final DoubleProperty currentValue;
 
     public Dynamo() {
