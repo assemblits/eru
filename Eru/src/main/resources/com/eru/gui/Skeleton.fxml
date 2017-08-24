@@ -24,7 +24,7 @@
         <URL value="@Skeleton.css" />
     </stylesheets>
     <StackPane fx:id="topPane" VBox.vgrow="NEVER"/>
-    <SplitPane dividerPositions="0.2" focusTraversable="true" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.3" focusTraversable="true" VBox.vgrow="ALWAYS">
         <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="180">
             <AnchorPane fx:id="leftPane"/>
         </ScrollPane>

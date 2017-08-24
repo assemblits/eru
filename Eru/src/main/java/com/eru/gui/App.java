@@ -11,9 +11,7 @@ import com.eru.scenebuilder.SceneBuilderStarter;
 import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.JpaUtil;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
 
@@ -80,7 +78,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     public void startSceneBuilder(EruScene scene) {
         log.info(String.format("Starting scene builder for '%s'", scene.getName()));
         SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
-        EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(scene, sceneFxmlManager, this);
+        EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(scene, sceneFxmlManager);
         try {
             eruSceneBuilder.init();
         } catch (FxmlFileReadException e) {
@@ -117,17 +115,9 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         this.skeleton.getTopPane().getChildren().add(menubar);
         this.skeleton.getLeftPane().getChildren().add(projectTree);
 
-        Rectangle2D bounds = getScreenBounds();
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
-
-        stage.setScene(new Scene(skeleton, bounds.getWidth(), bounds.getHeight()));
+        stage.setScene(new Scene(skeleton));
+        stage.setMaximized(true);
         stage.show();
-    }
-
-    private Rectangle2D getScreenBounds() {
-        Screen screen = Screen.getPrimary();
-        return screen.getVisualBounds();
     }
 
     @Override

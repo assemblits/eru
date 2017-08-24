@@ -14,9 +14,6 @@ import com.oracle.javafx.scenebuilder.kit.editor.panel.library.LibraryPanelContr
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -39,11 +36,10 @@ public class EruSceneBuilder extends VBox {
     private EruMainScreenStarter eruMainScreenStarter;
     private ComponentsIdsGenerator componentsIdsGenerator;
 
-    public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager, EruMainScreenStarter eruMainScreenStarter) {
+    public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager) {
         log.debug(format("Instantiating Eru Scene Builder for %s", scene.getName()));
         this.scene = scene;
         this.sceneFxmlManager = sceneFxmlManager;
-        this.eruMainScreenStarter = eruMainScreenStarter;
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
         componentsIdsGenerator = new ComponentsIdsGenerator();
 
@@ -52,6 +48,7 @@ public class EruSceneBuilder extends VBox {
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setRightAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
+        this.setFillWidth(true);
     }
 
     public void init() {
@@ -64,15 +61,6 @@ public class EruSceneBuilder extends VBox {
         LibraryPanelController palette = new LibraryPanelController(editorController);
 
         setFxmlTextAndLocation();
-
-        MenuBar menuBar = new MenuBar();
-        menuBar.prefWidthProperty().bind(this.widthProperty());
-        Menu fileMenu = new Menu("File");
-        MenuItem goBackToEruMenu = new MenuItem("Go back to Eru");
-        fileMenu.getItems().addAll(goBackToEruMenu);
-        menuBar.getMenus().addAll(fileMenu);
-
-        goBackToEruMenu.setOnAction(event -> eruMainScreenStarter.startEruScreen());
 
         SplitPane leftPane = new SplitPane();
         leftPane.setOrientation(Orientation.VERTICAL);
@@ -87,7 +75,7 @@ public class EruSceneBuilder extends VBox {
         content.setDividerPositions(0.21036789297658862, 0.7963210702341137);
         SplitPane.setResizableWithParent(content, Boolean.TRUE);
 
-        this.getChildren().addAll(menuBar, content);
+        this.getChildren().add(content);
         startChangeListener();
     }
 
