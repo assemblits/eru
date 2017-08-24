@@ -31,6 +31,6 @@ public class Display extends com.eru.scene.control.Display {
     }
     public void setCurrentValueTagID(String currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
-        TagLinksManager.DYNAMO_ID_TAG_ID.put(getId(), currentValueTagID);
+        TagLinksManager.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
     }
 }

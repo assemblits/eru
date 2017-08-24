@@ -6,10 +6,7 @@ import com.eru.gui.EruController;
 import com.eru.gui.erget.Display;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import lombok.extern.log4j.Log4j;
 
 import javax.script.ScriptException;
@@ -22,7 +19,7 @@ import java.util.*;
 @Log4j
 public class TagLinksManager {
 
-    public static final Map<String, String> DYNAMO_ID_TAG_ID = new HashMap<>();
+    public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
 
     private final EruController eruController;
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
@@ -104,7 +101,7 @@ public class TagLinksManager {
     }
 
     public void linkToScada(Node anchorPane) {
-        for (String displayID : DYNAMO_ID_TAG_ID.keySet()){
+        for (String displayID : DYNAMO_ID_VS_TAG_ID.keySet()){
             Display extractedDisplay = (com.eru.gui.erget.Display) anchorPane.lookup("#".concat(displayID));
             eruController.getProject().getTags()
                     .stream()
