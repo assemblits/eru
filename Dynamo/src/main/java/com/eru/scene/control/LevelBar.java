@@ -23,6 +23,7 @@ public class LevelBar extends Dynamo {
 
     /* ********** Fields ********** */
     private ObjectProperty<Paint>   textFill;
+
     private DoubleProperty          currentValue;
     private DoubleProperty          minValue;
     private DoubleProperty          maxValue;

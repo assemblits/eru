@@ -27,6 +27,7 @@ public class TagTable extends EruTable<Tag> {
         this.eruController = eruController;
 
         // **** Columns **** //
+        TableColumn<Tag, Integer> idColumn               = new TableColumn<>("ID");
         TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
         TableColumn<Tag, String> nameColumn              = new TableColumn<>("Name");
         TableColumn<Tag, Tag> linkedTagColumn            = new TableColumn<>("Source");
@@ -46,6 +47,9 @@ public class TagTable extends EruTable<Tag> {
         TableColumn<Tag, Boolean> alarmedColumn          = new TableColumn<>("Alarmed");
         TableColumn<Tag, Boolean> historianColumn        = new TableColumn<>("Historian");
         TableColumn<Tag, Timestamp> timestampTableColumn = new TableColumn<>("Timestamp");
+
+        idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
+        idColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -184,6 +188,7 @@ public class TagTable extends EruTable<Tag> {
 
         // **** General **** //
         this.getColumns().addAll(
+                idColumn,
                 groupColumn,
                 nameColumn,
                 linkedTagColumn,

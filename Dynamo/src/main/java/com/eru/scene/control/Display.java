@@ -40,6 +40,7 @@ public class Display extends Control {
 
     /* ********** Fields ********** */
     private ObjectProperty<Paint>               textFill;
+    private StringProperty                      currentValueTagID;
     private StringProperty                      currentText;
     private ObjectProperty<DisplayFont>         valueFont;
     private BooleanProperty                     alarmed;
@@ -61,6 +62,7 @@ public class Display extends Control {
     public Display() {
         getStyleClass().add("display");
         textFill            = new SimpleObjectProperty<>(this, "textFill", DEFAULT_TEXT_FILL);
+        currentValueTagID   = new SimpleStringProperty(this, "currentValueTagID","");
         currentText         = new SimpleStringProperty(this, "currentTex", "VALUE");
         valueFont           = new SimpleObjectProperty<>(this, "valueFont", DEFAULT_DISPLAY_FONT);
         alarmed             = new SimpleBooleanProperty(this, "alarmed", false);
@@ -83,6 +85,16 @@ public class Display extends Control {
     }
     public void setTextFill(Paint textFill) {
         this.textFill.set(textFill);
+    }
+
+    public String getCurrentValueTagID() {
+        return currentValueTagID.get();
+    }
+    public StringProperty currentValueTagIDProperty() {
+        return currentValueTagID;
+    }
+    public void setCurrentValueTagID(String currentValueTagID) {
+        this.currentValueTagID.set(currentValueTagID);
     }
 
     public String getCurrentText() {
