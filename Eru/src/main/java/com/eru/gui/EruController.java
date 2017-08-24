@@ -1,6 +1,5 @@
 package com.eru.gui;
 
-import com.eru.entities.Display;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.about.About;
@@ -11,9 +10,9 @@ import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.TagLinksManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.extern.log4j.Log4j;
@@ -56,27 +55,24 @@ public class EruController {
     public void performScadaAction(ScadaAction scadaAction){
         switch (scadaAction) {
             case LAUNCH:
-                // Brain storm *****************************************************/
                 try {
-                    final Display mainDisplay = this.project.get().getDisplays().get(0);
+                    final com.eru.entities.Display mainDisplay = this.project.get().getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
                     final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
-                    final File sceneFxmlFile;
-                    sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
-                    URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
-                    AnchorPane anchorPane = FXMLLoader.load(fxmlFileUrl);
-                    final Scene SCADA_SCENE = new Scene(anchorPane);
+                    final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
+                    final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+                    final Parent mainNode = FXMLLoader.load(fxmlFileUrl);
+                    final Scene SCADA_SCENE = new Scene(mainNode);
                     final Stage SCADA_STAGE = new Stage();
                     SCADA_STAGE.setScene(SCADA_SCENE);
                     SCADA_STAGE.show();
+                    tagLinksManager.linkToConnections();
+                    tagLinksManager.linkToScada(mainNode);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
-                // *****************************************************************/
-
-                tagLinksManager.link();
                 break;
             case STOP:
-                tagLinksManager.unlink();
+                tagLinksManager.unlinkFromConnections();
                 break;
         }
     }

@@ -3,10 +3,13 @@ package com.eru.util;
 import com.eru.exception.TagLinkException;
 import com.eru.entities.Tag;
 import com.eru.gui.EruController;
+import com.eru.gui.erget.Display;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import lombok.extern.log4j.Log4j;
 
 import javax.script.ScriptException;
@@ -19,6 +22,8 @@ import java.util.*;
 @Log4j
 public class TagLinksManager {
 
+    public static final Map<String, String> DYNAMO_ID_TAG_ID = new HashMap<>();
+
     private final EruController eruController;
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
 
@@ -26,16 +31,16 @@ public class TagLinksManager {
         this.eruController = eruController;
     }
 
-    public void link() {
+    public void linkToConnections() {
         this.eruController.getProject().getTags().forEach(this::installUpdaterLink);
     }
 
-    public void unlink() {
+    public void unlinkFromConnections() {
         this.eruController.getProject().getTags().forEach(this::removeUpdaterLink);
     }
 
     private void installUpdaterLink(Tag tag) {
-        log.debug("Installing updater link to " + tag.getName());
+        log.debug("Installing updater linkToConnections to " + tag.getName());
         TagLink link;
         switch (tag.getType()) {
             case INPUT:
@@ -88,7 +93,7 @@ public class TagLinksManager {
 
     private void removeUpdaterLink(Tag tag) {
         for(TagLink link : TAG_LINK_MAP.get(tag)){
-            log.debug("Removing updater link to " + tag.getName() + " with link " + link);
+            log.debug("Removing updater linkToConnections to " + tag.getName() + " with linkToConnections " + link);
             if(link instanceof AddressChangeLink){
                 tag.getLinkedAddress().timestampProperty().removeListener(link);
             } else {
@@ -96,6 +101,16 @@ public class TagLinksManager {
             }
         }
         TAG_LINK_MAP.remove(tag);
+    }
+
+    public void linkToScada(Node anchorPane) {
+        for (String displayID : DYNAMO_ID_TAG_ID.keySet()){
+            Display extractedDisplay = (com.eru.gui.erget.Display) anchorPane.lookup("#".concat(displayID));
+            eruController.getProject().getTags()
+                    .stream()
+                    .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
+                    .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
+        }
     }
 }
 
