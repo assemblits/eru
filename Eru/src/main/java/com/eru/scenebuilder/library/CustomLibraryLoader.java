@@ -32,7 +32,6 @@ public class CustomLibraryLoader {
     private Library library;
 
     private CustomLibraryLoader() {
-
     }
 
     public static CustomLibraryLoader getInstance() {
@@ -83,7 +82,6 @@ public class CustomLibraryLoader {
                         try {
                             classesInfo.add(new ClassInfo(className.get(), canonicalPackage, file, loadClass(canonicalPackage)));
                         } catch (ClassNotFoundException ignore) {
-
                         }
                     }
                 }

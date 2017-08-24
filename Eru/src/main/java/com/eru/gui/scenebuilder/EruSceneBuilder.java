@@ -1,7 +1,6 @@
 package com.eru.gui.scenebuilder;
 
 import com.eru.exception.FxmlFileReadException;
-import com.eru.gui.EruMainScreenStarter;
 import com.eru.scenebuilder.ComponentsIdsGenerator;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneFxmlManager;
@@ -33,7 +32,6 @@ public class EruSceneBuilder extends VBox {
     private final File sceneFxmlFile;
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
-    private EruMainScreenStarter eruMainScreenStarter;
     private ComponentsIdsGenerator componentsIdsGenerator;
 
     public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager) {
@@ -72,7 +70,7 @@ public class EruSceneBuilder extends VBox {
 
         SplitPane content = new SplitPane();
         content.getItems().addAll(leftPane, canvas.getPanelRoot(), propertyTable.getPanelRoot());
-        content.setDividerPositions(0.21036789297658862, 0.7963210702341137);
+        content.setDividerPositions(0.2, 0.8);
         SplitPane.setResizableWithParent(content, Boolean.TRUE);
 
         this.getChildren().add(content);

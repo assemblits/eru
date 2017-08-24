@@ -160,15 +160,12 @@ public class Gauge extends Dynamo{
     }
 
     // ******************** Setters and Getters *******************************************
-    @Override
     public double getCurrentValue() {
         return currentValue.get();
     }
-    @Override
     public DoubleProperty currentValueProperty() {
         return currentValue;
     }
-    @Override
     public void setCurrentValue(double currentValue) {
         this.currentValue.set(currentValue);
     }
