@@ -12,6 +12,7 @@ import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.JpaUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
 
@@ -82,8 +83,10 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         try {
             eruSceneBuilder.init();
         } catch (FxmlFileReadException e) {
-            //TODO Display dialog with error
-            log.error("Error on Eru Scene Builder init", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error on Eru Scene Builder initialization.");
+            alert.setContentText(e.getLocalizedMessage());
+            log.error(e);
         }
 
         this.skeleton.getCenterPane().getChildren().add(eruSceneBuilder);
