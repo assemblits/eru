@@ -20,8 +20,7 @@ import static java.lang.String.format;
 public class CustomLibraryLoader {
 
     private static final List<String> DYNAMO_CLASSES_LOCATION = new ArrayList<String>() {{
-        add("%scom%seru%sscene%scontrol".replaceAll("%s", separator));
-        add("%seu%shansolo".replaceAll("%s", separator));
+        add("%scom%seru%sgui%serget".replaceAll("%s", separator));
     }};
     private static final List<String> TOP_PACKAGES = new ArrayList<String>() {{
         add("main");

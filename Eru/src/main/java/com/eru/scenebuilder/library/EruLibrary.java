@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EruLibrary extends Library {
-    private static final String CUSTOM_SECTION = "Eru Components";
+    private static final String CUSTOM_SECTION = "Eru Controls";
 
     public EruLibrary(Collection<EruComponent> customComponents) {
         classLoaderProperty.set(EruLibrary.class.getClassLoader());

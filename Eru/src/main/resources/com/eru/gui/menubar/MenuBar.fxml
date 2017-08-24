@@ -15,12 +15,7 @@
         <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences" />
     </Menu>
     <Menu mnemonicParsing="false" text="Scada">
-      <Menu mnemonicParsing="false" text="Tags">
-        <items>
-              <MenuItem mnemonicParsing="false" onAction="#activateTagsMenuItemSelected" text="Activate" />
-          <MenuItem mnemonicParsing="false" onAction="#deactivateTagsMenuItemSelected" text="Deactivate" />
-        </items>
-      </Menu>
+        <MenuItem mnemonicParsing="false" onAction="#launchScadaMenuItemSelected" text="Launch" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
         <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />

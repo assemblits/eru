@@ -1,18 +1,25 @@
 package com.eru.gui;
 
+import com.eru.entities.Display;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.about.About;
 import com.eru.gui.preferences.EruPreferences;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
+import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.TagLinksManager;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.extern.log4j.Log4j;
+
+import java.io.File;
+import java.net.URL;
 
 /**
  * Created by mtrujillo on 8/23/17.
@@ -21,8 +28,8 @@ import lombok.extern.log4j.Log4j;
 public class EruController {
 
     public enum ScadaAction {
-        ACTIVATE_TAGS,
-        DEACTIVATE_TAGS
+        LAUNCH,
+        STOP
     }
 
     public enum DBAction {
@@ -41,19 +48,35 @@ public class EruController {
     private final SimpleObjectProperty<Project> project
             = new SimpleObjectProperty<>();
 
-    private final TagLinksManager tagLinksManager = new TagLinksManager();
+    private final TagLinksManager tagLinksManager = new TagLinksManager(this);
 
     public EruController() {
     }
 
     public void performScadaAction(ScadaAction scadaAction){
         switch (scadaAction) {
-            case ACTIVATE_TAGS:
-                tagLinksManager.setTags(project.get().getTags());
-                project.get().getTags().forEach(tagLinksManager::installLink);
+            case LAUNCH:
+                // Brain storm *****************************************************/
+                try {
+                    final Display mainDisplay = this.project.get().getDisplays().get(0);
+                    final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
+                    final File sceneFxmlFile;
+                    sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
+                    URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+                    AnchorPane anchorPane = FXMLLoader.load(fxmlFileUrl);
+                    final Scene SCADA_SCENE = new Scene(anchorPane);
+                    final Stage SCADA_STAGE = new Stage();
+                    SCADA_STAGE.setScene(SCADA_SCENE);
+                    SCADA_STAGE.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // *****************************************************************/
+
+                tagLinksManager.link();
                 break;
-            case DEACTIVATE_TAGS:
-                project.get().getTags().forEach(tagLinksManager::removeLink);
+            case STOP:
+                tagLinksManager.unlink();
                 break;
         }
     }

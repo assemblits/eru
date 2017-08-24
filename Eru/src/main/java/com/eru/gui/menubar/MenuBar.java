@@ -47,11 +47,8 @@ public class MenuBar extends javafx.scene.control.MenuBar {
         this.eruController.performPopupAction(EruController.PopupAction.SHOW_PREFERENCES);
     }
 
-    @FXML private void activateTagsMenuItemSelected(ActionEvent event){
-        this.eruController.performScadaAction(EruController.ScadaAction.ACTIVATE_TAGS);
+    @FXML private void launchScadaMenuItemSelected(ActionEvent event){
+        this.eruController.performScadaAction(EruController.ScadaAction.LAUNCH);
     }
 
-    @FXML private void deactivateTagsMenuItemSelected(ActionEvent event){
-        this.eruController.performScadaAction(EruController.ScadaAction.DEACTIVATE_TAGS);
-    }
 }
