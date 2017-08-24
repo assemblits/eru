@@ -23,6 +23,7 @@ public class LevelBar extends Dynamo {
 
     /* ********** Fields ********** */
     private ObjectProperty<Paint>   textFill;
+    private DoubleProperty          currentValue;
     private DoubleProperty          minValue;
     private DoubleProperty          maxValue;
     private IntegerProperty         decimals;
@@ -38,6 +39,7 @@ public class LevelBar extends Dynamo {
     public LevelBar() {
         getStyleClass().add("level-bar");
         textFill            = new SimpleObjectProperty<>(this, "textFill", DEFAULT_TEXT_FILL);
+        currentValue        = new SimpleDoubleProperty(this, "currentValue", 0.0);
         minValue            = new SimpleDoubleProperty(this, "minValue", 0.0);
         maxValue            = new SimpleDoubleProperty(this, "maxValue", 0.0);
         decimals            = new SimpleIntegerProperty(this, "decimals", DEFAULT_DECIMALS);
@@ -50,7 +52,6 @@ public class LevelBar extends Dynamo {
     }
 
     /* ********** Setters and Getters ********** */
-
     public Paint getTextFill() {
         return textFill.get();
     }
@@ -59,6 +60,16 @@ public class LevelBar extends Dynamo {
     }
     public void setTextFill(Paint textFill) {
         this.textFill.set(textFill);
+    }
+
+    public double getCurrentValue() {
+        return currentValue.get();
+    }
+    public DoubleProperty currentValueProperty() {
+        return currentValue;
+    }
+    public void setCurrentValue(double currentValue) {
+        this.currentValue.set(currentValue);
     }
 
     public double getMinValue() {

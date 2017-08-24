@@ -16,7 +16,7 @@ import java.util.List;
 public class Gauge extends Dynamo{
 
     /* ********** Static Fields ********** */
-    public static enum DisplayFont {
+    public enum DisplayFont {
         STANDARD("Open Sans"),
         LCD("Digital-7"),
         DIGITAL("Digital Readout Upright"),
@@ -32,7 +32,7 @@ public class Gauge extends Dynamo{
             return name;
         }
     }
-    public static enum TickLabelOrientation {
+    public enum TickLabelOrientation {
         ORTHOGONAL,
         HORIZONTAL,
         TANGENT
