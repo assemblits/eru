@@ -1,9 +1,9 @@
 package com.eru.gui.tables;
 
-import com.eru.entities.Connection;
 import com.eru.entities.Address;
+import com.eru.entities.Connection;
 import com.eru.entities.Device;
-import com.eru.gui.App;
+import com.eru.gui.EruController;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
@@ -21,15 +21,15 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * Created by mtrujillo on 8/8/17.
  */
 public class DeviceTable extends EruTable<Device> {
 
-    public DeviceTable(List<Device> items) {
-        super(items);
+    public DeviceTable(EruController eruController) {
+        super(eruController.getProject().getDevices());
+        this.eruController = eruController;
 
         // **** Columns **** //
         TableColumn<Device, String> groupColumn             = new TableColumn<>("Group");
@@ -120,7 +120,7 @@ public class DeviceTable extends EruTable<Device> {
         connectionColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
         connectionColumn.setCellValueFactory(param -> param.getValue().connectionProperty());
         connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
-                FXCollections.observableList(App.getSingleton().getProject().getConnections())
+                FXCollections.observableList(this.eruController.getProject().getConnections())
         ));
 
         // **** General **** //

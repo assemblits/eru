@@ -44,8 +44,8 @@ public class TagGenerator {
                         .map(field -> createTag(display, fxmlObject, simpleClassName, thisComponentCount, field))
                         .collect(Collectors.toList());
 
-                App.getSingleton().getProject().getTags().addAll(tags);
-                App.getSingleton().execute(App.Action.SAVE_TO_DB);
+//                App.getSingleton().getProject().getTags().addAll(tags);
+//                App.getSingleton().execute(App.Action.SAVE_TO_DB);
 
             }
             fxmlObjects.addAll(fxmlObject.getChildObjects());

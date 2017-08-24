@@ -3,6 +3,7 @@ package com.eru.gui.tables;
 import com.eru.entities.Connection;
 import com.eru.entities.SerialConnection;
 import com.eru.entities.TcpConnection;
+import com.eru.gui.EruController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +25,9 @@ import java.util.Optional;
  */
 public class ConnectionsTable extends EruTable<Connection> {
 
-    public ConnectionsTable(List<Connection> items) {
-        super(items);
+    public ConnectionsTable(EruController eruController) {
+        super(eruController.getProject().getConnections());
+        this.eruController = eruController;
 
         // **** Columns **** //
         TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");

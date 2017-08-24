@@ -2,8 +2,8 @@ package com.eru.gui.tables;
 
 import com.eru.entities.Address;
 import com.eru.entities.Device;
-import com.eru.gui.App;
 import com.eru.entities.Tag;
+import com.eru.gui.EruController;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -16,15 +16,15 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * Created by mtrujillo on 8/9/17.
  */
 public class TagTable extends EruTable<Tag> {
 
-    public TagTable(List<Tag> items) {
-        super(items);
+    public TagTable(EruController eruController) {
+        super(eruController.getProject().getTags());
+        this.eruController = eruController;
 
         // **** Columns **** //
         TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
@@ -112,7 +112,7 @@ public class TagTable extends EruTable<Tag> {
 
         addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.12));
         addressColumn.setCellValueFactory(param -> param.getValue().linkedAddressProperty());
-        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable());
+        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable(eruController));
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -252,6 +252,12 @@ public class TagTable extends EruTable<Tag> {
 
 class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
 
+    private EruController eruController;
+
+    public AddressesTableCellForTagTable(EruController eruController) {
+        this.eruController = eruController;
+    }
+
     @Override
     protected void updateItem(Address item, boolean empty) {
         super.updateItem(item, empty);
@@ -267,7 +273,7 @@ class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
             ListView<Device> deviceListView = new ListView<>();
             ListView<Address> addressListView = new ListView<>();
 
-            deviceListView.getItems().addAll(App.getSingleton().getProject().getDevices());
+            deviceListView.getItems().addAll(this.eruController.getProject().getDevices());
             deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue!= null) addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
             });

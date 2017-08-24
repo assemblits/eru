@@ -27,12 +27,12 @@
 
     <logger name="PSVLogger">
         <level value="debug"/>
-        <appender-ref ref="LoggerConsole"/>
+        <appender-ref ref="console"/>
         <appender-ref ref="LoggerLive"/>
     </logger>
 
     <root>
-        <priority value="debug"/>
+        <priority value="info"/>
         <appender-ref ref="console"/>
         <appender-ref ref="LabelAppender"/>
     </root>

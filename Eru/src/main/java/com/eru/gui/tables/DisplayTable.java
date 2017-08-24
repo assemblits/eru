@@ -1,6 +1,7 @@
 package com.eru.gui.tables;
 
 import com.eru.entities.Display;
+import com.eru.gui.EruController;
 import com.eru.scenebuilder.SceneBuilderStarter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,8 +19,9 @@ import java.util.Optional;
 @Log4j
 public class DisplayTable extends EruTable<Display> {
 
-    public DisplayTable(List<Display> displays, SceneBuilderStarter sceneBuilderStarter) {
-        super(displays);
+    public DisplayTable(EruController eruController, SceneBuilderStarter sceneBuilderStarter) {
+        super(eruController.getProject().getDisplays());
+
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> userNameColumn = new TableColumn<>("Name");
 

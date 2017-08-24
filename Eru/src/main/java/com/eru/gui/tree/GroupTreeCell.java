@@ -72,7 +72,6 @@ public class GroupTreeCell extends TreeCell<TreeElementsGroup> {
     @Override
     public void startEdit() {
         super.startEdit();
-        App.getSingleton().showGroup(getItem());
     }
 
     private MenuItem getMenuItemToAdd(TreeElementsGroup.Type type){

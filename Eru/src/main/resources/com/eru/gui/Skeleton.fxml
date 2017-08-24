@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,41 +18,15 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.StackPane?>
 <fx:root prefHeight="500.0" prefWidth="500.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@Skeleton.css" />
     </stylesheets>
-    <MenuBar VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#addMenuItemSelected" text="Add" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" onAction="#deleteMenuItemSelected" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#selectAllMenuItemSelected" text="Select All" />
-            <MenuItem mnemonicParsing="false" onAction="#unselectAllMenuItemSelected" text="Unselect All" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Run">
-            <MenuItem mnemonicParsing="false" onAction="#connectMenuItemSelected" text="Connect" />
-            <MenuItem mnemonicParsing="false" onAction="#disconnectMenuItemSelected" text="Disconnect" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />
-        </Menu>
-    </MenuBar>
+    <StackPane fx:id="topPane" VBox.vgrow="NEVER"/>
     <SplitPane dividerPositions="0.2" focusTraversable="true" VBox.vgrow="ALWAYS">
         <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="180">
-            <AnchorPane>
-                <ProjectTree fx:id="projectTree" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            </AnchorPane>
+            <AnchorPane fx:id="leftPane"/>
         </ScrollPane>
         <AnchorPane>
             <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -65,7 +38,7 @@
                     </padding>
                 </HBox>
                 <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-                    <AnchorPane fx:id="mainPane" />
+                    <AnchorPane fx:id="centerPane" />
                 </ScrollPane>
             </VBox>
         </AnchorPane>
@@ -83,9 +56,6 @@
             </textFill>
         </Label>
         <Pane HBox.hgrow="ALWAYS" />
-        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
-        <Label fx:id="usedDatabaseLabel" font="$x3" text="Database:" textFill="$x4" HBox.hgrow="NEVER" />
-        <Label fx:id="usedDatabaseText" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
         <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
         <Label fx:id="rightStatusLabel" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
     </HBox>

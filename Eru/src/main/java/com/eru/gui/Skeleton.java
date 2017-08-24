@@ -1,12 +1,11 @@
 package com.eru.gui;
 
-import com.eru.gui.tree.ProjectTree;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -17,13 +16,13 @@ import java.io.IOException;
 public class Skeleton extends VBox {
 
     @FXML
-    private AnchorPane mainPane;
+    private StackPane topPane;
     @FXML
-    private ProjectTree projectTree;
+    private AnchorPane leftPane;
+    @FXML
+    private AnchorPane centerPane;
     @FXML
     private TextField searchTextField;
-    @FXML
-    private Label usedDatabaseText;
     @FXML
     private Label leftStatusLabel;
     @FXML
@@ -40,69 +39,20 @@ public class Skeleton extends VBox {
         }
     }
 
-    @FXML
-    private void saveMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.SAVE_TO_DB);
+    public StackPane getTopPane() {
+        return topPane;
     }
 
-    @FXML
-    private void exitMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.EXIT_APP);
+    public AnchorPane getLeftPane() {
+        return leftPane;
     }
 
-    @FXML
-    private void addMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.ADD_TABLE_ITEM);
-    }
-
-    @FXML
-    private void deleteMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.DELETE_TABLE_ITEM);
-    }
-
-    @FXML
-    private void selectAllMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.SELECT_ALL_TABLE_ITEMS);
-    }
-
-    @FXML
-    private void unselectAllMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.UNSELECT_ALL_TABLE_ITEMS);
-    }
-
-    @FXML
-    private void aboutMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.SHOW_ABOUT);
-    }
-
-    @FXML
-    private void connectMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.CONNECT);
-    }
-
-    @FXML
-    private void disconnectMenuItemSelected(ActionEvent event) {
-        App.getSingleton().execute(App.Action.DISCONNECT);
-    }
-
-    @FXML private void preferencesMenuItemSelected(ActionEvent event){
-        App.getSingleton().execute(App.Action.SHOW_PREFERENCES);
-    }
-
-    public AnchorPane getMainPane() {
-        return mainPane;
-    }
-
-    public ProjectTree getProjectTree() {
-        return projectTree;
+    public AnchorPane getCenterPane() {
+        return centerPane;
     }
 
     public TextField getSearchTextField() {
         return searchTextField;
-    }
-
-    public Label getUsedDatabaseText() {
-        return usedDatabaseText;
     }
 
     public Label getLeftStatusLabel() {

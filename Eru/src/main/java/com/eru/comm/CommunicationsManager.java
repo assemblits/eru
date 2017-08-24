@@ -2,8 +2,11 @@ package com.eru.comm;
 
 import com.eru.comm.member.Communicator;
 import com.eru.comm.member.Director;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
+import com.eru.comm.member.ModbusDeviceCommunicator;
+import com.eru.entities.Connection;
+import com.eru.gui.EruController;
+import com.eru.util.EngineScriptUtil;
+import com.eru.util.TagUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,52 +16,56 @@ import java.util.List;
  */
 public class CommunicationsManager {
 
-    // Singleton
-    private static final CommunicationsManager instance = new CommunicationsManager();
-    public static CommunicationsManager getInstance(){
-        return instance;
+    private final EruController      eruController;
+    private final Director           director      = new Director();
+    private final List<Communicator> communicators = new ArrayList<>();
+
+    public CommunicationsManager(EruController eruController) {
+        this.eruController  = eruController;
     }
 
-    // Director
-    private Director            director;
-    private List<Communicator>  communicators;
-    private boolean             running;
-
-    private CommunicationsManager() {
-        this.director       = new Director();
-        this.communicators  = new ArrayList<>();
+    public void connect(){
+        this.eruController.getProject().getConnections()
+                .stream()
+                .filter(Connection::isEnabled)
+                .forEach(Connection::connect);
+        this.eruController.getProject().getDevices()
+                .stream()
+                .filter(device -> device.getConnection() != null && device.getConnection().isConnected())
+                .forEach(device -> {
+                    device.setStatus("CONNECTED");
+                    communicators.add(new ModbusDeviceCommunicator(device));
+                });
+        this.eruController.getProject().getTags().forEach(tag -> EngineScriptUtil.getInstance().loadTag(tag));
+        this.eruController.getProject().getTags().forEach(tag -> TagUtil.installLink(tag, this.eruController.getProject().getTags()));
+        startDirector();
     }
 
-    public void start() throws Exception {
-        // Update communicator
-        director.removeAllCommunicators();
+    public void disconnect(){
+        this.eruController.getProject().getConnections()
+                .stream()
+                .filter(Connection::isConnected)
+                .forEach(Connection::discconnect);
+        this.eruController.getProject().getDevices()
+                .stream()
+                .filter(device -> device.getConnection() != null && device.getConnection().isConnected())
+                .forEach(device -> device.setStatus("DISCONNECTED"));
+        stopDirector();
+    }
+
+    private void startDirector() {
+        director.getCommunicators().clear();
         for (Communicator c : communicators) {
-            director.addCommunicator(c);
+            director.getCommunicators().add(c);
         }
 
-        // Create a new Thread to this communication
         Thread directorThread = new Thread(director, "COMMUNICATIONS_MANAGER");
         directorThread.setDaemon(true);
         directorThread.start();
-
-        running = directorThread.isAlive();
     }
 
-    public void stop() throws InterruptedException {
-        running = director.stop();
+    private void stopDirector() {
+        director.stop();
     }
 
-    public List<Communicator> getCommunicators() {
-        return communicators;
-    }
-    public void setCommunicators(List<Communicator> communicators) {
-        this.communicators = communicators;
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
 }

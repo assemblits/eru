@@ -18,10 +18,10 @@ public class ProjectSaverService extends Service<Project> {
         return new Task<Project>() {
             @Override
             protected Project call() throws Exception {
-                updateMessage("Getting database Connection");
+                updateMessage("Getting database Connection...");
                 updateProgress(33, 100);
                 EntityManager entityManager = JpaUtil.getGlobalEntityManager();
-                updateMessage("Saving");
+                updateMessage("Collecting objects...");
                 updateProgress(76, 100);
                 Dao<Project> dao = new Dao<>(entityManager, Project.class);
                 log.debug("Saving " + getProject());

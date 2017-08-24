@@ -29,27 +29,21 @@ public class Director implements Runnable {
         loopRunning = false;
     }
 
-    public synchronized void addCommunicator(Communicator participant) throws InterruptedException {
-        communicators.put(participant);
-    }
-
-    public boolean stop(){
+    public void stop(){
         log.info("Stopping communicators updating...");
         while (loopRunning){
             try {
                 directorShallRun = false;
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
-                return loopRunning = true;
+                log.error("Stopping Director failure.", e);
             }
         }
         if (!loopRunning) log.info("Communicators updating stopped");
         else log.info("Communicators updating cannot be stopped");
-        return loopRunning;
     }
 
-    public void removeAllCommunicators() {
-        communicators.clear();
+    public LinkedBlockingQueue<Communicator> getCommunicators() {
+        return communicators;
     }
 }

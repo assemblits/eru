@@ -1,17 +1,37 @@
 package com.eru.gui.tree;
 
 import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.EruController;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Created by mtrujillo on 7/27/17.
  */
 public class ProjectTree extends TreeView<TreeElementsGroup> {
 
-    public ProjectTree() {
+    private final EruController eruController;
+
+    public ProjectTree(EruController eruController) {
+        this.eruController = eruController;
         this.setEditable(true);
-        this.setCellFactory(c -> new GroupTreeCell());
+        this.setCellFactory(c -> {
+            GroupTreeCell groupTreeCell = new GroupTreeCell();
+            groupTreeCell.selectedProperty().addListener((observable, wasSelected, isSelected) ->{
+                if(isSelected) eruController.setSelectedTreeItemProperty(groupTreeCell.getItem());
+            });
+            return groupTreeCell;
+        });
+
+        setContent(this.eruController.getProject().getGroup());
+        this.eruController.projectProperty().addListener((observable, oldValue, newValue) -> setContent(newValue.getGroup()));
+
+        // Always fit the Anchor Pane parent
+        AnchorPane.setTopAnchor(this, 0.0);
+        AnchorPane.setBottomAnchor(this, 0.0);
+        AnchorPane.setRightAnchor(this, 0.0);
+        AnchorPane.setLeftAnchor(this, 0.0);
     }
 
     public void setContent(TreeElementsGroup treeElementsGroup){

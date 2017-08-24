@@ -1,32 +1,18 @@
 package com.eru.gui;
 
-import com.eru.comm.CommunicationsManager;
-import com.eru.comm.member.ModbusDeviceCommunicator;
-import com.eru.dolphin.ServerStartupService;
-import com.eru.entities.Connection;
-import com.eru.entities.Device;
-import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
-import com.eru.gui.about.About;
-import com.eru.gui.preferences.EruPreferences;
+import com.eru.gui.menubar.MenuBar;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
-import com.eru.logger.LabelAppender;
-import com.eru.persistence.ProjectLoaderService;
-import com.eru.persistence.ProjectSaverService;
+import com.eru.gui.tree.ProjectTree;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneBuilderStarter;
 import com.eru.scenebuilder.SceneFxmlManager;
-import com.eru.util.DatabaseIdentifier;
-import com.eru.util.EngineScriptUtil;
 import com.eru.util.JpaUtil;
-import com.eru.util.TagUtil;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
@@ -40,183 +26,54 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
 
     public static final String NAME = "eru";
 
-    private static App singleton;
-    private Project project;
     private Stage stage;
+    private EruController eruController;
     private Skeleton skeleton;
-    private EruTable table;
-    private Scene eruScene;
+    private MenuBar menubar;
+    private ProjectTree projectTree;
+    private ConnectionsTable connectionsTable;
+    private DeviceTable deviceTable;
+    private TagTable tagTable;
+    private UserTable userTable;
+    private DisplayTable displayTable;
 
     public App() {
-        App.singleton = this;
+        this.eruController = new EruController();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public static App getSingleton() {
-        return singleton;
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        skeleton = new Skeleton();
-        LabelAppender.setObservableString(this.skeleton.getLeftStatusLabel().textProperty());
-        launchPreloader();
+        this.eruController.performDBAction(EruController.DBAction.LOAD);
+        this.eruController.projectProperty().addListener(observable -> startEruScreen());
+        this.eruController.selectedTreeItemProperty().addListener((observable, oldValue, newValue) -> updateSkeletonCenterPane(newValue));
     }
 
-    private void launchPreloader() {
-        Preloader preloaderWindow = new Preloader();
-        ProjectLoaderService pls = new ProjectLoaderService();
-        preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
-        preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
-        pls.setOnSucceeded(event -> {
-            DatabaseIdentifier databaseIdentifier = new DatabaseIdentifier(JpaUtil.getGlobalEntityManager());
-            project = (Project) event.getSource().getValue();
-            skeleton.getUsedDatabaseText().setText(databaseIdentifier.getDatabaseProductName());
-            eruScene = new Scene(skeleton, 900, 500);
-            execute(Action.UPDATE_PROJECT_IN_GUI);
-            displayMainEruScreen();
-        });
-        pls.start();
-        stage.setScene(new Scene(preloaderWindow, 500, 250));
-        stage.show();
-    }
-
-    private void displayMainEruScreen() {
-        stage.setScene(eruScene);
-        stage.show();
-    }
-
-    public void showGroup(TreeElementsGroup selectedTreeElementsGroup) {
-        skeleton.getMainPane().getChildren().clear();
+    private void updateSkeletonCenterPane(TreeElementsGroup selectedTreeElementsGroup) {
+        this.skeleton.getCenterPane().getChildren().clear();
         switch (selectedTreeElementsGroup.getType()) {
             case ROOT:
                 break;
             case CONNECTION:
-                this.table = new ConnectionsTable(this.project.getConnections());
+                this.skeleton.getCenterPane().getChildren().add(this.connectionsTable);
                 break;
             case DEVICE:
-                this.table = new DeviceTable(this.project.getDevices());
+                this.skeleton.getCenterPane().getChildren().add(this.deviceTable);
                 break;
             case TAG:
-                this.table = new TagTable(this.project.getTags());
+                this.skeleton.getCenterPane().getChildren().add(this.tagTable);
                 break;
             case USER:
-                this.table = new UserTable(this.project.getUsers());
+                this.skeleton.getCenterPane().getChildren().add(this.userTable);
                 break;
             case DISPLAY:
-                this.table = new DisplayTable(this.project.getDisplays(), this);
+                this.skeleton.getCenterPane().getChildren().add(this.displayTable);
                 break;
         }
-        if (this.table != null) {
-            AnchorPane.setTopAnchor(table, 0.0);
-            AnchorPane.setBottomAnchor(table, 0.0);
-            AnchorPane.setRightAnchor(table, 0.0);
-            AnchorPane.setLeftAnchor(table, 0.0);
-            skeleton.getMainPane().getChildren().add(table);
-            table.setTextToFilter(skeleton.getSearchTextField().textProperty());
-            skeleton.getSearchTextField().setText(selectedTreeElementsGroup.getName());
-        }
-    }
-
-    public void execute(Action action) {
-        try {
-            switch (action) {
-                case SHOW_GROUP:
-                    break;
-                case SHOW_PREFERENCES:
-                    Stage preferencesStage = new Stage();
-                    preferencesStage.setScene(new Scene(new EruPreferences()));
-                    preferencesStage.showAndWait();
-                    break;
-                case DELETE_GROUP:
-                    break;
-                case SAVE_TO_DB:
-                    ProjectSaverService pss = new ProjectSaverService();
-                    pss.setProject(this.project);
-                    pss.setOnSucceeded(event -> {
-                        project = (Project) event.getSource().getValue();
-                        execute(Action.UPDATE_PROJECT_IN_GUI);
-                    });
-                    pss.start();
-                    break;
-                case UPDATE_PROJECT_IN_GUI:
-                    skeleton.getProjectTree().setContent(project.getGroup());
-                    System.out.println(this.project.getDevices());
-                    break;
-                case ADD_TABLE_ITEM:
-                    if (this.table != null) this.table.addNewItem();
-                    break;
-                case DELETE_TABLE_ITEM:
-                    if (this.table != null) this.table.deleteSelectedItems();
-                    break;
-                case SELECT_ALL_TABLE_ITEMS:
-                    System.out.println(this.project.getUsers());
-                    if (this.table != null) this.table.selectAllItems();
-                    break;
-                case UNSELECT_ALL_TABLE_ITEMS:
-                    if (this.table != null) this.table.unselectAllItems();
-                    break;
-                case CONNECT:
-                    try {
-                        // START STUFF
-                        this.project.getConnections().forEach(Connection::connect);
-                        this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
-                        this.project.getTags().forEach(tag -> EngineScriptUtil.getInstance().loadTag(tag));
-                        this.project.getTags().forEach(tag -> TagUtil.installLink(tag, project.getTags()));
-
-                        // COMMUNICATION MANAGER
-                        this.project.getDevices().stream().
-                                filter(Device::getEnabled).
-                                filter(device -> device.getConnection() != null).
-                                forEach(enabledAndConnectedDevice -> CommunicationsManager.getInstance().getCommunicators().add(new ModbusDeviceCommunicator(enabledAndConnectedDevice)));
-                        CommunicationsManager.getInstance().start();
-                        this.skeleton.getRightStatusLabel().setText("Connected");
-                    } catch (Exception e) {
-                        log.error(e);
-                    }
-                    break;
-                case DISCONNECT:
-                    try {
-                        // COMMUNICATION MANAGER
-                        CommunicationsManager.getInstance().stop();
-
-                        // STOP STUFF
-                        this.project.getTags().forEach(TagUtil::removeLink);
-                        this.project.getConnections().forEach(Connection::discconnect);
-                        this.project.getDevices().forEach(device -> device.setStatus(device.getConnection().isConnected() ? "CONNECTED" : "NOT CONNECTED"));
-                        this.skeleton.getRightStatusLabel().setText("Disconnected");
-                    } catch (InterruptedException e) {
-                        log.error(e);
-                    }
-                    break;
-                case SHOW_ABOUT:
-                    Stage aboutStage = new Stage();
-                    aboutStage.setScene(new Scene(new About()));
-                    aboutStage.showAndWait();
-                    break;
-                case EXIT_APP:
-                    this.project.getConnections().forEach(Connection::discconnect);
-                    if (CommunicationsManager.getInstance().isRunning()) {
-                        CommunicationsManager.getInstance().stop();
-                    }
-                    if (ServerStartupService.getInstance().isRunning()) {
-                        ServerStartupService.getInstance().stop();
-                    }
-                    JpaUtil.getGlobalEntityManager().close();
-                    Platform.exit();
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Project getProject() {
-        return project;
     }
 
     @Override
@@ -238,29 +95,49 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         stage.show();
     }
 
+    @Override
+    public void startEruScreen() {
+        log.info(String.format("Starting eru screen"));
+
+        this.skeleton = new Skeleton();
+        this.menubar = new MenuBar(eruController);
+        this.projectTree = new ProjectTree(eruController);
+
+        this.connectionsTable = new ConnectionsTable(eruController);
+        this.connectionsTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
+
+        this.deviceTable = new DeviceTable(eruController);
+        this.deviceTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
+
+        this.tagTable = new TagTable(eruController);
+        this.tagTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
+
+        this.userTable = new UserTable(eruController);
+        this.userTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
+
+        this.displayTable = new DisplayTable(eruController, this);
+        this.displayTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
+
+        this.skeleton.getTopPane().getChildren().add(menubar);
+        this.skeleton.getLeftPane().getChildren().add(projectTree);
+
+        Rectangle2D bounds = getScreenBounds();
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+
+        stage.setScene(new Scene(skeleton, bounds.getWidth(), bounds.getHeight()));
+        stage.show();
+    }
+
     private Rectangle2D getScreenBounds() {
         Screen screen = Screen.getPrimary();
         return screen.getVisualBounds();
     }
 
     @Override
-    public void startEruScreen() {
-        displayMainEruScreen();
-    }
-
-    public enum Action {
-        SHOW_GROUP,
-        SHOW_PREFERENCES,
-        DELETE_GROUP,
-        SAVE_TO_DB,
-        UPDATE_PROJECT_IN_GUI,
-        ADD_TABLE_ITEM,
-        DELETE_TABLE_ITEM,
-        SELECT_ALL_TABLE_ITEMS,
-        UNSELECT_ALL_TABLE_ITEMS,
-        CONNECT,
-        DISCONNECT,
-        SHOW_ABOUT,
-        EXIT_APP
+    public void stop() throws Exception {
+        super.stop();
+        this.eruController.performConnectionAction(EruController.ConnectionAction.DISCONNECT);
+        JpaUtil.getGlobalEntityManager().close();
     }
 }

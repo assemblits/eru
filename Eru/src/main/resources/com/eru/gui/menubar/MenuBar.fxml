@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<fx:root type="javafx.scene.control.MenuBar" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" >
+    <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+        <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Run">
+        <MenuItem mnemonicParsing="false" onAction="#connectMenuItemSelected" text="Connect" />
+        <MenuItem mnemonicParsing="false" onAction="#disconnectMenuItemSelected" text="Disconnect" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+        <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />
+    </Menu>
+</fx:root>
