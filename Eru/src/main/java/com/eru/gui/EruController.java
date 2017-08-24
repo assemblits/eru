@@ -6,6 +6,7 @@ import com.eru.gui.about.About;
 import com.eru.gui.preferences.EruPreferences;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
+import com.eru.util.TagLinksManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,9 +20,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class EruController {
 
-    public enum ConnectionAction {
-        CONNECT,
-        DISCONNECT
+    public enum ScadaAction {
+        ACTIVATE_TAGS,
+        DEACTIVATE_TAGS
     }
 
     public enum DBAction {
@@ -40,7 +41,21 @@ public class EruController {
     private final SimpleObjectProperty<Project> project
             = new SimpleObjectProperty<>();
 
+    private final TagLinksManager tagLinksManager = new TagLinksManager();
+
     public EruController() {
+    }
+
+    public void performScadaAction(ScadaAction scadaAction){
+        switch (scadaAction) {
+            case ACTIVATE_TAGS:
+                tagLinksManager.setTags(project.get().getTags());
+                project.get().getTags().forEach(tagLinksManager::installLink);
+                break;
+            case DEACTIVATE_TAGS:
+                project.get().getTags().forEach(tagLinksManager::removeLink);
+                break;
+        }
     }
 
     public void performPopupAction(PopupAction popupAction){

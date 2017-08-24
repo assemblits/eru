@@ -19,38 +19,14 @@ import java.util.*;
 @Log4j
 public class TagLinksManager {
 
-    private ObservableList<Tag> tags = FXCollections.observableArrayList();
+    private List<Tag> tags = FXCollections.observableArrayList();
+    private Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
 
     public TagLinksManager() {
     }
 
-    public void observe(ObservableList<Tag> tags){
-        this.tags = tags;
-
-        tags.forEach(this::installLink);
-
-        tags.addListener((ListChangeListener<Tag>) c -> {
-            while (c.next()) {
-                if (c.wasPermutated()) {
-                    // Nothing
-                } else if (c.wasUpdated()) {
-                    // Nothing
-                } else {
-                    for (Tag remTag : c.getRemoved()) {
-                        removeLink(remTag);
-                    }
-                    for (Tag addTag : c.getAddedSubList()) {
-                        EngineScriptUtil.getInstance().loadTag(addTag);
-                        installLink(addTag);
-                    }
-                }
-            }
-        });
-    }
-
-    private Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
-
-    private void installLink(Tag tag) {
+    public void installLink(Tag tag) {
+        log.debug("Installing link to " + tag.getName());
         TagLink link;
         switch (tag.getType()) {
             case INPUT:
@@ -93,25 +69,32 @@ public class TagLinksManager {
         }
     }
 
-    private void removeLink(Tag tag) {
-        if (TAG_LINK_MAP.keySet().contains(tag)){
-            for(TagLink link : TAG_LINK_MAP.get(tag)){
-                if(link instanceof AddressChangeLink){
-                    tag.getLinkedAddress().timestampProperty().removeListener(link);
-                } else {
-                    tag.timestampProperty().removeListener(link);
-                }
-            }
-        }
-        TAG_LINK_MAP.clear();
-    }
-
     private void registerLink(Tag tag, TagLink link){
         if(TAG_LINK_MAP.keySet().contains(tag)){
             TAG_LINK_MAP.get(tag).add(link);
         } else {
             TAG_LINK_MAP.put(tag, new ArrayList<>(Arrays.asList(link)));
         }
+    }
+
+    public void removeLink(Tag tag) {
+        for(TagLink link : TAG_LINK_MAP.get(tag)){
+            log.debug("Removing link to " + tag.getName() + " with link " + link);
+            if(link instanceof AddressChangeLink){
+                tag.getLinkedAddress().timestampProperty().removeListener(link);
+            } else {
+                tag.timestampProperty().removeListener(link);
+            }
+        }
+        TAG_LINK_MAP.remove(tag);
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
 }
