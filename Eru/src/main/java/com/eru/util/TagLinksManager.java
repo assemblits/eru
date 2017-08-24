@@ -4,6 +4,9 @@ import com.eru.exception.TagLinkException;
 import com.eru.entities.Tag;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import lombok.extern.log4j.Log4j;
 
 import javax.script.ScriptException;
@@ -14,11 +17,40 @@ import java.util.*;
  * Created by mtrujillo on 9/9/2015.
  */
 @Log4j
-public class TagUtil {
+public class TagLinksManager {
 
-    public static final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
+    private ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-    public static void installLink(final Tag tag, final List<Tag> allTags) {
+    public TagLinksManager() {
+    }
+
+    public void observe(ObservableList<Tag> tags){
+        this.tags = tags;
+
+        tags.forEach(this::installLink);
+
+        tags.addListener((ListChangeListener<Tag>) c -> {
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    // Nothing
+                } else if (c.wasUpdated()) {
+                    // Nothing
+                } else {
+                    for (Tag remTag : c.getRemoved()) {
+                        removeLink(remTag);
+                    }
+                    for (Tag addTag : c.getAddedSubList()) {
+                        EngineScriptUtil.getInstance().loadTag(addTag);
+                        installLink(addTag);
+                    }
+                }
+            }
+        });
+    }
+
+    private Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
+
+    private void installLink(Tag tag) {
         TagLink link;
         switch (tag.getType()) {
             case INPUT:
@@ -32,7 +64,7 @@ public class TagUtil {
                 registerLink(tag.getLinkedTag(), link);
                 break;
             case MATH:
-                allTags.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {            // Find tags in the script
+                tags.stream().filter(t -> tag.getScript().contains(t.getName())).forEach(tagInScript -> {            // Find tags in the script
                     TagLink scriptUpdating = new TagCurrentValueLinkForScriptUpdating(tagInScript, tag);
                     tagInScript.valueProperty().addListener(scriptUpdating);
                     registerLink(tagInScript, scriptUpdating);
@@ -61,7 +93,7 @@ public class TagUtil {
         }
     }
 
-    public static void removeLink(Tag tag) {
+    private void removeLink(Tag tag) {
         if (TAG_LINK_MAP.keySet().contains(tag)){
             for(TagLink link : TAG_LINK_MAP.get(tag)){
                 if(link instanceof AddressChangeLink){
@@ -74,7 +106,7 @@ public class TagUtil {
         TAG_LINK_MAP.clear();
     }
 
-    private static void registerLink(Tag tag, TagLink link){
+    private void registerLink(Tag tag, TagLink link){
         if(TAG_LINK_MAP.keySet().contains(tag)){
             TAG_LINK_MAP.get(tag).add(link);
         } else {

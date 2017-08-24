@@ -37,7 +37,7 @@ public abstract class Connection {
     public abstract void connect();
 
     @Transient
-    public abstract void discconnect();
+    public abstract void disconnect();
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {

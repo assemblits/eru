@@ -137,7 +137,6 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     @Override
     public void stop() throws Exception {
         super.stop();
-        this.eruController.performConnectionAction(EruController.ConnectionAction.DISCONNECT);
         JpaUtil.getGlobalEntityManager().close();
     }
 }

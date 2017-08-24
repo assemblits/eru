@@ -15,6 +15,7 @@ public class Director implements Runnable {
 
     @Override
     public void run() {
+        log.info("Starting communicators updating...");
         directorShallRun = !communicators.isEmpty();
         loopRunning      = true;
         while(directorShallRun){
@@ -23,7 +24,7 @@ public class Director implements Runnable {
                 headParticipant.communicate();
                 if (headParticipant.isSelfRepeatable()) communicators.put(headParticipant);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.debug(e.getMessage());
             }
         }
         loopRunning = false;
@@ -34,9 +35,9 @@ public class Director implements Runnable {
         while (loopRunning){
             try {
                 directorShallRun = false;
-                Thread.sleep(50);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
-                log.error("Stopping Director failure.", e);
+                log.debug("Stopping Director failure.", e);
             }
         }
         if (!loopRunning) log.info("Communicators updating stopped");

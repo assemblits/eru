@@ -49,7 +49,7 @@ public class TcpConnection extends Connection{
     }
 
     @Override
-    public void discconnect() {
+    public void disconnect() {
         if(coreConnection != null && coreConnection.isConnected()){
             log.info("Disconnecting TCP connection:\t" + getName());
             coreConnection.close();

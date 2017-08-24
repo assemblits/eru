@@ -1,6 +1,5 @@
 package com.eru.gui;
 
-import com.eru.comm.CommunicationsManager;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.about.About;
@@ -25,13 +24,6 @@ public class EruController {
         DISCONNECT
     }
 
-    public enum TableAction {
-        ADD,
-        DELETE,
-        SELECT_ALL,
-        UNSELECT_ALL,
-    }
-
     public enum DBAction {
         LOAD,
         SAVE
@@ -42,8 +34,6 @@ public class EruController {
         SHOW_ABOUT
     }
 
-    private final CommunicationsManager communicationsManager = new CommunicationsManager(this);
-
     private final SimpleObjectProperty<TreeElementsGroup> selectedTreeItemProperty
             = new SimpleObjectProperty<>(null);
 
@@ -51,30 +41,6 @@ public class EruController {
             = new SimpleObjectProperty<>();
 
     public EruController() {
-    }
-
-    public void performConnectionAction(ConnectionAction action){
-        switch (action) {
-            case CONNECT:
-                communicationsManager.connect();
-                break;
-            case DISCONNECT:
-                communicationsManager.disconnect();
-                break;
-        }
-    }
-
-    public void performTableAction(TableAction tableAction){
-        switch (tableAction) {
-            case ADD:
-                break;
-            case DELETE:
-                break;
-            case SELECT_ALL:
-                break;
-            case UNSELECT_ALL:
-                break;
-        }
     }
 
     public void performPopupAction(PopupAction popupAction){

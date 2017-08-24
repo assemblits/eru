@@ -11,10 +11,6 @@
     <Menu mnemonicParsing="false" text="Edit">
         <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences" />
     </Menu>
-    <Menu mnemonicParsing="false" text="Run">
-        <MenuItem mnemonicParsing="false" onAction="#connectMenuItemSelected" text="Connect" />
-        <MenuItem mnemonicParsing="false" onAction="#disconnectMenuItemSelected" text="Disconnect" />
-    </Menu>
     <Menu mnemonicParsing="false" text="Help">
         <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />
     </Menu>

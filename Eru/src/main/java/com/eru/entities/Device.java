@@ -1,5 +1,6 @@
 package com.eru.entities;
 
+import com.eru.comm.CommunicationsManager;
 import com.eru.comm.device.AddressesBlock;
 import javafx.beans.property.*;
 
@@ -38,6 +39,20 @@ public class  Device {
         zeroBased           = new SimpleBooleanProperty(true);
         connection          = new SimpleObjectProperty<>();
         groupName           = new SimpleStringProperty("");
+    }
+
+    /* ********** Private Methods ********** */
+    private void listenIfConnect(ObjectProperty<Connection> connection) {
+        if(connection.get() == null) return;
+        connection.get().connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+            if (isConnected){
+                CommunicationsManager.getInstance().startUpdating(this);
+                setStatus("Connected");
+            } else {
+                CommunicationsManager.getInstance().stopUpdating(this);
+                setStatus("Disconnected");
+            }
+        });
     }
 
     /* ********** Setters and Getters ********** */
@@ -156,6 +171,7 @@ public class  Device {
     }
     public void setConnection(Connection connection) {
         this.connection.set(connection);
+        listenIfConnect(this.connection);
     }
 
     @Column(name = "group_name")

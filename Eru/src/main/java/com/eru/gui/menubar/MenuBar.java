@@ -43,16 +43,6 @@ public class MenuBar extends javafx.scene.control.MenuBar {
         this.eruController.performPopupAction(EruController.PopupAction.SHOW_ABOUT);
     }
 
-    @FXML
-    private void connectMenuItemSelected(ActionEvent event) {
-        this.eruController.performConnectionAction(EruController.ConnectionAction.CONNECT);
-    }
-
-    @FXML
-    private void disconnectMenuItemSelected(ActionEvent event) {
-        this.eruController.performConnectionAction(EruController.ConnectionAction.DISCONNECT);
-    }
-
     @FXML private void preferencesMenuItemSelected(ActionEvent event){
         this.eruController.performPopupAction(EruController.PopupAction.SHOW_PREFERENCES);
     }

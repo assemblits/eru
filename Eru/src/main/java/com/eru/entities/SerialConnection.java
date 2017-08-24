@@ -64,7 +64,7 @@ public class SerialConnection extends Connection {
     }
 
     @Override
-    public void discconnect() {
+    public void disconnect() {
         if(coreConnection != null && coreConnection.isOpen()){
             log.info("Disconnecting Serial connection:\t" + getName());
             coreConnection.close();

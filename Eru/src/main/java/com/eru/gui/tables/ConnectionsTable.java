@@ -4,25 +4,32 @@ import com.eru.entities.Connection;
 import com.eru.entities.SerialConnection;
 import com.eru.entities.TcpConnection;
 import com.eru.gui.EruController;
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
+import lombok.extern.log4j.Log4j;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Created by mtrujillo on 8/7/17.
  */
+@Log4j
 public class ConnectionsTable extends EruTable<Connection> {
 
     public ConnectionsTable(EruController eruController) {
@@ -30,6 +37,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         this.eruController = eruController;
 
         // **** Columns **** //
+        TableColumn<Connection, Void> actionColumn        = new TableColumn<>("Action");
         TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
         TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
         TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
@@ -55,6 +63,10 @@ public class ConnectionsTable extends EruTable<Connection> {
 
 
         // **** General Cells **** //
+        actionColumn.setCellFactory(param -> new ConnectActionCell<>(
+                index -> getItems().get(index).connect(),
+                index -> getItems().get(index).disconnect()));
+
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
@@ -230,6 +242,7 @@ public class ConnectionsTable extends EruTable<Connection> {
 
         // **** General **** //
         this.getColumns().addAll(
+                actionColumn,
                 groupColumn,
                 nameColumn,
                 typeColumn,
@@ -349,4 +362,37 @@ public class ConnectionsTable extends EruTable<Connection> {
         ));
     }
 
+}
+
+@Log4j
+class ConnectActionCell<S> extends TableCell<S, Void>{
+    private ToggleButton toggleButton;
+    private ImageView connnectImageView = new ImageView(new Image(getClass().getResource("connect.png").toExternalForm()));
+    private ImageView disconnnectImageView = new ImageView(new Image(getClass().getResource("disconnect.png").toExternalForm()));
+
+    public ConnectActionCell(Consumer<Integer> selectedAction, Consumer<Integer> deselectedAction) {
+        toggleButton = new ToggleButton();
+
+        toggleButton.setGraphic(connnectImageView);
+        toggleButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
+            if(isSelected){
+                log.info("Connecting");
+                selectedAction.accept(getIndex());
+                toggleButton.setGraphic(disconnnectImageView);
+            } else {
+                log.info("Disconnecting");
+                deselectedAction.accept(getIndex());
+                toggleButton.setGraphic(connnectImageView);
+            }
+        });
+        setAlignment(Pos.CENTER);
+    }
+
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        setGraphic(null);
+        if(!empty){
+            setGraphic(toggleButton);
+        }
+    }
 }

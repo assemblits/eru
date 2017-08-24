@@ -4,6 +4,7 @@ import com.eru.entities.Address;
 import com.eru.entities.Device;
 import com.eru.entities.Tag;
 import com.eru.gui.EruController;
+import com.eru.util.TagLinksManager;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -25,6 +26,9 @@ public class TagTable extends EruTable<Tag> {
     public TagTable(EruController eruController) {
         super(eruController.getProject().getTags());
         this.eruController = eruController;
+
+        TagLinksManager tagLinksManager = new TagLinksManager();
+        tagLinksManager.observe(items);
 
         // **** Columns **** //
         TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
