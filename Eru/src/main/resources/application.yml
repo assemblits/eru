@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: eru
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+  datasource:
+    url: jdbc:postgresql://localhost:5432/eru
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres

@@ -2,13 +2,11 @@ package com.eru.persistence;
 
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.scenebuilder.library.CustomLibraryLoader;
-import com.eru.util.JpaUtil;
-import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -23,16 +21,14 @@ public class ProjectLoaderService extends Service<Project> {
             protected Project call() throws Exception {
                 Project project = null;
                 try {
-                    updateMessage("Getting database Connection");
+                    updateMessage("Loading project");
                     updateProgress(25, 100);
-                    EntityManager entityManager = JpaUtil.getGlobalEntityManager();
-                    updateMessage("Loading");
-                    updateProgress(50, 100);
-                    Dao<Project> dao = new Dao<>(entityManager, Project.class);
-                    List<Project> entities = dao.findEntities();
+                    ProjectDao projectDao = ApplicationContextHolder
+                            .getApplicationContext().getBean(ProjectDao.class);
+                    List<Project> entities = projectDao.findEntities();
                     if (entities == null || entities.isEmpty()) {
                         project = getNewProject();
-                        dao.create(project);
+                        projectDao.create(project);
                     } else {
                         project = entities.get(0);
                     }

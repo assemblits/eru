@@ -1,13 +1,14 @@
 package com.eru.historian;
 
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.Container;
 import com.eru.entities.Tag;
 import com.eru.util.Constants;
 import com.eru.util.Preferences;
-import com.eru.util.JpaUtil;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import lombok.extern.log4j.Log4j;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
 import java.sql.SQLException;
@@ -104,8 +105,8 @@ public class Historian {
             Thread.currentThread().setName("Historian Thread");
 
             log.info("Historian: Linking...");
-            em          = JpaUtil.getEntityManagerFactory().createEntityManager();
-            historicDao = new HistoricDao(em);
+            em          = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
+            historicDao = new HistoricDao(ApplicationContextHolder.getApplicationContext().getBean(JdbcTemplate.class));
             running     = true;
 
             if(historicalTagList.length == 0){

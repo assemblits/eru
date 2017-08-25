@@ -1,7 +1,7 @@
 package com.eru.gui.trend;
 
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.historian.HistoricDao;
-import com.eru.util.JpaUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.StageStyle;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class DatabaseTrendExtractor extends Service<Trend> {
     private String tagName;
     private Alert popupProgressInformator = new Alert(Alert.AlertType.INFORMATION);
-    private EntityManager entityManager = JpaUtil.getGlobalEntityManager();
+    private EntityManager entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
 
     public DatabaseTrendExtractor(EntityManager entityManager, String name) {
         this.entityManager = entityManager;
@@ -38,7 +39,8 @@ public class DatabaseTrendExtractor extends Service<Trend> {
         return new Task<Trend>() {
             protected Trend call() throws Exception {
                 updateMessage("Connecting with database");
-                HistoricDao historicDao = new HistoricDao(entityManager);
+                HistoricDao historicDao =
+                        new HistoricDao(ApplicationContextHolder.getApplicationContext().getBean(JdbcTemplate.class));
                 XYChart.Series<LocalDateTime, Number> series = new XYChart.Series<>();
                     List<Map<String, String>> table = historicDao.getTagsHistoric(tagName);
                     for (Map<String, String> row : table) {

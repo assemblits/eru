@@ -1,5 +1,34 @@
+buildscript {
+    ext {
+        jettyVersion = '9.2.10.v20150310'
+        openDolphinVersion = '1.0-RC1'
+        jbossLogginVersion = '1.0.1.Final'
+        itextVersion = '2.1.7'
+        log4jVersion = '1.2.17'
+        rxtxVersion = '2.1.7'
+        wimpiJamodVersion = '1.2'
+        groovyVersion = '2.3.6'
+        h2Version = '1.4.196'
+        mockitoVersion = '1.10.19'
+        powerMockVersion = '1.6.6'
+        jUnitVersion = '4.12'
+        cglibNodepVersion = '2.2.2'
+        postgresVersion = '9.4.1211'
+        lombokVersion = '1.16.18'
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'eru'
@@ -21,31 +50,12 @@ sourceSets {
     }
 }
 
-ext {
-    jettyVersion = '9.2.10.v20150310'
-    openDolphinVersion = '1.0-RC1'
-    hibernateVersion = '4.1.5.SP1'
-    javaAssistVersion = '3.18.1-GA'
-    hibernatePersistenceVersion = '1.0.1.Final'
-    jbossSpecJavaTransactionVersion = '1.0.1.Final'
-    jbossLogginVersion = '1.0.1.Final'
-    hibernateCommonVersion = '3.0.1.GA'
-    itextVersion = '2.1.7'
-    log4jVersion = '1.2.17'
-    rxtxVersion = '2.1.7'
-    wimpiJamodVersion = '1.2'
-    groovyVersion = '2.3.6'
-    h2Version = '1.4.196'
-    mockitoVersion = '1.10.19'
-    powerMockVersion = '1.6.6'
-    jUnitVersion = '4.12'
-    cglibNodepVersion = '2.2.2'
-    postgresVersion = '9.4.1211'
-    lombokVersion = '1.16.18'
-}
-
 dependencies {
-    
+
+    //project
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile "org.projectlombok:lombok:${lombokVersion}"
+
     //logging
     compile "log4j:log4j:${log4jVersion}"
 
@@ -57,16 +67,9 @@ dependencies {
     compile "org.open-dolphin:dolphin-server:${openDolphinVersion}"
 
     //persistence
-    compile "org.hibernate:hibernate-core:${hibernateVersion}"
-    compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
-    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:${hibernatePersistenceVersion}"
-    compile "org.javassist:javassist:${javaAssistVersion}"
-    compile "org.jboss.logging:jboss-logging:${hibernateCommonVersion}"
-    compile "org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:${jbossSpecJavaTransactionVersion}"
-    compile "org.hibernate.common:hibernate-commons-annotations:${hibernateCommonVersion}"
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile "com.h2database:h2:${h2Version}"
     compile "org.postgresql:postgresql:${postgresVersion}"
-    compile "org.projectlombok:lombok:${lombokVersion}"
 
     //jetty
     compile "org.eclipse.jetty:jetty-servlets:${jettyVersion}"
@@ -93,5 +96,5 @@ dependencies {
     testCompile "org.powermock:powermock-api-mockito:${powerMockVersion}"
     testCompile "org.powermock:powermock-module-junit4:${powerMockVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
-
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

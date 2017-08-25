@@ -1,10 +1,10 @@
 package com.eru.alarming;
 
 import com.eru.entities.Alarm;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.Container;
 import com.eru.persistence.Dao;
 import com.eru.entities.Tag;
-import com.eru.util.JpaUtil;
 import com.eru.util.Preferences;
 import groovy.lang.Closure;
 import groovyx.gpars.agent.Agent;
@@ -50,7 +50,7 @@ public class Alarming {
 
     /* ********** Constructor ********** */
     private Alarming() {
-        entityManager   = JpaUtil.getEntityManagerFactory().createEntityManager();
+        entityManager   = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
         running         = false;
         alarmDao        = new Dao<>(entityManager, Alarm.class);
         alarmsAgent     = new Agent<>(FXCollections.observableArrayList());
@@ -72,7 +72,7 @@ public class Alarming {
             try {
                 // Check if there is a database connection
                 if (entityManager == null){
-                    entityManager   = JpaUtil.getEntityManagerFactory().createEntityManager();
+                    entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
                 }
 
                 // Clear persistent context and memory

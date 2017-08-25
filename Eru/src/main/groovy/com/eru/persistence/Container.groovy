@@ -3,10 +3,10 @@ package com.eru.persistence
 import com.eru.entities.Connection
 import com.eru.entities.Tag
 import com.eru.entities.Device
+import com.eru.gui.ApplicationContextHolder
 import com.eru.historian.HistoricDao
 
 import com.eru.entities.User
-import com.eru.util.JpaUtil
 import groovyx.gpars.agent.Agent
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -60,7 +60,7 @@ class Container {
 
     /* ********** Methods ********** */
     public synchronized Boolean loadDatabase(){
-        final EntityManager EM       = JpaUtil.getGlobalEntityManager();
+        final EntityManager EM       = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
 
         // Clear the persistent context
         EM.clear()

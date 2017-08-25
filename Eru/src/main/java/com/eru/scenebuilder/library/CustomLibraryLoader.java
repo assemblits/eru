@@ -51,7 +51,7 @@ public class CustomLibraryLoader {
                     log.debug(format("Component '%s' loaded", eruComponent.getName()));
                     return eruComponent;
                 }).collect(Collectors.toList());
-        log.info(String.format("%d custom components loaded successfully", eruComponents.size()));
+        log.info(format("%d custom components loaded successfully", eruComponents.size()));
         library = new EruLibrary(eruComponents);
     }
 
@@ -64,7 +64,7 @@ public class CustomLibraryLoader {
 
     private Set<ClassInfo> scanClassPathAndGetClassesInfo() {
         Stack<File> directories = new Stack<>();
-        log.debug(String.format("Scanning packages %s", DYNAMO_CLASSES_LOCATION));
+        log.debug(format("Scanning packages %s", DYNAMO_CLASSES_LOCATION));
         for (String location : DYNAMO_CLASSES_LOCATION) {
             directories.push(new File(getClass().getResource(location).getPath()));
         }

@@ -2,6 +2,8 @@ package com.eru.entities;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -72,6 +74,7 @@ public class TreeElementsGroup {
         this.parent.set(parent);
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     public List<TreeElementsGroup> getChildren() {
         return children;

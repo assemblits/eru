@@ -1,6 +1,7 @@
 package com.eru.util;
 
 import com.eru.entities.Alarm;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.historian.HistoricDao;
 import com.eru.entities.Tag;
 import com.lowagie.text.*;
@@ -8,6 +9,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.eru.persistence.Dao;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
 import java.io.FileOutputStream;
@@ -154,8 +156,9 @@ public class PdfReportCreator {
     }
 
     private void fillTable(PdfPTable table) throws SQLException, InterruptedException {
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        HistoricDao historicDAO = new HistoricDao(em);
+        EntityManager em = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
+
+        HistoricDao historicDAO = new HistoricDao(ApplicationContextHolder.getApplicationContext().getBean(JdbcTemplate.class));
         Dao<Alarm> alarmDao = new Dao<>(em, Alarm.class);
 
         switch (reportType) {

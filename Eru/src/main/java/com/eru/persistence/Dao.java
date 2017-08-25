@@ -5,11 +5,14 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
 * Created by mtrujillo on 9/02/14.
 */
+// TODO: 25-08-17 refactor
+@Transactional
 public class Dao<T> {
 
     public enum Order {
@@ -26,10 +29,7 @@ public class Dao<T> {
 
     public void create(T t){
         try {
-            //em.clear();
-            em.getTransaction().begin();
             em.persist(t);
-            em.getTransaction().commit();
         }catch (Exception e){
             System.err.println("Exception with " + entityClass.getName());
             e.printStackTrace();
@@ -43,9 +43,7 @@ public class Dao<T> {
     public T update(T t){
         try {
             //em.clear();
-            em.getTransaction().begin();
             t = em.merge(t);
-            em.getTransaction().commit();
             return t;
         }catch (Exception e){
             System.err.println("Exception with " + entityClass.getName());
@@ -57,10 +55,8 @@ public class Dao<T> {
     public void delete(T t){
         try {
             //em.clear();
-            em.getTransaction().begin();
             t = em.merge(t);
             em.remove(t);
-            em.getTransaction().commit();
         }catch (Exception e){
             System.err.println("Exception with " + entityClass.getName());
             e.printStackTrace();
@@ -82,7 +78,6 @@ public class Dao<T> {
     private List<T> findEntities(boolean all, int maxResults, int firstResult, boolean filter, String orderBy, Order o){
         try {
             //em.clear();
-            em.getTransaction().begin();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<T> t = cq.from(entityClass);
@@ -102,9 +97,7 @@ public class Dao<T> {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
-            List<T> result = q.getResultList();
-            em.getTransaction().commit();
-            return result;
+            return (List<T>) q.getResultList();
         } catch (Exception e){
             System.err.println("Exception with " + entityClass.getName());
             e.printStackTrace();
@@ -115,11 +108,8 @@ public class Dao<T> {
     public int getCount() {
         try {
             //em.clear();
-            em.getTransaction().begin();
             final String QUERY = "SELECT count(e) FROM " + entityClass.getSimpleName() + " e";
-            int count = em.createQuery(QUERY, Long.class).getSingleResult().intValue();
-            em.getTransaction().commit();
-            return count;
+            return em.createQuery(QUERY, Long.class).getSingleResult().intValue();
         } catch (Exception ex){
             ex.printStackTrace();
         }

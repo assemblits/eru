@@ -1,9 +1,9 @@
 package com.eru.gui.export;
 
 import com.eru.entities.Tag;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.util.PdfReportCreator;
 import com.eru.persistence.Dao;
-import com.eru.util.JpaUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -82,7 +82,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
         // Fill the choice boxes
         try {
 
-            EntityManager entityManager   = JpaUtil.getEntityManagerFactory().createEntityManager();
+            EntityManager entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
             Dao<Tag> tagDao= new Dao<>(entityManager, Tag.class);
             for(Tag t : tagDao.findEntities("name", Dao.Order.ASC)){
                 if(t.getHistoricalEnabled()) availableTagsListView.getItems().add(t);

@@ -3,6 +3,8 @@ package com.eru.entities;
 import com.eru.comm.CommunicationsManager;
 import com.eru.comm.device.AddressesBlock;
 import javafx.beans.property.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -119,6 +121,7 @@ public class  Device {
         this.enabled.set(enabled);
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
     public List<Address> getAddresses() {
         return addresses;

@@ -1,8 +1,8 @@
 package com.eru.gui.trend;
 
 import com.eru.entities.Tag;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.Dao;
-import com.eru.util.JpaUtil;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.Observable;
@@ -329,7 +329,7 @@ public class TrendsGraphicAnalyzer extends AnchorPane implements Initializable {
     }
 
     private void fillListViewWithTagsThatHaveHistorianEnabled() {
-        EntityManager entityManager   = JpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
         Dao<Tag> tagDao= new Dao<>(entityManager, Tag.class);
         for(Tag t : tagDao.findEntities("name", Dao.Order.ASC)){
             if(t.getHistoricalEnabled()) tagsWithHistorianEnabled.getItems().add(t);

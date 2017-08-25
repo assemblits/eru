@@ -1,6 +1,8 @@
 package com.eru.entities;
 
 import javafx.beans.property.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class Project {
         return name;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     public TreeElementsGroup getGroup() {
         return group.get();
@@ -72,6 +75,7 @@ public class Project {
         return group;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Device> getDevices() {
         return devices;
@@ -81,6 +85,7 @@ public class Project {
         this.devices = devices;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Connection> getConnections() {
         return connections;
@@ -90,6 +95,7 @@ public class Project {
         this.connections = connections;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Tag> getTags() {
         return tags;
@@ -99,6 +105,7 @@ public class Project {
         this.tags = tags;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<User> getUsers() {
         return users;
@@ -108,6 +115,7 @@ public class Project {
         this.users = users;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Display> getDisplays() {
         return displays;

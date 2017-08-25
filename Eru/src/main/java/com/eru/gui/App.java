@@ -9,21 +9,30 @@ import com.eru.gui.tree.ProjectTree;
 import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneBuilderStarter;
 import com.eru.scenebuilder.SceneFxmlManager;
-import com.eru.util.JpaUtil;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import static com.sun.javafx.application.LauncherImpl.launchApplication;
 
 
-/**
- * Created by mtrujillo on 8/31/2015.
- */
 @Log4j
+@EntityScan("com.eru")
+@SpringBootApplication
+@EnableJpaRepositories("com.eru")
+@ComponentScan(value = "com.eru")
 public class App extends Application implements SceneBuilderStarter, EruMainScreenStarter {
 
     public static final String NAME = "eru";
+    private static String[] savedArgs;
 
     private Stage stage;
     private EruController eruController;
@@ -35,13 +44,15 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     private TagTable tagTable;
     private UserTable userTable;
     private DisplayTable displayTable;
+    private ConfigurableApplicationContext applicationContext;
 
     public App() {
         this.eruController = new EruController();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        savedArgs = args;
+        launchApplication(App.class, args);
     }
 
     @Override
@@ -94,7 +105,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
 
     @Override
     public void startEruScreen() {
-        log.info(String.format("Starting eru screen"));
+        log.info("Starting eru screen");
 
         this.skeleton = new Skeleton();
         this.menubar = new MenuBar(eruController);
@@ -124,8 +135,15 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     }
 
     @Override
+    public void init() throws Exception {
+        applicationContext = SpringApplication.run(getClass(), savedArgs);
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+        ApplicationContextHolder.setApplicationContext(applicationContext);
+    }
+
+    @Override
     public void stop() throws Exception {
         super.stop();
-        JpaUtil.getGlobalEntityManager().close();
+        applicationContext.close();
     }
 }
