@@ -1,8 +1,8 @@
 package com.eru.gui.scenebuilder;
 
+import com.eru.entities.Display;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.scenebuilder.ComponentsIdsGenerator;
-import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.scenebuilder.library.CustomLibraryLoader;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
@@ -28,17 +28,17 @@ import static java.lang.String.format;
 public class EruSceneBuilder extends VBox {
 
     private final SceneFxmlManager sceneFxmlManager;
-    private final EruScene scene;
+    private final Display display;
     private final File sceneFxmlFile;
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
     private ComponentsIdsGenerator componentsIdsGenerator;
 
-    public EruSceneBuilder(EruScene scene, SceneFxmlManager sceneFxmlManager) {
-        log.debug(format("Instantiating Eru Scene Builder for %s", scene.getName()));
-        this.scene = scene;
+    public EruSceneBuilder(Display display, SceneFxmlManager sceneFxmlManager) {
+        log.debug(format("Instantiating Eru Scene Builder for %s", display.getName()));
+        this.display = display;
         this.sceneFxmlManager = sceneFxmlManager;
-        sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(scene);
+        sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
         componentsIdsGenerator = new ComponentsIdsGenerator();
 
         // Always fit the Anchor Pane parent

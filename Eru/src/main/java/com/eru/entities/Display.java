@@ -1,6 +1,5 @@
 package com.eru.entities;
 
-import com.eru.scenebuilder.EruScene;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "display", schema = "public")
-public class Display implements EruScene {
+public class Display {
 
     @Id
     @Column(name = "display_id")

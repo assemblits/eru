@@ -1,12 +1,12 @@
 package com.eru.gui;
 
+import com.eru.entities.Display;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.menubar.MenuBar;
 import com.eru.gui.scenebuilder.EruSceneBuilder;
 import com.eru.gui.tables.*;
 import com.eru.gui.tree.ProjectTree;
-import com.eru.scenebuilder.EruScene;
 import com.eru.scenebuilder.SceneBuilderStarter;
 import com.eru.scenebuilder.SceneFxmlManager;
 import javafx.application.Application;
@@ -87,10 +87,10 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     }
 
     @Override
-    public void startSceneBuilder(EruScene scene) {
-        log.info(String.format("Starting scene builder for '%s'", scene.getName()));
+    public void startSceneBuilder(Display display) {
+        log.info(String.format("Starting display builder for '%s'", display.getName()));
         SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
-        EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(scene, sceneFxmlManager);
+        EruSceneBuilder eruSceneBuilder = new EruSceneBuilder(display, sceneFxmlManager);
         try {
             eruSceneBuilder.init();
         } catch (FxmlFileReadException e) {

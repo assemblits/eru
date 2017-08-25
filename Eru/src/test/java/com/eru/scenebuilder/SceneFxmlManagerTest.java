@@ -1,5 +1,6 @@
 package com.eru.scenebuilder;
 
+import com.eru.entities.Display;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class SceneFxmlManagerTest {
 
     @Test
     public void createSceneFxmlFileWithTheFormattedNameAndWithTheRightContent() throws Exception {
-        File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(new MyScene());
+        File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(new Display(1L, "MyScene", "group", false));
 
         Assert.assertEquals("test-scene.fxml", sceneFxmlFile.getName());
         Assert.assertEquals(NEW_FXML_FILE_CONTENT, getFileContent(sceneFxmlFile));
@@ -43,12 +44,5 @@ public class SceneFxmlManagerTest {
         StringBuilder fileContent = new StringBuilder();
         Files.lines(sceneFxmlFile.toPath()).forEach(s -> fileContent.append(s).append("\n"));
         return fileContent.toString();
-    }
-
-    class MyScene implements EruScene {
-        @Override
-        public String getName() {
-            return "Test scene";
-        }
     }
 }

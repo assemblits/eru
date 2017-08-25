@@ -1,5 +1,6 @@
 package com.eru.scenebuilder;
 
+import com.eru.entities.Display;
 import com.eru.exception.FxmlFileWriteException;
 import com.eru.gui.App;
 import lombok.extern.log4j.Log4j;
@@ -15,15 +16,15 @@ public class SceneFxmlManager {
     private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 
-    public File createSceneFxmlFile(EruScene scene) {
+    public File createSceneFxmlFile(Display display) {
         String fxmlFilesDirectoryPath = System.getProperty("user.home") + separator + "."
                 + App.NAME + separator + "displays";
 
-        String formattedSceneName = formatName(scene);
+        String formattedSceneName = formatName(display);
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);
         File fxmlFile = new File(fxmlFilesDirectory.getAbsolutePath() + separator + formattedSceneName + ".fxml");
         if (!fxmlFile.exists()) {
-            log.debug(format("Creating fxml file for scene '%s'", scene.getName()));
+            log.debug(format("Creating fxml file for display '%s'", display.getName()));
             try {
                 if (!fxmlFilesDirectory.exists()) {
                     fxmlFilesDirectory.mkdirs();
@@ -33,12 +34,12 @@ public class SceneFxmlManager {
                 }
 
             } catch (IOException e) {
-                log.error(format("Error creating fxml file for scene '%s'", scene.getName()));
+                log.error(format("Error creating fxml file for display '%s'", display.getName()));
                 throw new FxmlFileWriteException(e);
             }
         }
-        log.debug(format("fxml file for scene '%s' was created successfully in '%s'",
-                scene.getName(), fxmlFile.getAbsolutePath()));
+        log.debug(format("fxml file for display '%s' was created successfully in '%s'",
+                display.getName(), fxmlFile.getAbsolutePath()));
         return fxmlFile;
     }
 
@@ -54,8 +55,8 @@ public class SceneFxmlManager {
         log.debug(format("File '%s' updated successfully", fxmlFile.getAbsolutePath()));
     }
 
-    private String formatName(EruScene scene) {
-        return scene.getName().replaceAll("\\s", "-").toLowerCase();
+    private String formatName(Display display) {
+        return display.getName().replaceAll("\\s", "-").toLowerCase();
     }
 
 }
