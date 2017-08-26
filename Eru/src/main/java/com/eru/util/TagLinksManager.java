@@ -3,8 +3,10 @@ package com.eru.util;
 import com.eru.entities.Tag;
 import com.eru.exception.TagLinkException;
 import com.eru.gui.EruController;
+import com.eru.gui.dynamo.EruAlarm;
 import com.eru.gui.dynamo.EruDisplay;
 import com.eru.gui.dynamo.EruGauge;
+import com.eru.gui.dynamo.EruLevelBar;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
@@ -105,7 +107,13 @@ public class TagLinksManager {
     public void linkToScada(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()){
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
-            if (extractedControl instanceof EruDisplay){
+            if (extractedControl instanceof EruAlarm){
+                EruAlarm extractedAlarm = (EruAlarm) extractedControl;
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedAlarm.setCurrentValue(Boolean.parseBoolean(newValue))));
+            } else if (extractedControl instanceof EruDisplay){
                 EruDisplay extractedDisplay = (EruDisplay) extractedControl;
                 eruController.getProject().getTags()
                         .stream()
@@ -121,6 +129,16 @@ public class TagLinksManager {
                         .stream()
                         .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
+            } else if (extractedControl instanceof EruLevelBar){
+                EruLevelBar extractedLevelBar = (EruLevelBar) extractedControl;
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setCurrentValue(Double.parseDouble(newValue))));
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
             }
         }
     }
