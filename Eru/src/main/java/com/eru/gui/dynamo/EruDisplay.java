@@ -1,5 +1,6 @@
 package com.eru.gui.dynamo;
 
+import com.eru.scene.control.Display;
 import com.eru.util.TagLinksManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -7,7 +8,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by mtrujillo on 8/24/17.
  */
-public class EruDisplay extends com.eru.scene.control.Display {
+public class EruDisplay extends Display {
 
     /**
      * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for

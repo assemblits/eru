@@ -1,13 +1,14 @@
 package com.eru.scene.control;
 
 import javafx.beans.property.*;
+import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import com.eru.scene.control.skin.SwitchSkin;
 
 /**
  * Created by mtrujillo on 09/02/2015.
  */
-public class Switch extends Dynamo {
+public class Switch extends Control {
 
     private static final int DEFAULT_ANIMATION_DURATION = 400;
 

@@ -5,12 +5,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
 /**
  * Created by mtrujillo on 09/02/2015.
  */
-public class Load extends Dynamo {
+public class Load extends Control {
 
     /* ********** Dynamic Fields ********** */
     private StringProperty name;

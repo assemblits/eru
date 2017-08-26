@@ -251,7 +251,8 @@ public class GaugeSkin extends SkinBase<Gauge> {
         getSkinnable().dropShadowEnabledProperty().addListener(observable -> handleControlPropertyChanged("DROP_SHADOW"));
         getSkinnable().getSections().addListener((ListChangeListener<Section>) change -> handleControlPropertyChanged("CANVAS_REFRESH"));
         getSkinnable().customTickLabelsEnabledProperty().addListener(observable1 -> handleControlPropertyChanged("CANVAS_REFRESH"));
-        getSkinnable().valueFontProperty().addListener(observble -> handleControlPropertyChanged("VALUE_FONT"));
+        getSkinnable().valueFontProperty().addListener(observable -> handleControlPropertyChanged("VALUE_FONT"));
+        getSkinnable().titleProperty().addListener(observable -> handleControlPropertyChanged("TITLE"));
         needleRotate.angleProperty().addListener(observable -> handleControlPropertyChanged("ANGLE"));
     }
 
@@ -319,6 +320,8 @@ public class GaugeSkin extends SkinBase<Gauge> {
             maxMeasuredValue.setManaged(getSkinnable().getMaxMeasuredValueVisible());
         } else if ("VALUE_FONT".equals(PROPERTY)){
             updateFonts();
+        } else if ("TITLE".equals(PROPERTY)){
+            title.setText(getSkinnable().getTitle());
         }
     }
 

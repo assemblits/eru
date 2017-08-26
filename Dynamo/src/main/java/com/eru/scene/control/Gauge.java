@@ -5,6 +5,7 @@ import com.eru.util.Section;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by mtrujillo on 12/06/2014.
  */
-public class Gauge extends Dynamo{
+public class Gauge extends Control {
 
     /* ********** Static Fields ********** */
     public enum DisplayFont {

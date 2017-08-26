@@ -4,6 +4,7 @@ import com.eru.util.Section;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by mtrujillo on 23/06/2014.
  */
-public class LevelBar extends Dynamo {
+public class LevelBar extends Control {
     /* ********** Static Fields ********** */
     public static final Color   DEFAULT_TEXT_FILL           = Color.LIGHTGRAY;
     private static final double DEFAULT_ANIMATION_DURATION  = 300;

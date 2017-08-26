@@ -117,6 +117,10 @@ public class TagLinksManager {
                         .stream()
                         .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
             }
         }
     }
