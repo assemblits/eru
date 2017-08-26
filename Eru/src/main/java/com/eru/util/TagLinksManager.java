@@ -1,12 +1,14 @@
 package com.eru.util;
 
-import com.eru.exception.TagLinkException;
 import com.eru.entities.Tag;
+import com.eru.exception.TagLinkException;
 import com.eru.gui.EruController;
-import com.eru.gui.erget.Display;
+import com.eru.gui.dynamo.EruDisplay;
+import com.eru.gui.dynamo.EruGauge;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
+import javafx.scene.control.Control;
 import lombok.extern.log4j.Log4j;
 
 import javax.script.ScriptException;
@@ -101,12 +103,21 @@ public class TagLinksManager {
     }
 
     public void linkToScada(Node anchorPane) {
-        for (String displayID : DYNAMO_ID_VS_TAG_ID.keySet()){
-            Display extractedDisplay = (com.eru.gui.erget.Display) anchorPane.lookup("#".concat(displayID));
-            eruController.getProject().getTags()
-                    .stream()
-                    .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
-                    .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
+        for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()){
+            Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
+            if (extractedControl instanceof EruDisplay){
+                EruDisplay extractedDisplay = (EruDisplay) extractedControl;
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
+            } else if (extractedControl instanceof EruGauge){
+                EruGauge extractedGauge = (EruGauge) extractedControl;
+                eruController.getProject().getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.eru.gui;
 
+import com.eru.entities.Display;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.about.About;
@@ -56,7 +57,7 @@ public class EruController {
         switch (scadaAction) {
             case LAUNCH:
                 try {
-                    final com.eru.entities.Display mainDisplay = this.project.get().getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
+                    final Display mainDisplay = this.project.get().getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
                     final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
                     final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
                     final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
@@ -69,6 +70,7 @@ public class EruController {
                     tagLinksManager.linkToScada(mainNode);
                 } catch (Exception e) {
                     log.error(e);
+                    e.printStackTrace();
                 }
                 break;
             case STOP:
