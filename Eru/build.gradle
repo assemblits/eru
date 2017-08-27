@@ -1,0 +1,97 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+jar {
+    baseName = 'eru'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url 'http://nexus.gluonhq.com/nexus/content/repositories/releases/' }
+}
+
+sourceSets {
+    main {
+        java { srcDirs = [] }
+        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }
+    }
+}
+
+ext {
+    jettyVersion = '9.2.10.v20150310'
+    openDolphinVersion = '1.0-RC1'
+    hibernateVersion = '4.1.5.SP1'
+    javaAssistVersion = '3.18.1-GA'
+    hibernatePersistenceVersion = '1.0.1.Final'
+    jbossSpecJavaTransactionVersion = '1.0.1.Final'
+    jbossLogginVersion = '1.0.1.Final'
+    hibernateCommonVersion = '3.0.1.GA'
+    itextVersion = '2.1.7'
+    log4jVersion = '1.2.17'
+    rxtxVersion = '2.1.7'
+    wimpiJamodVersion = '1.2'
+    groovyVersion = '2.3.6'
+    h2Version = '1.4.196'
+    mockitoVersion = '1.10.19'
+    powerMockVersion = '1.6.6'
+    jUnitVersion = '4.12'
+    cglibNodepVersion = '2.2.2'
+    postgresVersion = '9.4.1211'
+    lombokVersion = '1.16.18'
+}
+
+dependencies {
+    
+    //logging
+    compile "log4j:log4j:${log4jVersion}"
+
+    //Dolphin
+    compile "com.lowagie:itext:${itextVersion}"
+    compile "org.open-dolphin:dolphin-client:${openDolphinVersion}"
+    compile "org.open-dolphin:dolphin-client-javafx:${openDolphinVersion}"
+    compile "org.open-dolphin:dolphin-shared:${openDolphinVersion}"
+    compile "org.open-dolphin:dolphin-server:${openDolphinVersion}"
+
+    //persistence
+    compile "org.hibernate:hibernate-core:${hibernateVersion}"
+    compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:${hibernatePersistenceVersion}"
+    compile "org.javassist:javassist:${javaAssistVersion}"
+    compile "org.jboss.logging:jboss-logging:${hibernateCommonVersion}"
+    compile "org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:${jbossSpecJavaTransactionVersion}"
+    compile "org.hibernate.common:hibernate-commons-annotations:${hibernateCommonVersion}"
+    compile "com.h2database:h2:${h2Version}"
+    compile "org.postgresql:postgresql:${postgresVersion}"
+    compile "org.projectlombok:lombok:${lombokVersion}"
+
+    //jetty
+    compile "org.eclipse.jetty:jetty-servlets:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-server:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-servlet:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-http:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-continuation:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-security:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-xml:${jettyVersion}"
+    compile "org.eclipse.jetty:jetty-io:${jettyVersion}"
+
+    //RXTX
+    compile "org.rxtx:rxtx:${rxtxVersion}"
+    compile "net.wimpi:jamod:${wimpiJamodVersion}"
+    compile "org.codehaus.groovy:groovy:${groovyVersion}"
+    compile "cglib:cglib-nodep:${cglibNodepVersion}"
+
+    //Scene builder
+    compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
+
+    //Testing
+    testCompile "junit:junit:${jUnitVersion}"
+    testCompile "org.powermock:powermock-api-mockito:${powerMockVersion}"
+    testCompile "org.powermock:powermock-module-junit4:${powerMockVersion}"
+    testCompile "org.mockito:mockito-core:${mockitoVersion}"
+
+}

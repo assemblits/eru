@@ -1,0 +1,21 @@
+.alarm {
+    -fx-skin          : "com.eru.scene.control.skin.AlarmSkin";
+    -background-color : TRANSPARENT;
+    -text-color       : #eeeeee;
+}
+
+.alarm .background {
+    -fx-background-color  : -background-color;
+    -fx-scale-shape       : true;
+    -fx-background-radius : 1;
+}
+
+.alarm .frame {
+    -fx-background-color : #8b8c8d;
+    -fx-scale-shape      : true;
+    -fx-shape            : "M 0 0 L 0 24 L 7.59375 24 L 7.59375 22 L 2 22 L 2 2 L 7.59375 2 L 7.59375 0 L 0 0 z M 117.40625 0 L 117.40625 2 L 123 2 L 123 22 L 117.40625 22 L 117.40625 24 L 125 24 L 125 0 L 117.40625 0 z ";
+}
+
+.alarm .text{
+    -fx-fill   : -text-color;
+}

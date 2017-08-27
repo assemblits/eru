@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/new-toolboxes/lib/graphic-design/project-icon.png" />
+  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.pnghttps://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.png" />
   Eru Server
   <br>
 </h1>
@@ -7,6 +7,10 @@
 <h4 align="center">An open linux SCADA based on JavaFX.</h4>
 
 [![Join the chat at https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby](https://badges.gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby.svg)](https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+| dev    |  master   |
+|:------:|:---------:|
+| [![Build Status](https://travis-ci.org/eru-scada/eru.svg?branch=develop)](https://travis-ci.org/eru-scada/eru)  | [![Build Status](https://travis-ci.org/eru-scada/eru.svg?branch=master)](https://travis-ci.org/eru-scada/eru)  |
   
 ## Resume
   This app has 4 main things:
@@ -17,8 +21,8 @@
 
   Basically, in the normal workflow, you:
   1) Create a "connection" to communicate with remote devices (Like PLC, Solar Panels, Engine controllers, Residence automation (Doors, Lights, Windows, etc) etc).
-  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an address called height in the window device).
-  3) Create a "tag" to represent the actual value of the address of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
+  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an linkedAddress called height in the window device).
+  3) Create a "tag" to represent the actual value of the linkedAddress of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
   4) Create a "user" this is to be sure that you have permissions to read the value (in construction).
   5) Create a "display" to see visualizations linked to the tag. (To draw the windows and see graphically if is closed or open) (in construction)
 
@@ -65,10 +69,21 @@
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (which comes with [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm)) installed on your computer. From your command line:
 
 ```bash
+# Go to your workspace
+cd ~/Workspace
+# Create a folder called "eru" (Recommended)
+mkdir eru
+# Go there
+cd eru/
 # Clone this repository
-$ git clone https://github.com/marlontrujillo1080/eru
+git clone https://github.com/marlontrujillo1080/eru
 ```
-You can use IntelliJ IDE to have the same experience of the developers...
+You can use IntelliJ IDE to have the same experience of the developers:
+
+1) Launch IJ.
+2) Click import project.
+3) Select the Gradle Build file in the eru workspace.
+4) Let IJ do the magic.
 
 ## Credits
 

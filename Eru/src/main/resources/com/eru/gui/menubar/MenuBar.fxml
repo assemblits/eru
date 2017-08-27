@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+
+<fx:root type="javafx.scene.control.MenuBar" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+        <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Scada">
+        <MenuItem mnemonicParsing="false" onAction="#launchScadaMenuItemSelected" text="Launch" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+        <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />
+    </Menu>
+</fx:root>

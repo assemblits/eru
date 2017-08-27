@@ -1,0 +1,43 @@
+.level-bar {
+    -fx-skin           : "com.eru.scene.control.skin.LevelBarSkin";
+}
+
+.level-bar .main {
+    -fx-background-color : TRANSPARENT;
+}
+
+/* ********** Background ********** */
+.level-bar .frame {
+    -fx-background-color : #8b8c8d;
+    -fx-scale-shape      : true;
+    -fx-shape            : "m 0.03125,12.9375 c 0,9 0,18 0,27 l 2,0 0,-25 121,0 0,25.03125 2,0 c 0,-9 0,-18 0,-27 l 0,-0.03125 c -41.666667,0 -83.333333,0 -125,0 z";
+}
+
+/* ********** Pointer ********** */
+.level-bar .normal-current-value-pointer {
+    -fx-background-color : derive(-fx-text-base-color, 70%);
+    /*-fx-border-color     : #151515;*/
+    -fx-scale-shape      : true;
+    -fx-shape            : "m -363.84165,505.95157 37.24603,0 2.5619,8.47397 -2.5619,7.88275 -37.24603,0 z";
+}
+
+.level-bar .current-value-text {
+    -fx-font-weight: bold;
+    /*-fx-fill: -fx-text-base-color;*/
+    -fx-fill: BLACK;
+}
+.level-bar .title {
+    -fx-position-shape: true;
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-base-color;
+}
+
+.level-bar .text {
+    -fx-position-shape: true;
+    -fx-fill: -fx-text-base-color;
+}
+
+.level-bar .unit {
+    -fx-position-shape: true;
+    -fx-fill: -fx-text-base-color;
+}

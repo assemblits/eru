@@ -1,0 +1,9 @@
+subprojects {
+    apply plugin: 'java'
+}
+
+project(':Eru') {
+    dependencies {
+        compile project(':Dynamo')
+    }
+}

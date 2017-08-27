@@ -1,0 +1,38 @@
+.switch {
+    -fx-skin            : "com.eru.scene.control.skin.SwitchSkin";
+    -background-color   : TRANSPARENT;
+    -de-energized-color : BLACK;
+    -energized-color    : #c94b4d;
+    -starting-color     : ORANGE;
+    -warning-color      : #c94b4d;
+    -disable-color      : GREY;
+}
+
+.switch .background{
+    -fx-background-color  : -background-color;
+    -fx-scale-shape       : true;
+    -fx-background-radius : 1;
+}
+
+.switch .up-bar{
+    -fx-background-color : -de-energized-color;
+    -fx-scale-shape      : true;
+    -fx-shape            : "m 295.40625,371.9375 0,16.34375 3.5,0 0,-16.34375 -3.5,0 z";
+}
+
+.switch .down-bar{
+    -fx-background-color : -de-energized-color;
+    -fx-scale-shape      : true;
+    -fx-shape            : "m 295.40625,371.9375 0,16.34375 3.5,0 0,-16.34375 -3.5,0 z";
+}
+
+.switch .mobile-bar{
+    -fx-background-color : -de-energized-color;
+    -fx-scale-shape      : true;
+    -fx-shape            : "m 295.40625,371.9375 0,16.34375 3.5,0 0,-16.34375 -3.5,0 z";
+}
+
+.switch .name-text{
+    -fx-fill   : BLACK;
+    /*-fx-stroke : BLACK;*/
+}

@@ -4,3 +4,7 @@
 # Outputs
 out/
 *.class
+*.iml
+build/
+.gradle/
+classes/

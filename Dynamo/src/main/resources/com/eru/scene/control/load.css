@@ -1,0 +1,26 @@
+.load {
+    -fx-skin            : "com.eru.scene.control.skin.LoadSkin";
+    -background-color   : TRANSPARENT;
+    -de-energized-color : BLACK;
+    -energized-color    : #c94b4d;
+    -starting-color     : ORANGE;
+    -warning-color      : #c94b4d;
+    -disable-color      : GREY;
+}
+
+.load .background{
+    -fx-background-color  : -background-color;
+    -fx-scale-shape       : true;
+    -fx-background-radius : 1;
+}
+
+.load .load-shape{
+    -fx-background-color : -de-energized-color;
+    -fx-scale-shape      : true;
+    -fx-shape            : "m 121.356,419.33721 c -11.5365,0 -23.073005,0 -34.609508,0 5.774606,13.05719 11.536246,26.12013 17.304758,39.18002 5.76334,-13.06217 11.53916,-26.11884 17.30475,-39.18002 z m -5.29869,3.99572 c -4.00202,9.06147 -8.00404,18.12295 -12.00606,27.18442 -3.99705,-9.06272 -7.996917,-18.12419 -11.999604,-27.18442 8.001884,0 16.003774,0 24.005664,0 z";
+}
+
+.load .name-text{
+    -fx-fill   : BLACK;
+    /*-fx-stroke : BLACK;*/
+}

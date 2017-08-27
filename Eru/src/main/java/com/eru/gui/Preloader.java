@@ -1,0 +1,38 @@
+package com.eru.gui;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
+
+/**
+ * Created by mtrujillo on 9/11/2015.
+ */
+public class Preloader extends BorderPane {
+
+    @FXML private Label         statusLabel;
+    @FXML private ProgressBar   progressBar;
+
+    public Preloader() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Preloader.fxml"));
+            fxmlLoader.setRoot(this);
+            fxmlLoader.setController(this);
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
+}
+
