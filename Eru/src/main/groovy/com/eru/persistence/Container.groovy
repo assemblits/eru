@@ -1,15 +1,15 @@
 package com.eru.persistence
 
 import com.eru.entities.Connection
-import com.eru.entities.Tag
 import com.eru.entities.Device
+import com.eru.entities.Tag
+import com.eru.entities.User
 import com.eru.gui.ApplicationContextHolder
 import com.eru.historian.HistoricDao
-
-import com.eru.entities.User
 import groovyx.gpars.agent.Agent
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import lombok.extern.log4j.Log4j
 
 import javax.persistence.EntityManager
 import java.sql.SQLException
@@ -19,21 +19,25 @@ import java.util.function.Predicate
 /**
  * Created by mtrujillo on 9/3/2015.
  */
+@Log4j
 class Container {
-    /* ********** Static Fields ********** */
-    private static final Container instance = new Container();
+    private static final Container instance = new Container()
+
     public static Container getInstance() {
-        return instance;
+        return instance
     }
 
-    /* **** Dao **** */
     // The lists in the Daos keep an image of the database status. This is useful when we want to see if any object is
     // in the database without tranasactions. The Dao list objects are the same as the container list objects, they have
     // the same reference.
-    private DaoList<Device> deviceDaoList;
-    private DaoList<Connection> connectionDaoList;
-    private DaoList<Tag>        tagDaoList;
-    private DaoList<User> userDaoList;
+    private DeviceRepository deviceRepository
+    private ObservableList<Device> devices
+    private ConnectionRepository connectionRepository
+    private ObservableList<Connection> connections
+    private TagRepository tagRepository
+    private ObservableList<Tag> tags
+    private UserRepository userRepository
+    private ObservableList<User> users
 
     /* **** Container Lists **** */
     // This lists are used in the APP, they are different than the Daos lists, but the objects are the same. Therefore,
@@ -42,81 +46,72 @@ class Container {
     //
     // Another characteristic of this lists is that they are wrapped in an Agent, and the modifications on the objects
     // of the list has to be done through Closure.
-    private Agent<ObservableList<Device>>     devicesAgent;
-    private Agent<ObservableList<Connection>> connectionsAgent;
-    private Agent<ObservableList<Tag>>        tagsAgent;
-    private Agent<ObservableList<User>>       usersAgent;
-    private Agent<Boolean>                    loadedAgent;
-
+    private Agent<ObservableList<Device>> devicesAgent
+    private Agent<ObservableList<Connection>> connectionsAgent
+    private Agent<ObservableList<Tag>> tagsAgent
+    private Agent<ObservableList<User>> usersAgent
+    private Agent<Boolean> loadedAgent
 
     /* ********** Constructor ********** */
+
     private Container() {
-        this.devicesAgent     = new Agent(FXCollections.observableArrayList());
-        this.connectionsAgent = new Agent(FXCollections.observableArrayList());
-        this.tagsAgent        = new Agent(FXCollections.observableArrayList());
-        this.usersAgent       = new Agent(FXCollections.observableArrayList());
-        this.loadedAgent      = new Agent(false);
+        this.devicesAgent = new Agent(FXCollections.observableArrayList())
+        this.connectionsAgent = new Agent(FXCollections.observableArrayList())
+        this.tagsAgent = new Agent(FXCollections.observableArrayList())
+        this.usersAgent = new Agent(FXCollections.observableArrayList())
+        this.loadedAgent = new Agent(false)
     }
 
     /* ********** Methods ********** */
-    public synchronized Boolean loadDatabase(){
-        final EntityManager EM       = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
 
-        // Clear the persistent context
-        EM.clear()
+    public synchronized Boolean loadDatabase() {
 
-        if(EM){
-            // Clean agents
-            this.devicesAgent.updateValue(FXCollections.observableArrayList());
-            this.connectionsAgent.updateValue(FXCollections.observableArrayList());
-            this.tagsAgent.updateValue(FXCollections.observableArrayList());
-            this.usersAgent.updateValue(FXCollections.observableArrayList());
+        this.devicesAgent.updateValue(FXCollections.observableArrayList())
+        this.connectionsAgent.updateValue(FXCollections.observableArrayList())
+        this.tagsAgent.updateValue(FXCollections.observableArrayList())
+        this.usersAgent.updateValue(FXCollections.observableArrayList())
 
-            // Create DAO using Hibernate Entity Manager
-            userDaoList       = new DaoList<>(User.class, EM, Dao.Order.ASC, "userName");
-            deviceDaoList     = new DaoList<>(Device.class, EM, Dao.Order.ASC, "name");
-            connectionDaoList = new DaoList<>(Connection.class, EM, Dao.Order.ASC, "name");
-            tagDaoList        = new DaoList<>(Tag.class, EM, Dao.Order.ASC, "name");
+        userRepository = ApplicationContextHolder.getApplicationContext().getBean(UserRepository)
+        deviceRepository = ApplicationContextHolder.getApplicationContext().getBean(DeviceRepository)
+        connectionRepository = ApplicationContextHolder.getApplicationContext().getBean(ConnectionRepository)
+        tagRepository = ApplicationContextHolder.getApplicationContext().getBean(TagRepository)
+        tags = FXCollections.observableArrayList(new ArrayList<>())
+        devices = FXCollections.observableArrayList(new ArrayList<>())
+        connections = FXCollections.observableArrayList(new ArrayList<>())
+        users = FXCollections.observableArrayList(new ArrayList<>())
 
-            // Load ALL with DAOs
-            LogUtil.logger.info("Loading database");
-            userDaoList.fillFromDatabase();
-            tagDaoList.fillFromDatabase();
-            deviceDaoList.fillFromDatabase();
-            connectionDaoList.fillFromDatabase();
+        users.addAll(userRepository.findAllByOrderByUserNameAsc())
+        tags.addAll(tagRepository.findAllByOrderByNameAsc())
+        devices.addAll(deviceRepository.findAllByOrderByNameAsc())
+        connections.addAll(connectionRepository.findAllByOrderByNameAsc())
 
-            // Copy the actual state of database to Container
-            loadAllReadyDaosLists();
+        // Copy the actual state of database to Container
+        loadAllReadyDaosLists()
 
-            // Update status
-            loadedAgent.updateValue(true);
+        // Update status
+        loadedAgent.updateValue(true)
 
-            LogUtil.logger.info("Database loaded");
-        } else {
-            // Update status
-            loadedAgent.updateValue(false);
-            LogUtil.logger.error("Container cannot load database. There is no Database connection.");
-        }
+        log.info("Database loaded")
+
         return loadedAgent.val
     }
 
     public void saveDatabase() {
-        LogUtil.logger.info("Saving database");
+        log.info("Saving database")
         try {
-            removeOrphanedPersistedData();
-            executeCascadeSaving();
-        } catch (Exception e){
-            LogUtil.logger.error("Error saving database", e);
+            removeOrphanedPersistedData()
+            executeCascadeSaving()
+        } catch (Exception e) {
+            log.error("Error saving database", e)
         }
-        LogUtil.logger.info("Database saved");
+        log.info("Database saved")
     }
 
-    /* ********** Private Methods ********** */
-    private void loadAllReadyDaosLists(){
-        usersAgent.val.addAll(userDaoList.getVal())
-        tagsAgent.val.addAll(tagDaoList.getVal())
-        devicesAgent.val.addAll(deviceDaoList.getVal())
-        connectionsAgent.val.addAll(connectionDaoList.getVal())
+    private void loadAllReadyDaosLists() {
+        usersAgent.val.addAll(users)
+        tagsAgent.val.addAll(tags)
+        devicesAgent.val.addAll(devices)
+        connectionsAgent.val.addAll(connections)
     }
 
     /**
@@ -125,34 +120,34 @@ class Container {
      *  2) If there is a user in the App but is not present in DaoList, add it to DaoList
      *  3) Has to be sent and wait because they use the same Entity Manager/Database Connection.
      */
-    private void removeOrphanedPersistedData(){
+    private void removeOrphanedPersistedData() {
 
         /* ** USERS ** */
         usersAgent.sendAndWait { ObservableList<User> usersInApp ->
-            final List<User> orphanUsers = new ArrayList<>(userDaoList.val)
+            final List<User> orphanUsers = new ArrayList<>(users)
             orphanUsers.removeAll(usersInApp.asList())
             orphanUsers.stream().forEach(new Consumer<User>() {
                 @Override
                 void accept(User orphanUser) {
-                    userDaoList.deleteOnDB(orphanUser)
+                    userRepository.delete(orphanUser)
                 }
             })
-            userDaoList.val.removeAll(orphanUsers)
+            users.removeAll(orphanUsers)
 
             final List<User> newUsers = new ArrayList<>(usersInApp)
-            newUsers.removeAll(userDaoList.val)
+            newUsers.removeAll(users)
             newUsers.stream().forEach(new Consumer<User>() {
                 @Override
                 void accept(User newUser) {
-                    userDaoList.createOnDB(newUser)
+                    userRepository.save(newUser)
                 }
             })
-            userDaoList.val.addAll(newUsers)
+            users.addAll(newUsers)
         }
 
         /* ** HISTORICAL ** */
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        HistoricDao historicDao = new HistoricDao(em);
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager()
+        HistoricDao historicDao = new HistoricDao(em)
 
         tagsAgent.sendAndWait { tagsInApp ->
             tagsInApp.stream().filter(new Predicate<Tag>() {
@@ -164,149 +159,144 @@ class Container {
                 @Override
                 void accept(Tag tagWithHistoricalDisabled) {
                     try {
-                        historicDao.deleteHistoricTagColumnIfExist(tagWithHistoricalDisabled);
+                        historicDao.deleteHistoricTagColumnIfExist(tagWithHistoricalDisabled)
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        e.printStackTrace()
                     }
                 }
             })
         }
-        em.close();
+        em.close()
 
         /* ** TAGS ** */
         tagsAgent.sendAndWait { ObservableList<Tag> tagsInApp ->
-            final List<Tag> orphanTags = new ArrayList<>(tagDaoList.val)
+            final List<Tag> orphanTags = new ArrayList<>(tags)
             orphanTags.removeAll(tagsInApp.asList())
             orphanTags.stream().forEach(new Consumer<Tag>() {
                 @Override
                 void accept(Tag orphanTag) {
-                    tagDaoList.deleteOnDB(orphanTag)
+                    tagRepository.delete(orphanTag)
                 }
             })
-            tagDaoList.val.removeAll(orphanTags)
+            tags.removeAll(orphanTags)
 
             final List<Tag> newTags = new ArrayList<>(tagsInApp)
-            newTags.removeAll(tagDaoList.val)
+            newTags.removeAll(tags)
             newTags.stream().forEach(new Consumer<Tag>() {
                 @Override
                 void accept(Tag newTag) {
-                    tagDaoList.createOnDB(newTag)
+                    tagRepository.save(newTag)
                 }
             })
-            tagDaoList.val.addAll(newTags)
+            tags.addAll(newTags)
         }
 
         /* ** MODBUS SERIAL DEVICES ** */
         devicesAgent.sendAndWait { ObservableList<Device> devicesInApp ->
-            final List<Device> orphanDevices = new ArrayList<>(deviceDaoList.val)
+            final List<Device> orphanDevices = new ArrayList<>(devices)
             orphanDevices.removeAll(devicesInApp.asList())
             orphanDevices.stream().forEach(new Consumer<Device>() {
                 @Override
                 void accept(Device orphanDevice) {
-                    deviceDaoList.deleteOnDB(orphanDevice)
+                    deviceRepository.delete(orphanDevice)
                 }
             })
-            deviceDaoList.val.removeAll(orphanDevices)
+            devices.removeAll(orphanDevices)
 
             final List<Device> newDevices = new ArrayList<>(devicesInApp)
-            newDevices.removeAll(deviceDaoList.val)
+            newDevices.removeAll(devices)
             newDevices.stream().forEach(new Consumer<Device>() {
                 @Override
                 void accept(Device newDevice) {
-                    deviceDaoList.createOnDB(newDevice)
+                    deviceRepository.save(newDevice)
                 }
             })
-            deviceDaoList.val.addAll(newDevices)
+            devices.addAll(newDevices)
         }
 
         /* ** MODBUS CONNECTIONS ** */
         connectionsAgent.sendAndWait { ObservableList<Connection> connectionsInApp ->
-            final List<Connection> orphanConnections = new ArrayList<>(connectionDaoList.val)
+            final List<Connection> orphanConnections = new ArrayList<>(connections)
             orphanConnections.removeAll(connectionsInApp.asList())
             orphanConnections.stream().forEach(new Consumer<Connection>() {
                 @Override
                 void accept(Connection orphanConnection) {
-                    connectionDaoList.deleteOnDB(orphanConnection)
+                    connectionRepository.delete(orphanConnection)
                 }
             })
-            connectionDaoList.val.removeAll(orphanConnections)
+            connections.removeAll(orphanConnections)
 
             final List<Connection> newConnections = new ArrayList<>(connectionsInApp)
-            newConnections.removeAll(connectionDaoList.val)
+            newConnections.removeAll(connections)
             newConnections.stream().forEach(new Consumer<Connection>() {
                 @Override
                 void accept(Connection newConnection) {
-                    connectionDaoList.createOnDB(newConnection)
+                    connectionRepository.save(newConnection)
                 }
             })
-            connectionDaoList.val.addAll(newConnections)
+            connections.addAll(newConnections)
         }
     }
 
     private void executeCascadeSaving() {
         /* ** USERS ** */
-        userDaoList.val.forEach(new Consumer<User>() {
+        users.forEach(new Consumer<User>() {
             @Override
-            void accept(User userInDaoList) {
-                userDaoList.updateOnDB(userInDaoList)
+            void accept(User user) {
+                userRepository.save(user)
             }
-        });
+        })
 
         /* ** HISTORICAL ** */
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        HistoricDao historicDao = new HistoricDao(em);
-        tagDaoList.getVal().stream()
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager()
+        HistoricDao historicDao = new HistoricDao(em)
+        tags.stream()
                 .filter(new Predicate<Tag>() {
             @Override
             boolean test(Tag tagInDaoList) {
-                tagInDaoList.getHistoricalEnabled();
+                tagInDaoList.getHistoricalEnabled()
             }
         })
                 .forEach(new Consumer<Tag>() {
             @Override
             void accept(Tag tagWithHistoricalEnabled) {
                 try {
-                    historicDao.addHistoricTagColumn(tagWithHistoricalEnabled);
+                    historicDao.addHistoricTagColumn(tagWithHistoricalEnabled)
                 } catch (SQLException e) {
-                    LogUtil.logger.debug("Error saving tagsAgent", e);
+                    log.debug("Error saving tagsAgent", e)
                 }
             }
-        });
-        em.close();
+        })
+        em.close()
 
-        /* ** TAGS ** */
-        tagDaoList.val.forEach(new Consumer<Tag>() {
+        tags.forEach(new Consumer<Tag>() {
             @Override
-            void accept(Tag tagInDaoList) {
-                tagDaoList.updateOnDB(tagInDaoList);
+            void accept(Tag tag) {
+                tagRepository.save(tag)
             }
-        });
+        })
 
-        /* ** MODBUS DEVICES ** */
         devicesAgent.val.forEach(new Consumer<Device>() {
             @Override
             void accept(Device deviceInDaoList) {
-                deviceDaoList.updateOnDB(deviceInDaoList);
+                deviceRepository.save(deviceInDaoList)
             }
-        });
+        })
 
-        /* ** MODBUS CONNECTIONS ** */
         connectionsAgent.val.forEach(new Consumer<Connection>() {
             @Override
-            void accept(Connection connectionInDaoList) {
-                connectionDaoList.updateOnDB(connectionInDaoList);
+            void accept(Connection connection) {
+                connectionRepository.save(connection)
             }
-        });
+        })
     }
 
-    /* ********** Getters ********** */
-
     Agent<ObservableList<Device>> getDevicesAgent() {
-        return devicesAgent;
+        return devicesAgent
     }
 
     Agent<ObservableList<Connection>> getConnectionsAgent() {
-        return connectionsAgent;
+        return connectionsAgent
     }
 
     Agent<ObservableList<Tag>> getTagsAgent() {

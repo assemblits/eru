@@ -2,8 +2,8 @@ package com.eru.gui.export;
 
 import com.eru.entities.Tag;
 import com.eru.gui.ApplicationContextHolder;
+import com.eru.persistence.TagRepository;
 import com.eru.util.PdfReportCreator;
-import com.eru.persistence.Dao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,8 +15,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lombok.extern.log4j.Log4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
@@ -28,42 +29,59 @@ import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
- *
+ * <p>
  * Title: ReportExportationController.java <br>
  * Company: Comelecinca Power Systems C.A.<br>
  *
  * @author Marlon Trujillo (MT)
  * @version 1.0
- * <br><br>
- * Changes:<br>
- * <ul>
- * <li> 2014-07-15 (MT) Creation </li>*
- * <ul>
+ *          <br><br>
+ *          Changes:<br>
+ *          <ul>
+ *          <li> 2014-07-15 (MT) Creation </li>*
+ *          <ul>
  */
 @Log4j
+@Lazy
+@Component
 public class ReportExportationController extends AnchorPane implements Initializable {
 
-    /* ********** Fields ********** */
-    @FXML private ListView<Tag>     selectedTagsListView;
-    @FXML private ListView<Tag>     availableTagsListView;
-    @FXML private VBox              initDateVBox;
-    @FXML private VBox              finalDateVBox;
-    @FXML private Label             userMessageText;
-    @FXML private HBox              messageHBox;
-    @FXML private Tab               historianTab;
-    @FXML private Button            addTagButton;
-    @FXML private Button            deleteTagButton;
-    @FXML private DatePicker        initTagDatePicker;
-    @FXML private DatePicker        lastTagDatePicker;
-    @FXML private CheckBox          checkBoxAllTags;
-    @FXML private CheckBox          checkBoxTodayTags;
-    @FXML private CheckBox          checkBoxRangeTags;
-    @FXML private Button            exportButton;
-    @FXML private Button            cancelButton;
+    @FXML
+    private ListView<Tag> selectedTagsListView;
+    @FXML
+    private ListView<Tag> availableTagsListView;
+    @FXML
+    private VBox initDateVBox;
+    @FXML
+    private VBox finalDateVBox;
+    @FXML
+    private Label userMessageText;
+    @FXML
+    private HBox messageHBox;
+    @FXML
+    private Tab historianTab;
+    @FXML
+    private Button addTagButton;
+    @FXML
+    private Button deleteTagButton;
+    @FXML
+    private DatePicker initTagDatePicker;
+    @FXML
+    private DatePicker lastTagDatePicker;
+    @FXML
+    private CheckBox checkBoxAllTags;
+    @FXML
+    private CheckBox checkBoxTodayTags;
+    @FXML
+    private CheckBox checkBoxRangeTags;
+    @FXML
+    private Button exportButton;
+    @FXML
+    private Button cancelButton;
+    private PdfReportCreator pdfReportCreator;
 
 
-    /* ********** Constructors ********** */
-    public ReportExportationController() {
+    public ReportExportationController(PdfReportCreator pdfReportCreator) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportExportation.fxml"));
             fxmlLoader.setRoot(this);
@@ -72,20 +90,17 @@ public class ReportExportationController extends AnchorPane implements Initializ
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        this.pdfReportCreator = pdfReportCreator;
         registerListeners();
     }
 
-    /* ********** Initialization ********** */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Fill the choice boxes
         try {
-
-            EntityManager entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
-            Dao<Tag> tagDao= new Dao<>(entityManager, Tag.class);
-            for(Tag t : tagDao.findEntities("name", Dao.Order.ASC)){
-                if(t.getHistoricalEnabled()) availableTagsListView.getItems().add(t);
+            TagRepository tagRepository = ApplicationContextHolder.getApplicationContext().getBean(TagRepository.class);
+            for (Tag t : tagRepository.findAllByOrderByNameAsc()) {
+                if (t.getHistoricalEnabled()) availableTagsListView.getItems().add(t);
             }
 
         } catch (Exception e) {
@@ -93,7 +108,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
         }
 
         // Customize the datePickers
-        initTagDatePicker.setValue(LocalDate.of(1985,9,12));
+        initTagDatePicker.setValue(LocalDate.of(1985, 9, 12));
         initTagDatePicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
@@ -146,9 +161,9 @@ public class ReportExportationController extends AnchorPane implements Initializ
     }
 
     private void handleUserSelection(final String PROPERTY) {
-        switch (PROPERTY){
+        switch (PROPERTY) {
             case "EXPORT":
-                    exportHistoric();
+                exportHistoric();
                 break;
             case "ADD_TAG_BUTTON":
                 if (availableTagsListView.getSelectionModel().getSelectedItem() != null) {
@@ -157,18 +172,18 @@ public class ReportExportationController extends AnchorPane implements Initializ
                 }
                 break;
             case "DELETE_TAG":
-                if(selectedTagsListView.getSelectionModel().getSelectedItem()!=null){
+                if (selectedTagsListView.getSelectionModel().getSelectedItem() != null) {
                     availableTagsListView.getItems().add(selectedTagsListView.getSelectionModel().getSelectedItem());
                     selectedTagsListView.getItems().remove(selectedTagsListView.getSelectionModel().getSelectedItem());
                 }
                 break;
             case "DATE_ALL_TAGS":
-                if(checkBoxAllTags.isSelected()){
+                if (checkBoxAllTags.isSelected()) {
                     checkBoxRangeTags.setSelected(false);
                     checkBoxTodayTags.setSelected(false);
                     initDateVBox.setVisible(false);
                     finalDateVBox.setVisible(false);
-                    initTagDatePicker.setValue(LocalDate.of(1985,9,12));
+                    initTagDatePicker.setValue(LocalDate.of(1985, 9, 12));
                     lastTagDatePicker.setValue(LocalDate.now());
                 } else {
                     checkBoxAllTags.setSelected(true);
@@ -198,7 +213,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
                     lastTagDatePicker.setDisable(false);
                     initTagDatePicker.setValue(LocalDate.now());
                     lastTagDatePicker.setValue(LocalDate.now());
-                }else{
+                } else {
                     checkBoxRangeTags.setSelected(true);
                 }
                 break;
@@ -217,7 +232,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
         Stage stage = (Stage) cancelButton.getScene().getWindow();
 
         // If is empty the selected list, or is not selected any checkbox Return!
-        if((selectedTagsListView.getItems().isEmpty())){
+        if ((selectedTagsListView.getItems().isEmpty())) {
             Alert exportAllConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             exportAllConfirmation.setTitle("The list is empty. Do you want to export only time stamp?");
             Optional<ButtonType> result = exportAllConfirmation.showAndWait();
@@ -226,7 +241,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
             } else {
                 return;
             }
-        } else if(!checkBoxAllTags.isSelected() & !checkBoxTodayTags.isSelected() & !checkBoxRangeTags.isSelected()) {
+        } else if (!checkBoxAllTags.isSelected() & !checkBoxTodayTags.isSelected() & !checkBoxRangeTags.isSelected()) {
             Alert exportAllConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
             exportAllConfirmation.setTitle("Please, select a tag date checkbox.");
             return;
@@ -242,37 +257,38 @@ public class ReportExportationController extends AnchorPane implements Initializ
         File file = fileChooser.showSaveDialog(stage);
 
         // If 'cancel' button is pressed on the saveDatabase dialog, return...
-        if(file == null) return;
+        if (file == null) return;
 
         if (!file.getName().contains(".")) {
             file = new File(file.getAbsolutePath() + ".pdf");
         }
 
         if (checkBoxTodayTags.isSelected() || checkBoxRangeTags.isSelected()) {
-            PdfReportCreator pdfReport = new PdfReportCreator();
-            pdfReport.setTags(selectedTagsListView.getItems());
-            pdfReport.setReportType(PdfReportCreator.Report.DATE_FILTER_TAGS);
-            pdfReport.setInitDate(initTagDatePicker.getValue());
-            pdfReport.setFinalDate(lastTagDatePicker.getValue());
-            pdfReport.setFileName(file.getAbsolutePath());
+
+            PdfReportCreator.Configuration configuration = PdfReportCreator.Configuration.builder()
+                    .tags(selectedTagsListView.getItems())
+                    .reportType(PdfReportCreator.Report.DATE_FILTER_TAGS)
+                    .initDate(initTagDatePicker.getValue())
+                    .finalDate(lastTagDatePicker.getValue())
+                    .fileName(file.getAbsolutePath()).build();
             //pdfReport.setAuthor(Main.actualUser.getUserName()); TODO: User name specifications
             try {
-                pdfReport.makePDF("Historic Report");
+                pdfReportCreator.makePDF(configuration, "Historic Report");
             } catch (Exception e) {
                 Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
                 log.error("Error exporting historic.", e);
             }
         } else if (checkBoxAllTags.isSelected()) {
-            PdfReportCreator pdfReport = new PdfReportCreator();
-            pdfReport.setTags(selectedTagsListView.getItems());
-            pdfReport.setReportType(PdfReportCreator.Report.ALL_TAGS);
-            pdfReport.setInitDate(initTagDatePicker.getValue());
-            pdfReport.setFinalDate(lastTagDatePicker.getValue());
-            pdfReport.setFileName(file.getAbsolutePath());
+            PdfReportCreator.Configuration configuration = PdfReportCreator.Configuration.builder()
+                    .tags(selectedTagsListView.getItems())
+                    .reportType(PdfReportCreator.Report.ALL_TAGS)
+                    .initDate(initTagDatePicker.getValue())
+                    .finalDate(lastTagDatePicker.getValue())
+                    .fileName(file.getAbsolutePath()).build();
             // pdfReport.setAuthor(Main.actualUser.getUserName()); TODO: User name again!
             try {
-                pdfReport.makePDF("Complete Historic Report");
+                pdfReportCreator.makePDF(configuration, "Complete Historic Report");
             } catch (Exception e) {
                 Alert errorWindow = new Alert(Alert.AlertType.ERROR);
                 errorWindow.setTitle(e.getMessage());
@@ -284,7 +300,7 @@ public class ReportExportationController extends AnchorPane implements Initializ
     }
 
 
-    private void closeStage(){
+    private void closeStage() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }

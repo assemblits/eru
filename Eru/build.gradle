@@ -51,27 +51,17 @@ sourceSets {
 }
 
 dependencies {
-
-    //project
     compile 'org.springframework.boot:spring-boot-starter'
     compile "org.projectlombok:lombok:${lombokVersion}"
-
-    //logging
     compile "log4j:log4j:${log4jVersion}"
-
-    //Dolphin
     compile "com.lowagie:itext:${itextVersion}"
     compile "org.open-dolphin:dolphin-client:${openDolphinVersion}"
     compile "org.open-dolphin:dolphin-client-javafx:${openDolphinVersion}"
     compile "org.open-dolphin:dolphin-shared:${openDolphinVersion}"
     compile "org.open-dolphin:dolphin-server:${openDolphinVersion}"
-
-    //persistence
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile "com.h2database:h2:${h2Version}"
     compile "org.postgresql:postgresql:${postgresVersion}"
-
-    //jetty
     compile "org.eclipse.jetty:jetty-servlets:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-server:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-servlet:${jettyVersion}"
@@ -81,14 +71,10 @@ dependencies {
     compile "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-xml:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-io:${jettyVersion}"
-
-    //RXTX
     compile "org.rxtx:rxtx:${rxtxVersion}"
     compile "net.wimpi:jamod:${wimpiJamodVersion}"
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
-
-    //Scene builder
     compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
 
     //Testing

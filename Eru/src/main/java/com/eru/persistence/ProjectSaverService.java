@@ -18,9 +18,10 @@ public class ProjectSaverService extends Service<Project> {
             protected Project call() throws Exception {
                 updateMessage("Collecting objects");
                 updateProgress(76, 100);
-                ProjectDao projectDao = ApplicationContextHolder.getApplicationContext().getBean(ProjectDao.class);
+                ProjectRepository projectRepository = ApplicationContextHolder.getApplicationContext()
+                        .getBean(ProjectRepository.class);
                 log.debug("Saving " + getProject());
-                Project updatedProject = projectDao.update(getProject());
+                Project updatedProject = projectRepository.save(getProject());
                 updateProgress(100, 100);
                 return updatedProject;
             }

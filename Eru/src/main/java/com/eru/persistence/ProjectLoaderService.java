@@ -23,14 +23,14 @@ public class ProjectLoaderService extends Service<Project> {
                 try {
                     updateMessage("Loading project");
                     updateProgress(25, 100);
-                    ProjectDao projectDao = ApplicationContextHolder
-                            .getApplicationContext().getBean(ProjectDao.class);
-                    List<Project> entities = projectDao.findEntities();
-                    if (entities == null || entities.isEmpty()) {
+                    ProjectRepository projectDao = ApplicationContextHolder
+                            .getApplicationContext().getBean(ProjectRepository.class);
+                    List<Project> projects = projectDao.findAll();
+                    if (projects == null || projects.isEmpty()) {
                         project = getNewProject();
-                        projectDao.create(project);
+                        projectDao.save(project);
                     } else {
-                        project = entities.get(0);
+                        project = projects.get(0);
                     }
                     updateMessage("Loading custom components");
                     updateProgress(75, 100);

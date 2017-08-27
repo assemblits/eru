@@ -19,10 +19,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 //// TODO: 24-08-17 Refactor
 public class HistoricDao {
-    /* ********** Fields ********** */
     private final JdbcTemplate jdbcTemplate;
 
-    /* ********** Methods ********** */
     public List<Map<String, String>> getTagsHistoric(List<Tag> tags) throws SQLException {
         List<Map<String, String>> tagHistoric = new LinkedList<>();
         StringBuilder columnNames = new StringBuilder();

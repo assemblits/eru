@@ -1,10 +1,10 @@
 package com.eru.alarming;
 
 import com.eru.entities.Alarm;
-import com.eru.gui.ApplicationContextHolder;
-import com.eru.persistence.Container;
-import com.eru.persistence.Dao;
 import com.eru.entities.Tag;
+import com.eru.gui.ApplicationContextHolder;
+import com.eru.persistence.AlarmRepository;
+import com.eru.persistence.Container;
 import com.eru.util.Preferences;
 import groovy.lang.Closure;
 import groovyx.gpars.agent.Agent;
@@ -17,8 +17,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.extern.log4j.Log4j;
+import org.springframework.data.domain.PageRequest;
 
-import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
@@ -32,31 +32,24 @@ import java.util.concurrent.Executors;
  */
 @Log4j
 public class Alarming {
-    /* ********** Static Fields ********** */
     private static final Alarming ourInstance = new Alarming();
-    public  static Alarming getInstance() {
-        return ourInstance;
-    }
 
-    /* ********** Fields ********** */
-    private EntityManager                               entityManager;
-    private Dao<Alarm> alarmDao;
-    private Agent<ObservableList<Alarm>>                alarmsAgent;
-    private boolean                                     running;
-    private StringProperty                              status;
-    private BooleanProperty                             alarmed;
-    private ExecutorService                             executorService;
+    private AlarmRepository alarmRepository;
+    private Agent<ObservableList<Alarm>> alarmsAgent;
+    private boolean running;
+    private StringProperty status;
+    private BooleanProperty alarmed;
+    private ExecutorService executorService;
     private Map<Tag, AlarmListenerToCreateNewAlarms> tagsRegisteredListeners;
 
     /* ********** Constructor ********** */
     private Alarming() {
-        entityManager   = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
-        running         = false;
-        alarmDao        = new Dao<>(entityManager, Alarm.class);
-        alarmsAgent     = new Agent<>(FXCollections.observableArrayList());
-        status          = new SimpleStringProperty();
-        alarmed         = new SimpleBooleanProperty();
-        executorService  = Executors.newSingleThreadExecutor(r -> {
+        running = false;
+        alarmRepository = ApplicationContextHolder.getApplicationContext().getBean(AlarmRepository.class);
+        alarmsAgent = new Agent<>(FXCollections.observableArrayList());
+        status = new SimpleStringProperty();
+        alarmed = new SimpleBooleanProperty();
+        executorService = Executors.newSingleThreadExecutor(r -> {
             Thread newThread = new Thread(r);
             newThread.setDaemon(true);
             return newThread;
@@ -64,37 +57,40 @@ public class Alarming {
         tagsRegisteredListeners = new HashMap<>();
     }
 
+    public static Alarming getInstance() {
+        return ourInstance;
+    }
+
     /* ********** Methods ********** */
     public synchronized boolean start() {
-        if(running) {
+        if (running) {
             log.error("Alarming: detected a load command, but the communications are already started.");
         } else {
             try {
-                // Check if there is a database connection
-                if (entityManager == null){
-                    entityManager = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
-                }
-
-                // Clear persistent context and memory
-                entityManager.clear();
                 alarmsAgent.getVal().clear();
 
                 // Setting limits for alarms in memory
-                final int alarmTableCount = alarmDao.getCount();
+                final long alarmTableCount = alarmRepository.count();
                 final int alarmsToShowLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
-                final int firstResult = alarmTableCount - alarmsToShowLimit < 0 ? 0 : alarmTableCount - alarmsToShowLimit;
 
                 // Loading alarms from database
-                log.info("Loading " + alarmsToShowLimit  + " of " + alarmTableCount + "  alarms from database.");
-                final ObservableList<Alarm> databaseAlarms = FXCollections.observableArrayList(alarmDao.findEntities("timeStamp", Dao.Order.ASC, alarmsToShowLimit, firstResult));
+                log.info("Loading " + alarmsToShowLimit + " of " + alarmTableCount + "  alarms from database.");
+//                final long firstResult = alarmTableCount - alarmsToShowLimit < 0 ? 0 : alarmTableCount - alarmsToShowLimit;
+//                final ObservableList<Alarm> databaseAlarms = FXCollections.observableArrayList(alarmDao.findEntities("timeStamp", Dao.Order.ASC, alarmsToShowLimit, firstResult));
+//                alarmsAgent.updateValue(databaseAlarms);
+
+                final ObservableList<Alarm> databaseAlarms =
+                        FXCollections.observableArrayList(alarmRepository.findAllByOrderByTimeStampAsc(
+                                new PageRequest((int) (alarmTableCount / alarmsToShowLimit), alarmsToShowLimit)));
                 alarmsAgent.updateValue(databaseAlarms);
+
                 updateStatus();
 
                 running = true;
 
                 installAlarmListenerOnTags(Container.getInstance().getTagsAgent().getInstantVal());
                 log.info("Alarming: alarms loaded.");
-            }catch (Exception e){
+            } catch (Exception e) {
                 final String errorMSG = "Alarming module cannot load.";
                 status.setValue(errorMSG);
                 alarmed.setValue(true);
@@ -104,27 +100,27 @@ public class Alarming {
         return running;
     }
 
-    public synchronized void stop(){
+    public synchronized void stop() {
         removeAlarmListenerOnRegisteredTags();
         running = false;
     }
 
     public void load(Alarm newAlarm) {
-        if(newAlarm == null) return;
+        if (newAlarm == null) return;
 
         final int alarmsInDatabaseLimit = Preferences.getInstance().getAlarmsDatabaseLimit();
-        final int alarmsInMemoryLimit   = Preferences.getInstance().getAlarmsInMemoryLimit();
+        final int alarmsInMemoryLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
 
-        executorService.execute(()->{
+        executorService.execute(() -> {
                     // In Database
-                    alarmDao.create(newAlarm);
-                    while(alarmDao.getCount() > alarmsInDatabaseLimit){
-                        alarmDao.delete(alarmDao.findEntities("timeStamp", Dao.Order.ASC, 1, 0).get(0));
+                    alarmRepository.save(newAlarm);
+                    while (alarmRepository.count() > alarmsInDatabaseLimit) {
+                        alarmRepository.delete(alarmRepository.findFirstByOrderByTimeStampAsc());
                     }
 
                     // In memory
                     alarmsAgent.send(new Closure(this) {
-                        void doCall(ObservableList<Alarm> alarms){
+                        void doCall(ObservableList<Alarm> alarms) {
                             alarms.add(newAlarm);
                             while (alarms.size() > alarmsInMemoryLimit) {
                                 alarms.remove(0);
@@ -138,15 +134,15 @@ public class Alarming {
         );
     }
 
-    public void installAlarmListenerOnTags(List<Tag> tagsToListen){
+    public void installAlarmListenerOnTags(List<Tag> tagsToListen) {
         log.info("Alarming: Installing listeners on tags:");
 
-        if(tagsRegisteredListeners.size()>0){
+        if (tagsRegisteredListeners.size() > 0) {
             removeAlarmListenerOnRegisteredTags();
         }
 
         // Check if Alarming module is running, has to be running cause the listen create new alarms on database.
-        if(running){
+        if (running) {
             tagsToListen.stream()
                     .filter(Tag::getAlarmEnabled)
                     .forEach(alarmEnabledTag -> {
@@ -162,22 +158,22 @@ public class Alarming {
 
     public void removeAlarmListenerOnRegisteredTags() {
         log.info("Alarming: Removing listeners on tags...");
-        for(Tag tag : tagsRegisteredListeners.keySet()){
+        for (Tag tag : tagsRegisteredListeners.keySet()) {
             tag.alarmedProperty().removeListener(tagsRegisteredListeners.get(tag));
         }
         tagsRegisteredListeners.clear();
         log.info("Alarming: listeners on tags removed.");
     }
 
-    public void setAcknowledgeAllAlarms(String userInCharge){
+    public void setAcknowledgeAllAlarms(String userInCharge) {
         log.info("Acknowledging all alarms...");
         alarmsAgent.send(new Closure(this) {
-            void doCall(ObservableList<Alarm> alarms){
+            void doCall(ObservableList<Alarm> alarms) {
                 alarms.forEach(alarm -> {
-                    if(!alarm.getAcknowledged()){
+                    if (!alarm.getAcknowledged()) {
                         alarm.setAcknowledged(true);
                         alarm.setUserInCharge(userInCharge);
-                        alarmDao.update(alarm);
+                        alarmRepository.save(alarm);
                     }
                 });
             }
@@ -206,7 +202,7 @@ public class Alarming {
 //    }
 
     /* ********** Private Methods ********** */
-    private void updateStatus(){
+    private void updateStatus() {
         // Clean Status
         alarmed.set(false);
         status.set("");
@@ -228,6 +224,7 @@ public class Alarming {
     public String getStatus() {
         return status.get();
     }
+
     public StringProperty statusProperty() {
         return status;
     }
@@ -235,6 +232,7 @@ public class Alarming {
     public boolean getAlarmed() {
         return alarmed.get();
     }
+
     public BooleanProperty alarmedProperty() {
         return alarmed;
     }
