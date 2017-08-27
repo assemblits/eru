@@ -26,7 +26,7 @@ public class SceneFxmlManagerTest {
 
     @Test
     public void createSceneFxmlFileWithTheFormattedNameAndWithTheRightContent() throws Exception {
-        File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(new Display(1L, "MyScene", "group", false));
+        File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(new Display(1L, "Test scene", "group", false));
 
         Assert.assertEquals("test-scene.fxml", sceneFxmlFile.getName());
         Assert.assertEquals(NEW_FXML_FILE_CONTENT, getFileContent(sceneFxmlFile));
