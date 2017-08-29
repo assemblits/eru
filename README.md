@@ -1,10 +1,10 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.pnghttps://raw.githubusercontent.com/marlontrujillo1080/eru/master/lib/graphic-design/project-icon.png" />
-  Eru Server
+  <img src="https://raw.githubusercontent.com/marlontrujillo1080/eru/master/src/main/resources/com/eru/gui/Logo124x124.png" />
+  Eru
   <br>
 </h1>
 
-<h4 align="center">An open linux SCADA based on JavaFX.</h4>
+<h4 align="center">The open JavaFX SCADA</h4>
 
 [![Join the chat at https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby](https://badges.gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby.svg)](https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -28,13 +28,9 @@
 
 ## Dependencies
   * Database
-    - Postgresql installed on localhost with the following features:
-      - Username = postgres (Default)
-      - Password = postgres
-      - Port     = 5432 (Default)
-      - A database called "eru" in the public schema.
+    - H2 database.
   * Modbus:
-    - To be able to connect to the modbus devices (no necessary to run the app) install the drivers in the java environment. Linux (Debian) example:
+    - To be able to connect to the serial modbus devices (no necessary to run the app) install the drivers in the java environment. Linux (Debian) example:
       1) Go to: _eru_home_directory / lib / serial / Rxtx-Serial-comms-Drivers /_
       2) Choose your binary build: x86_64 or i386 (based on which version of the JVM you are installing to)
       3) Extract.

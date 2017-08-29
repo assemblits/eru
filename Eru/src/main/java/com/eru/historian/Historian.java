@@ -1,7 +1,6 @@
 package com.eru.historian;
 
 import com.eru.gui.ApplicationContextHolder;
-import com.eru.persistence.Container;
 import com.eru.entities.Tag;
 import com.eru.util.Constants;
 import com.eru.util.Preferences;
@@ -16,10 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 /**
  * Created by mtrujillo on 14/07/2014.
+ * TODO
  */
 @Log4j
 public class Historian {
@@ -67,14 +66,14 @@ public class Historian {
 
     /* ********** Private Methods ********** */
     private Tag[] getEnableTagsFromContainer(){
-        historicalTagList.clear();
-        try {
-            historicalTagList.addAll(Container.getInstance().getTagsAgent().getVal().stream()
-                    .filter(Tag::getHistoricalEnabled)
-                    .collect(Collectors.toList()));
-        } catch (InterruptedException e) {
-            log.error("Cannot load tags for historical daemon.", e);
-        }
+//        historicalTagList.clear();
+//        try {
+//            historicalTagList.addAll(Container.getInstance().getTagsAgent().getVal().stream()
+//                    .filter(Tag::getHistoricalEnabled)
+//                    .collect(Collectors.toList()));
+//        } catch (InterruptedException e) {
+//            log.error("Cannot load tags for historical daemon.", e);
+//        }
         return historicalTagList.toArray(new Tag[historicalTagList.size()]);
     }
 

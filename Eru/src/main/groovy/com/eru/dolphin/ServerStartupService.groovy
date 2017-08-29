@@ -1,7 +1,6 @@
 package com.eru.dolphin
 
 
-import com.eru.persistence.Container
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import org.eclipse.jetty.servlet.ServletContextHandler

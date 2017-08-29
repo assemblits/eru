@@ -4,7 +4,6 @@ import com.eru.entities.Alarm;
 import com.eru.entities.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.AlarmRepository;
-import com.eru.persistence.Container;
 import com.eru.util.Preferences;
 import groovy.lang.Closure;
 import groovyx.gpars.agent.Agent;
@@ -88,7 +87,7 @@ public class Alarming {
 
                 running = true;
 
-                installAlarmListenerOnTags(Container.getInstance().getTagsAgent().getInstantVal());
+//                installAlarmListenerOnTags(Container.getInstance().getTagsAgent().getInstantVal());
                 log.info("Alarming: alarms loaded.");
             } catch (Exception e) {
                 final String errorMSG = "Alarming module cannot load.";

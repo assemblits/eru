@@ -8,7 +8,7 @@ spring:
     properties:
       hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   datasource:
-    url: jdbc:postgresql://localhost:5432/eru
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
+    url: jdbc:h2:~/eru
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:

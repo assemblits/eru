@@ -5,7 +5,6 @@ import com.eru.entities.Tag
 import com.eru.entities.Alarm
 import com.eru.alarming.Alarming
 import com.eru.logger.LiveAppender
-import com.eru.persistence.Container
 import com.eru.entities.User
 import org.opendolphin.LogConfig
 import org.opendolphin.core.comm.NamedCommand
