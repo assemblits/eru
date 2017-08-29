@@ -47,10 +47,10 @@ public class  Device {
     private void listenIfConnect(ObjectProperty<Connection> connection) {
         if(connection.get() == null) return;
         connection.get().connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-            if (isConnected){
+            if (isConnected && getEnabled()){
                 CommunicationsManager.getInstance().startUpdating(this);
                 setStatus("Connected");
-            } else {
+            } else if (!isConnected){
                 CommunicationsManager.getInstance().stopUpdating(this);
                 setStatus("Disconnected");
             }
