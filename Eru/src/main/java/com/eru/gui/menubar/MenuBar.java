@@ -51,4 +51,7 @@ public class MenuBar extends javafx.scene.control.MenuBar {
         this.eruController.performScadaAction(EruController.ScadaAction.LAUNCH);
     }
 
+    @FXML private void stopScadaMenuItemSelected(ActionEvent event){
+        this.eruController.performScadaAction(EruController.ScadaAction.STOP);
+    }
 }

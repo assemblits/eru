@@ -19,6 +19,8 @@ import javafx.stage.StageStyle;
 import lombok.extern.log4j.Log4j;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -57,6 +59,9 @@ public class EruController {
         switch (scadaAction) {
             case LAUNCH:
                 try {
+                    log.info("Launching tags.");
+                    tagLinksManager.linkToConnections();
+                    log.info("Launching displays.");
                     final Display mainDisplay = this.project.get().getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
                     final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
                     final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
@@ -66,9 +71,12 @@ public class EruController {
                     final Stage SCADA_STAGE = new Stage();
                     SCADA_STAGE.setScene(SCADA_SCENE);
                     SCADA_STAGE.show();
-                    tagLinksManager.linkToConnections();
                     tagLinksManager.linkToScada(mainNode);
-                } catch (Exception e) {
+                } catch (Exception e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Error in SCADA launching process.");
+                    alert.setContentText("There is no Main display created.");
+                    alert.show();
                     log.error(e);
                     e.printStackTrace();
                 }
@@ -97,32 +105,30 @@ public class EruController {
     public void performDBAction(DBAction dbAction){
         switch (dbAction) {
             case LOAD:
+                log.info("Loading " + getProject());
                 final Stage plsStage            = new Stage(StageStyle.TRANSPARENT);
                 final Preloader preloaderWindow = new Preloader();
                 final ProjectLoaderService pls  = new ProjectLoaderService();
-
                 preloaderWindow.getProgressBar().progressProperty().bind(pls.progressProperty());
                 preloaderWindow.getStatusLabel().textProperty().bind(pls.messageProperty());
                 pls.setOnSucceeded(event -> {
                     this.project.set((Project) event.getSource().getValue());
                     plsStage.close();
+                    log.info("Loaded");
                 });
                 pls.start();
                 plsStage.setScene(new Scene(preloaderWindow));
                 plsStage.show();
                 break;
             case SAVE:
-                final Alert alertWindow = new Alert(Alert.AlertType.INFORMATION);
+                log.info("Saving " + getProject());
                 ProjectSaverService pss = new ProjectSaverService();
-                alertWindow.setContentText(null);
-                alertWindow.headerTextProperty().bind(pss.messageProperty());
                 pss.setProject(this.project.get());
                 pss.setOnSucceeded(event -> {
                     this.project.set((Project) event.getSource().getValue());
-                    alertWindow.close();
+                    log.info("Saved");
                 });
                 pss.start();
-                alertWindow.show();
                 break;
         }
     }

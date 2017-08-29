@@ -16,6 +16,7 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Scada">
         <MenuItem mnemonicParsing="false" onAction="#launchScadaMenuItemSelected" text="Launch" />
+        <MenuItem mnemonicParsing="false" onAction="#stopScadaMenuItemSelected" text="Stop" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
         <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About" />

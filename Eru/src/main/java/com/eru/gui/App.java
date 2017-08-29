@@ -107,9 +107,16 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     public void startEruScreen() {
         log.info("Starting eru screen");
 
-        this.skeleton = new Skeleton();
+        if(this.skeleton == null){
+            this.skeleton = new Skeleton();
+        }
         this.menubar = new MenuBar(eruController);
         this.projectTree = new ProjectTree(eruController);
+
+        this.skeleton.getTopPane().getChildren().clear();
+        this.skeleton.getTopPane().getChildren().add(menubar);
+        this.skeleton.getLeftPane().getChildren().clear();
+        this.skeleton.getLeftPane().getChildren().add(projectTree);
 
         this.connectionsTable = new ConnectionsTable(eruController);
         this.connectionsTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
@@ -126,12 +133,11 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
         this.displayTable = new DisplayTable(eruController, this);
         this.displayTable.setTextToFilter(skeleton.getSearchTextField().textProperty());
 
-        this.skeleton.getTopPane().getChildren().add(menubar);
-        this.skeleton.getLeftPane().getChildren().add(projectTree);
-
-        stage.setScene(new Scene(skeleton));
-        stage.setMaximized(true);
-        stage.show();
+        if (!stage.isShowing()){
+            stage.setScene(new Scene(skeleton));
+            stage.setMaximized(true);
+            stage.show();
+        }
     }
 
     @Override
