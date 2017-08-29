@@ -1,6 +1,6 @@
 package com.eru.entities;
 
-import com.eru.comm.CommunicationsManager;
+import com.eru.util.CommunicationsManager;
 import com.eru.comm.device.AddressesBlock;
 import javafx.beans.property.*;
 import org.hibernate.annotations.LazyCollection;

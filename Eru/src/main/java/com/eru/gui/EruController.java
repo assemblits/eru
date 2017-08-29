@@ -105,7 +105,7 @@ public class EruController {
     public void performDBAction(DBAction dbAction){
         switch (dbAction) {
             case LOAD:
-                log.info("Loading database");
+                log.info("Loading database  ");
                 final Stage plsStage            = new Stage(StageStyle.TRANSPARENT);
                 final Preloader preloaderWindow = new Preloader();
                 final ProjectLoaderService pls  = new ProjectLoaderService();

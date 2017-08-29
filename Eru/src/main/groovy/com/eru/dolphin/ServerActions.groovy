@@ -1,6 +1,6 @@
 package com.eru.dolphin
 
-import com.eru.comm.CommunicationsManager
+import com.eru.util.CommunicationsManager
 import com.eru.entities.Tag
 import com.eru.entities.Alarm
 import com.eru.alarming.Alarming

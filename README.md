@@ -81,15 +81,22 @@ You can use IntelliJ IDE to have the same experience of the developers:
 
 ## Credits
 
-This software uses code from several open source packages.
+This software uses code from several open source packages like:
 
 - [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Groovy](http://groovy-lang.org/)
+- [Spring](https://spring.io/)
+- [Gradle](https://gradle.org/)
+- [Loombok](https://projectlombok.org/)
+- [Log4J](https://logging.apache.org/log4j/)
 - [Open Dolphin](http://open-dolphin.org/dolphin_website/Home.html)
 - [Medusa Project](https://github.com/marlontrujillo1080/Medusa)
-- [Groovy](http://groovy-lang.org/)
-- [Postgresql](https://www.postgresql.org/)
 - [Jamod](http://jamod.sourceforge.net/index.html)
-- [RXTX for Java](http://mfizz.com/oss/rxtx-for-java). Courtesy of [Mfizz, Inc. ](http://mfizz.com/)  
+- [RXTX for Java](http://mfizz.com/oss/rxtx-for-java). Courtesy of [Mfizz, Inc. ](http://mfizz.com/)
+
+And skills from:
+- [Marlon Trujillo](https://github.com/marlontrujillo1080)
+- [Gilberto Requena](https://github.com/gilbertojrequena)
 - [Rafael Robles](https://github.com/Rafaelsk)
 - [Lucio Guerchi](https://github.com/luHub)
 - [Ronald Vera](https://www.linkedin.com/in/ronald-vera-2185b382/)

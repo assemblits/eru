@@ -1,4 +1,4 @@
-package com.eru.comm;
+package com.eru.util;
 
 import com.eru.comm.member.Communicator;
 import com.eru.comm.member.Director;
@@ -6,9 +6,7 @@ import com.eru.comm.member.ModbusDeviceCommunicator;
 import com.eru.entities.Device;
 import lombok.extern.log4j.Log4j;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
