@@ -1,5 +1,8 @@
 package com.eru.util;
 
+import com.eru.gui.App.Theme;
+import com.eru.gui.App;
+
 /**
  *
  * @author marlon
@@ -21,6 +24,13 @@ public class Preferences {
 
 
     /* ********** Visual Module ********** */
+    public String getTheme() {
+        return preferences.get("visual.eru.theme", Theme.DEFAULT.name());
+    }
+    public void setTheme(Theme theme) {
+        preferences.put("visual.eru.theme", theme.name());
+    }
+
     public boolean getAnimationsEnabled(){
         return preferences.getBoolean("visual.animations.enabled", true);
     }
@@ -37,20 +47,6 @@ public class Preferences {
 
 
     /* ********** Communication Module ********** */
-    public boolean getCommunicationsEnabled(){
-        return preferences.getBoolean("communications.enabled", true);
-    }
-    public void setCommunicationsEnabled(Boolean enabled){
-        preferences.put("communications.enabled", enabled.toString());
-    }
-
-    public double getCommunicationsSamplingTime(){
-        return preferences.getDouble("communications.sampling.time", 0);
-    }
-    public void setCommunicationsSamplingTime(double communicationsSamplingTime){
-        preferences.put("communications.sampling.time", String.valueOf(communicationsSamplingTime));
-    }
-
     public int getModbusBlockMaxLimit(){
         return preferences.getInt("communications.modbus.blockMaxLimit", 120);// Limite modbus... comprobado en haiti easygens
     }

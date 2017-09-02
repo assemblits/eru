@@ -34,6 +34,21 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     public static final String NAME = "eru";
     private static String[] savedArgs;
 
+    public enum Theme {
+        DEFAUWLT {
+            @Override
+            public String toString() {
+                return "prefs.theme.default";
+            }
+        },
+        DARK {
+            @Override
+            public String toString() {
+                return "prefs.theme.dark";
+            }
+        }
+    }
+
     private Stage stage;
     private EruController eruController;
     private Skeleton skeleton;

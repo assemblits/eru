@@ -18,21 +18,17 @@
             <AnchorPane>
                 <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <children>
-                        <Label text="Theme: " />
-                        <AnchorPane GridPane.columnIndex="1">
-                            <children>
-                                <ChoiceBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                            </children>
-                        </AnchorPane>
-                    </children>
+                    <Label text="Theme: "/>
+                    <AnchorPane GridPane.columnIndex="1">
+                        <ChoiceBox fx:id="themeChoiceBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
                 </GridPane>
             </AnchorPane>
         </Tab>
