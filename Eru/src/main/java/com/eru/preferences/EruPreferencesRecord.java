@@ -12,25 +12,26 @@ import java.util.prefs.Preferences;
 public class EruPreferencesRecord {
 
     // Default values
-    static final double DEFAULT_ROOT_CONTAINER_HEIGHT = 400;
-    static final double DEFAULT_ROOT_CONTAINER_WIDTH = 600;
-    static final Theme DEFAULT_THEME = Theme.DEFAULT;
-    static final int DEFAULT_RECENT_ITEMS_SIZE = 5;
+    private static final double DEFAULT_ROOT_CONTAINER_HEIGHT = 400;
+    private static final double DEFAULT_ROOT_CONTAINER_WIDTH = 600;
+    private static final Theme DEFAULT_THEME = Theme.DEFAULT;
+    private static final int DEFAULT_RECENT_ITEMS_SIZE = 5;
 
-    static final boolean DEFAULT_ANIMATIONS_ENABLED = true;
-    static final double DEFAULT_ANIMATIONS_DURATION = 5000;
+    private static final boolean DEFAULT_ANIMATIONS_ENABLED = true;
+    private static final double DEFAULT_ANIMATIONS_DURATION = 5000;
 
-    static final int DEFAULT_MODBUS_BLOCK_MAX_LIMIT = 120;
+    private static final int DEFAULT_MODBUS_BLOCK_MAX_LIMIT = 120;
 
-    static final boolean DEFAULT_HISTORIAN_ENABLED = true;
-    static final int DEFAULT_HISTORIAN_LIMIT = 1000;
-    static final int DEFAULT_HISTORIAN_SAMPLING_TIME = 600_000;
+    private static final boolean DEFAULT_HISTORIAN_ENABLED = true;
+    private static final int DEFAULT_HISTORIAN_LIMIT = 1000;
+    private static final int DEFAULT_HISTORIAN_SAMPLING_TIME = 600_000;
 
-    static final boolean DEFAULT_ALARMING_ENABLED = true;
-    static final int DEFAULT_ALARMING_DATABASE_LIMIT = 1000;
-    static final int DEFAULT_ALARMING_RUNTIME_LIMIT = 100;
-    static final int DEFAULT_ALARMING_SAMPLING_TIME = 500;
-    static final boolean DEFAULT_ALARMING_HORN_ENABLED = true;
+    private static final boolean DEFAULT_ALARMING_ENABLED = true;
+    private static final int DEFAULT_ALARMING_DATABASE_LIMIT = 1000;
+    private static final int DEFAULT_ALARMING_RUNTIME_LIMIT = 100;
+    private static final int DEFAULT_ALARMING_SAMPLING_TIME = 500;
+    private static final boolean DEFAULT_ALARMING_HORN_ENABLED = true;
+    private final Preferences applicationRootPreferences;
 
     // Global preferences
     private double rootContainerHeight = DEFAULT_ROOT_CONTAINER_HEIGHT;
@@ -59,7 +60,7 @@ public class EruPreferencesRecord {
     private boolean alarmingHornEnabled = DEFAULT_ALARMING_HORN_ENABLED;
 
     public EruPreferencesRecord(Preferences applicationRootPreferences) {
-
+        this.applicationRootPreferences = applicationRootPreferences;
     }
 
     public double getRootContainerHeight() {
@@ -184,5 +185,13 @@ public class EruPreferencesRecord {
 
     public void setAlarmingHornEnabled(boolean alarmingHornEnabled) {
         this.alarmingHornEnabled = alarmingHornEnabled;
+    }
+
+    public void readFromJavaPreferences() {
+        // TODO
+    }
+
+    public void writeToJavaPreferences(String key) {
+        // TODO
     }
 }
