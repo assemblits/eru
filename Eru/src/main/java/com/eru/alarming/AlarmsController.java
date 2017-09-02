@@ -1,7 +1,6 @@
 package com.eru.alarming;
 
 import com.eru.dolphin.ClientStartupService;
-import com.eru.util.Preferences;
 import com.eru.util.Commands;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,8 +75,8 @@ public class AlarmsController implements Initializable {
                         final Boolean IS_ACKNOWLEDGE = (Boolean) pm.getAt(ATT_ALARM_ACK).getValue();
 
                         String cellColor = IS_ACKNOWLEDGE ?
-                                Preferences.getInstance().getAcknowledgedAlarmColor() :
-                                Preferences.getInstance().getUnacknowledgedAlarmColor();
+                                "#000000" :
+                                "#A60000";
 
                         //Set the CSS style on the cell and set the cell's text.
                         setStyle("-fx-text-fill:" + cellColor);

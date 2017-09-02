@@ -35,7 +35,7 @@ public class App extends Application implements SceneBuilderStarter, EruMainScre
     private static String[] savedArgs;
 
     public enum Theme {
-        DEFAUWLT {
+        DEFAULT {
             @Override
             public String toString() {
                 return "prefs.theme.default";

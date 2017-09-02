@@ -4,7 +4,7 @@ import com.eru.entities.Display;
 import com.eru.entities.Project;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.about.About;
-import com.eru.gui.preferences.EruPreferences;
+import com.eru.gui.preferences.EruPreferencesWindows;
 import com.eru.persistence.ProjectLoaderService;
 import com.eru.persistence.ProjectSaverService;
 import com.eru.scenebuilder.SceneFxmlManager;
@@ -19,8 +19,6 @@ import javafx.stage.StageStyle;
 import lombok.extern.log4j.Log4j;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -91,7 +89,7 @@ public class EruController {
         switch (popupAction) {
             case SHOW_PREFERENCES:
                 Stage preferencesStage = new Stage();
-                preferencesStage.setScene(new Scene(new EruPreferences()));
+                preferencesStage.setScene(new Scene(new EruPreferencesWindows()));
                 preferencesStage.showAndWait();
                 break;
             case SHOW_ABOUT:

@@ -4,7 +4,7 @@ import com.eru.entities.Alarm;
 import com.eru.entities.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.AlarmRepository;
-import com.eru.util.Preferences;
+import com.eru.preferences.EruPreferences;
 import groovy.lang.Closure;
 import groovyx.gpars.agent.Agent;
 import javafx.beans.InvalidationListener;
@@ -70,7 +70,7 @@ public class Alarming {
 
                 // Setting limits for alarms in memory
                 final long alarmTableCount = alarmRepository.count();
-                final int alarmsToShowLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
+                final int alarmsToShowLimit = EruPreferences.getInstance().getEruPreferencesRecord().getAlarmingRuntimeLimit();
 
                 // Loading alarms from database
                 log.info("Loading " + alarmsToShowLimit + " of " + alarmTableCount + "  alarms from database.");
@@ -107,8 +107,8 @@ public class Alarming {
     public void load(Alarm newAlarm) {
         if (newAlarm == null) return;
 
-        final int alarmsInDatabaseLimit = Preferences.getInstance().getAlarmsDatabaseLimit();
-        final int alarmsInMemoryLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
+        final int alarmsInDatabaseLimit = EruPreferences.getInstance().getEruPreferencesRecord().getAlarmingDatabaseLimit();
+        final int alarmsInMemoryLimit = EruPreferences.getInstance().getEruPreferencesRecord().getAlarmingRuntimeLimit();
 
         executorService.execute(() -> {
                     // In Database

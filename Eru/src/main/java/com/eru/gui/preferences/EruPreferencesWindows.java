@@ -1,8 +1,8 @@
 package com.eru.gui.preferences;
 
 import com.eru.gui.App.Theme;
-import com.eru.util.Preferences;
-import javafx.beans.InvalidationListener;
+import com.eru.preferences.EruPreferences;
+import com.eru.preferences.EruPreferencesRecord;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,14 +16,14 @@ import java.util.Arrays;
 /**
  * Created by mtrujillo on 8/16/17.
  */
-public class EruPreferences extends AnchorPane {
+public class EruPreferencesWindows extends AnchorPane {
 
     @FXML
     private ChoiceBox<Theme> themeChoiceBox;
 
-    public EruPreferences() {
+    public EruPreferencesWindows() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EruPreferences.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EruPreferencesWindows.fxml"));
             fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             fxmlLoader.load();
@@ -34,11 +34,12 @@ public class EruPreferences extends AnchorPane {
     }
 
     private void initialize() {
-        final Preferences preferences = Preferences.getInstance();
+        final EruPreferences eruPreferences = EruPreferences.getInstance();
+        final EruPreferencesRecord eruPreferencesRecord = eruPreferences.getEruPreferencesRecord();
 
         // Theme
         themeChoiceBox.getItems().setAll(Arrays.asList(Theme.class.getEnumConstants()));
-        themeChoiceBox.setValue(Theme.valueOf(preferences.getTheme()));
+        themeChoiceBox.setValue(eruPreferencesRecord.getTheme());
         themeChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ThemeListener());
     }
 
@@ -46,9 +47,10 @@ public class EruPreferences extends AnchorPane {
 
         @Override
         public void changed(ObservableValue<? extends Theme> observable, Theme oldValue, Theme newValue) {
-            final Preferences preferences = Preferences.getInstance();
+            final EruPreferences eruPreferences = EruPreferences.getInstance();
+            final EruPreferencesRecord eruPreferencesRecord = eruPreferences.getEruPreferencesRecord();
             // Update preferences
-            preferences.setTheme(newValue);
+            eruPreferencesRecord.setTheme(newValue);
             // Update UI
 //            preferences.refreshToolTheme();
         }
