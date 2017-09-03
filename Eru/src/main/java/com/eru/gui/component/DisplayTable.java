@@ -1,7 +1,8 @@
-package com.eru.gui.tables;
+package com.eru.gui.component;
 
 import com.eru.entities.Display;
-import com.eru.gui.EruController;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.model.ProjectModel;
 import com.eru.scenebuilder.SceneBuilderStarter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,39 +18,37 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j
-public class DisplayTable extends EruTable<Display> {
+public class DisplayTable extends EruTableView<Display> {
 
-    public DisplayTable(EruController eruController, SceneBuilderStarter sceneBuilderStarter) {
-        super(eruController.getProject().getDisplays());
-
+    public DisplayTable(SceneBuilderStarter sceneBuilderStarter) {
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> userNameColumn = new TableColumn<>("Name");
 
         groupColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGroupName()));
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.50));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.50));
 
         userNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
         userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.50));
+        userNameColumn.prefWidthProperty().bind(widthProperty().multiply(0.50));
 
-        this.getColumns().addAll(
+        getColumns().addAll(
                 groupColumn,
                 userNameColumn);
 
-        this.setEditable(false);
-        this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        setEditable(false);
+        getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        this.setOnMousePressed(event -> {
+        setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                sceneBuilderStarter.startSceneBuilder(this.getSelectionModel().getSelectedItem());
+                sceneBuilderStarter.startSceneBuilder(getSelectionModel().getSelectedItem());
             }
         });
     }
 
     @Override
     public void addNewItem() {
-        this.getSelectionModel().clearSelection();
+        getSelectionModel().clearSelection();
 
         Dialog<Display> dialog = new Dialog<>();
         dialog.setTitle("Create new display");
@@ -90,8 +89,8 @@ public class DisplayTable extends EruTable<Display> {
 
 
         result.ifPresent(display -> {
-            this.items.add(display);
-            this.getSelectionModel().select(display);
+            items.add(display);
+            getSelectionModel().select(display);
         });
 
         // *******************************************************************************
@@ -102,10 +101,9 @@ public class DisplayTable extends EruTable<Display> {
         // filtered list is only used to be able to filter using the textToFilter.
         //
         //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(this.items);
-        super.setItems(this.filteredItems);
+        super.filteredItems = new FilteredList<>(items);
+        super.setItems(filteredItems);
 
-        // Check if a textToFilter is setted
         if (super.textToFilter != null) {
             setTextToFilter(textToFilter);
         }
@@ -114,12 +112,22 @@ public class DisplayTable extends EruTable<Display> {
     @Override
     public void setTextToFilter(StringProperty textToFilter) {
         textToFilter.addListener(observable ->
-                this.filteredItems.setPredicate(user ->
+                filteredItems.setPredicate(user ->
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || user.getName().startsWith(textToFilter.getValue())
                                 || user.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
+    }
+
+    @Override
+    public TreeElementsGroup.Type getItemType() {
+        return TreeElementsGroup.Type.DISPLAY;
+    }
+
+    @Override
+    protected List<Display> getItemsFromProjectModel(ProjectModel projectModel) {
+        return projectModel.getDisplays();
     }
 }

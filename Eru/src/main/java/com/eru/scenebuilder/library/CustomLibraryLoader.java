@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import lombok.extern.log4j.Log4j;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.lang.reflect.Modifier;
@@ -17,6 +18,7 @@ import static java.io.File.separator;
 import static java.lang.String.format;
 
 @Log4j
+@Component
 public class CustomLibraryLoader {
 
     private static final List<String> DYNAMO_CLASSES_LOCATION = new ArrayList<String>() {{
@@ -27,18 +29,7 @@ public class CustomLibraryLoader {
         add("target");
         add("classes");
     }};
-    private static CustomLibraryLoader instance;
     private Library library;
-
-    private CustomLibraryLoader() {
-    }
-
-    public static CustomLibraryLoader getInstance() {
-        if (instance == null) {
-            instance = new CustomLibraryLoader();
-        }
-        return instance;
-    }
 
     public void loadFromClassPath() {
         log.info("Loading custom components from classpath");

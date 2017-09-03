@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<MenuBar xmlns="http://javafx.com/javafx/8.0.111"
+         xmlns:fx="http://javafx.com/fxml/1" fx:id="menu" fx:controller="com.eru.gui.controller.MenuBarController">
+    <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save"/>
+        <SeparatorMenuItem mnemonicParsing="false"/>
+        <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit"/>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+        <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences"/>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Scada">
+        <MenuItem mnemonicParsing="false" onAction="#launchScadaMenuItemSelected" text="Launch"/>
+        <MenuItem mnemonicParsing="false" onAction="#stopScadaMenuItemSelected" text="Stop"/>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+        <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About"/>
+    </Menu>
+</MenuBar>

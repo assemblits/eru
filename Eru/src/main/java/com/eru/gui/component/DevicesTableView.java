@@ -1,9 +1,10 @@
-package com.eru.gui.tables;
+package com.eru.gui.component;
 
 import com.eru.entities.Address;
 import com.eru.entities.Connection;
 import com.eru.entities.Device;
-import com.eru.gui.EruController;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
@@ -21,36 +22,30 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-/**
- * Created by mtrujillo on 8/8/17.
- */
-public class DeviceTable extends EruTable<Device> {
+public class DevicesTableView extends EruTableView<Device> {
 
-    public DeviceTable(EruController eruController) {
-        super(eruController.getProject().getDevices());
-        this.eruController = eruController;
+    private TableColumn<Device, String> groupColumn = new TableColumn<>("Group");
+    private TableColumn<Device, String> nameColumn = new TableColumn<>("Name");
+    private TableColumn<Device, Integer> unitIdentifierColumn = new TableColumn<>("ID");
+    private TableColumn<Device, String> statusColumn = new TableColumn<>("Status");
+    private TableColumn<Device, Integer> retriesColumn = new TableColumn<>("Retries");
+    private TableColumn<Device, Boolean> enabledColumn = new TableColumn<>("Enabled");
+    private TableColumn<Device, ObservableList<Address>> addressesColumn = new TableColumn<>("Addresses");
+    private TableColumn<Device, Boolean> zeroBasedColumn = new TableColumn<>("Zero based");
+    private TableColumn<Device, Connection> connectionColumn = new TableColumn<>("Connection");
 
-        // **** Columns **** //
-        TableColumn<Device, String> groupColumn             = new TableColumn<>("Group");
-        TableColumn<Device, String> nameColumn              = new TableColumn<>("Name");
-        TableColumn<Device, Integer> unitIdentifierColumn   = new TableColumn<>("ID");
-        TableColumn<Device, String> statusColumn            = new TableColumn<>("Status");
-        TableColumn<Device, Integer> retriesColumn          = new TableColumn<>("Retries");
-        TableColumn<Device, Boolean> enabledColumn          = new TableColumn<>("Enabled");
-        TableColumn<Device, ObservableList<Address>> addressesColumn  = new TableColumn<>("Addresses");
-        TableColumn<Device, Boolean> zeroBasedColumn        = new TableColumn<>("Zero based");
-        TableColumn<Device, Connection> connectionColumn    = new TableColumn<>("Connection");
-
+    public DevicesTableView() {
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
 
-        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.10));
+        nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.10));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        unitIdentifierColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        unitIdentifierColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         unitIdentifierColumn.setCellValueFactory(param -> param.getValue().unitIdentifierProperty().asObject());
         unitIdentifierColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
@@ -64,11 +59,11 @@ public class DeviceTable extends EruTable<Device> {
             }
         }));
 
-        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.11));
+        statusColumn.prefWidthProperty().bind(widthProperty().multiply(0.11));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        retriesColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        retriesColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         retriesColumn.setCellValueFactory(param -> param.getValue().retriesProperty().asObject());
         retriesColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
@@ -82,11 +77,11 @@ public class DeviceTable extends EruTable<Device> {
             }
         }));
 
-        enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        enabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
-        addressesColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.33));
+        addressesColumn.prefWidthProperty().bind(widthProperty().multiply(0.33));
         addressesColumn.setCellValueFactory(param -> {
             final ListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableArrayList(param.getValue().getAddresses())); // Set initial values
             addressesInDevice.addListener((ListChangeListener<Address>) c -> {                                                                            // Set updater
@@ -101,7 +96,7 @@ public class DeviceTable extends EruTable<Device> {
                             param.getValue().getAddresses().remove(remAddress);
                         }
                         for (Address addAddress : c.getAddedSubList()) {
-                            if (addAddress.getOwner() != getSelectionModel().getSelectedItem()){
+                            if (addAddress.getOwner() != getSelectionModel().getSelectedItem()) {
                                 addAddress.setOwner(getSelectionModel().getSelectedItem());
                             }
                             param.getValue().getAddresses().add(addAddress);
@@ -113,18 +108,15 @@ public class DeviceTable extends EruTable<Device> {
         });
         addressesColumn.setCellFactory(param -> new AddressesTableCellForDeviceTable());
 
-        zeroBasedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.08));
+        zeroBasedColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
         zeroBasedColumn.setCellValueFactory(param -> param.getValue().zeroBasedProperty());
         zeroBasedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
-        connectionColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        connectionColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
         connectionColumn.setCellValueFactory(param -> param.getValue().connectionProperty());
-        connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
-                FXCollections.observableList(this.eruController.getProject().getConnections())
-        ));
 
-        // **** General **** //
-        this.getColumns().addAll(
+
+        getColumns().addAll(
                 groupColumn,
                 nameColumn,
                 unitIdentifierColumn,
@@ -136,9 +128,9 @@ public class DeviceTable extends EruTable<Device> {
                 connectionColumn
         );
 
-        this.setEditable(true);
-        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.setTableMenuButtonVisible(true);
+        setEditable(true);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setTableMenuButtonVisible(true);
     }
 
     @Override
@@ -146,9 +138,9 @@ public class DeviceTable extends EruTable<Device> {
         Device newDevice = new Device();
         newDevice.setName("New device");
         newDevice.setGroupName("Devices");
-        this.items.add(newDevice);
-        this.getSelectionModel().clearSelection();
-        this.getSelectionModel().select(newDevice);
+        items.add(newDevice);
+        getSelectionModel().clearSelection();
+        getSelectionModel().select(newDevice);
 
         // *******************************************************************************
         // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
@@ -158,26 +150,42 @@ public class DeviceTable extends EruTable<Device> {
         // filtered list is only used to be able to filter using the textToFilter.
         //
         //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(this.items);
-        super.setItems(this.filteredItems);
+        super.filteredItems = new FilteredList<>(items);
+        super.setItems(filteredItems);
 
-        // Check if a textToFilter is setted
-        if (super.textToFilter != null){
+        if (super.textToFilter != null) {
             setTextToFilter(textToFilter);
         }
-        // *******************************************************************************
     }
 
     @Override
     public void setTextToFilter(StringProperty textToFilter) {
         textToFilter.addListener(observable ->
-                this.filteredItems.setPredicate(device ->
+                filteredItems.setPredicate(device ->
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || device.getName().startsWith(textToFilter.getValue())
                                 || device.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
+    }
+
+    @Override
+    public TreeElementsGroup.Type getItemType() {
+        return TreeElementsGroup.Type.DEVICE;
+    }
+
+    @Override
+    protected List<Device> getItemsFromProjectModel(ProjectModel projectModel) {
+        return projectModel.getDevices();
+    }
+
+    @Override
+    public void setProjectModel(ProjectModel projectModel) {
+        super.setProjectModel(projectModel);
+        connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
+                FXCollections.observableList(projectModel.getConnections())
+        ));
     }
 }
 
@@ -192,7 +200,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
     private void updateViewMode() {
         setGraphic(null);
         setText(null);
-        if(isEditing()){
+        if (isEditing()) {
             VBox box = new VBox();
             TableView<Address> addressesTableView = new TableView<>();
             addressesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -225,14 +233,14 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
             endAddressTextField.setPromptText("End");
             ChoiceBox<Address.DataModel> typeChoiceBox = new ChoiceBox<>();
 
-            if (getItem() != null){
+            if (getItem() != null) {
                 addressesTableView.getItems().addAll(getItem());
                 typeChoiceBox.getItems().addAll(Address.DataModel.values());
             }
 
             Button addAddressButton = new Button("Add");
             addAddressButton.setOnAction(event -> {
-                try{
+                try {
                     final int firstAddress = Integer.parseInt(startAddressTextField.getText());
                     final int lastAddress = Integer.parseInt(endAddressTextField.getText());
                     if (firstAddress > lastAddress) throw new Exception("Last Address is minor than first.");
@@ -240,13 +248,13 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
 
                     for (int i = firstAddress; i <= lastAddress; i++) {
                         boolean isAlreadyInTable = false;
-                        for(Address address : addressesTableView.getItems()){
-                            if((address.getNetworkID() == i) && (address.getDataModel().equals(dataType))){
+                        for (Address address : addressesTableView.getItems()) {
+                            if ((address.getNetworkID() == i) && (address.getDataModel().equals(dataType))) {
                                 isAlreadyInTable = true;
                                 break;
                             }
                         }
-                        if(!isAlreadyInTable){
+                        if (!isAlreadyInTable) {
                             Address newAddress = new Address();
                             newAddress.setNetworkID(i);
                             newAddress.setDataModel(dataType);
@@ -257,7 +265,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
                     startAddressTextField.clear();
                     endAddressTextField.clear();
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -266,7 +274,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
             deleteAddressButton.setOnAction(event -> {
                 final int CURRENT_INDEX = addressesTableView.getSelectionModel().getSelectedIndex();
                 addressesTableView.getItems().removeAll(addressesTableView.getSelectionModel().getSelectedItems());
-                addressesTableView.getSelectionModel().select(CURRENT_INDEX -1);
+                addressesTableView.getSelectionModel().select(CURRENT_INDEX - 1);
             });
 
             Button okButton = new Button("OK");
@@ -285,7 +293,7 @@ class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<
             box.getChildren().addAll(addressesTableView, toolBar);
             setGraphic(box);
         } else {
-            if(getItem() != null) {
+            if (getItem() != null) {
                 setText(getItem().toString());
             }
         }

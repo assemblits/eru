@@ -1,4 +1,4 @@
-package com.eru.gui.scenebuilder;
+package com.eru.gui.component;
 
 import com.eru.entities.Display;
 import com.eru.exception.FxmlFileReadException;
@@ -17,6 +17,9 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,33 +28,34 @@ import java.net.URL;
 import static java.lang.String.format;
 
 @Log4j
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class EruSceneBuilder extends VBox {
 
     private final SceneFxmlManager sceneFxmlManager;
-    private final Display display;
-    private final File sceneFxmlFile;
+    private final CustomLibraryLoader customLibraryLoader;
+    private File sceneFxmlFile;
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
     private ComponentsIdsGenerator componentsIdsGenerator;
 
-    public EruSceneBuilder(Display display, SceneFxmlManager sceneFxmlManager) {
-        log.debug(format("Instantiating Eru Scene Builder for %s", display.getName()));
-        this.display = display;
+    public EruSceneBuilder(CustomLibraryLoader customLibraryLoader, SceneFxmlManager sceneFxmlManager) {
+        this.customLibraryLoader = customLibraryLoader;
         this.sceneFxmlManager = sceneFxmlManager;
-        sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
         componentsIdsGenerator = new ComponentsIdsGenerator();
 
-        // Always fit the Anchor Pane parent
         AnchorPane.setTopAnchor(this, 0.0);
         AnchorPane.setBottomAnchor(this, 0.0);
         AnchorPane.setRightAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
-        this.setFillWidth(true);
+        setFillWidth(true);
     }
 
-    public void init() {
+    public void init(Display display) {
+        log.debug(format("Instantiating Eru Scene Builder for %s", display.getName()));
+        sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
         editorController = new EditorController();
-        editorController.setLibrary(CustomLibraryLoader.getInstance().getLibrary());
+        editorController.setLibrary(customLibraryLoader.getLibrary());
 
         HierarchyTreeViewController componentTree = new HierarchyTreeViewController(editorController);
         ContentPanelController canvas = new ContentPanelController(editorController);
@@ -73,7 +77,7 @@ public class EruSceneBuilder extends VBox {
         content.setDividerPositions(0.2, 0.8);
         SplitPane.setResizableWithParent(content, Boolean.TRUE);
 
-        this.getChildren().add(content);
+        getChildren().add(content);
         startChangeListener();
     }
 

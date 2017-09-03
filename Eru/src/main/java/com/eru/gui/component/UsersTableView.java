@@ -1,7 +1,8 @@
-package com.eru.gui.tables;
+package com.eru.gui.component;
 
+import com.eru.entities.TreeElementsGroup;
 import com.eru.entities.User;
-import com.eru.gui.EruController;
+import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.SelectionMode;
@@ -11,15 +12,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.util.List;
 
-/**
- * Created by mtrujillo on 8/1/17.
- */
-public class UserTable extends EruTable<User> {
+public class UsersTableView extends EruTableView<User> {
 
-    public UserTable(EruController eruController) {
-        super(eruController.getProject().getUsers());
-        this.eruController = eruController;
-
+    public UsersTableView() {
         TableColumn<User, String> groupColumn = new TableColumn<>("Group");
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
@@ -30,33 +25,33 @@ public class UserTable extends EruTable<User> {
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
 
         userNameColumn.setCellValueFactory(param -> param.getValue().userNameProperty());
         userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        userNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
+        userNameColumn.prefWidthProperty().bind(widthProperty().multiply(0.15));
 
         firstNameColumn.setCellValueFactory(param -> param.getValue().firstNameProperty());
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
+        firstNameColumn.prefWidthProperty().bind(widthProperty().multiply(0.15));
 
         lastNameColumn.setCellValueFactory(param -> param.getValue().lastNameProperty());
         lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        lastNameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        lastNameColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
 
         emailColumn.setCellValueFactory(param -> param.getValue().emailProperty());
         emailColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        emailColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        emailColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
 
         passwordColumn.setCellValueFactory(param -> param.getValue().passwordProperty());
         passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        passwordColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        passwordColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
 
         onlineColumn.setCellValueFactory(param -> param.getValue().onlineProperty());
-        onlineColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.14));
+        onlineColumn.prefWidthProperty().bind(widthProperty().multiply(0.14));
         onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
 
-        this.getColumns().addAll(
+        getColumns().addAll(
                 groupColumn,
                 userNameColumn,
                 firstNameColumn,
@@ -65,8 +60,8 @@ public class UserTable extends EruTable<User> {
                 passwordColumn,
                 onlineColumn);
 
-        this.setEditable(true);
-        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setEditable(true);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @Override
@@ -74,9 +69,9 @@ public class UserTable extends EruTable<User> {
         User newUser = new User();
         newUser.setUserName("newUser");
         newUser.setGroupName("Users");
-        this.items.add(newUser);
-        this.getSelectionModel().clearSelection();
-        this.getSelectionModel().select(newUser);
+        items.add(newUser);
+        getSelectionModel().clearSelection();
+        getSelectionModel().select(newUser);
 
         // *******************************************************************************
         // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
@@ -86,11 +81,11 @@ public class UserTable extends EruTable<User> {
         // filtered list is only used to be able to filter using the textToFilter.
         //
         //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(this.items);
-        super.setItems(this.filteredItems);
+        super.filteredItems = new FilteredList<>(items);
+        super.setItems(filteredItems);
 
         // Check if a textToFilter is setted
-        if (super.textToFilter != null){
+        if (super.textToFilter != null) {
             setTextToFilter(textToFilter);
         }
         // *******************************************************************************
@@ -99,13 +94,23 @@ public class UserTable extends EruTable<User> {
     @Override
     public void setTextToFilter(StringProperty textToFilter) {
         textToFilter.addListener(observable ->
-                this.filteredItems.setPredicate(user ->
+                filteredItems.setPredicate(user ->
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || user.getUserName().startsWith(textToFilter.getValue())
                                 || user.getGroupName().startsWith(textToFilter.getValue()))
                 )
         );
+    }
+
+    @Override
+    public TreeElementsGroup.Type getItemType() {
+        return TreeElementsGroup.Type.USER;
+    }
+
+    @Override
+    protected List<User> getItemsFromProjectModel(ProjectModel projectModel) {
+        return projectModel.getUsers();
     }
 
 }

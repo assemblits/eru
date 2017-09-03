@@ -1,9 +1,10 @@
-package com.eru.gui.tables;
+package com.eru.gui.component;
 
 import com.eru.entities.Address;
 import com.eru.entities.Device;
 import com.eru.entities.Tag;
-import com.eru.gui.EruController;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -16,66 +17,60 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-/**
- * Created by mtrujillo on 8/9/17.
- */
-public class TagTable extends EruTable<Tag> {
+public class TagsTableView extends EruTableView<Tag> {
 
-    public TagTable(EruController eruController) {
-        super(eruController.getProject().getTags());
-        this.eruController = eruController;
+    private TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
+    private TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
+    private TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
+    private TableColumn<Tag, Tag> linkedTagColumn = new TableColumn<>("Source");
+    private TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
+    private TableColumn<Tag, String> descriptionColumn = new TableColumn<>("Description");
+    private TableColumn<Tag, String> valueColumn = new TableColumn<>("Value");
+    private TableColumn<Tag, Integer> decimalsColumn = new TableColumn<>("Decimals");
+    private TableColumn<Tag, Tag.Type> tagTypeColumn = new TableColumn<>("Type");
+    private TableColumn<Tag, String> statusColumn = new TableColumn<>("Status");
+    private TableColumn<Tag, Address> addressColumn = new TableColumn<>("Address");
+    private TableColumn<Tag, String> scriptColumn = new TableColumn<>("Script");
+    private TableColumn<Tag, Integer> maskColumn = new TableColumn<>("Mask");
+    private TableColumn<Tag, Double> scaleFactorColumn = new TableColumn<>("Factor");
+    private TableColumn<Tag, Double> scaleOffsetColumn = new TableColumn<>("Offset");
+    private TableColumn<Tag, Boolean> alarmEnabledColumn = new TableColumn<>("Alarming");
+    private TableColumn<Tag, String> alarmColumn = new TableColumn<>("Alarm");
+    private TableColumn<Tag, Boolean> alarmedColumn = new TableColumn<>("Alarmed");
+    private TableColumn<Tag, Boolean> historianColumn = new TableColumn<>("Historian");
+    private TableColumn<Tag, Timestamp> timestampTableColumn = new TableColumn<>("Timestamp");
 
-        // **** Columns **** //
-        TableColumn<Tag, Integer> idColumn               = new TableColumn<>("ID");
-        TableColumn<Tag, String> groupColumn             = new TableColumn<>("Group");
-        TableColumn<Tag, String> nameColumn              = new TableColumn<>("Name");
-        TableColumn<Tag, Tag> linkedTagColumn            = new TableColumn<>("Source");
-        TableColumn<Tag, Boolean> enabledColumn          = new TableColumn<>("Enabled");
-        TableColumn<Tag, String> descriptionColumn       = new TableColumn<>("Description");
-        TableColumn<Tag, String> valueColumn             = new TableColumn<>("Value");
-        TableColumn<Tag, Integer> decimalsColumn         = new TableColumn<>("Decimals");
-        TableColumn<Tag, Tag.Type> tagTypeColumn         = new TableColumn<>("Type");
-        TableColumn<Tag, String> statusColumn            = new TableColumn<>("Status");
-        TableColumn<Tag, Address> addressColumn          = new TableColumn<>("Address");
-        TableColumn<Tag, String> scriptColumn            = new TableColumn<>("Script");
-        TableColumn<Tag, Integer> maskColumn             = new TableColumn<>("Mask");
-        TableColumn<Tag, Double> scaleFactorColumn       = new TableColumn<>("Factor");
-        TableColumn<Tag, Double> scaleOffsetColumn       = new TableColumn<>("Offset");
-        TableColumn<Tag, Boolean> alarmEnabledColumn     = new TableColumn<>("Alarming");
-        TableColumn<Tag, String> alarmColumn             = new TableColumn<>("Alarm");
-        TableColumn<Tag, Boolean> alarmedColumn          = new TableColumn<>("Alarmed");
-        TableColumn<Tag, Boolean> historianColumn        = new TableColumn<>("Historian");
-        TableColumn<Tag, Timestamp> timestampTableColumn = new TableColumn<>("Timestamp");
-
+    public TagsTableView() {
         idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
-        idColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
+        idColumn.prefWidthProperty().bind(widthProperty().multiply(0.04));
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
 
-        nameColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
         linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
-        linkedTagColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
 
-        enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        enabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
-        descriptionColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.1));
+        descriptionColumn.prefWidthProperty().bind(widthProperty().multiply(0.1));
         descriptionColumn.setCellValueFactory(param -> param.getValue().descriptionProperty());
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        valueColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        valueColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         valueColumn.setCellValueFactory(param -> param.getValue().valueProperty());
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        timestampTableColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.15));
+        timestampTableColumn.prefWidthProperty().bind(widthProperty().multiply(0.15));
         timestampTableColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
         timestampTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Timestamp>() {
             @Override
@@ -89,7 +84,7 @@ public class TagTable extends EruTable<Tag> {
             }
         }));
 
-        decimalsColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        decimalsColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         decimalsColumn.setCellValueFactory(param -> param.getValue().decimalsProperty().asObject());
         decimalsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
@@ -104,26 +99,25 @@ public class TagTable extends EruTable<Tag> {
         }));
         decimalsColumn.setVisible(false);
 
-        tagTypeColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.06));
+        tagTypeColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
         tagTypeColumn.setCellValueFactory(param -> param.getValue().typeProperty());
         tagTypeColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
                 FXCollections.observableArrayList(Tag.Type.values())
         ));
 
-        statusColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        statusColumn.prefWidthProperty().bind(widthProperty().multiply(0.07));
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        addressColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.12));
+        addressColumn.prefWidthProperty().bind(widthProperty().multiply(0.12));
         addressColumn.setCellValueFactory(param -> param.getValue().linkedAddressProperty());
-        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable(eruController));
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        scriptColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        scriptColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         scriptColumn.setVisible(false);
 
-        maskColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        maskColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         maskColumn.setCellValueFactory(param -> param.getValue().maskProperty().asObject());
         maskColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
@@ -138,7 +132,7 @@ public class TagTable extends EruTable<Tag> {
         }));
         maskColumn.setVisible(false);
 
-        scaleFactorColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
+        scaleFactorColumn.prefWidthProperty().bind(widthProperty().multiply(0.04));
         scaleFactorColumn.setCellValueFactory(param -> param.getValue().scaleFactorProperty().asObject());
         scaleFactorColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
             @Override
@@ -153,7 +147,7 @@ public class TagTable extends EruTable<Tag> {
         }));
         scaleFactorColumn.setVisible(false);
 
-        scaleOffsetColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.04));
+        scaleOffsetColumn.prefWidthProperty().bind(widthProperty().multiply(0.04));
         scaleOffsetColumn.setCellValueFactory(param -> param.getValue().scaleOffsetProperty().asObject());
         scaleOffsetColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
             @Override
@@ -168,26 +162,25 @@ public class TagTable extends EruTable<Tag> {
         }));
         scaleOffsetColumn.setVisible(false);
 
-        alarmEnabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        alarmEnabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         alarmEnabledColumn.setCellValueFactory(param -> param.getValue().alarmEnabledProperty());
         alarmEnabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(alarmEnabledColumn));
         alarmEnabledColumn.setVisible(false);
 
         alarmColumn.setCellValueFactory(param -> param.getValue().alarmScriptProperty());
         alarmColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        alarmColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        alarmColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         alarmColumn.setVisible(false);
 
-        alarmedColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
+        alarmedColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         alarmedColumn.setCellValueFactory(param -> param.getValue().alarmedProperty());
         alarmedColumn.setCellFactory(CheckBoxTableCell.forTableColumn(alarmedColumn));
 
-        historianColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
+        historianColumn.prefWidthProperty().bind(widthProperty().multiply(0.07));
         historianColumn.setCellValueFactory(param -> param.getValue().historicalEnabledProperty());
         historianColumn.setCellFactory(CheckBoxTableCell.forTableColumn(historianColumn));
 
-        // **** General **** //
-        this.getColumns().addAll(
+        getColumns().addAll(
                 idColumn,
                 groupColumn,
                 nameColumn,
@@ -210,9 +203,9 @@ public class TagTable extends EruTable<Tag> {
                 historianColumn
         );
 
-        this.setEditable(true);
-        this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.setTableMenuButtonVisible(true);
+        setEditable(true);
+        getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setTableMenuButtonVisible(true);
     }
 
     @Override
@@ -220,9 +213,9 @@ public class TagTable extends EruTable<Tag> {
         Tag newTag = new Tag();
         newTag.setName("New tag");
         newTag.setGroupName("Tags");
-        this.items.add(newTag);
-        this.getSelectionModel().clearSelection();
-        this.getSelectionModel().select(newTag);
+        items.add(newTag);
+        getSelectionModel().clearSelection();
+        getSelectionModel().select(newTag);
 
         // *******************************************************************************
         // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
@@ -232,20 +225,18 @@ public class TagTable extends EruTable<Tag> {
         // filtered list is only used to be able to filter using the textToFilter.
         //
         //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(this.items);
-        super.setItems(this.filteredItems);
+        super.filteredItems = new FilteredList<>(items);
+        super.setItems(filteredItems);
 
-        // Check if a textToFilter is setted
-        if (super.textToFilter != null){
+        if (super.textToFilter != null) {
             setTextToFilter(textToFilter);
         }
-        // *******************************************************************************
     }
 
     @Override
     public void setTextToFilter(StringProperty textToFilter) {
         textToFilter.addListener(observable ->
-                this.filteredItems.setPredicate(device ->
+                filteredItems.setPredicate(device ->
                         (textToFilter.getValue() == null
                                 || textToFilter.getValue().isEmpty()
                                 || device.getName().startsWith(textToFilter.getValue())
@@ -253,14 +244,30 @@ public class TagTable extends EruTable<Tag> {
                 )
         );
     }
+
+    @Override
+    public TreeElementsGroup.Type getItemType() {
+        return TreeElementsGroup.Type.TAG;
+    }
+
+    @Override
+    protected List<Tag> getItemsFromProjectModel(ProjectModel projectModel) {
+        return projectModel.getTags();
+    }
+
+    @Override
+    public void setProjectModel(ProjectModel projectModel) {
+        super.setProjectModel(projectModel);
+        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable(projectModel));
+    }
 }
 
 class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
 
-    private EruController eruController;
+    private ProjectModel projectModel;
 
-    public AddressesTableCellForTagTable(EruController eruController) {
-        this.eruController = eruController;
+    public AddressesTableCellForTagTable(ProjectModel projectModel) {
+        this.projectModel = projectModel;
     }
 
     @Override
@@ -272,15 +279,16 @@ class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
     private void updateViewMode() {
         setGraphic(null);
         setText(null);
-        if(isEditing()){
+        if (isEditing()) {
             VBox box = new VBox();
 
             ListView<Device> deviceListView = new ListView<>();
             ListView<Address> addressListView = new ListView<>();
 
-            deviceListView.getItems().addAll(this.eruController.getProject().getDevices());
+            deviceListView.getItems().addAll(projectModel.getDevices());
             deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue!= null) addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
+                if (newValue != null)
+                    addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
             });
 
             Button okButton = new Button("OK");
@@ -292,7 +300,7 @@ class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
             box.getChildren().addAll(new HBox(deviceListView, addressListView), toolBar);
             setGraphic(box);
         } else {
-            if(getItem() != null) {
+            if (getItem() != null) {
                 setText(getItem().toString());
             }
         }

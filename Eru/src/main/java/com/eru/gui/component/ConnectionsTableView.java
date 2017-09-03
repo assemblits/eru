@@ -1,9 +1,10 @@
-package com.eru.gui.tables;
+package com.eru.gui.component;
 
 import com.eru.entities.Connection;
 import com.eru.entities.SerialConnection;
 import com.eru.entities.TcpConnection;
-import com.eru.gui.EruController;
+import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,42 +24,36 @@ import javafx.util.Pair;
 import javafx.util.StringConverter;
 import lombok.extern.log4j.Log4j;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-/**
- * Created by mtrujillo on 8/7/17.
- */
 @Log4j
-public class ConnectionsTable extends EruTable<Connection> {
+public class ConnectionsTableView extends EruTableView<Connection> {
 
-    public ConnectionsTable(EruController eruController) {
-        super(eruController.getProject().getConnections());
-        this.eruController = eruController;
+    public ConnectionsTableView() {
+        TableColumn<Connection, Void> actionColumn = new TableColumn<>("Action");
+        TableColumn<Connection, String> groupColumn = new TableColumn<>("Group");
+        TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Connection, Boolean> enabledColumn = new TableColumn<>("Enable");
+        TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
+        TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
+        TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
+        TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
 
-        // **** Columns **** //
-        TableColumn<Connection, Void> actionColumn        = new TableColumn<>("Action");
-        TableColumn<Connection, String> groupColumn         = new TableColumn<>("Group");
-        TableColumn<Connection, String> nameColumn          = new TableColumn<>("Name");
-        TableColumn<Connection, String> typeColumn          = new TableColumn<>("Type");
-        TableColumn<Connection, Boolean> enabledColumn      = new TableColumn<>("Enable");
-        TableColumn<Connection, Integer> timeoutColumn      = new TableColumn<>("Timeout");
-        TableColumn<Connection, Integer> samplingColumn     = new TableColumn<>("Sampling");
-        TableColumn<Connection, Boolean> connectedColumn    = new TableColumn<>("Connected");
-        TableColumn<Connection, String> statusColumn        = new TableColumn<>("Status");
-
-        TableColumn<Connection, String> serialPortColumn            = new TableColumn<>("Port");
+        TableColumn<Connection, String> serialPortColumn = new TableColumn<>("Port");
         TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
-        TableColumn<Connection, Integer> serialDatabitsColumn       = new TableColumn<>("Databits");
-        TableColumn<Connection, String> serialParityColumn          = new TableColumn<>("Parity");
-        TableColumn<Connection, Integer> serialStopBitsColumn       = new TableColumn<>("Stop bits");
-        TableColumn<Connection, String> serialFrameEncodingColumn   = new TableColumn<>("Frame");
-        TableColumn serialgroupColumn                               = new TableColumn<>("Serial Parameters");
+        TableColumn<Connection, Integer> serialDatabitsColumn = new TableColumn<>("Databits");
+        TableColumn<Connection, String> serialParityColumn = new TableColumn<>("Parity");
+        TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
+        TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
+        TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
         serialgroupColumn.getColumns().addAll(serialPortColumn, serialBitsPerSecondsColumn, serialDatabitsColumn, serialParityColumn, serialStopBitsColumn, serialFrameEncodingColumn);
 
-        TableColumn<Connection, String> tcpHostnameColumn   = new TableColumn<>("Hostname");
-        TableColumn<Connection, Integer> tcpPortColumn      = new TableColumn<>("Port");
-        TableColumn tcpgroupColumn                          = new TableColumn<>("Tcp Parameters");
+        TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
+        TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
+        TableColumn tcpgroupColumn = new TableColumn<>("Tcp Parameters");
         tcpgroupColumn.getColumns().addAll(tcpHostnameColumn, tcpPortColumn);
 
 
@@ -118,7 +113,6 @@ public class ConnectionsTable extends EruTable<Connection> {
         statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
         statusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        // **** Serial Cells **** //
         serialPortColumn.setCellValueFactory(param -> {
             StringProperty cellValue = null;
             if (param.getValue() instanceof SerialConnection) {
@@ -230,7 +224,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         tcpPortColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
             public String toString(Integer object) {
-                return object !=null ? object.toString() : "";
+                return object != null ? object.toString() : "";
             }
 
             @Override
@@ -240,7 +234,6 @@ public class ConnectionsTable extends EruTable<Connection> {
         }));
         tcpPortColumn.setVisible(false);
 
-        // **** General **** //
         this.getColumns().addAll(
                 actionColumn,
                 groupColumn,
@@ -313,7 +306,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         Optional<Pair<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(results -> {
-            switch (results.getValue()){
+            switch (results.getValue()) {
                 case SERIAL:
                     SerialConnection newSerialConnection = new SerialConnection();
                     newSerialConnection.setName(results.getKey());
@@ -345,7 +338,7 @@ public class ConnectionsTable extends EruTable<Connection> {
         super.setItems(this.filteredItems);
 
         // Check if a textToFilter is setted
-        if (super.textToFilter != null){
+        if (super.textToFilter != null) {
             setTextToFilter(textToFilter);
         }
         // *******************************************************************************
@@ -356,33 +349,43 @@ public class ConnectionsTable extends EruTable<Connection> {
         textToFilter.addListener(observable ->
                 this.filteredItems.setPredicate(connection ->
                         (textToFilter.getValue() == null
-                        || textToFilter.getValue().isEmpty()
-                        || connection.getName().startsWith(textToFilter.getValue())
-                        || connection.getGroupName().startsWith(textToFilter.getValue()))
-        ));
+                                || textToFilter.getValue().isEmpty()
+                                || connection.getName().startsWith(textToFilter.getValue())
+                                || connection.getGroupName().startsWith(textToFilter.getValue()))
+                ));
+    }
+
+    @Override
+    public TreeElementsGroup.Type getItemType() {
+        return TreeElementsGroup.Type.CONNECTION;
+    }
+
+    @Override
+    protected List<Connection> getItemsFromProjectModel(ProjectModel projectModel) {
+        return projectModel.getConnections();
     }
 
 }
 
 @Log4j
-class ConnectActionCell<S> extends TableCell<S, Void>{
+class ConnectActionCell<S> extends TableCell<S, Void> {
     private ToggleButton toggleButton;
-    private ImageView connnectImageView = new ImageView(new Image(getClass().getResource("connect.png").toExternalForm()));
-    private ImageView disconnnectImageView = new ImageView(new Image(getClass().getResource("disconnect.png").toExternalForm()));
+    private ImageView connectImageView = new ImageView(new Image(getClass().getResource("/images/connect.png").toExternalForm()));
+    private ImageView disconnectImageView = new ImageView(new Image(getClass().getResource("/images/disconnect.png").toExternalForm()));
 
     public ConnectActionCell(Consumer<Integer> selectedAction, Consumer<Integer> deselectedAction) {
         toggleButton = new ToggleButton();
 
-        toggleButton.setGraphic(connnectImageView);
+        toggleButton.setGraphic(connectImageView);
         toggleButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
-            if(isSelected){
+            if (isSelected) {
                 log.info("Connecting");
                 selectedAction.accept(getIndex());
-                toggleButton.setGraphic(disconnnectImageView);
+                toggleButton.setGraphic(disconnectImageView);
             } else {
                 log.info("Disconnecting");
                 deselectedAction.accept(getIndex());
-                toggleButton.setGraphic(connnectImageView);
+                toggleButton.setGraphic(connectImageView);
             }
         });
         setAlignment(Pos.CENTER);
@@ -391,7 +394,7 @@ class ConnectActionCell<S> extends TableCell<S, Void>{
     @Override
     protected void updateItem(Void item, boolean empty) {
         setGraphic(null);
-        if(!empty){
+        if (!empty) {
             setGraphic(toggleButton);
         }
     }
