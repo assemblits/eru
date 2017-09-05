@@ -1,10 +1,13 @@
 package com.eru.preferences;
 
+import org.springframework.stereotype.Component;
+
 import java.util.prefs.Preferences;
 
 /**
  * Created by mtrujillo on 9/2/17.
  */
+@Component
 public class EruPreferences {
 
     // GLOBAL PREFERENCES
@@ -38,9 +41,6 @@ public class EruPreferences {
     static final String ALARMING_SAMPLING_TIME = "ALARMING_SAMPLING_TIME";
     static final String ALARMING_HORN_ENABLED = "ALARMING_HORN_ENABLED";
 
-
-    private static final EruPreferences INSTANCE = new EruPreferences();
-
     private final Preferences applicationRootPreferences;
     private final Preferences documentsRootPreferences;
     private final Preferences scadaRootPreferences;
@@ -59,10 +59,6 @@ public class EruPreferences {
         alarmingRootPreferences = applicationRootPreferences.node(ALARMING);
 
         eruPreferencesRecord = new EruPreferencesRecord(applicationRootPreferences);
-    }
-
-    public static synchronized EruPreferences getInstance() {
-        return INSTANCE;
     }
 
     public EruPreferencesRecord getEruPreferencesRecord() {

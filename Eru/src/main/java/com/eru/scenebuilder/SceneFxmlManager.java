@@ -2,8 +2,9 @@ package com.eru.scenebuilder;
 
 import com.eru.entities.Display;
 import com.eru.exception.FxmlFileWriteException;
-import com.eru.gui.App;
+import com.eru.gui.Application;
 import lombok.extern.log4j.Log4j;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
@@ -11,6 +12,7 @@ import static java.io.File.separator;
 import static java.lang.String.format;
 
 @Log4j
+@Component
 public class SceneFxmlManager {
 
     private static final String NEW_FXML_FILE_CONTENT = "";
@@ -18,7 +20,7 @@ public class SceneFxmlManager {
 
     public File createSceneFxmlFile(Display display) {
         String fxmlFilesDirectoryPath = System.getProperty("user.home") + separator + "."
-                + App.NAME + separator + "displays";
+                + Application.NAME + separator + "displays";
 
         String formattedSceneName = formatName(display);
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);

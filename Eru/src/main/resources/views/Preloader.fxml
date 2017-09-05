@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.*?>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="250.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <bottom>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <Label fx:id="statusLabel" VBox.vgrow="ALWAYS"/>
+            <ProgressBar fx:id="progressBar" prefHeight="17.0" prefWidth="484.0" progress="0.0"/>
+        </VBox>
+    </bottom>
+    <center>
+        <AnchorPane>
+            <Region layoutX="175.0" layoutY="14.0" prefHeight="150.0" prefWidth="150.0"
+                    style="-fx-shape: &quot;M -58.792969 -1416.666 C -59.175015 -1416.6617 -59.559581 -1416.6482 -59.945312 -1416.623 C -71.063585 -1415.8982 -80.175472 -1406.2097 -79.375 -1394.9336 C -78.661459 -1384.8822 -69.866938 -1376.6503 -59.658203 -1377.4473 C -50.673718 -1378.1487 -43.322618 -1386.0502 -44.117188 -1395.1914 L -51.953125 -1395.1328 C -51.142171 -1390.2664 -54.999221 -1385.9189 -59.716797 -1385.2832 C -65.653386 -1384.4833 -70.882646 -1389.2061 -71.539062 -1394.9902 C -72.334077 -1401.9956 -66.737554 -1408.1136 -59.886719 -1408.7871 C -51.813233 -1409.5808 -44.805415 -1403.1091 -44.117188 -1395.1914 L -36.283203 -1395.248 C -36.99583 -1407.0525 -46.949549 -1416.7999 -58.792969 -1416.666 z M -51.953125 -1395.1328 C -52.561563 -1398.784 -56.037272 -1401.7869 -59.830078 -1400.9531 C -62.414535 -1400.3849 -64.588935 -1397.7552 -63.705078 -1395.0469 C -63.210949 -1393.5328 -61.341763 -1392.1027 -59.773438 -1393.1172 C -59.194829 -1393.4915 -58.608628 -1395.0848 -59.787109 -1395.0762 L -51.953125 -1395.1328 z &quot;; -fx-background-color: BLACK;"/>
+        </AnchorPane>
+    </center>
+</BorderPane>
