@@ -22,7 +22,8 @@
                         <Label text="Theme: "/>
                         <AnchorPane GridPane.columnIndex="1">
                             <children>
-                                <ChoiceBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                <ChoiceBox fx:id="themeChoiceBox" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="0.0"
                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </children>
                         </AnchorPane>

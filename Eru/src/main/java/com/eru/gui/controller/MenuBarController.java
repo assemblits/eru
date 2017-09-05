@@ -92,6 +92,7 @@ public class MenuBarController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlViewName));
+            fxmlLoader.setControllerFactory(applicationContext::getBean);
             return fxmlLoader.load();
         } catch (IOException e) {
             String errorMessage = format("Error loading %s screen", fxmlViewName);

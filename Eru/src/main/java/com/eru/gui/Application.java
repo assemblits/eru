@@ -28,6 +28,21 @@ public class Application extends javafx.application.Application {
     public static final String NAME = "eru";
     private static String[] savedArgs;
 
+    public enum Theme {
+        DEFAULT {
+            @Override
+            public String toString() {
+                return "prefs.theme.default";
+            }
+        },
+        DARK {
+            @Override
+            public String toString() {
+                return "prefs.theme.dark";
+            }
+        }
+    }
+
     private ConfigurableApplicationContext applicationContext;
 
     @Autowired
@@ -46,6 +61,7 @@ public class Application extends javafx.application.Application {
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
 
+            ApplicationContextHolder.setApplicationContext(applicationContext);
             applicationContext = loadResult.getApplicationContext();
             eruController.startEru(loadResult.getProject(), stage);
         });

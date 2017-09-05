@@ -1,7 +1,8 @@
 package com.eru.comm.device;
 
 import com.eru.entities.Address;
-import com.eru.util.Preferences;
+import com.eru.gui.ApplicationContextHolder;
+import com.eru.preferences.EruPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
  */
 public class AddressesBlock {
 
-    public static final int DEFAULT_MAXIMUM_CAPACITY = Preferences.getInstance().getModbusBlockMaxLimit();
+    public static final int DEFAULT_MAXIMUM_CAPACITY = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class)
+            .getEruPreferencesRecord().getModbusBlockMaxLimit();
 
     private int             capacity;
     private List<Address>   block;

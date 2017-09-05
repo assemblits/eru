@@ -4,7 +4,7 @@ import com.eru.entities.Alarm;
 import com.eru.entities.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.AlarmRepository;
-import com.eru.util.Preferences;
+import com.eru.preferences.EruPreferences;
 import groovy.lang.Closure;
 import groovyx.gpars.agent.Agent;
 import javafx.beans.InvalidationListener;
@@ -40,11 +40,13 @@ public class Alarming {
     private BooleanProperty alarmed;
     private ExecutorService executorService;
     private Map<Tag, AlarmListenerToCreateNewAlarms> tagsRegisteredListeners;
+    private EruPreferences eruPreferences;
 
     /* ********** Constructor ********** */
     private Alarming() {
         running = false;
         alarmRepository = ApplicationContextHolder.getApplicationContext().getBean(AlarmRepository.class);
+        eruPreferences =  ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
         alarmsAgent = new Agent<>(FXCollections.observableArrayList());
         status = new SimpleStringProperty();
         alarmed = new SimpleBooleanProperty();
@@ -70,7 +72,7 @@ public class Alarming {
 
                 // Setting limits for alarms in memory
                 final long alarmTableCount = alarmRepository.count();
-                final int alarmsToShowLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
+                final int alarmsToShowLimit = eruPreferences.getEruPreferencesRecord().getAlarmingRuntimeLimit();
 
                 // Loading alarms from database
                 log.info("Loading " + alarmsToShowLimit + " of " + alarmTableCount + "  alarms from database.");
@@ -107,8 +109,8 @@ public class Alarming {
     public void load(Alarm newAlarm) {
         if (newAlarm == null) return;
 
-        final int alarmsInDatabaseLimit = Preferences.getInstance().getAlarmsDatabaseLimit();
-        final int alarmsInMemoryLimit = Preferences.getInstance().getAlarmsInMemoryLimit();
+        final int alarmsInDatabaseLimit = eruPreferences.getEruPreferencesRecord().getAlarmingDatabaseLimit();
+        final int alarmsInMemoryLimit = eruPreferences.getEruPreferencesRecord().getAlarmingRuntimeLimit();
 
         executorService.execute(() -> {
                     // In Database
