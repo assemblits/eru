@@ -3,8 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane minWidth="563.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.eru.gui.controller.PreferencesController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eru.gui.controller.PreferencesController">
     <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="General">
@@ -18,16 +17,12 @@
                         <RowConstraints vgrow="SOMETIMES"/>
                         <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <children>
-                        <Label text="Theme: "/>
-                        <AnchorPane GridPane.columnIndex="1">
-                            <children>
-                                <ChoiceBox fx:id="themeChoiceBox" AnchorPane.bottomAnchor="0.0"
-                                           AnchorPane.leftAnchor="0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                            </children>
-                        </AnchorPane>
-                    </children>
+                    <Label text="Theme: "/>
+                    <AnchorPane GridPane.columnIndex="1">
+                        <ChoiceBox fx:id="themeChoiceBox"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
                 </GridPane>
             </AnchorPane>
         </Tab>
@@ -42,13 +37,11 @@
                         <RowConstraints vgrow="SOMETIMES"/>
                         <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <children>
-                        <Label text="Auxiliary database: "/>
-                        <HBox GridPane.columnIndex="1">
-                            <TextField HBox.hgrow="ALWAYS"/>
-                            <Button mnemonicParsing="false" text="..."/>
-                        </HBox>
-                    </children>
+                    <Label text="Auxiliary database: "/>
+                    <HBox GridPane.columnIndex="1">
+                        <TextField HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" text="..."/>
+                    </HBox>
                 </GridPane>
             </AnchorPane>
         </Tab>

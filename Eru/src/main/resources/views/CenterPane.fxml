@@ -6,6 +6,5 @@
             fx:controller="com.eru.gui.controller.CenterPaneController"
             fitToHeight="true" fitToWidth="true">
 
-    <AnchorPane fx:id="centerPane">
-    </AnchorPane>
+    <AnchorPane fx:id="centerPane"/>
 </ScrollPane>

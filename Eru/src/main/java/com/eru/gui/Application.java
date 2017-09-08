@@ -3,6 +3,7 @@ package com.eru.gui;
 import com.eru.gui.controller.EruController;
 import com.eru.gui.controller.EruPreloaderController;
 import com.eru.gui.service.ApplicationLoader;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -56,7 +57,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), savedArgs);
-        javafx.application.Preloader preloaderWindow = loadPreloader(applicationLoader);
+        Preloader preloaderWindow = loadPreloader(applicationLoader);
 
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
@@ -77,8 +78,8 @@ public class Application extends javafx.application.Application {
     }
 
 
-    private javafx.application.Preloader loadPreloader(ApplicationLoader applicationLoader) {
-        return new javafx.application.Preloader() {
+    private Preloader loadPreloader(ApplicationLoader applicationLoader) {
+        return new Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {
                 FXMLLoader loader = new FXMLLoader();
