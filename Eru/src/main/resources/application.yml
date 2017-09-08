@@ -8,7 +8,7 @@ spring:
     properties:
       hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   datasource:
-    url: jdbc:h2:~/eru
+    url: jdbc:h2:${project.directory}/eru
     driver-class-name: org.h2.Driver
     username: sa
     password:

@@ -9,7 +9,7 @@
 <?import java.net.URL?>
 <VBox prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@Main.css" />
+        <URL value="@styles/Main.css" />
     </stylesheets>
     <StackPane fx:id="topPane" VBox.vgrow="NEVER">
         <fx:include source="MenuBar.fxml"/>

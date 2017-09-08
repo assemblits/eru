@@ -3,6 +3,8 @@ package com.eru.scenebuilder;
 import com.eru.entities.Display;
 import com.eru.exception.FxmlFileWriteException;
 import com.eru.gui.Application;
+import com.eru.preferences.EruPreferences;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +15,16 @@ import static java.lang.String.format;
 
 @Log4j
 @Component
+@RequiredArgsConstructor
 public class SceneFxmlManager {
 
     private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 
+    private final EruPreferences eruPreferences;
+
     public File createSceneFxmlFile(Display display) {
-        String fxmlFilesDirectoryPath = System.getProperty("user.home") + separator + "."
-                + Application.NAME + separator + "displays";
+        String fxmlFilesDirectoryPath = eruPreferences.getApplicationDirectory() + separator + "displays";
 
         String formattedSceneName = formatName(display);
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);

@@ -74,6 +74,7 @@ dependencies {
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
     compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
+    compile 'org.controlsfx:controlsfx:8.40.13'
 
     //Testing
     testCompile "junit:junit:${jUnitVersion}"

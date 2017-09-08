@@ -1,8 +1,12 @@
 package com.eru.gui;
 
+import com.eru.gui.component.StartUpWizard;
 import com.eru.gui.controller.EruController;
 import com.eru.gui.controller.EruPreloaderController;
+import com.eru.gui.service.ApplicationArgsPreparer;
 import com.eru.gui.service.ApplicationLoader;
+import com.eru.preferences.EruPreferences;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,26 +29,8 @@ import static com.sun.javafx.application.LauncherImpl.launchApplication;
 @ComponentScan(value = "com.eru")
 public class Application extends javafx.application.Application {
 
-    public static final String NAME = "eru";
     private static String[] savedArgs;
-
-    public enum Theme {
-        DEFAULT {
-            @Override
-            public String toString() {
-                return "prefs.theme.default";
-            }
-        },
-        DARK {
-            @Override
-            public String toString() {
-                return "prefs.theme.dark";
-            }
-        }
-    }
-
     private ConfigurableApplicationContext applicationContext;
-
     @Autowired
     private EruController eruController;
 
@@ -55,9 +41,16 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        EruPreferences eruPreferences = new EruPreferences();
+        eruPreferences.setApplicationConfigured(false);
+        ApplicationArgsPreparer environmentPreparer = new ApplicationArgsPreparer();
+        if (!eruPreferences.isApplicationConfigured()) {
+            StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
+            startUpWizard.startWizard();
+        }
+        savedArgs = environmentPreparer.prepare(savedArgs, eruPreferences);
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), savedArgs);
-        javafx.application.Preloader preloaderWindow = loadPreloader(applicationLoader);
-
+        Preloader preloaderWindow = loadPreloader(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
 
@@ -76,8 +69,7 @@ public class Application extends javafx.application.Application {
         applicationContext.close();
     }
 
-
-    private javafx.application.Preloader loadPreloader(ApplicationLoader applicationLoader) {
+    private Preloader loadPreloader(ApplicationLoader applicationLoader) {
         return new javafx.application.Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {
@@ -90,6 +82,22 @@ public class Application extends javafx.application.Application {
                 primaryStage.show();
             }
         };
+    }
+
+
+    public enum Theme {
+        DEFAULT {
+            @Override
+            public String toString() {
+                return "prefs.theme.default";
+            }
+        },
+        DARK {
+            @Override
+            public String toString() {
+                return "prefs.theme.dark";
+            }
+        }
     }
 
 }

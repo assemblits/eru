@@ -50,7 +50,7 @@ public class EruPreferences {
 
     private final EruPreferencesRecord eruPreferencesRecord;
 
-    private EruPreferences() {
+    public EruPreferences() {
         applicationRootPreferences = Preferences.userNodeForPackage(EruPreferences.class);
         documentsRootPreferences = applicationRootPreferences.node(DOCUMENTS);
         scadaRootPreferences = applicationRootPreferences.node(SCADA);
@@ -63,5 +63,21 @@ public class EruPreferences {
 
     public EruPreferencesRecord getEruPreferencesRecord() {
         return eruPreferencesRecord;
+    }
+
+    public String getApplicationDirectory() {
+        return applicationRootPreferences.get("app.directory", "~/.eru");
+    }
+
+    public void setApplicationDirectory(String directoryPath) {
+        applicationRootPreferences.put("app.directory", directoryPath);
+    }
+
+    public boolean isApplicationConfigured() {
+        return applicationRootPreferences.getBoolean("app.configured", false);
+    }
+
+    public void setApplicationConfigured(boolean configured) {
+        applicationRootPreferences.putBoolean("app.configured", configured);
     }
 }
