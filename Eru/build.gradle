@@ -13,6 +13,7 @@ buildscript {
         powerMockVersion = '1.6.6'
         jUnitVersion = '4.12'
         cglibNodepVersion = '2.2.2'
+        sceneBuilderVersion = '8.2.0'
         lombokVersion = '1.16.18'
         springBootVersion = '1.5.6.RELEASE'
     }
@@ -73,7 +74,7 @@ dependencies {
     compile "net.wimpi:jamod:${wimpiJamodVersion}"
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
-    compile 'com.gluonhq.scenebuilder:scenebuilder-all:8.2.0'
+    compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
 
     //Testing
     testCompile "junit:junit:${jUnitVersion}"

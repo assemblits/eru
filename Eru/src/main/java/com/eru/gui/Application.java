@@ -16,18 +16,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import static com.sun.javafx.application.LauncherImpl.launchApplication;
-
-
 @Log4j
-@EntityScan("com.eru")
 @SpringBootApplication
 @EnableJpaRepositories("com.eru")
 @ComponentScan(value = "com.eru")
+@EntityScan("com.eru")
 public class Application extends javafx.application.Application {
 
     public static final String NAME = "eru";
-    private static String[] savedArgs;
 
     public enum Theme {
         DEFAULT {
@@ -49,14 +45,9 @@ public class Application extends javafx.application.Application {
     @Autowired
     private EruController eruController;
 
-    public static void main(String[] args) {
-        savedArgs = args;
-        launchApplication(Application.class, args);
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
-        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), savedArgs);
+        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
         Preloader preloaderWindow = loadPreloader(applicationLoader);
 
         applicationLoader.setOnSucceeded(event -> {
@@ -77,7 +68,6 @@ public class Application extends javafx.application.Application {
         applicationContext.close();
     }
 
-
     private Preloader loadPreloader(ApplicationLoader applicationLoader) {
         return new Preloader() {
             @Override
@@ -93,4 +83,8 @@ public class Application extends javafx.application.Application {
         };
     }
 
+    private String[] getApplicationParameters(){
+        final Parameters parametersObject = getParameters();
+        return parametersObject.getRaw().toArray(new String[0]);
+    }
 }

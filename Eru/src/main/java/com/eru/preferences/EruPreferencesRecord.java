@@ -35,6 +35,7 @@ public class EruPreferencesRecord {
     private static final boolean DEFAULT_ALARMING_HORN_ENABLED = true;
     private final Preferences applicationRootPreferences;
     private final List<String> recentItems = new ArrayList<>();
+
     // Global preferences
     private double rootContainerHeight = DEFAULT_ROOT_CONTAINER_HEIGHT;
     private double rootContainerWidth = DEFAULT_ROOT_CONTAINER_WIDTH;
