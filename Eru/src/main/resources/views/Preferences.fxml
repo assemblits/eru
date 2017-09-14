@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane minWidth="563.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eru.gui.controller.PreferencesController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eru.gui.controller.PreferencesWindowController">
     <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="General">
