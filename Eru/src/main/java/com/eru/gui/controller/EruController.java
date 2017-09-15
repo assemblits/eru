@@ -3,6 +3,7 @@ package com.eru.gui.controller;
 import com.eru.entities.Project;
 import com.eru.gui.exception.EruException;
 import com.eru.gui.model.ProjectModel;
+import com.eru.preferences.EruPreferences;
 import com.eru.util.TagLinksManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,7 +28,7 @@ public class EruController {
     private final TagLinksManager tagLinksManager;
     private ProjectModel projectModel;
 
-    public void startEru(Project project, Stage stage) {
+    public void startEru(Project project, Stage stage, EruPreferences eruPreferences) {
         log.info("Starting Eru");
         Parent parent = loadMainScene();
 
@@ -38,9 +39,14 @@ public class EruController {
         tagLinksManager.setProjectModel(projectModel);
 
         stage.setScene(new Scene(parent));
+        stage.getScene().getStylesheets().add(getClass().getResource("/theme/"+eruPreferences.getTheme()+".css").toExternalForm());
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
         stage.show();
+    }
+
+    public void refreshTheme(){
+
     }
 
     private Parent loadMainScene() {
@@ -59,5 +65,4 @@ public class EruController {
         fxmlLoader.setControllerFactory(applicationContext::getBean);
         return fxmlLoader;
     }
-
 }

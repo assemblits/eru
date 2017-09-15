@@ -50,7 +50,7 @@ public class Application extends javafx.application.Application {
 
             applicationContext = loadResult.getApplicationContext();
             ApplicationContextHolder.setApplicationContext(applicationContext);
-            eruController.startEru(loadResult.getProject(), stage);
+            eruController.startEru(loadResult.getProject(), stage, eruPreferences);
         });
 
         preloaderWindow.start(stage);
@@ -91,17 +91,7 @@ public class Application extends javafx.application.Application {
     }
 
     public enum Theme {
-        DEFAULT {
-            @Override
-            public String toString() {
-                return "prefs.theme.default";
-            }
-        },
-        DARK {
-            @Override
-            public String toString() {
-                return "prefs.theme.dark";
-            }
-        }
+        DEFAULT,
+        DARK
     }
 }
