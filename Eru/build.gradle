@@ -7,7 +7,7 @@ buildscript {
         log4jVersion = '1.2.17'
         rxtxVersion = '2.1.7'
         wimpiJamodVersion = '1.2'
-        groovyVersion = '2.3.6'
+        groovyVersion = '2.4.1'
         h2Version = '1.4.196'
         mockitoVersion = '1.10.19'
         powerMockVersion = '1.6.6'
@@ -17,6 +17,7 @@ buildscript {
         lombokVersion = '1.16.18'
         springBootVersion = '1.5.6.RELEASE'
         controlsfxVersion = '8.40.13'
+        spockVersion = '1.1-groovy-2.4'
     }
     repositories {
         mavenCentral()
@@ -73,7 +74,7 @@ dependencies {
     compile "org.eclipse.jetty:jetty-io:${jettyVersion}"
     compile "org.rxtx:rxtx:${rxtxVersion}"
     compile "net.wimpi:jamod:${wimpiJamodVersion}"
-    compile "org.codehaus.groovy:groovy:${groovyVersion}"
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
     compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
     compile "org.controlsfx:controlsfx:${controlsfxVersion}"
@@ -84,4 +85,7 @@ dependencies {
     testCompile "org.powermock:powermock-module-junit4:${powerMockVersion}"
     testCompile "org.mockito:mockito-core:${mockitoVersion}"
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile "org.spockframework:spock-spring:${spockVersion}"
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+
 }
