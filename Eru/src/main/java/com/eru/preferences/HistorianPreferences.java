@@ -1,11 +1,8 @@
 package com.eru.preferences;
 
-import org.springframework.stereotype.Component;
-
 /**
  * Created by mtrujillo on 9/13/17.
  */
-@Component
 public class HistorianPreferences {
     static final boolean DEFAULT_HISTORIAN_ENABLED = true;
     static final String HISTORIAN_ENABLED = "HISTORIAN_ENABLED";

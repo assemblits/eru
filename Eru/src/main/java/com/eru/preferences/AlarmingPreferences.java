@@ -1,11 +1,8 @@
 package com.eru.preferences;
 
-import org.springframework.stereotype.Component;
-
 /**
  * Created by mtrujillo on 9/13/17.
  */
-@Component
 public class AlarmingPreferences {
     static final boolean DEFAULT_ALARMING_ENABLED = true;
     static final String ALARMING_ENABLED = "ALARMING_ENABLED";

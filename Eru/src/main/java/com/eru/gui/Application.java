@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Log4j
 @SpringBootApplication
 @EnableJpaRepositories("com.eru")
-@ComponentScan(value = "com.eru")
+@ComponentScan({"com.eru","com.eru.preferences"})
 @EntityScan("com.eru")
 public class Application extends javafx.application.Application {
 
@@ -86,5 +86,9 @@ public class Application extends javafx.application.Application {
     private String[] getApplicationParameters(){
         final Parameters parametersObject = getParameters();
         return parametersObject.getRaw().toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        launch(Application.class, args);
     }
 }

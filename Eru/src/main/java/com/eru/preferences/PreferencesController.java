@@ -2,8 +2,6 @@ package com.eru.preferences;
 
 import com.eru.gui.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import static com.eru.preferences.GlobalPreferences.*;
 import static com.eru.preferences.ScadaPreferences.*;
 import static com.eru.preferences.CommunicationsPreferences.*;
@@ -15,7 +13,6 @@ import java.util.prefs.Preferences;
 /**
  * Created by mtrujillo on 9/2/17.
  */
-@Component
 public class PreferencesController {
 
     private final Preferences globalRootPreferences;
@@ -24,15 +21,10 @@ public class PreferencesController {
     private final Preferences historianRootPreferences;
     private final Preferences alarmingRootPreferences;
 
-    @Autowired
     private GlobalPreferences globalPreferences;
-    @Autowired
     private ScadaPreferences scadaPreferences;
-    @Autowired
     private CommunicationsPreferences communicationsPreferences;
-    @Autowired
     private HistorianPreferences historianPreferences;
-    @Autowired
     private AlarmingPreferences alarmingPreferences;
 
     private PreferencesController() {
@@ -41,6 +33,14 @@ public class PreferencesController {
         communicationsRootPreferences = Preferences.userNodeForPackage(CommunicationsPreferences.class);
         historianRootPreferences = Preferences.userNodeForPackage(HistorianPreferences.class);
         alarmingRootPreferences = Preferences.userNodeForPackage(AlarmingPreferences.class);
+
+        globalPreferences = new GlobalPreferences();
+        scadaPreferences = new ScadaPreferences();
+        communicationsPreferences = new CommunicationsPreferences();
+        historianPreferences = new HistorianPreferences();
+        alarmingPreferences = new AlarmingPreferences();
+
+
         load();
     }
 
