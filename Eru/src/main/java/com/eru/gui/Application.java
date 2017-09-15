@@ -21,35 +21,30 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import static com.sun.javafx.application.LauncherImpl.launchApplication;
 
-
 @Log4j
 @EntityScan("com.eru")
 @SpringBootApplication
+@ComponentScan("com.eru")
 @EnableJpaRepositories("com.eru")
-@ComponentScan(value = "com.eru")
 public class Application extends javafx.application.Application {
 
-    private static String[] savedArgs;
+    public static final String NAME = "eru";
     private ConfigurableApplicationContext applicationContext;
     @Autowired
     private EruController eruController;
+    private EruPreferences eruPreferences;
 
     public static void main(String[] args) {
-        savedArgs = args;
         launchApplication(Application.class, args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        EruPreferences eruPreferences = new EruPreferences();
-        eruPreferences.setApplicationConfigured(false);
-        ApplicationArgsPreparer environmentPreparer = new ApplicationArgsPreparer();
         if (!eruPreferences.isApplicationConfigured()) {
             StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
             startUpWizard.startWizard();
         }
-        savedArgs = environmentPreparer.prepare(savedArgs, eruPreferences);
-        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), savedArgs);
+        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
         Preloader preloaderWindow = loadPreloader(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
@@ -69,8 +64,14 @@ public class Application extends javafx.application.Application {
         applicationContext.close();
     }
 
+    @Override
+    public void init() throws Exception {
+        super.init();
+        eruPreferences = new EruPreferences();
+    }
+
     private Preloader loadPreloader(ApplicationLoader applicationLoader) {
-        return new javafx.application.Preloader() {
+        return new Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {
                 FXMLLoader loader = new FXMLLoader();
@@ -84,6 +85,11 @@ public class Application extends javafx.application.Application {
         };
     }
 
+    private String[] getApplicationParameters() {
+        ApplicationArgsPreparer environmentPreparer = new ApplicationArgsPreparer();
+        final Parameters parametersObject = getParameters();
+        return environmentPreparer.prepare(parametersObject.getRaw().toArray(new String[0]), eruPreferences);
+    }
 
     public enum Theme {
         DEFAULT {
@@ -99,5 +105,4 @@ public class Application extends javafx.application.Application {
             }
         }
     }
-
 }

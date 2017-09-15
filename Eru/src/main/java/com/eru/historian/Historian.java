@@ -42,8 +42,8 @@ public class Historian {
     /* ********** Constructor ********** */
     private Historian() {
         EruPreferences eruPreferences = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
-        limit               = eruPreferences.getEruPreferencesRecord().getHistorianLimit();
-        samplingTime        = eruPreferences.getEruPreferencesRecord().getHistorianSamplingTime();
+        limit               = eruPreferences.getHistorianLimit();
+        samplingTime        = eruPreferences.getHistorianSamplingTime();
         historicalTagList   = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
         historianExecutor  = Executors.newSingleThreadExecutor(r -> {
             currentHistorianThread = new Thread(r);

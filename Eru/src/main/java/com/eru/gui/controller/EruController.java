@@ -27,12 +27,11 @@ public class EruController {
     private final TagLinksManager tagLinksManager;
     private ProjectModel projectModel;
 
-
     public void startEru(Project project, Stage stage) {
         log.info("Starting Eru");
         Parent parent = loadMainScene();
 
-        this.projectModel = ProjectModel.from(project);
+        projectModel = ProjectModel.from(project);
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);

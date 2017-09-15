@@ -2,7 +2,6 @@ package com.eru.scenebuilder;
 
 import com.eru.entities.Display;
 import com.eru.exception.FxmlFileWriteException;
-import com.eru.gui.Application;
 import com.eru.preferences.EruPreferences;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;

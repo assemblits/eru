@@ -2,20 +2,20 @@
 
 <?import javafx.scene.control.*?>
 <MenuBar xmlns="http://javafx.com/javafx/8.0.111"
-         xmlns:fx="http://javafx.com/fxml/1" fx:id="menu" fx:controller="com.eru.gui.controller.MenuBarController">
-    <Menu mnemonicParsing="false" text="File">
-        <MenuItem mnemonicParsing="false" onAction="#saveMenuItemSelected" text="Save"/>
-        <SeparatorMenuItem mnemonicParsing="false"/>
-        <MenuItem mnemonicParsing="false" onAction="#exitMenuItemSelected" text="Exit"/>
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eru.gui.controller.MenuBarController">
+    <Menu text="_File">
+        <MenuItem text="_Save"  onAction="#saveMenuItemSelected"/>
+        <SeparatorMenuItem />
+        <MenuItem text="_Exit" onAction="#exitMenuItemSelected"/>
     </Menu>
-    <Menu mnemonicParsing="false" text="Edit">
-        <MenuItem mnemonicParsing="false" onAction="#preferencesMenuItemSelected" text="Preferences"/>
+    <Menu text="Edit">
+        <MenuItem text="_Preferences" onAction="#preferencesMenuItemSelected"/>
     </Menu>
-    <Menu mnemonicParsing="false" text="Scada">
-        <MenuItem mnemonicParsing="false" onAction="#launchScadaMenuItemSelected" text="Launch"/>
-        <MenuItem mnemonicParsing="false" onAction="#stopScadaMenuItemSelected" text="Stop"/>
+    <Menu text="_Scada">
+        <MenuItem text="_Launch" onAction="#launchScadaMenuItemSelected"/>
+        <MenuItem text="_Stop" onAction="#stopScadaMenuItemSelected"/>
     </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-        <MenuItem mnemonicParsing="false" onAction="#aboutMenuItemSelected" text="About"/>
+    <Menu text="_Help">
+        <MenuItem text="_About" onAction="#aboutMenuItemSelected"/>
     </Menu>
 </MenuBar>

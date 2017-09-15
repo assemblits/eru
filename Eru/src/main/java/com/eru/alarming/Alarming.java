@@ -72,7 +72,7 @@ public class Alarming {
 
                 // Setting limits for alarms in memory
                 final long alarmTableCount = alarmRepository.count();
-                final int alarmsToShowLimit = eruPreferences.getEruPreferencesRecord().getAlarmingRuntimeLimit();
+                final int alarmsToShowLimit = eruPreferences.getAlarmingRuntimeLimit();
 
                 // Loading alarms from database
                 log.info("Loading " + alarmsToShowLimit + " of " + alarmTableCount + "  alarms from database.");
@@ -109,8 +109,8 @@ public class Alarming {
     public void load(Alarm newAlarm) {
         if (newAlarm == null) return;
 
-        final int alarmsInDatabaseLimit = eruPreferences.getEruPreferencesRecord().getAlarmingDatabaseLimit();
-        final int alarmsInMemoryLimit = eruPreferences.getEruPreferencesRecord().getAlarmingRuntimeLimit();
+        final int alarmsInDatabaseLimit = eruPreferences.getAlarmingDatabaseLimit();
+        final int alarmsInMemoryLimit = eruPreferences.getAlarmingRuntimeLimit();
 
         executorService.execute(() -> {
                     // In Database
