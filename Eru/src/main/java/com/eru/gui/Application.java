@@ -49,8 +49,8 @@ public class Application extends javafx.application.Application {
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
 
-            ApplicationContextHolder.setApplicationContext(applicationContext);
             applicationContext = loadResult.getApplicationContext();
+            ApplicationContextHolder.setApplicationContext(applicationContext);
             eruController.startEru(loadResult.getProject(), stage);
         });
 
