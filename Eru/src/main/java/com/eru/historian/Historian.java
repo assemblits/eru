@@ -3,7 +3,7 @@ package com.eru.historian;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.entities.Tag;
 import com.eru.util.Constants;
-import com.eru.preferences.PreferencesController;
+import com.eru.preferences.EruPreferences;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import lombok.extern.log4j.Log4j;
@@ -41,9 +41,9 @@ public class Historian {
 
     /* ********** Constructor ********** */
     private Historian() {
-        PreferencesController preferencesController = ApplicationContextHolder.getApplicationContext().getBean(PreferencesController.class);
-        limit               = preferencesController.getHistorianPreferences().getLimit();
-        samplingTime        = preferencesController.getHistorianPreferences().getSamplingTime();
+        EruPreferences eruPreferences = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
+        limit               = eruPreferences.getHistorianLimit();
+        samplingTime        = eruPreferences.getHistorianSamplingTime();
         historicalTagList   = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
         historianExecutor  = Executors.newSingleThreadExecutor(r -> {
             currentHistorianThread = new Thread(r);

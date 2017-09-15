@@ -1,8 +1,11 @@
 package com.eru.gui;
 
+import com.eru.gui.component.StartUpWizard;
 import com.eru.gui.controller.EruController;
 import com.eru.gui.controller.EruPreloaderController;
+import com.eru.gui.service.ApplicationArgsPreparer;
 import com.eru.gui.service.ApplicationLoader;
+import com.eru.preferences.EruPreferences;
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,45 +19,38 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import static com.sun.javafx.application.LauncherImpl.launchApplication;
+
 @Log4j
-@SpringBootApplication
-@EnableJpaRepositories("com.eru")
-@ComponentScan("com.eru")
 @EntityScan("com.eru")
+@SpringBootApplication
+@ComponentScan("com.eru")
+@EnableJpaRepositories("com.eru")
 public class Application extends javafx.application.Application {
 
     public static final String NAME = "eru";
-
-    public enum Theme {
-        DEFAULT {
-            @Override
-            public String toString() {
-                return "prefs.theme.default";
-            }
-        },
-        DARK {
-            @Override
-            public String toString() {
-                return "prefs.theme.dark";
-            }
-        }
-    }
-
     private ConfigurableApplicationContext applicationContext;
-
     @Autowired
     private EruController eruController;
+    private EruPreferences eruPreferences;
+
+    public static void main(String[] args) {
+        launchApplication(Application.class, args);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
+        if (!eruPreferences.isApplicationConfigured()) {
+            StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
+            startUpWizard.startWizard();
+        }
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
         Preloader preloaderWindow = loadPreloader(applicationLoader);
-
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
 
-            ApplicationContextHolder.setApplicationContext(applicationContext);
             applicationContext = loadResult.getApplicationContext();
+            ApplicationContextHolder.setApplicationContext(applicationContext);
             eruController.startEru(loadResult.getProject(), stage);
         });
 
@@ -66,6 +62,12 @@ public class Application extends javafx.application.Application {
     public void stop() throws Exception {
         super.stop();
         applicationContext.close();
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        eruPreferences = new EruPreferences();
     }
 
     private Preloader loadPreloader(ApplicationLoader applicationLoader) {
@@ -83,12 +85,24 @@ public class Application extends javafx.application.Application {
         };
     }
 
-    private String[] getApplicationParameters(){
+    private String[] getApplicationParameters() {
+        ApplicationArgsPreparer environmentPreparer = new ApplicationArgsPreparer();
         final Parameters parametersObject = getParameters();
-        return parametersObject.getRaw().toArray(new String[0]);
+        return environmentPreparer.prepare(parametersObject.getRaw().toArray(new String[0]), eruPreferences);
     }
 
-    public static void main(String[] args) {
-        launch(Application.class, args);
+    public enum Theme {
+        DEFAULT {
+            @Override
+            public String toString() {
+                return "prefs.theme.default";
+            }
+        },
+        DARK {
+            @Override
+            public String toString() {
+                return "prefs.theme.dark";
+            }
+        }
     }
 }

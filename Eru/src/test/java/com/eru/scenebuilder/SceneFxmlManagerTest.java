@@ -1,27 +1,36 @@
 package com.eru.scenebuilder;
 
 import com.eru.entities.Display;
+import com.eru.preferences.EruPreferences;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class SceneFxmlManagerTest {
 
     private static final String NEW_FXML_FILE_CONTENT = "";
 
     private SceneFxmlManager sceneFxmlManager;
+    @Mock
+    private EruPreferences eruPreferences;
 
     @Before
     public void setUp() throws Exception {
         URL resource = ClassLoader.getSystemClassLoader().getResource("");
-        System.setProperty("user.home", resource.getPath());
+        when(eruPreferences.getApplicationDirectory()).thenReturn(resource.getPath());
 
-        sceneFxmlManager = new SceneFxmlManager();
+        sceneFxmlManager = new SceneFxmlManager(eruPreferences);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.eru.preferences;
 
+import com.eru.gui.Application;
 import org.springframework.stereotype.Component;
 
 import java.util.prefs.Preferences;
@@ -10,58 +11,122 @@ import java.util.prefs.Preferences;
 @Component
 public class EruPreferences {
 
-    // GLOBAL PREFERENCES
-    static final String DOCUMENTS = "DOCUMENTS";
-    static final String SCADA = "SCADA";
-    static final String COMMUNICATIONS = "SCADA";
-    static final String HISTORIAN = "HISTORIAN";
-    static final String ALARMING = "ALARMING";
-    static final String ROOT_CONTAINER_HEIGHT = "ROOT_CONTAINER_HEIGHT";
-    static final String ROOT_CONTAINER_WIDTH = "ROOT_CONTAINER_WIDTH";
-    static final String THEME = "THEME";
-    static final String RECENT_ITEMS = "RECENT_ITEMS";
-    static final String RECENT_ITEMS_SIZE = "RECENT_ITEMS_SIZE";
+    private final Preferences appPreferences;
 
-    // SCADA PREFERENCES
-    static final String ANIMATIONS_ENABLED = "ANIMATIONS_ENABLED";
-    static final String ANIMATIONS_DURATION = "ANIMATIONS_DURATION";
-
-    // COMMUNICATIONS PREFERENCES
-    static final String MODBUS_BLOCK_MAX_LIMIT = "MODBUS_BLOCK_MAX_LIMIT";
-
-    // HISTORIAN PREFERENCES
-    static final String HISTORIAN_ENABLED = "HISTORIAN_ENABLED";
-    static final String HISTORIAN_LIMIT = "HISTORIAN_LIMIT";
-    static final String HISTORIAN_SAMPLING_TIME = "HISTORIAN_SAMPLING_TIME";
-
-    // ALARMING PREFERENCES
-    static final String ALARMING_ENABLED = "ALARMING_ENABLED";
-    static final String ALARMING_DATABASE_LIMIT = "ALARMING_DATABASE_LIMIT";
-    static final String ALARMING_RUNTIME_LIMIT = "ALARMING_RUNTIME_LIMIT";
-    static final String ALARMING_SAMPLING_TIME = "ALARMING_SAMPLING_TIME";
-    static final String ALARMING_HORN_ENABLED = "ALARMING_HORN_ENABLED";
-
-    private final Preferences applicationRootPreferences;
-    private final Preferences documentsRootPreferences;
-    private final Preferences scadaRootPreferences;
-    private final Preferences communicationsRootPreferences;
-    private final Preferences historianRootPreferences;
-    private final Preferences alarmingRootPreferences;
-
-    private final EruPreferencesRecord eruPreferencesRecord;
-
-    private EruPreferences() {
-        applicationRootPreferences = Preferences.userNodeForPackage(EruPreferences.class);
-        documentsRootPreferences = applicationRootPreferences.node(DOCUMENTS);
-        scadaRootPreferences = applicationRootPreferences.node(SCADA);
-        communicationsRootPreferences = applicationRootPreferences.node(COMMUNICATIONS);
-        historianRootPreferences = applicationRootPreferences.node(HISTORIAN);
-        alarmingRootPreferences = applicationRootPreferences.node(ALARMING);
-
-        eruPreferencesRecord = new EruPreferencesRecord(applicationRootPreferences);
+    public EruPreferences() {
+        appPreferences = Preferences.userNodeForPackage(Application.class);
     }
 
-    public EruPreferencesRecord getEruPreferencesRecord() {
-        return eruPreferencesRecord;
+    public Application.Theme getTheme() {
+        return Application.Theme.valueOf(appPreferences.get("theme", Application.Theme.DEFAULT.name()));
     }
+
+    public void setTheme(Application.Theme theme) {
+        appPreferences.put("theme", theme.name());
+    }
+
+    public boolean isAnimationsEnabled() {
+        return appPreferences.getBoolean("animations.enabled", true);
+    }
+
+    public void setAnimationsEnabled(boolean animationsEnabled) {
+        appPreferences.putBoolean("animations.enabled", animationsEnabled);
+    }
+
+    public double getAnimationsDuration() {
+        return appPreferences.getDouble("animations.duration", 5000);
+    }
+
+    public void setAnimationsDuration(double animationsDuration) {
+        appPreferences.putDouble("animations.duration", animationsDuration);
+    }
+
+    public int getModbusBlockMaxLimit() {
+        return appPreferences.getInt("modbus.block.maxLimit", 120);
+    }
+
+    public void setModbusBlockMaxLimit(int modbusBlockMaxLimit) {
+        appPreferences.putInt("modbus.block.maxLimit", modbusBlockMaxLimit);
+    }
+
+    public boolean isHistorianEnabled() {
+        return appPreferences.getBoolean("historian.enabled", true);
+    }
+
+    public void setHistorianEnabled(boolean historianEnabled) {
+        appPreferences.putBoolean("historian.enabled", historianEnabled);
+    }
+
+    public int getHistorianLimit() {
+        return appPreferences.getInt("historian.limit", 1000);
+    }
+
+    public void setHistorianLimit(int limit) {
+        appPreferences.putInt("historian.limit", limit);
+    }
+
+    public int getHistorianSamplingTime() {
+        return appPreferences.getInt("historian.samplingTime", 600_000);
+    }
+
+    public void setHistorianSamplingTime(int samplingTime) {
+        appPreferences.putInt("historian.samplingTime", samplingTime);
+    }
+
+    public boolean isAlarmingEnabled() {
+        return appPreferences.getBoolean("alarming.enabled", true);
+    }
+
+    public void setAlarmingEnabled(boolean alarmingEnabled) {
+        appPreferences.putBoolean("alarming.enabled", alarmingEnabled);
+    }
+
+    public int getAlarmingDatabaseLimit() {
+        return appPreferences.getInt("alarming.databaseLimit", 1000);
+    }
+
+    public void setAlarmingDatabaseLimit(int databaseLimit) {
+        appPreferences.putInt("alarming.databaseLimit", databaseLimit);
+    }
+
+    public int getAlarmingRuntimeLimit() {
+        return appPreferences.getInt("alarming.runtimeLimit", 100);
+    }
+
+    public void setAlarmingRuntimeLimit(int runtimeLimit) {
+        appPreferences.putInt("alarming.runtimeLimit", runtimeLimit);
+    }
+
+    public int getAlarmingSamplingTime() {
+        return appPreferences.getInt("alarming.samplingTime", 500);
+    }
+
+    public void setAlarmingSamplingTime(int samplingTime) {
+        appPreferences.putInt("alarming.samplingTime", samplingTime);
+    }
+
+    public boolean isAlarmingHornEnabled() {
+        return appPreferences.getBoolean("alarming.hornEnabled", true);
+    }
+
+    public void setAlarmingHornEnabled(boolean hornEnabled) {
+        appPreferences.putBoolean("alarming.horEnabled", hornEnabled);
+    }
+
+    public String getApplicationDirectory() {
+        return appPreferences.get("app.directory", "~/.eru");
+    }
+
+    public void setApplicationDirectory(String directoryPath) {
+        appPreferences.put("app.directory", directoryPath);
+    }
+
+    public boolean isApplicationConfigured() {
+        return appPreferences.getBoolean("app.configured", false);
+    }
+
+    public void setApplicationConfigured(boolean configured) {
+        appPreferences.putBoolean("app.configured", configured);
+    }
+
 }

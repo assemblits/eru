@@ -16,6 +16,7 @@ buildscript {
         sceneBuilderVersion = '8.2.0'
         lombokVersion = '1.16.18'
         springBootVersion = '1.5.6.RELEASE'
+        controlsfxVersion = '8.40.13'
     }
     repositories {
         mavenCentral()
@@ -75,6 +76,7 @@ dependencies {
     compile "org.codehaus.groovy:groovy:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
     compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
+    compile "org.controlsfx:controlsfx:${controlsfxVersion}"
 
     //Testing
     testCompile "junit:junit:${jUnitVersion}"
