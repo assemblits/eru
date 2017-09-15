@@ -3,6 +3,7 @@ package com.eru.gui;
 import com.eru.gui.controller.EruController;
 import com.eru.gui.controller.EruPreloaderController;
 import com.eru.gui.service.ApplicationLoader;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,18 +16,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import static com.sun.javafx.application.LauncherImpl.launchApplication;
-
-
 @Log4j
-@EntityScan("com.eru")
 @SpringBootApplication
 @EnableJpaRepositories("com.eru")
-@ComponentScan(value = "com.eru")
+@ComponentScan("com.eru")
+@EntityScan("com.eru")
 public class Application extends javafx.application.Application {
 
     public static final String NAME = "eru";
-    private static String[] savedArgs;
 
     public enum Theme {
         DEFAULT {
@@ -48,15 +45,10 @@ public class Application extends javafx.application.Application {
     @Autowired
     private EruController eruController;
 
-    public static void main(String[] args) {
-        savedArgs = args;
-        launchApplication(Application.class, args);
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
-        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), savedArgs);
-        javafx.application.Preloader preloaderWindow = loadPreloader(applicationLoader);
+        ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
+        Preloader preloaderWindow = loadPreloader(applicationLoader);
 
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
@@ -76,9 +68,8 @@ public class Application extends javafx.application.Application {
         applicationContext.close();
     }
 
-
-    private javafx.application.Preloader loadPreloader(ApplicationLoader applicationLoader) {
-        return new javafx.application.Preloader() {
+    private Preloader loadPreloader(ApplicationLoader applicationLoader) {
+        return new Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {
                 FXMLLoader loader = new FXMLLoader();
@@ -92,4 +83,12 @@ public class Application extends javafx.application.Application {
         };
     }
 
+    private String[] getApplicationParameters(){
+        final Parameters parametersObject = getParameters();
+        return parametersObject.getRaw().toArray(new String[0]);
+    }
+
+    public static void main(String[] args) {
+        launch(Application.class, args);
+    }
 }
