@@ -28,7 +28,6 @@ import static com.sun.javafx.application.LauncherImpl.launchApplication;
 @EnableJpaRepositories("com.eru")
 public class Application extends javafx.application.Application {
 
-    public static final String NAME = "eru";
     private ConfigurableApplicationContext applicationContext;
     @Autowired
     private EruController eruController;
