@@ -50,7 +50,7 @@ public class Application extends javafx.application.Application {
 
             applicationContext = loadResult.getApplicationContext();
             ApplicationContextHolder.setApplicationContext(applicationContext);
-            eruController.startEru(loadResult.getProject(), stage, eruPreferences);
+            eruController.startEru(loadResult.getProject(), stage);
         });
 
         preloaderWindow.start(stage);

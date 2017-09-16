@@ -26,9 +26,10 @@ public class EruController {
     private final CenterPaneController centerPaneController;
     private final MenuBarController menuBarController;
     private final TagLinksManager tagLinksManager;
+    private final EruPreferences eruPreferences;
     private ProjectModel projectModel;
 
-    public void startEru(Project project, Stage stage, EruPreferences eruPreferences) {
+    public void startEru(Project project, Stage stage) {
         log.info("Starting Eru");
         Parent parent = loadMainScene();
 
@@ -43,10 +44,6 @@ public class EruController {
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
         stage.show();
-    }
-
-    public void refreshTheme(){
-
     }
 
     private Parent loadMainScene() {
