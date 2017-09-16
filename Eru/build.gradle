@@ -9,9 +9,6 @@ buildscript {
         wimpiJamodVersion = '1.2'
         groovyVersion = '2.4.1'
         h2Version = '1.4.196'
-        mockitoVersion = '1.10.19'
-        powerMockVersion = '1.6.6'
-        jUnitVersion = '4.12'
         cglibNodepVersion = '2.2.2'
         sceneBuilderVersion = '8.2.0'
         lombokVersion = '1.16.18'
@@ -80,10 +77,6 @@ dependencies {
     compile "org.controlsfx:controlsfx:${controlsfxVersion}"
 
     //Testing
-    testCompile "junit:junit:${jUnitVersion}"
-    testCompile "org.powermock:powermock-api-mockito:${powerMockVersion}"
-    testCompile "org.powermock:powermock-module-junit4:${powerMockVersion}"
-    testCompile "org.mockito:mockito-core:${mockitoVersion}"
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile "org.spockframework:spock-spring:${spockVersion}"
     testCompile "org.spockframework:spock-core:${spockVersion}"
