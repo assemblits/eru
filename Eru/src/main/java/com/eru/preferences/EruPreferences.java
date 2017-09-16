@@ -114,7 +114,7 @@ public class EruPreferences {
     }
 
     public String getApplicationDirectory() {
-        return appPreferences.get("app.directory", "~/.eru");
+        return appPreferences.get("app.directory", System.getProperty("user.home") + "/.eru/");
     }
 
     public void setApplicationDirectory(String directoryPath) {

@@ -13,9 +13,9 @@ import org.controlsfx.dialog.WizardPane;
 
 import java.io.File;
 
-public class StartUpWizard extends Wizard {
+import static java.lang.String.format;
 
-    private static final String DEFAULT_APP_DIRECTORY = "~/.eru/";
+public class StartUpWizard extends Wizard {
 
     private static final String WELCOME_MESSAGE = "Welcome and thanks for using Eru.\n\n" +
             "Before start using the application\n " +
@@ -23,7 +23,7 @@ public class StartUpWizard extends Wizard {
             "Click Next to continue.";
     private static final String SETUP_DIRECTORY_PAGE_MESSAGE = "You can select the directory in which all the application\n" +
             "files are going to be stored or click Finish to use the \n" +
-            "default '" + DEFAULT_APP_DIRECTORY + "' directory.";
+            "default '%s' directory.";
 
     private static final String SETUP_WIZARD_CSS = "views/styles/WizardPage1.css";
 
@@ -55,7 +55,8 @@ public class StartUpWizard extends Wizard {
         page2Grid.setVgap(10);
         page2Grid.setHgap(10);
 
-        page2Grid.add(new Label(SETUP_DIRECTORY_PAGE_MESSAGE), 0, 0);
+        page2Grid.add(new Label(format(SETUP_DIRECTORY_PAGE_MESSAGE, eruPreferences.getApplicationDirectory())),
+                0, 0);
         Button button = new Button("Change directory");
 
         button.setOnAction(event -> {
