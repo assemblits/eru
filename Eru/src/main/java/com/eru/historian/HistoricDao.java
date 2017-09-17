@@ -3,7 +3,7 @@ package com.eru.historian;
 import com.eru.entities.Tag;
 import com.eru.util.Constants;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 //// TODO: 24-08-17 Refactor

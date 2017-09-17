@@ -1,22 +1,25 @@
 package com.eru.logger;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.AppenderBase;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
-import lombok.extern.log4j.Log4j;
-import org.apache.log4j.WriterAppender;
-import org.apache.log4j.spi.LoggingEvent;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by mtrujillo on 9/2/2015.
  */
-@Log4j
-public class TextAreaAppender extends WriterAppender {
+@Slf4j
+public class TextAreaAppender extends AppenderBase<ILoggingEvent> {
     private static volatile TextArea textArea;
 
+    public static void setTextArea(TextArea textArea) {
+        TextAreaAppender.textArea = textArea;
+    }
+
     @Override
-    public void append(LoggingEvent event) {
-        final String message = this.layout.format(event);
-        // Append formatted message to text area using the Thread.
+    protected void append(ILoggingEvent eventObject) {
+        final String message = eventObject.getFormattedMessage();
         try {
             Platform.runLater(() -> {
                 try {
@@ -32,12 +35,7 @@ public class TextAreaAppender extends WriterAppender {
                     log.error("TextAreaAppender error:", t);
                 }
             });
-        } catch (final IllegalStateException e) {
-            // ignore case when the platform hasn't yet been iniitialized
+        } catch (final IllegalStateException ignored) {
         }
-    }
-
-    public static void setTextArea(TextArea textArea) {
-        TextAreaAppender.textArea = textArea;
     }
 }

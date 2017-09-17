@@ -12,3 +12,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+logging:
+  file: ${project.directory}/logs/eru.log
+  level.org.springframework.web: INFO
+  level.org.hibernate: ERROR
+  level.com.eru: INFO

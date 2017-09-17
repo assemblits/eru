@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -21,7 +21,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import static com.sun.javafx.application.LauncherImpl.launchApplication;
 
-@Log4j
+@Slf4j
 @EntityScan("com.eru")
 @SpringBootApplication
 @ComponentScan("com.eru")

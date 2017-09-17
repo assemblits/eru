@@ -10,13 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EruController {
@@ -40,7 +40,7 @@ public class EruController {
         tagLinksManager.setProjectModel(projectModel);
 
         stage.setScene(new Scene(parent));
-        stage.getScene().getStylesheets().add(getClass().getResource("/theme/"+eruPreferences.getTheme()+".css").toExternalForm());
+        stage.getScene().getStylesheets().add(getClass().getResource("/theme/" + eruPreferences.getTheme() + ".css").toExternalForm());
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
         stage.show();
