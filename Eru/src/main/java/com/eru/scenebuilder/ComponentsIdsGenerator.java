@@ -5,6 +5,7 @@ import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMInstance;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMObject;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Stack;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ComponentsIdsGenerator {
 
-    public void generateComponentsId(FXOMDocument fxomDocument) {
+    public void generateComponentsId(@NonNull FXOMDocument fxomDocument) {
         Stack<FXOMObject> fxmlObjects = new Stack<>();
         fxmlObjects.push(fxomDocument.getFxomRoot());
 
