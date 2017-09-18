@@ -16,7 +16,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,9 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static java.lang.String.format;
-
-@Log4j
+@Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class EruSceneBuilder extends VBox {
@@ -52,7 +50,7 @@ public class EruSceneBuilder extends VBox {
     }
 
     public void init(Display display) {
-        log.debug(format("Instantiating Eru Scene Builder for %s", display.getName()));
+        log.debug("Instantiating Eru Scene Builder for {}", display.getName());
         sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
         editorController = new EditorController();
         editorController.setLibrary(customLibraryLoader.getLibrary());
@@ -87,7 +85,7 @@ public class EruSceneBuilder extends VBox {
             String fxmlText = FXOMDocument.readContentFromURL(fxmlFileUrl);
             editorController.setFxmlTextAndLocation(fxmlText, fxmlFileUrl);
         } catch (IOException e) {
-            log.error(format("Error trying to read <%s>", sceneFxmlFile.getAbsoluteFile()));
+            log.error("Error trying to read '{}'", sceneFxmlFile.getAbsoluteFile());
             throw new FxmlFileReadException(e);
         }
     }

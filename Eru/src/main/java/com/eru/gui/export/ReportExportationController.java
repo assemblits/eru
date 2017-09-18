@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ import java.util.ResourceBundle;
  *          <li> 2014-07-15 (MT) Creation </li>*
  *          <ul>
  */
-@Log4j
+@Slf4j
 @Lazy
 @Component
 public class ReportExportationController extends AnchorPane implements Initializable {

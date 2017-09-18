@@ -12,12 +12,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
 
-@Log4j
+@Slf4j
 public class DisplayTable extends EruTableView<Display> {
 
     public DisplayTable(SceneBuilderStarter sceneBuilderStarter) {

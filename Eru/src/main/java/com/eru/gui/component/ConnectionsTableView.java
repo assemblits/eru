@@ -22,13 +22,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Log4j
+@Slf4j
 public class ConnectionsTableView extends EruTableView<Connection> {
 
     public ConnectionsTableView() {
@@ -367,7 +367,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
 
 }
 
-@Log4j
+@Slf4j
 class ConnectActionCell<S> extends TableCell<S, Void> {
     private ToggleButton toggleButton;
     private ImageView connectImageView = new ImageView(new Image(getClass().getResource("/images/connect.png").toExternalForm()));

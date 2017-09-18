@@ -4,7 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import net.wimpi.modbus.util.SerialParameters;
 
 import javax.persistence.Column;
@@ -17,31 +17,31 @@ import javax.persistence.Transient;
  */
 @Entity
 @DiscriminatorValue(value = "SERIAL")
-@Log4j
+@Slf4j
 public class SerialConnection extends Connection {
 
-    private StringProperty  port;
+    private StringProperty port;
     private IntegerProperty bitsPerSeconds;
     private IntegerProperty dataBits;
-    private StringProperty  parity;
+    private StringProperty parity;
     private IntegerProperty stopsBits;
-    private StringProperty  frameEncoding;
+    private StringProperty frameEncoding;
     private net.wimpi.modbus.net.SerialConnection coreConnection;
 
     public SerialConnection() {
-        this.port           = new SimpleStringProperty("COM1");
+        this.port = new SimpleStringProperty("COM1");
         this.bitsPerSeconds = new SimpleIntegerProperty(19200);
-        this.dataBits       = new SimpleIntegerProperty(8);
-        this.parity         = new SimpleStringProperty("NONE");
-        this.stopsBits      = new SimpleIntegerProperty(1);
-        this.frameEncoding  = new SimpleStringProperty("RTU");
+        this.dataBits = new SimpleIntegerProperty(8);
+        this.parity = new SimpleStringProperty("NONE");
+        this.stopsBits = new SimpleIntegerProperty(1);
+        this.frameEncoding = new SimpleStringProperty("RTU");
     }
 
     @Override
     public void connect() {
-        if(!isEnabled() || (coreConnection != null && coreConnection.isOpen())) return;
+        if (!isEnabled() || (coreConnection != null && coreConnection.isOpen())) return;
         try {
-            log.info("Connecting " + getName() + " connection...");
+            log.info("Starting connection <{}>", getName());
             SerialParameters connectionParameters = new SerialParameters();
             connectionParameters.setPortName(port.get());
             connectionParameters.setBaudRate(bitsPerSeconds.get());
@@ -54,23 +54,23 @@ public class SerialConnection extends Connection {
             coreConnection.open();
             setConnected(true);
             setStatus("Connected");
-            log.info(getName() + " connected.");
+            log.info("<{}> connected", getName());
         } catch (Exception e) {
             e.printStackTrace();
             setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error(getName() + " connection failure.", e);
+            log.error("{} connection failure.", getName(), e);
         }
     }
 
     @Override
     public void disconnect() {
-        if(coreConnection != null && coreConnection.isOpen()){
-            log.info("Disconnecting Serial connection:\t" + getName());
+        if (coreConnection != null && coreConnection.isOpen()) {
+            log.info("Disconnecting Serial connection:\t{}", getName());
             coreConnection.close();
             setConnected(false);
             setStatus("Disconnected");
-            log.info(getName() + " disconnected.");
+            log.info("{} disconnected.", getName());
         }
     }
 
@@ -78,66 +78,78 @@ public class SerialConnection extends Connection {
     public String getPort() {
         return port.get();
     }
-    public StringProperty portProperty() {
-        return port;
-    }
+
     public void setPort(String port) {
         this.port.set(port);
+    }
+
+    public StringProperty portProperty() {
+        return port;
     }
 
     @Column(name = "bits_per_seconds")
     public int getBitsPerSeconds() {
         return bitsPerSeconds.get();
     }
-    public IntegerProperty bitsPerSecondsProperty() {
-        return bitsPerSeconds;
-    }
+
     public void setBitsPerSeconds(int bitsPerSeconds) {
         this.bitsPerSeconds.set(bitsPerSeconds);
+    }
+
+    public IntegerProperty bitsPerSecondsProperty() {
+        return bitsPerSeconds;
     }
 
     @Column(name = "data_bits")
     public int getDataBits() {
         return dataBits.get();
     }
-    public IntegerProperty dataBitsProperty() {
-        return dataBits;
-    }
+
     public void setDataBits(int dataBits) {
         this.dataBits.set(dataBits);
+    }
+
+    public IntegerProperty dataBitsProperty() {
+        return dataBits;
     }
 
     @Column(name = "parity")
     public String getParity() {
         return parity.get();
     }
-    public StringProperty parityProperty() {
-        return parity;
-    }
+
     public void setParity(String parity) {
         this.parity.set(parity);
+    }
+
+    public StringProperty parityProperty() {
+        return parity;
     }
 
     @Column(name = "stop_bits")
     public int getStopsBits() {
         return stopsBits.get();
     }
-    public IntegerProperty stopsBitsProperty() {
-        return stopsBits;
-    }
+
     public void setStopsBits(int stopsBits) {
         this.stopsBits.set(stopsBits);
+    }
+
+    public IntegerProperty stopsBitsProperty() {
+        return stopsBits;
     }
 
     @Column(name = "frame_encoding")
     public String getFrameEncoding() {
         return frameEncoding.get();
     }
-    public StringProperty frameEncodingProperty() {
-        return frameEncoding;
-    }
+
     public void setFrameEncoding(String frameEncoding) {
         this.frameEncoding.set(frameEncoding);
+    }
+
+    public StringProperty frameEncodingProperty() {
+        return frameEncoding;
     }
 
     @Transient

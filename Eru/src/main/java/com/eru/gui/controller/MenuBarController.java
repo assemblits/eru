@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ import java.net.URL;
 
 import static java.lang.String.format;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MenuBarController {
@@ -38,7 +38,7 @@ public class MenuBarController {
     private ProjectModel projectModel;
 
     public void saveMenuItemSelected() {
-        log.info("Saving " + projectModel);
+        log.info("Saving {}", projectModel);
         projectRepository.save(projectModel.get());
     }
 
@@ -74,7 +74,7 @@ public class MenuBarController {
             tagLinksManager.linkToScada(mainNode);
             log.info("Linking to scada was successful.");
         } catch (Exception e) {
-            log.error(e);
+            log.error("Error launching display", e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error in SCADA launching process.");
             alert.setContentText("There is no Main display created.");

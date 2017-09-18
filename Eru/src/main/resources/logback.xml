@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="LABEL_APPENDER" class="com.eru.logger.LabelAppender">
+    </appender>
+
+    <appender name="LOGGER_LIVE" class="com.eru.logger.LiveAppender">
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="LABEL_APPENDER"/>
+        <appender-ref ref="LOGGER_LIVE"/>
+    </root>
+</configuration>

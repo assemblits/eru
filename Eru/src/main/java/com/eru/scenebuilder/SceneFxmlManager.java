@@ -4,15 +4,14 @@ import com.eru.entities.Display;
 import com.eru.exception.FxmlFileWriteException;
 import com.eru.preferences.EruPreferences;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 
 import static java.io.File.separator;
-import static java.lang.String.format;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SceneFxmlManager {
@@ -29,7 +28,7 @@ public class SceneFxmlManager {
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);
         File fxmlFile = new File(fxmlFilesDirectory.getAbsolutePath() + separator + formattedSceneName + ".fxml");
         if (!fxmlFile.exists()) {
-            log.debug(format("Creating fxml file for display '%s'", display.getName()));
+            log.debug("Creating fxml file for display '{}'", display.getName());
             try {
                 if (!fxmlFilesDirectory.exists()) {
                     fxmlFilesDirectory.mkdirs();
@@ -39,25 +38,25 @@ public class SceneFxmlManager {
                 }
 
             } catch (IOException e) {
-                log.error(format("Error creating fxml file for display '%s'", display.getName()));
+                log.error("Error creating fxml file for display '{}'", display.getName());
                 throw new FxmlFileWriteException(e);
             }
         }
-        log.debug(format("fxml file for display '%s' was created successfully in '%s'",
-                display.getName(), fxmlFile.getAbsolutePath()));
+        log.debug("fxml file for display '{}' was created successfully in '{}'",
+                display.getName(), fxmlFile.getAbsolutePath());
         return fxmlFile;
     }
 
     public void updateContent(File fxmlFile, String content) {
-        log.debug(format("Updating '%s'", fxmlFile.getAbsolutePath()));
+        log.debug("Updating '{}'", fxmlFile.getAbsolutePath());
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(fxmlFile), CHARSET_NAME))) {
             writer.write(content);
         } catch (IOException e) {
-            log.error(format("Error updating fxml file '%s'", fxmlFile.getAbsolutePath()));
+            log.error("Error updating fxml file '{}'", fxmlFile.getAbsolutePath());
             throw new FxmlFileWriteException(e);
         }
-        log.debug(format("File '%s' updated successfully", fxmlFile.getAbsolutePath()));
+        log.debug("File '{}' updated successfully", fxmlFile.getAbsolutePath());
     }
 
     private String formatName(Display display) {

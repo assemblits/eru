@@ -11,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CenterPaneController implements SceneBuilderStarter {
@@ -69,7 +69,7 @@ public class CenterPaneController implements SceneBuilderStarter {
 
     @Override
     public void startSceneBuilder(Display display) {
-        log.info(String.format("Starting display builder for '%s'", display.getName()));
+        log.info("Starting display builder for '{}'", display.getName());
 
         List<Node> oldSceneBuilders = centerPane.getChildren().stream()
                 .filter(node -> node instanceof EruSceneBuilder).collect(Collectors.toList());
@@ -82,7 +82,7 @@ public class CenterPaneController implements SceneBuilderStarter {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error on Eru Scene Builder initialization.");
             alert.setContentText(e.getLocalizedMessage());
-            log.error(e);
+            log.error("Error starting scene builder", e);
         }
 
         centerPane.getChildren().add(eruSceneBuilder);

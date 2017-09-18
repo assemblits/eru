@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 
 import java.sql.Timestamp;
@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by mtrujillo on 15/10/2014.
  */
-@Log4j
+@Slf4j
 public class Alarming {
     private static final Alarming ourInstance = new Alarming();
 
@@ -46,7 +46,7 @@ public class Alarming {
     private Alarming() {
         running = false;
         alarmRepository = ApplicationContextHolder.getApplicationContext().getBean(AlarmRepository.class);
-        eruPreferences =  ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
+        eruPreferences = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
         alarmsAgent = new Agent<>(FXCollections.observableArrayList());
         status = new SimpleStringProperty();
         alarmed = new SimpleBooleanProperty();
@@ -75,7 +75,7 @@ public class Alarming {
                 final int alarmsToShowLimit = eruPreferences.getAlarmingLimit().getValue();
 
                 // Loading alarms from database
-                log.info("Loading " + alarmsToShowLimit + " of " + alarmTableCount + "  alarms from database.");
+                log.info("Loading {}  of {}  alarms from database.", alarmsToShowLimit, alarmTableCount);
 //                final long firstResult = alarmTableCount - alarmsToShowLimit < 0 ? 0 : alarmTableCount - alarmsToShowLimit;
 //                final ObservableList<Alarm> databaseAlarms = FXCollections.observableArrayList(alarmDao.findEntities("timeStamp", Dao.Order.ASC, alarmsToShowLimit, firstResult));
 //                alarmsAgent.updateValue(databaseAlarms);
