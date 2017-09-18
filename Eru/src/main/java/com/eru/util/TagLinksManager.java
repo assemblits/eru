@@ -2,17 +2,17 @@ package com.eru.util;
 
 import com.eru.entities.Tag;
 import com.eru.exception.TagLinkException;
-import com.eru.gui.model.ProjectModel;
 import com.eru.gui.dynamo.EruAlarm;
 import com.eru.gui.dynamo.EruDisplay;
 import com.eru.gui.dynamo.EruGauge;
 import com.eru.gui.dynamo.EruLevelBar;
+import com.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Created by mtrujillo on 9/9/2015.
  */
-@Log4j
+@Slf4j
 @Component
 public class TagLinksManager {
 
@@ -41,7 +41,7 @@ public class TagLinksManager {
     }
 
     private void installUpdaterLink(Tag tag) {
-        log.debug("Installing updater linkToConnections to " + tag.getName());
+        log.debug("Installing updater linkToConnections to {}", tag.getName());
         TagLink link;
         switch (tag.getType()) {
             case INPUT:
@@ -94,7 +94,7 @@ public class TagLinksManager {
 
     private void removeUpdaterLink(Tag tag) {
         for (TagLink link : TAG_LINK_MAP.get(tag)) {
-            log.debug("Removing updater linkToConnections to " + tag.getName() + " with linkToConnections " + link);
+            log.debug("Removing updater linkToConnections to {} with linkToConnections {}", tag.getName(), link);
             if (link instanceof AddressChangeLink) {
                 tag.getLinkedAddress().timestampProperty().removeListener(link);
             } else {
@@ -144,7 +144,7 @@ public class TagLinksManager {
     }
 }
 
-@Log4j
+@Slf4j
 abstract class TagLink implements InvalidationListener {
     Tag tagToListen;
     Tag tagToUpdate;
@@ -162,7 +162,7 @@ abstract class TagLink implements InvalidationListener {
             tagToUpdate.setStatus("OK");
         } catch (Exception e) {
             tagToUpdate.setStatus(e.getLocalizedMessage());
-            log.error(e);
+            log.error("Error updating tag", e);
         }
     }
 

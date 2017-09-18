@@ -7,14 +7,14 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.NonNull;
 import lombok.Value;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
 
-@Log4j
+@Slf4j
 public class ApplicationLoader extends Service<ApplicationLoader.Result> {
 
     private final Object appObject;

@@ -1,12 +1,12 @@
 package com.eru.historian;
 
-import com.eru.gui.ApplicationContextHolder;
 import com.eru.entities.Tag;
-import com.eru.util.Constants;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.preferences.EruPreferences;
-import javafx.beans.property.*;
+import com.eru.util.Constants;
+import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.collections.FXCollections;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.persistence.EntityManager;
@@ -20,53 +20,52 @@ import java.util.concurrent.Executors;
  * Created by mtrujillo on 14/07/2014.
  * TODO
  */
-@Log4j
+@Slf4j
 public class Historian {
 
+    public static final SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     /* ********** Static Fields ********** */
-    private static final Historian                  instance   = new Historian();
-    private boolean running;
-
-    public static Historian getInstance(){
-        return instance;
-    }
-
+    private static final Historian instance = new Historian();
     /* ********** Fields ********** */
-    private final int                      limit;
-    private final int                      samplingTime;
+    private final int limit;
+    private final int samplingTime;
     private final ReadOnlyListWrapper<Tag> historicalTagList;
-    public static final SimpleDateFormat   TIME_STAMP_FORMAT   = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    private Executor                       historianExecutor;
-    private Thread                         currentHistorianThread;
-
+    private boolean running;
+    private Executor historianExecutor;
+    private Thread currentHistorianThread;
     /* ********** Constructor ********** */
     private Historian() {
         EruPreferences eruPreferences = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
-        limit               = eruPreferences.getHistorianLimit().getValue();
-        samplingTime        = eruPreferences.getHistorianSamplingTime().getValue();
-        historicalTagList   = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
-        historianExecutor  = Executors.newSingleThreadExecutor(r -> {
+        limit = eruPreferences.getHistorianLimit().getValue();
+        samplingTime = eruPreferences.getHistorianSamplingTime().getValue();
+        historicalTagList = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
+        historianExecutor = Executors.newSingleThreadExecutor(r -> {
             currentHistorianThread = new Thread(r);
             currentHistorianThread.setDaemon(true);
             return currentHistorianThread;
         });
     }
 
+    public static Historian getInstance() {
+        return instance;
+    }
+
     /* ********** Methods ********** */
-    public void start(){
-        if(!running){
+    public void start() {
+        if (!running) {
             historianExecutor.execute(new HistorianRunnable(this.limit, this.samplingTime, getEnableTagsFromContainer()));
             running = true;
         }
     }
-    public void stop(){
-        if(running) {
+
+    public void stop() {
+        if (running) {
             currentHistorianThread.interrupt();
         }
     }
 
     /* ********** Private Methods ********** */
-    private Tag[] getEnableTagsFromContainer(){
+    private Tag[] getEnableTagsFromContainer() {
 //        historicalTagList.clear();
 //        try {
 //            historicalTagList.addAll(Container.getInstance().getTagsAgent().getVal().stream()
@@ -80,23 +79,23 @@ public class Historian {
 
     /* ********** Nested Classes ********** */
     private class HistorianRunnable implements Runnable {
+        private final int serviceLimit;
+        private final int serviceSamplingTime;
+        private final StringBuffer columnNames;
+        private final StringBuffer columnValues;
         /* ********** Fields ********** */
-        private          Tag[]            historicalTagList;
-        private          EntityManager    em;
-        private          HistoricDao      historicDao;
-        private final    int              serviceLimit;
-        private final    int              serviceSamplingTime;
-        private final    StringBuffer     columnNames;
-        private final    StringBuffer     columnValues;
-        private volatile boolean          running = false;
+        private Tag[] historicalTagList;
+        private EntityManager em;
+        private HistoricDao historicDao;
+        private volatile boolean running = false;
 
         /* ********** Constructor ********** */
         private HistorianRunnable(int serviceLimit, int serviceSamplingTime, Tag[] historicalTagList) {
-            this.serviceLimit           = serviceLimit;
-            this.serviceSamplingTime    = serviceSamplingTime;
-            this.columnNames            = new StringBuffer();
-            this.columnValues           = new StringBuffer();
-            this.historicalTagList      = historicalTagList;
+            this.serviceLimit = serviceLimit;
+            this.serviceSamplingTime = serviceSamplingTime;
+            this.columnNames = new StringBuffer();
+            this.columnValues = new StringBuffer();
+            this.historicalTagList = historicalTagList;
         }
 
         /* ********** Method ********** */
@@ -105,16 +104,16 @@ public class Historian {
             Thread.currentThread().setName("Historian Thread");
 
             log.info("Historian: Linking...");
-            em          = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
+            em = ApplicationContextHolder.getApplicationContext().getBean(EntityManager.class);
             historicDao = new HistoricDao(ApplicationContextHolder.getApplicationContext().getBean(JdbcTemplate.class));
-            running     = true;
+            running = true;
 
-            if(historicalTagList.length == 0){
-                log.error("Historian: There is no tags to record. List size: " + historicalTagList.length);
+            if (historicalTagList.length == 0) {
+                log.error("Historian: There is no tags to record. List size: {}", historicalTagList.length);
                 running = false;
             }
 
-            log.info("Historian: Recording tags history of: " + historicalTagList.length + " tags. Daemon:");
+            log.info("Historian: Recording tags history of: {} tags. Daemon:", historicalTagList.length);
 
             while (running) {
                 // Clear buffers

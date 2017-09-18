@@ -11,13 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EruController {
@@ -36,11 +36,11 @@ public class EruController {
         Parent parent = loadMainScene();
 
         this.stage = stage;
-        this.projectModel = ProjectModel.from(project);
-        this.projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
-        this.centerPaneController.setProjectModel(projectModel);
-        this.menuBarController.setProjectModel(projectModel);
-        this.tagLinksManager.setProjectModel(projectModel);
+        projectModel = ProjectModel.from(project);
+        projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
+        centerPaneController.setProjectModel(projectModel);
+        menuBarController.setProjectModel(projectModel);
+        tagLinksManager.setProjectModel(projectModel);
 
         stage.setScene(new Scene(parent));
         stage.setMaximized(true);
