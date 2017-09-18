@@ -1,0 +1,74 @@
+.root {
+    /***************************************************************************
+     *                                                                         *
+     * The main color palette from which the rest of the colors are derived.   *
+     *                                                                         *
+     **************************************************************************/
+
+    /* A light grey that is the base color for objects.  Instead of using
+     * -fx-base directly, the sections in this file will typically use -fx-color.
+     */
+    -fx-base: #d0d0d0;
+
+    /* A very light grey used for the background of windows.  See also
+     * -fx-text-background-color, which should be used as the -fx-text-fill
+     * value for text painted on top of backgrounds colored with -fx-background.
+     */
+    -fx-background: #f4f4f4;
+
+    /* Used for the inside of text boxes, password boxes, lists, trees, and
+     * tables.  See also -fx-text-inner-color, which should be used as the
+     * -fx-text-fill value for text painted on top of backgrounds colored
+     * with -fx-control-inner-background.
+     */
+    -fx-control-inner-background: white;
+
+    /* Used to remove ugly lines when focus*/
+    -fx-focus-color: transparent;
+
+    -fx-font-size: 12px;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * SplitPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: -fx-base;
+    -fx-padding: 0 0 0 0;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ScrollPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+.scroll-pane {
+    -fx-background-insets: 0, 0;
+    -fx-padding: 0;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * TableView                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.table-view .column-header .label {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuBar                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-bar {
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: 0, 0 0 0 0;
+}

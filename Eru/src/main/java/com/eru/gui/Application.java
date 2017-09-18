@@ -93,6 +93,9 @@ public class Application extends javafx.application.Application {
 
 
     public enum Theme {
-        DEFAULT, DARK
+        DEFAULT, DARK;
+        public String getStyleSheetURL(){
+            return "/views/styles/" + name() + ".css";
+        }
     }
 }

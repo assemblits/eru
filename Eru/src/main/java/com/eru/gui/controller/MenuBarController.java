@@ -4,6 +4,7 @@ import com.eru.entities.Display;
 import com.eru.gui.exception.EruException;
 import com.eru.gui.model.ProjectModel;
 import com.eru.persistence.ProjectRepository;
+import com.eru.preferences.EruPreferences;
 import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.TagLinksManager;
 import javafx.application.Platform;
@@ -32,7 +33,7 @@ public class MenuBarController {
     private final ProjectRepository projectRepository;
     private final ApplicationContext applicationContext;
     private final SceneFxmlManager sceneFxmlManager;
-
+    private final EruPreferences eruPreferences;
 
     private ProjectModel projectModel;
 
@@ -47,7 +48,13 @@ public class MenuBarController {
 
     public void preferencesMenuItemSelected() {
         Stage preferencesStage = new Stage();
+        preferencesStage.setTitle("Preferences");
         preferencesStage.setScene(new Scene(loadNode("/views/Preferences.fxml")));
+        preferencesStage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
+        eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
+            preferencesStage.getScene().getStylesheets().clear();
+            preferencesStage.getScene().getStylesheets().add(getClass().getResource(newTheme.getStyleSheetURL()).toExternalForm());
+        });
         preferencesStage.showAndWait();
     }
 

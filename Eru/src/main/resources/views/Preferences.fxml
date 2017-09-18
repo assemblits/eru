@@ -26,25 +26,6 @@
                 </GridPane>
             </AnchorPane>
         </Tab>
-        <Tab text="Database">
-            <AnchorPane>
-                <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="ALWAYS"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <Label text="Auxiliary database: "/>
-                    <HBox GridPane.columnIndex="1">
-                        <TextField HBox.hgrow="ALWAYS"/>
-                        <Button mnemonicParsing="false" text="..."/>
-                    </HBox>
-                </GridPane>
-            </AnchorPane>
-        </Tab>
         <Tab text="Historian">
             <AnchorPane/>
         </Tab>

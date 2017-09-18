@@ -45,16 +45,12 @@ public class EruController {
         stage.setScene(new Scene(parent));
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
-        refreshTheme();
-        eruPreferences.getTheme().addListener(observable -> refreshTheme());
+        this.stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
+        eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
+            this.stage.getScene().getStylesheets().clear();
+            this.stage.getScene().getStylesheets().add(getClass().getResource(newTheme.getStyleSheetURL()).toExternalForm());
+        });
         stage.show();
-    }
-
-    public void refreshTheme(){
-        final Application.Theme NEW_THEME = eruPreferences.getTheme().getValue();
-        log.info("Refreshing Theme to " + NEW_THEME);
-        this.stage.getScene().getStylesheets().clear();
-        this.stage.getScene().getStylesheets().add(getClass().getResource("/theme/"+NEW_THEME+".css").toExternalForm());
     }
 
     private Parent loadMainScene() {

@@ -6,11 +6,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 <VBox prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-    <stylesheets>
-        <URL value="@styles/Main.css" />
-    </stylesheets>
     <StackPane fx:id="topPane" VBox.vgrow="NEVER">
         <fx:include source="MenuBar.fxml"/>
     </StackPane>
