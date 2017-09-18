@@ -11,7 +11,7 @@
      * -fx-text-background-color, which should be used as the -fx-text-fill
      * value for text painted on top of backgrounds colored with -fx-background.
      */
-    /*-fx-background: #0f0f0f;*/
+    -fx-background: #252525;
 }
 
 /* ********** Electrical controls ********** */

@@ -39,7 +39,7 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        if (!eruPreferences.isApplicationConfigured()) {
+        if (!eruPreferences.getApplicationConfigured().getValue()) {
             StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
             startUpWizard.startWizard();
         }
@@ -90,8 +90,8 @@ public class Application extends javafx.application.Application {
         return environmentPreparer.prepare(parametersObject.getRaw().toArray(new String[0]), eruPreferences);
     }
 
+
     public enum Theme {
-        DEFAULT,
-        DARK
+        DEFAULT, DARK
     }
 }
