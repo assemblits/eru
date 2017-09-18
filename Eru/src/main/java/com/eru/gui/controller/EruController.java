@@ -36,11 +36,11 @@ public class EruController {
         Parent parent = loadMainScene();
 
         this.stage = stage;
-        this.projectModel = ProjectModel.from(project);
-        this.projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
-        this.centerPaneController.setProjectModel(projectModel);
-        this.menuBarController.setProjectModel(projectModel);
-        this.tagLinksManager.setProjectModel(projectModel);
+        projectModel = ProjectModel.from(project);
+        projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
+        centerPaneController.setProjectModel(projectModel);
+        menuBarController.setProjectModel(projectModel);
+        tagLinksManager.setProjectModel(projectModel);
 
         stage.setScene(new Scene(parent));
         stage.setMaximized(true);
