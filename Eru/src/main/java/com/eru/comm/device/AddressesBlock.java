@@ -13,7 +13,7 @@ import java.util.List;
 public class AddressesBlock {
 
     public static final int DEFAULT_MAXIMUM_CAPACITY = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class)
-            .getModbusBlockMaxLimit();
+            .getModbusBlockMaxLimit().getValue();
 
     private int             capacity;
     private List<Address>   block;

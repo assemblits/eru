@@ -11,7 +11,7 @@ public class ApplicationArgsPreparer {
                 .filter(arg -> arg.contains("project.directory")).findFirst().isPresent();
         if (!isProjectDirectoryArgPresent) {
             savedArgs = Arrays.copyOf(savedArgs, savedArgs.length + 1);
-            savedArgs[savedArgs.length - 1] = "--project.directory=" + eruPreferences.getApplicationDirectory();
+            savedArgs[savedArgs.length - 1] = "--project.directory=" + eruPreferences.getApplicationDirectory().getValue();
         }
         return savedArgs;
     }

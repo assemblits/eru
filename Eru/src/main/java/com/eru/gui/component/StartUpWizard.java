@@ -55,7 +55,7 @@ public class StartUpWizard extends Wizard {
         page2Grid.setVgap(10);
         page2Grid.setHgap(10);
 
-        page2Grid.add(new Label(format(SETUP_DIRECTORY_PAGE_MESSAGE, eruPreferences.getApplicationDirectory())),
+        page2Grid.add(new Label(format(SETUP_DIRECTORY_PAGE_MESSAGE, eruPreferences.getApplicationDirectory().getValue())),
                 0, 0);
         Button button = new Button("Change directory");
 
@@ -83,9 +83,9 @@ public class StartUpWizard extends Wizard {
         showAndWait().ifPresent(result -> {
             if (result == ButtonType.FINISH) {
                 if (directory[0] != null) {
-                    eruPreferences.setApplicationDirectory(directory[0].getPath());
+                    eruPreferences.getApplicationDirectory().setValue(directory[0].getPath());
                 }
-                eruPreferences.setApplicationConfigured(true);
+                eruPreferences.getApplicationConfigured().setValue(true);
             } else if (result == ButtonType.CANCEL) {
                 Platform.exit();
             }

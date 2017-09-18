@@ -36,13 +36,13 @@ public class Historian {
     /* ********** Constructor ********** */
     private Historian() {
         EruPreferences eruPreferences = ApplicationContextHolder.getApplicationContext().getBean(EruPreferences.class);
-        limit = eruPreferences.getHistorianLimit();
-        samplingTime = eruPreferences.getHistorianSamplingTime();
-        historicalTagList = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
-        historianExecutor = Executors.newSingleThreadExecutor(r -> {
-            currentHistorianThread = new Thread(r);
-            currentHistorianThread.setDaemon(true);
-            return currentHistorianThread;
+        limit               = eruPreferences.getHistorianLimit().getValue();
+        samplingTime        = eruPreferences.getHistorianSamplingTime().getValue();
+        historicalTagList   = new ReadOnlyListWrapper<>(FXCollections.observableArrayList());
+        historianExecutor  = Executors.newSingleThreadExecutor(r -> {
+        currentHistorianThread = new Thread(r);
+        currentHistorianThread.setDaemon(true);
+        return currentHistorianThread;
         });
     }
 

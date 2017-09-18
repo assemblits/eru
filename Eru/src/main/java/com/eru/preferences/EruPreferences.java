@@ -1,6 +1,7 @@
 package com.eru.preferences;
 
 import com.eru.gui.Application;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.prefs.Preferences;
@@ -9,124 +10,90 @@ import java.util.prefs.Preferences;
  * Created by mtrujillo on 9/2/17.
  */
 @Component
+@Data
 public class EruPreferences {
 
     private final Preferences appPreferences;
+    private final EruPreference<Application.Theme> theme;
+    private final EruPreference<Boolean> animationEnabled;
+    private final EruPreference<Integer> animationDuration;
+    private final EruPreference<Integer> modbusBlockMaxLimit;
+    private final EruPreference<Boolean> historianEnabled;
+    private final EruPreference<Integer> historianLimit;
+    private final EruPreference<Integer> historianSamplingTime;
+    private final EruPreference<Boolean> alarmingEnabled;
+    private final EruPreference<Integer> alarmingLimit;
+    private final EruPreference<Integer> alarmingSamplingTime;
+    private final EruPreference<Boolean> alarmingHornEnabled;
+    private final EruPreference<String> applicationDirectory;
+    private final EruPreference<Boolean> applicationConfigured;
 
     public EruPreferences() {
         appPreferences = Preferences.userNodeForPackage(Application.class);
+
+        theme = new EruPreference<>(this, "theme", Application.Theme.DEFAULT);
+        theme.setValue(Application.Theme.valueOf(appPreferences.get(theme.getName(), theme.getDefaultValue().name())));
+        theme.addListener(observable -> save(theme.getName(), theme.getValue()));
+
+        animationEnabled = new EruPreference<>(this, "animations.enabled", true);
+        animationEnabled.setValue(appPreferences.getBoolean(animationEnabled.getName(), animationEnabled.getDefaultValue()));
+        animationEnabled.addListener((observable, oldValue, newValue) -> save(animationEnabled.getName(), newValue));
+
+        animationDuration = new EruPreference<>(this, "animations.duration", 5000);
+        animationDuration.setValue(appPreferences.getInt(animationDuration.getName(), animationDuration.getDefaultValue()));
+        animationDuration.addListener((observable, oldValue, newValue) -> save(animationDuration.getName(), newValue));
+
+        modbusBlockMaxLimit = new EruPreference<>(this, "modbus.block.maxLimit", 120);
+        modbusBlockMaxLimit.setValue(appPreferences.getInt(modbusBlockMaxLimit.getName(), modbusBlockMaxLimit.getDefaultValue()));
+        modbusBlockMaxLimit.addListener((observable, oldValue, newValue) -> save(modbusBlockMaxLimit.getName(), newValue));
+
+        historianEnabled = new EruPreference<>(this, "historian.enabled", true);
+        historianEnabled.setValue(appPreferences.getBoolean(historianEnabled.getName(), historianEnabled.getDefaultValue()));
+        historianEnabled.addListener((observable, oldValue, newValue) -> save(historianEnabled.getName(), newValue));
+
+        historianLimit = new EruPreference<>(this, "historian.limit", 1000);
+        historianLimit.setValue(appPreferences.getInt(historianLimit.getName(), historianLimit.getDefaultValue()));
+        historianLimit.addListener((observable, oldValue, newValue) -> save(historianLimit.getName(), newValue));
+
+        historianSamplingTime = new EruPreference<>(this, "historian.samplingTime", 600_000);
+        historianSamplingTime.setValue(appPreferences.getInt(historianSamplingTime.getName(), historianSamplingTime.getDefaultValue()));
+        historianSamplingTime.addListener((observable, oldValue, newValue) -> save(historianSamplingTime.getName(), newValue));
+
+        alarmingEnabled = new EruPreference<>(this, "alarming.enabled", true);
+        alarmingEnabled.setValue(appPreferences.getBoolean(alarmingEnabled.getName(), alarmingEnabled.getDefaultValue()));
+        alarmingEnabled.addListener((observable, oldValue, newValue) -> save(alarmingEnabled.getName(), newValue));
+
+        alarmingLimit = new EruPreference<>(this, "alarming.limit", 1000);
+        alarmingLimit.setValue(appPreferences.getInt(alarmingLimit.getName(), alarmingLimit.getDefaultValue()));
+        alarmingLimit.addListener((observable, oldValue, newValue) -> save(alarmingLimit.getName(), newValue));
+
+        alarmingSamplingTime = new EruPreference<>(this, "alarming.samplingTime", 500);
+        alarmingSamplingTime.setValue(appPreferences.getInt(alarmingSamplingTime.getName(), alarmingSamplingTime.getDefaultValue()));
+        alarmingSamplingTime.addListener((observable, oldValue, newValue) -> save(alarmingSamplingTime.getName(), newValue));
+
+        alarmingHornEnabled = new EruPreference<>(this, "alarming.horn.enabled", true);
+        alarmingHornEnabled.setValue(appPreferences.getBoolean(alarmingHornEnabled.getName(), alarmingHornEnabled.getDefaultValue()));
+        alarmingHornEnabled.addListener((observable, oldValue, newValue) -> save(alarmingHornEnabled.getName(), newValue));
+
+        applicationDirectory = new EruPreference<>(this, "app.directory", System.getProperty("user.home") + "/.eru/");
+        applicationDirectory.setValue(appPreferences.get(applicationDirectory.getName(), applicationDirectory.getDefaultValue()));
+        applicationDirectory.addListener((observable, oldValue, newValue) -> save(applicationDirectory.getName(), newValue));
+
+        applicationConfigured = new EruPreference<>(this, "app.configured", false);
+        applicationConfigured.setValue(appPreferences.getBoolean(applicationConfigured.getName(), applicationConfigured.getDefaultValue()));
+        applicationConfigured.addListener((observable, oldValue, newValue) -> save(applicationConfigured.getName(), newValue));
     }
 
-    public Application.Theme getTheme() {
-        return Application.Theme.valueOf(appPreferences.get("theme", Application.Theme.DEFAULT.name()));
-    }
-
-    public void setTheme(Application.Theme theme) {
-        appPreferences.put("theme", theme.name());
-    }
-
-    public boolean isAnimationsEnabled() {
-        return appPreferences.getBoolean("animations.enabled", true);
-    }
-
-    public void setAnimationsEnabled(boolean animationsEnabled) {
-        appPreferences.putBoolean("animations.enabled", animationsEnabled);
-    }
-
-    public double getAnimationsDuration() {
-        return appPreferences.getDouble("animations.duration", 5000);
-    }
-
-    public void setAnimationsDuration(double animationsDuration) {
-        appPreferences.putDouble("animations.duration", animationsDuration);
-    }
-
-    public int getModbusBlockMaxLimit() {
-        return appPreferences.getInt("modbus.block.maxLimit", 120);
-    }
-
-    public void setModbusBlockMaxLimit(int modbusBlockMaxLimit) {
-        appPreferences.putInt("modbus.block.maxLimit", modbusBlockMaxLimit);
-    }
-
-    public boolean isHistorianEnabled() {
-        return appPreferences.getBoolean("historian.enabled", true);
-    }
-
-    public void setHistorianEnabled(boolean historianEnabled) {
-        appPreferences.putBoolean("historian.enabled", historianEnabled);
-    }
-
-    public int getHistorianLimit() {
-        return appPreferences.getInt("historian.limit", 1000);
-    }
-
-    public void setHistorianLimit(int limit) {
-        appPreferences.putInt("historian.limit", limit);
-    }
-
-    public int getHistorianSamplingTime() {
-        return appPreferences.getInt("historian.samplingTime", 600_000);
-    }
-
-    public void setHistorianSamplingTime(int samplingTime) {
-        appPreferences.putInt("historian.samplingTime", samplingTime);
-    }
-
-    public boolean isAlarmingEnabled() {
-        return appPreferences.getBoolean("alarming.enabled", true);
-    }
-
-    public void setAlarmingEnabled(boolean alarmingEnabled) {
-        appPreferences.putBoolean("alarming.enabled", alarmingEnabled);
-    }
-
-    public int getAlarmingDatabaseLimit() {
-        return appPreferences.getInt("alarming.databaseLimit", 1000);
-    }
-
-    public void setAlarmingDatabaseLimit(int databaseLimit) {
-        appPreferences.putInt("alarming.databaseLimit", databaseLimit);
-    }
-
-    public int getAlarmingRuntimeLimit() {
-        return appPreferences.getInt("alarming.runtimeLimit", 100);
-    }
-
-    public void setAlarmingRuntimeLimit(int runtimeLimit) {
-        appPreferences.putInt("alarming.runtimeLimit", runtimeLimit);
-    }
-
-    public int getAlarmingSamplingTime() {
-        return appPreferences.getInt("alarming.samplingTime", 500);
-    }
-
-    public void setAlarmingSamplingTime(int samplingTime) {
-        appPreferences.putInt("alarming.samplingTime", samplingTime);
-    }
-
-    public boolean isAlarmingHornEnabled() {
-        return appPreferences.getBoolean("alarming.hornEnabled", true);
-    }
-
-    public void setAlarmingHornEnabled(boolean hornEnabled) {
-        appPreferences.putBoolean("alarming.horEnabled", hornEnabled);
-    }
-
-    public String getApplicationDirectory() {
-        return appPreferences.get("app.directory", System.getProperty("user.home") + "/.eru/");
-    }
-
-    public void setApplicationDirectory(String directoryPath) {
-        appPreferences.put("app.directory", directoryPath);
-    }
-
-    public boolean isApplicationConfigured() {
-        return appPreferences.getBoolean("app.configured", false);
-    }
-
-    public void setApplicationConfigured(boolean configured) {
-        appPreferences.putBoolean("app.configured", configured);
+    private void save(String name, Object value){
+        if (value instanceof String){
+            appPreferences.put(name, (String) value);
+        } else if (value instanceof Integer){
+            appPreferences.putInt(name, (Integer) value);
+        } else if (value instanceof Boolean){
+            appPreferences.putBoolean(name, (Boolean) value);
+        } else if (value instanceof Application.Theme){
+            appPreferences.put(name, ((Application.Theme) value).name());
+        }
     }
 
 }

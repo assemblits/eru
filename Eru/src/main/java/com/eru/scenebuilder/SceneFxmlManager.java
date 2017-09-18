@@ -22,7 +22,7 @@ public class SceneFxmlManager {
     private final EruPreferences eruPreferences;
 
     public File createSceneFxmlFile(Display display) {
-        String fxmlFilesDirectoryPath = eruPreferences.getApplicationDirectory() + separator + "displays";
+        String fxmlFilesDirectoryPath = eruPreferences.getApplicationDirectory().getValue() + separator + "displays";
 
         String formattedSceneName = formatName(display);
         File fxmlFilesDirectory = new File(fxmlFilesDirectoryPath);

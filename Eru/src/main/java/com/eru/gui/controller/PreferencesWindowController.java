@@ -1,7 +1,6 @@
 package com.eru.gui.controller;
 
 import com.eru.gui.Application.Theme;
-import com.eru.gui.ApplicationContextHolder;
 import com.eru.preferences.EruPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,16 +21,16 @@ public class PreferencesWindowController {
 
     public void initialize() {
         themeChoiceBox.getItems().setAll(Arrays.asList(Theme.class.getEnumConstants()));
-        themeChoiceBox.setValue(eruPreferences.getTheme());
-        themeChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ThemeListener(eruPreferences));
+        themeChoiceBox.setValue(eruPreferences.getTheme().getValue());
+        themeChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ThemeChangeListener(eruPreferences));
     }
 
     @RequiredArgsConstructor
-    private static class ThemeListener implements ChangeListener<Theme> {
+    private static class ThemeChangeListener implements ChangeListener<Theme> {
         private final EruPreferences eruPreferences;
         @Override
         public void changed(ObservableValue<? extends Theme> observable, Theme oldValue, Theme newValue) {
-            eruPreferences.setTheme(newValue);
+            eruPreferences.getTheme().setValue(newValue);
         }
     }
 }
