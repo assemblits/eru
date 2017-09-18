@@ -53,7 +53,7 @@ public class MenuBarController {
         preferencesStage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
         eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
             preferencesStage.getScene().getStylesheets().clear();
-            preferencesStage.getScene().getStylesheets().add(getClass().getResource(newTheme.getStyleSheetURL()).toExternalForm());
+            preferencesStage.getScene().getStylesheets().add(newTheme.getStyleSheetURL());
         });
         preferencesStage.showAndWait();
     }

@@ -29,13 +29,11 @@ public class EruController {
     private final TagLinksManager tagLinksManager;
     private final EruPreferences eruPreferences;
     private ProjectModel projectModel;
-    private Stage stage;
 
     public void startEru(Project project, Stage stage) {
         log.info("Starting Eru");
         Parent parent = loadMainScene();
 
-        this.stage = stage;
         projectModel = ProjectModel.from(project);
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
@@ -45,10 +43,10 @@ public class EruController {
         stage.setScene(new Scene(parent));
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
-        this.stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
+        stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
         eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
-            this.stage.getScene().getStylesheets().clear();
-            this.stage.getScene().getStylesheets().add(getClass().getResource(newTheme.getStyleSheetURL()).toExternalForm());
+            stage.getScene().getStylesheets().clear();
+            stage.getScene().getStylesheets().add(newTheme.getStyleSheetURL());
         });
         stage.show();
     }
