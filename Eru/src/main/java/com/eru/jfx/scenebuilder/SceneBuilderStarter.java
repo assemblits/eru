@@ -1,4 +1,4 @@
-package com.eru.scenebuilder;
+package com.eru.jfx.scenebuilder;
 
 import com.eru.entities.Display;
 

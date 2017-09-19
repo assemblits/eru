@@ -1,13 +1,15 @@
-package com.eru.scenebuilder
+package com.eru.jfx.scenebuilder
 
 import com.eru.gui.dynamo.EruGauge
+import com.eru.jfx.JFXClassUtil
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMInstance
 import spock.lang.Specification
 
 class ComponentsIdsGeneratorTest extends Specification {
 
-    def componentsIdsGenerator = new ComponentsIdsGenerator()
+    def jfxClassUtil = Mock(JFXClassUtil)
+    def componentsIdsGenerator = new ComponentsIdsGenerator(jfxClassUtil)
     def fxomDocument = Mock(FXOMDocument)
 
     def 'should throw illegal argument exception when null fxomDocument is provided'() {
@@ -25,6 +27,7 @@ class ComponentsIdsGeneratorTest extends Specification {
         def eruComponent2 = Mock(FXOMInstance)
         when:
         fxomDocument.getFxomRoot() >> eruComponent
+        jfxClassUtil.isNotJavaFxComponent(_) >> true
         eruComponent.getDeclaredClass() >> EruGauge
         eruComponent.getChildObjects() >> [eruComponent1, eruComponent2]
         eruComponent1.getDeclaredClass() >> EruGauge

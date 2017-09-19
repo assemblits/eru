@@ -8,16 +8,10 @@ import java.util.Optional;
 import static java.io.File.separator;
 
 @UtilityClass
-public class SceneBuilderUtil {
+public class ClassUtil {
 
-    public boolean isNotJavaFxComponent(@NonNull String className) {
-        return !className.startsWith("java.") && !className.startsWith("javax.")
-                && !className.startsWith("javafx.") && !className.startsWith("com.oracle.javafx.scenebuilder.")
-                && !className.startsWith("com.javafx.");
-    }
-
-    public String getSimpleNameFromClassName(@NonNull String className) {
-        return className.substring(className.lastIndexOf(".") + 1, className.length());
+    public Class<?> loadClass(String className) throws ClassNotFoundException {
+        return ClassUtil.class.getClassLoader().loadClass(className);
     }
 
     public Optional<String> makeClassNameFromCompiledClassName(@NonNull String className) {

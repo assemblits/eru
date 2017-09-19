@@ -2,9 +2,9 @@ package com.eru.gui.component;
 
 import com.eru.entities.Display;
 import com.eru.exception.FxmlFileReadException;
-import com.eru.scenebuilder.ComponentsIdsGenerator;
-import com.eru.scenebuilder.SceneFxmlManager;
-import com.eru.scenebuilder.library.CustomLibraryLoader;
+import com.eru.jfx.scenebuilder.ComponentsIdsGenerator;
+import com.eru.jfx.scenebuilder.SceneFxmlManager;
+import com.eru.jfx.scenebuilder.library.CustomLibraryLoader;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.content.ContentPanelController;
 import com.oracle.javafx.scenebuilder.kit.editor.panel.hierarchy.treeview.HierarchyTreeViewController;
@@ -37,10 +37,11 @@ public class EruSceneBuilder extends VBox {
     private ChangeListener<Number> updateListener;
     private ComponentsIdsGenerator componentsIdsGenerator;
 
-    public EruSceneBuilder(CustomLibraryLoader customLibraryLoader, SceneFxmlManager sceneFxmlManager) {
+    public EruSceneBuilder(CustomLibraryLoader customLibraryLoader, SceneFxmlManager sceneFxmlManager,
+                           ComponentsIdsGenerator componentsIdsGenerator) {
         this.customLibraryLoader = customLibraryLoader;
         this.sceneFxmlManager = sceneFxmlManager;
-        componentsIdsGenerator = new ComponentsIdsGenerator();
+        this.componentsIdsGenerator = componentsIdsGenerator;
 
         AnchorPane.setTopAnchor(this, 0.0);
         AnchorPane.setBottomAnchor(this, 0.0);

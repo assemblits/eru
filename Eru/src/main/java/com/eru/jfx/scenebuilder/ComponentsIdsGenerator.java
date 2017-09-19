@@ -1,17 +1,21 @@
-package com.eru.scenebuilder;
+package com.eru.jfx.scenebuilder;
 
-import com.eru.util.SceneBuilderUtil;
+import com.eru.jfx.JFXClassUtil;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMDocument;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMInstance;
 import com.oracle.javafx.scenebuilder.kit.fxom.FXOMObject;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Stack;
 import java.util.UUID;
 
-@AllArgsConstructor
+@Component
+@RequiredArgsConstructor
 public class ComponentsIdsGenerator {
+
+    private final JFXClassUtil jfxClassUtil;
 
     public void generateComponentsId(@NonNull FXOMDocument fxomDocument) {
         Stack<FXOMObject> fxmlObjects = new Stack<>();
@@ -22,7 +26,7 @@ public class ComponentsIdsGenerator {
             Class<?> componentClass = ((FXOMInstance) fxmlObject).getDeclaredClass();
             String className = componentClass.getName();
 
-            if (fxmlObject.getFxId() == null && SceneBuilderUtil.isNotJavaFxComponent(className)) {
+            if (fxmlObject.getFxId() == null && jfxClassUtil.isNotJavaFxComponent(className)) {
                 fxmlObject.setFxId(generateId());
             }
             fxmlObjects.addAll(fxmlObject.getChildObjects());

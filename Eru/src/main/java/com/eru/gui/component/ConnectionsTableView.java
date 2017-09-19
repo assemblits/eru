@@ -49,7 +49,13 @@ public class ConnectionsTableView extends EruTableView<Connection> {
         TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
         TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
         TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
-        serialgroupColumn.getColumns().addAll(serialPortColumn, serialBitsPerSecondsColumn, serialDatabitsColumn, serialParityColumn, serialStopBitsColumn, serialFrameEncodingColumn);
+        serialgroupColumn.getColumns().addAll(
+                serialPortColumn,
+                serialBitsPerSecondsColumn,
+                serialDatabitsColumn,
+                serialParityColumn,
+                serialStopBitsColumn,
+                serialFrameEncodingColumn);
 
         TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
         TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
