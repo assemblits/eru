@@ -4,7 +4,7 @@ import com.eru.entities.Display;
 import com.eru.entities.TreeElementsGroup;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.gui.model.ProjectModel;
-import com.eru.scenebuilder.SceneBuilderStarter;
+import com.eru.jfx.scenebuilder.SceneBuilderStarter;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;

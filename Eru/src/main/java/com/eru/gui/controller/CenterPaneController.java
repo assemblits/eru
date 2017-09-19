@@ -5,7 +5,7 @@ import com.eru.entities.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.component.*;
 import com.eru.gui.model.ProjectModel;
-import com.eru.scenebuilder.SceneBuilderStarter;
+import com.eru.jfx.scenebuilder.SceneBuilderStarter;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
