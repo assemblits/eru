@@ -21,7 +21,13 @@ class SceneFxmlManagerTest extends Specification {
         applicationDirectory.getValue() >> localPath
         eruPreferences.getApplicationDirectory() >> applicationDirectory
         when:
-        def sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(new Display(1L, 'Test scene', 'group', false))
+        def display = new Display();
+        display.setId(1L);
+        display.setName("Test Scene")
+        display.setGroupName("group")
+        display.setInitialDisplay(false)
+        display.setStageType(Display.StageType.REPLACE)
+        def sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display)
         then:
         sceneFxmlFile.name == 'test-scene.fxml'
         getFileContent(sceneFxmlFile) == NEW_FXML_FILE_CONTENT
