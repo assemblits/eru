@@ -5,7 +5,7 @@ import com.eru.packages.ClassInfo;
 import com.eru.packages.PackageExplorer;
 import com.oracle.javafx.scenebuilder.kit.library.Library;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static java.io.File.separator;
 import static java.lang.String.format;
 
-@Log4j
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomLibraryLoader {
@@ -37,10 +37,10 @@ public class CustomLibraryLoader {
                 .filter(this::isJFXComponentClass)
                 .map(classInfo -> {
                     EruComponent eruComponent = new EruComponent(classInfo.getName(), classInfo.getClazz());
-                    log.debug(format("Component '%s' loaded", eruComponent.getName()));
+                    log.debug("Component {} loaded", eruComponent.getName());
                     return eruComponent;
                 }).collect(Collectors.toList());
-        log.info(format("%d custom components loaded successfully", eruComponents.size()));
+        log.info("{} custom components loaded successfully", eruComponents.size());
         library = new EruLibrary(eruComponents);
     }
 
