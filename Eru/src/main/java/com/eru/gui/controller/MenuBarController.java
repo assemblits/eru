@@ -60,8 +60,6 @@ public class MenuBarController {
 
     public void launchScadaMenuItemSelected() {
         try {
-            log.info("Launching tags.");
-            tagLinksManager.linkToConnections();
             log.info("Launching displays.");
             final Display mainDisplay = projectModel.getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
             final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
@@ -71,7 +69,7 @@ public class MenuBarController {
             final Stage SCADA_STAGE = new Stage();
             SCADA_STAGE.setScene(SCADA_SCENE);
             SCADA_STAGE.show();
-            tagLinksManager.linkToScada(mainNode);
+            tagLinksManager.link(mainNode);
             log.info("Linking to scada was successful.");
         } catch (Exception e) {
             log.error("Error launching display", e);
@@ -80,10 +78,6 @@ public class MenuBarController {
             alert.setContentText("There is no Main display created.");
             alert.show();
         }
-    }
-
-    public void stopScadaMenuItemSelected() {
-        tagLinksManager.unlinkFromConnections();
     }
 
     public void aboutMenuItemSelected() {

@@ -11,7 +11,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -29,14 +28,13 @@ public class TagLinksManager {
     public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
 
-    @Setter
     private ProjectModel projectModel;
 
-    public void linkToConnections() {
+    public void linkToConnection() {
         projectModel.getTags().forEach(this::installUpdaterLink);
     }
 
-    public void unlinkFromConnections() {
+    public void unlinkFromConnection() {
         projectModel.getTags().forEach(this::removeUpdaterLink);
     }
 
@@ -104,7 +102,7 @@ public class TagLinksManager {
         TAG_LINK_MAP.remove(tag);
     }
 
-    public void linkToScada(Node anchorPane) {
+    public void link(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
             if (extractedControl instanceof EruAlarm) {
@@ -141,6 +139,19 @@ public class TagLinksManager {
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
             }
         }
+    }
+
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
+        // If a connection is active, link the tags to be updated with the connection.
+//        this.projectModel.getConnections().forEach(connection ->
+//                connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+//                    if(isConnected){
+//                        linkToConnection();
+//                    } else {
+//                        unlinkFromConnection();
+//                    }
+//                }));
     }
 }
 
