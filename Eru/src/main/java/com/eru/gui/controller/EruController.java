@@ -9,6 +9,7 @@ import com.eru.util.TagLinksManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,7 @@ public class EruController {
             stage.getScene().getStylesheets().clear();
             stage.getScene().getStylesheets().add(newTheme.getStyleSheetURL());
         });
+        stage.getIcons().add(new Image(getClass().getResource("/images/Logo256x256.png").toExternalForm()));
         stage.show();
     }
 
