@@ -20,6 +20,7 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     protected StringProperty textToFilter;
     protected ObservableList<Item> items;
     protected FilteredList<Item> filteredItems;
+    protected ContextMenu contextMenu;
 
     EruTableView() {
         AnchorPane.setTopAnchor(this, 0.0);
@@ -27,18 +28,22 @@ public abstract class EruTableView<Item> extends TableView<Item> {
         AnchorPane.setRightAnchor(this, 0.0);
         AnchorPane.setLeftAnchor(this, 0.0);
 
-        ContextMenu contextMenu = new ContextMenu();
+        this.contextMenu = new ContextMenu();
+        addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {
+            if (t.getButton() == MouseButton.SECONDARY) {
+                contextMenu.show(this, t.getScreenX(), t.getScreenY());
+            }
+        });
+        addDefaultMenuItems();
+    }
+
+    private void addDefaultMenuItems(){
         MenuItem addMenuItem = new MenuItem("Add");
         addMenuItem.setOnAction(event -> addNewItem());
         MenuItem deleteMenuItem = new MenuItem("Delete");
         deleteMenuItem.setOnAction(event -> deleteSelectedItems());
         contextMenu.getItems().add(addMenuItem);
         contextMenu.getItems().add(deleteMenuItem);
-        addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {
-            if (t.getButton() == MouseButton.SECONDARY) {
-                contextMenu.show(this, t.getScreenX(), t.getScreenY());
-            }
-        });
     }
 
     private void deleteSelectedItems() {

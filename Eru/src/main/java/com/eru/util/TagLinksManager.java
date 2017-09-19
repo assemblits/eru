@@ -121,10 +121,12 @@ public class TagLinksManager {
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
             } else if (extractedControl instanceof EruGauge) {
                 EruGauge extractedGauge = (EruGauge) extractedControl;
+                if (extractedGauge.getCurrentValueTagID().isEmpty()) return;
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
+                if (extractedGauge.getCurrentTitleTagID().isEmpty()) return;
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))

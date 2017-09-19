@@ -63,7 +63,7 @@ public class MenuBarController {
             log.info("Launching tags.");
             tagLinksManager.linkToConnections();
             log.info("Launching displays.");
-            final Display mainDisplay = projectModel.getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
+            final Display mainDisplay = projectModel.getDisplays().stream().filter(Display::isInitialDisplay).findAny().get();
             final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
             final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
             final Parent mainNode = FXMLLoader.load(fxmlFileUrl);
