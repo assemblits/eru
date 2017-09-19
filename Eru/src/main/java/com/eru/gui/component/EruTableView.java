@@ -43,12 +43,12 @@ public abstract class EruTableView<Item> extends TableView<Item> {
 
     private void deleteSelectedItems() {
         final int CURRENT_INDEX = getSelectionModel().getSelectedIndex();
-        getItems().removeAll(getSelectionModel().getSelectedItems());
+        items.removeAll(getSelectionModel().getSelectedItems());
         getSelectionModel().select(CURRENT_INDEX - 1);
     }
 
     public void setProjectModel(ProjectModel projectModel) {
-        this.items = FXCollections.observableList(getItemsFromProjectModel(projectModel));
+        items = FXCollections.observableList(getItemsFromProjectModel(projectModel));
         filteredItems = new FilteredList<>(this.items, t -> true);
         setItems(filteredItems);
     }
