@@ -1,7 +1,7 @@
 package com.eru.gui.service;
 
-import com.eru.entities.Project;
-import com.eru.entities.TreeElementsGroup;
+import com.eru.entity.Project;
+import com.eru.entity.TreeElementsGroup;
 
 public class ProjectCreator {
 

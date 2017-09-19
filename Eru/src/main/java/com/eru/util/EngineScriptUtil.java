@@ -2,7 +2,7 @@ package com.eru.util;
 
 
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;

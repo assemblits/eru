@@ -3,7 +3,7 @@ package com.eru.util;
 import com.eru.comm.member.Communicator;
 import com.eru.comm.member.Director;
 import com.eru.comm.member.ModbusDeviceCommunicator;
-import com.eru.entities.Device;
+import com.eru.entity.Device;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;

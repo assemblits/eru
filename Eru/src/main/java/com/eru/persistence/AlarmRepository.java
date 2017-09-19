@@ -1,6 +1,6 @@
 package com.eru.persistence;
 
-import com.eru.entities.Alarm;
+import com.eru.entity.Alarm;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

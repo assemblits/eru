@@ -1,7 +1,7 @@
 package com.eru.gui.controller;
 
-import com.eru.entities.Display;
-import com.eru.entities.TreeElementsGroup;
+import com.eru.entity.Display;
+import com.eru.entity.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.component.*;
 import com.eru.gui.model.ProjectModel;

@@ -1,6 +1,6 @@
 package com.eru.gui.component;
 
-import com.eru.entities.TreeElementsGroup;
+import com.eru.entity.TreeElementsGroup;
 import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;

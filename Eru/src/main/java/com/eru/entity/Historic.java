@@ -1,4 +1,4 @@
-package com.eru.entities;
+package com.eru.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

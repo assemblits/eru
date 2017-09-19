@@ -1,4 +1,4 @@
-package com.eru.entities;
+package com.eru.entity;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

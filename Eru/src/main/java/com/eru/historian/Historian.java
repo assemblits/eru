@@ -1,6 +1,6 @@
 package com.eru.historian;
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.preferences.EruPreferences;
 import com.eru.util.Constants;

@@ -1,11 +1,11 @@
 package com.eru.comm.context;
 
-import com.eru.entities.SerialConnection;
-import com.eru.entities.TcpConnection;
-import com.eru.entities.Address;
-import com.eru.entities.Address.DataModel;
+import com.eru.entity.SerialConnection;
+import com.eru.entity.TcpConnection;
+import com.eru.entity.Address;
+import com.eru.entity.Address.DataModel;
 import com.eru.comm.device.AddressesBlock;
-import com.eru.entities.Device;
+import com.eru.entity.Device;
 import javafx.application.Platform;
 import net.wimpi.modbus.io.ModbusSerialTransaction;
 import net.wimpi.modbus.io.ModbusTCPTransaction;

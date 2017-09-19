@@ -1,6 +1,6 @@
 package com.eru.gui.export;
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

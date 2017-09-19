@@ -1,9 +1,9 @@
 package com.eru.gui.component;
 
-import com.eru.entities.Address;
-import com.eru.entities.Connection;
-import com.eru.entities.Device;
-import com.eru.entities.TreeElementsGroup;
+import com.eru.entity.Address;
+import com.eru.entity.Connection;
+import com.eru.entity.Device;
+import com.eru.entity.TreeElementsGroup;
 import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;

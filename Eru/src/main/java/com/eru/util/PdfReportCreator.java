@@ -1,7 +1,7 @@
 package com.eru.util;
 
-import com.eru.entities.Alarm;
-import com.eru.entities.Tag;
+import com.eru.entity.Alarm;
+import com.eru.entity.Tag;
 import com.eru.historian.HistoricDao;
 import com.eru.persistence.AlarmRepository;
 import com.lowagie.text.*;

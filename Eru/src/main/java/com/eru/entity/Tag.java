@@ -1,4 +1,4 @@
-package com.eru.entities;
+package com.eru.entity;
 
 import com.eru.util.MathUtil;
 import javafx.beans.property.*;

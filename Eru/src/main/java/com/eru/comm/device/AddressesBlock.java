@@ -1,6 +1,6 @@
 package com.eru.comm.device;
 
-import com.eru.entities.Address;
+import com.eru.entity.Address;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.preferences.EruPreferences;
 

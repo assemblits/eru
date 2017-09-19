@@ -1,6 +1,6 @@
 package com.eru.historian;
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 import com.eru.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

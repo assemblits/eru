@@ -1,6 +1,6 @@
 package com.eru.util;
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 import com.eru.exception.TagLinkException;
 import com.eru.gui.dynamo.EruAlarm;
 import com.eru.gui.dynamo.EruDisplay;

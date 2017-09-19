@@ -3,8 +3,8 @@ package com.eru.comm.member;
 import com.eru.comm.context.Message;
 import com.eru.comm.context.MessageToReadAddressBlock;
 import com.eru.comm.device.AddressesBlock;
-import com.eru.entities.Address;
-import com.eru.entities.Device;
+import com.eru.entity.Address;
+import com.eru.entity.Device;
 
 import java.util.ArrayList;
 import java.util.List;

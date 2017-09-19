@@ -1,7 +1,7 @@
 package com.eru.gui.component;
 
-import com.eru.entities.TreeElementsGroup;
-import com.eru.entities.User;
+import com.eru.entity.TreeElementsGroup;
+import com.eru.entity.User;
 import com.eru.gui.model.ProjectModel;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;

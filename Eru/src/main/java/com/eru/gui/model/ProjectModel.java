@@ -1,7 +1,7 @@
 package com.eru.gui.model;
 
 
-import com.eru.entities.*;
+import com.eru.entity.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

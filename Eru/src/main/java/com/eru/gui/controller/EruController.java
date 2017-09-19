@@ -1,7 +1,6 @@
 package com.eru.gui.controller;
 
-import com.eru.entities.Project;
-import com.eru.gui.Application;
+import com.eru.entity.Project;
 import com.eru.gui.exception.EruException;
 import com.eru.gui.model.ProjectModel;
 import com.eru.preferences.EruPreferences;

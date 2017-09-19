@@ -1,6 +1,6 @@
 package com.eru.jfx.scenebuilder;
 
-import com.eru.entities.Display;
+import com.eru.entity.Display;
 
 public interface SceneBuilderStarter {
 

@@ -1,7 +1,7 @@
 package com.eru.alarming;
 
-import com.eru.entities.Alarm;
-import com.eru.entities.Tag;
+import com.eru.entity.Alarm;
+import com.eru.entity.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.AlarmRepository;
 import com.eru.preferences.EruPreferences;

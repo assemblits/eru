@@ -1,11 +1,11 @@
-package com.eru.entities;
+package com.eru.entity;
 
 import javafx.beans.property.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-import static com.eru.entities.Address.DataModel.*;
+import static com.eru.entity.Address.DataModel.*;
 
 /**
  * Created by mtrujillo on 13/05/14.

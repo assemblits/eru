@@ -1,4 +1,4 @@
-package com.eru.entities;
+package com.eru.entity;
 
 import com.eru.util.CommunicationsManager;
 import com.eru.comm.device.AddressesBlock;

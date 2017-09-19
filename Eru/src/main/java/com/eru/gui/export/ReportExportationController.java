@@ -1,6 +1,6 @@
 package com.eru.gui.export;
 
-import com.eru.entities.Tag;
+import com.eru.entity.Tag;
 import com.eru.gui.ApplicationContextHolder;
 import com.eru.persistence.TagRepository;
 import com.eru.util.PdfReportCreator;

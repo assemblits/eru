@@ -1,6 +1,6 @@
 package com.eru.jfx.scenebuilder
 
-import com.eru.entities.Display
+import com.eru.entity.Display
 import com.eru.preferences.EruPreference
 import com.eru.preferences.EruPreferences
 import spock.lang.Specification

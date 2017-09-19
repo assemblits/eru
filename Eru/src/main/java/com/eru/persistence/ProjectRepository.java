@@ -1,7 +1,7 @@
 package com.eru.persistence;
 
 
-import com.eru.entities.Project;
+import com.eru.entity.Project;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.eru.gui.component;
 
-import com.eru.entities.Display;
+import com.eru.entity.Display;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.jfx.scenebuilder.ComponentsIdsGenerator;
 import com.eru.jfx.scenebuilder.SceneFxmlManager;

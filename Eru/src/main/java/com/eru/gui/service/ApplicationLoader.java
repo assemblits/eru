@@ -1,6 +1,6 @@
 package com.eru.gui.service;
 
-import com.eru.entities.Project;
+import com.eru.entity.Project;
 import com.eru.persistence.ProjectRepository;
 import com.eru.jfx.scenebuilder.library.CustomLibraryLoader;
 import javafx.concurrent.Service;
