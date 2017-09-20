@@ -1,5 +1,6 @@
 package com.eru.util;
 
+import com.eru.entities.Connection;
 import com.eru.entities.Tag;
 import com.eru.exception.TagLinkException;
 import com.eru.gui.dynamo.EruAlarm;
@@ -9,6 +10,7 @@ import com.eru.gui.dynamo.EruLevelBar;
 import com.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +32,80 @@ public class TagLinksManager {
 
     private ProjectModel projectModel;
 
-    public void linkToConnection() {
+
+
+    public void linkToDisplay(Node anchorPane) {
+        for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
+            Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
+            if (extractedControl instanceof EruAlarm) {
+                EruAlarm extractedAlarm = (EruAlarm) extractedControl;
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedAlarm.setCurrentValue(Boolean.parseBoolean(newValue))));
+            } else if (extractedControl instanceof EruDisplay) {
+                EruDisplay extractedDisplay = (EruDisplay) extractedControl;
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
+            } else if (extractedControl instanceof EruGauge) {
+                EruGauge extractedGauge = (EruGauge) extractedControl;
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
+            } else if (extractedControl instanceof EruLevelBar) {
+                EruLevelBar extractedLevelBar = (EruLevelBar) extractedControl;
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setCurrentValue(Double.parseDouble(newValue))));
+                projectModel.getTags()
+                        .stream()
+                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID()))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
+            }
+        }
+    }
+
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
+        addListeners();
+    }
+
+    private void addListeners() {
+        // Current Connections
+        this.projectModel.getConnections().forEach(this::installListenerOnConnection);
+        // Future Connections
+        this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
+            while (c.next()) {
+                for (Connection newConnection : c.getAddedSubList()) {
+                    installListenerOnConnection(newConnection);
+                }
+            }
+        });
+    }
+
+    private void installListenerOnConnection(Connection connection){
+        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+            if(isConnected){
+                linkToConnection();
+            } else {
+                unlinkFromConnection();
+            }
+        });
+    }
+
+    private void linkToConnection() {
         projectModel.getTags().forEach(this::installUpdaterLink);
     }
 
-    public void unlinkFromConnection() {
+    private void unlinkFromConnection() {
         projectModel.getTags().forEach(this::removeUpdaterLink);
     }
 
@@ -100,58 +171,6 @@ public class TagLinksManager {
             }
         }
         TAG_LINK_MAP.remove(tag);
-    }
-
-    public void link(Node anchorPane) {
-        for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
-            Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
-            if (extractedControl instanceof EruAlarm) {
-                EruAlarm extractedAlarm = (EruAlarm) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedAlarm.setCurrentValue(Boolean.parseBoolean(newValue))));
-            } else if (extractedControl instanceof EruDisplay) {
-                EruDisplay extractedDisplay = (EruDisplay) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
-            } else if (extractedControl instanceof EruGauge) {
-                EruGauge extractedGauge = (EruGauge) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
-            } else if (extractedControl instanceof EruLevelBar) {
-                EruLevelBar extractedLevelBar = (EruLevelBar) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setCurrentValue(Double.parseDouble(newValue))));
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID()))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
-            }
-        }
-    }
-
-    public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
-        // If a connection is active, link the tags to be updated with the connection.
-//        this.projectModel.getConnections().forEach(connection ->
-//                connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-//                    if(isConnected){
-//                        linkToConnection();
-//                    } else {
-//                        unlinkFromConnection();
-//                    }
-//                }));
     }
 }
 
