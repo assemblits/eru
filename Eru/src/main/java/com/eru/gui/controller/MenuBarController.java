@@ -69,7 +69,7 @@ public class MenuBarController {
             final Stage SCADA_STAGE = new Stage();
             SCADA_STAGE.setScene(SCADA_SCENE);
             SCADA_STAGE.show();
-            tagLinksManager.linkToDisplay(mainNode);
+            tagLinksManager.linkToDisplay(mainNode); //TODO: Remove this and do it inside TagLinksManager using listeners
             log.info("Linking to scada was successful.");
         } catch (Exception e) {
             log.error("Error launching display", e);

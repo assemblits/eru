@@ -31,7 +31,7 @@ public class TagLinksManager {
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
 
     private ProjectModel projectModel;
-    
+
     public void linkToDisplay(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
