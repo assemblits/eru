@@ -11,12 +11,11 @@
         <SeparatorMenuItem />
         <MenuItem onAction="#exitMenuItemSelected" text="_Exit" />
     </Menu>
-    <Menu text="Edit">
+    <Menu text="_Edit">
         <MenuItem onAction="#preferencesMenuItemSelected" text="_Preferences" />
     </Menu>
     <Menu text="_Scada">
         <MenuItem onAction="#launchScadaMenuItemSelected" text="_Launch" />
-        <MenuItem onAction="#stopScadaMenuItemSelected" text="_Stop" />
     </Menu>
     <Menu text="_Help">
         <MenuItem onAction="#aboutMenuItemSelected" text="_About" />

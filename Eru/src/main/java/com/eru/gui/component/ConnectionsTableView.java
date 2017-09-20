@@ -65,8 +65,8 @@ public class ConnectionsTableView extends EruTableView<Connection> {
 
         // **** General Cells **** //
         actionColumn.setCellFactory(param -> new ConnectActionCell<>(
-                index -> getItems().get(index).connect(),
-                index -> getItems().get(index).disconnect()));
+                index -> activateConnection(getItems().get(index)),
+                index -> deactivateConnection(getItems().get(index))));
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -256,6 +256,21 @@ public class ConnectionsTableView extends EruTableView<Connection> {
         this.setEditable(true);
         this.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.setTableMenuButtonVisible(true);
+    }
+
+    private void activateConnection(Connection connection){
+        final boolean isAnotherConnectionActivated = getItems().stream().anyMatch(Connection::isConnected);
+        if (isAnotherConnectionActivated){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("There is another connection activated.");
+            alert.show();
+        } else {
+            connection.connect();
+        }
+    }
+
+    private void deactivateConnection(Connection connection){
+        if (connection.isConnected()) connection.disconnect();
     }
 
     @Override
