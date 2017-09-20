@@ -39,33 +39,33 @@ public class TagLinksManager {
                 EruAlarm extractedAlarm = (EruAlarm) extractedControl;
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID()))
+                        .filter(tag -> (!extractedAlarm.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedAlarm.setCurrentValue(Boolean.parseBoolean(newValue))));
             } else if (extractedControl instanceof EruDisplay) {
                 EruDisplay extractedDisplay = (EruDisplay) extractedControl;
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID()))
+                        .filter(tag -> (!extractedDisplay.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
             } else if (extractedControl instanceof EruGauge) {
                 EruGauge extractedGauge = (EruGauge) extractedControl;
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID()))
+                        .filter(tag -> (!extractedGauge.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID()))
+                        .filter(tag -> (!extractedGauge.getCurrentTitleTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
             } else if (extractedControl instanceof EruLevelBar) {
                 EruLevelBar extractedLevelBar = (EruLevelBar) extractedControl;
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID()))
+                        .filter(tag -> (!extractedLevelBar.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setCurrentValue(Double.parseDouble(newValue))));
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID()))
+                        .filter(tag -> (!extractedLevelBar.getCurrentTitleTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID())))
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
             }
         }
