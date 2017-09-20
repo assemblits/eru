@@ -1,4 +1,4 @@
-package com.eru.scenebuilder.library;
+package com.eru.jfx.scenebuilder.library;
 
 
 import com.oracle.javafx.scenebuilder.kit.library.BuiltinLibrary;

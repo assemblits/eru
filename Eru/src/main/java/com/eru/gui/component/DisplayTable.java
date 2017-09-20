@@ -2,14 +2,17 @@ package com.eru.gui.component;
 
 import com.eru.entities.Display;
 import com.eru.entities.TreeElementsGroup;
+import com.eru.gui.ApplicationContextHolder;
 import com.eru.gui.model.ProjectModel;
-import com.eru.scenebuilder.SceneBuilderStarter;
-import javafx.beans.property.SimpleStringProperty;
+import com.eru.jfx.scenebuilder.SceneBuilderStarter;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
@@ -20,30 +23,49 @@ import java.util.Optional;
 @Slf4j
 public class DisplayTable extends EruTableView<Display> {
 
-    public DisplayTable(SceneBuilderStarter sceneBuilderStarter) {
+    public DisplayTable() {
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
-        TableColumn<Display, String> userNameColumn = new TableColumn<>("Name");
+        TableColumn<Display, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Display, Display.StageType> stageTypeColumn = new TableColumn<>("Stage type");
+        TableColumn<Display, Boolean> initialDisplayColumn = new TableColumn<>("Initial");
 
-        groupColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGroupName()));
+        groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.50));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
 
-        userNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
-        userNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        userNameColumn.prefWidthProperty().bind(widthProperty().multiply(0.50));
+        nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+
+        stageTypeColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+        stageTypeColumn.setCellValueFactory(param -> param.getValue().stageTypeProperty());
+        stageTypeColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
+                FXCollections.observableArrayList(Display.StageType.values())
+        ));
+
+        initialDisplayColumn.setCellValueFactory(param -> param.getValue().initialDisplayProperty());
+        initialDisplayColumn.setCellFactory(CheckBoxTableCell.forTableColumn(initialDisplayColumn));
+        initialDisplayColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
 
         getColumns().addAll(
                 groupColumn,
-                userNameColumn);
+                nameColumn,
+                stageTypeColumn,
+                initialDisplayColumn
+                );
 
-        setEditable(false);
+        setEditable(true);
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        addGraphicEditorMenuItem();
+    }
 
-        setOnMousePressed(event -> {
-            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                sceneBuilderStarter.startSceneBuilder(getSelectionModel().getSelectedItem());
-            }
-        });
+    private void addGraphicEditorMenuItem() {
+        final MenuItem displayEditor = new MenuItem("Edit graphic");
+        final SceneBuilderStarter sceneBuilderStarter = ApplicationContextHolder.getApplicationContext().
+                getBean(SceneBuilderStarter.class);
+        displayEditor.setOnAction(event ->
+                sceneBuilderStarter.startSceneBuilder(getSelectionModel().getSelectedItem()));
+        contextMenu.getItems().add(displayEditor);
     }
 
     @Override

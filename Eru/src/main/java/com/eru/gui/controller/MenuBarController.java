@@ -3,9 +3,9 @@ package com.eru.gui.controller;
 import com.eru.entities.Display;
 import com.eru.gui.exception.EruException;
 import com.eru.gui.model.ProjectModel;
+import com.eru.jfx.scenebuilder.SceneFxmlManager;
 import com.eru.persistence.ProjectRepository;
 import com.eru.preferences.EruPreferences;
-import com.eru.scenebuilder.SceneFxmlManager;
 import com.eru.util.TagLinksManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -61,7 +61,7 @@ public class MenuBarController {
     public void launchScadaMenuItemSelected() {
         try {
             log.info("Launching displays.");
-            final Display mainDisplay = projectModel.getDisplays().stream().filter(display -> display.getName().equals("Main")).findAny().get();
+            final Display mainDisplay = projectModel.getDisplays().stream().filter(Display::isInitialDisplay).findAny().get();
             final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
             final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
             final Parent mainNode = FXMLLoader.load(fxmlFileUrl);

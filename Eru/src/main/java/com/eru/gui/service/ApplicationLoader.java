@@ -2,7 +2,7 @@ package com.eru.gui.service;
 
 import com.eru.entities.Project;
 import com.eru.persistence.ProjectRepository;
-import com.eru.scenebuilder.library.CustomLibraryLoader;
+import com.eru.jfx.scenebuilder.library.CustomLibraryLoader;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.NonNull;

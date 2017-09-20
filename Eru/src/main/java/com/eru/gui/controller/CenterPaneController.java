@@ -5,7 +5,7 @@ import com.eru.entities.TreeElementsGroup;
 import com.eru.exception.FxmlFileReadException;
 import com.eru.gui.component.*;
 import com.eru.gui.model.ProjectModel;
-import com.eru.scenebuilder.SceneBuilderStarter;
+import com.eru.jfx.scenebuilder.SceneBuilderStarter;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -33,7 +33,7 @@ public class CenterPaneController implements SceneBuilderStarter {
         ConnectionsTableView connectionsTableView = new ConnectionsTableView();
         DevicesTableView devicesTableView = new DevicesTableView();
         TagsTableView tagsTableView = new TagsTableView();
-        DisplayTable displayTableView = new DisplayTable(this);
+        DisplayTable displayTableView = new DisplayTable();
         centerPane.getChildren().addAll(usersTableView, connectionsTableView, devicesTableView, tagsTableView,
                 displayTableView);
         centerPane.getChildren().forEach(this::adjustToAnchorPaneAndHide);
