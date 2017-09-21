@@ -15,6 +15,7 @@ buildscript {
         controlsfxVersion = '8.40.13'
         spockVersion = '1.1-groovy-2.4'
         powerMockVersion = '1.7.1'
+        jamodVersion = '1.2'
     }
     repositories {
         mavenCentral()
@@ -74,6 +75,8 @@ dependencies {
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
     compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
     compile "org.controlsfx:controlsfx:${controlsfxVersion}"
+    compile "net.wimpi:jamod:${jamodVersion}"
+
 
     //Testing
     testCompile 'org.springframework.boot:spring-boot-starter-test'
