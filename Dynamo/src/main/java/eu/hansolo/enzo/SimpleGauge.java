@@ -30,9 +30,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import com.eru.fonts.Fonts;
+import org.assemblits.eru.fonts.Fonts;
 import eu.hansolo.enzo.skin.SimpleGaugeSkin;
-import com.eru.util.Section;
+import org.assemblits.eru.util.Section;
 
 import java.util.ArrayList;
 import java.util.Arrays;

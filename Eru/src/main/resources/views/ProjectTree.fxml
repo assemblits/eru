@@ -3,6 +3,6 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"  xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.eru.gui.controller.ProjectTreeController">
+            fx:controller="org.assemblits.eru.gui.controller.ProjectTreeController">
     <TreeView fx:id="projectTree"/>
 </AnchorPane>

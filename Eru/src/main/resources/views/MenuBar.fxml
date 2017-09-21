@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eru.gui.controller.MenuBarController">
+<MenuBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.assemblits.eru.gui.controller.MenuBarController">
     <Menu text="_File">
         <MenuItem onAction="#saveMenuItemSelected" text="_Save" />
         <SeparatorMenuItem />

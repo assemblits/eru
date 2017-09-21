@@ -2,10 +2,10 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <appender name="LABEL_APPENDER" class="com.eru.logger.LabelAppender">
+    <appender name="LABEL_APPENDER" class="org.assemblits.eru.logger.LabelAppender">
     </appender>
 
-    <appender name="LOGGER_LIVE" class="com.eru.logger.LiveAppender">
+    <appender name="LOGGER_LIVE" class="org.assemblits.eru.logger.LiveAppender">
     </appender>
 
     <root level="INFO">

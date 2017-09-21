@@ -25,7 +25,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import com.eru.scene.control.skin.LedSkin;
+import org.assemblits.eru.scene.control.skin.LedSkin;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -36,7 +36,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import com.eru.fonts.Fonts;
+import org.assemblits.eru.fonts.Fonts;
 import eu.hansolo.enzo.Lcd;
 
 import java.text.DecimalFormat;

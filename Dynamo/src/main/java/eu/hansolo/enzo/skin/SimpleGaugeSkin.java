@@ -37,9 +37,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import com.eru.fonts.Fonts;
+import org.assemblits.eru.fonts.Fonts;
 import eu.hansolo.enzo.SimpleGauge;
-import com.eru.util.Section;
+import org.assemblits.eru.util.Section;
 
 import java.time.Instant;
 import java.util.Locale;
