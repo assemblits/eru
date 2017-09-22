@@ -33,9 +33,9 @@ public class CenterPaneController implements SceneBuilderStarter {
         ConnectionsTableView connectionsTableView = new ConnectionsTableView();
         DevicesTableView devicesTableView = new DevicesTableView();
         TagsTableView tagsTableView = new TagsTableView();
-        DisplayTable displayTableView = new DisplayTable();
+        DisplayTableView displayTableViewView = new DisplayTableView();
         centerPane.getChildren().addAll(usersTableView, connectionsTableView, devicesTableView, tagsTableView,
-                displayTableView);
+                displayTableViewView);
         centerPane.getChildren().forEach(this::adjustToAnchorPaneAndHide);
     }
 

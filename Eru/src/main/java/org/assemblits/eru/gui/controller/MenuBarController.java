@@ -1,26 +1,22 @@
 package org.assemblits.eru.gui.controller;
 
-import org.assemblits.eru.entities.Display;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.assemblits.eru.util.TagLinksManager;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import static java.lang.String.format;
 
@@ -29,10 +25,8 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class MenuBarController {
 
-    private final TagLinksManager tagLinksManager;
     private final ProjectRepository projectRepository;
     private final ApplicationContext applicationContext;
-    private final SceneFxmlManager sceneFxmlManager;
     private final EruPreferences eruPreferences;
 
     private ProjectModel projectModel;
@@ -56,28 +50,6 @@ public class MenuBarController {
             preferencesStage.getScene().getStylesheets().add(newTheme.getStyleSheetURL());
         });
         preferencesStage.showAndWait();
-    }
-
-    public void launchScadaMenuItemSelected() {
-        try {
-            log.info("Launching displays.");
-            final Display mainDisplay = projectModel.getDisplays().stream().filter(Display::isInitialDisplay).findAny().get();
-            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(mainDisplay);
-            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
-            final Parent mainNode = FXMLLoader.load(fxmlFileUrl);
-            final Scene SCADA_SCENE = new Scene(mainNode);
-            final Stage SCADA_STAGE = new Stage();
-            SCADA_STAGE.setScene(SCADA_SCENE);
-            SCADA_STAGE.show();
-            tagLinksManager.linkToDisplay(mainNode); //TODO: Remove this and do it inside TagLinksManager using listeners
-            log.info("Linking to scada was successful.");
-        } catch (Exception e) {
-            log.error("Error launching display", e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error in SCADA launching process.");
-            alert.setContentText("There is no Main display created.");
-            alert.show();
-        }
     }
 
     public void aboutMenuItemSelected() {

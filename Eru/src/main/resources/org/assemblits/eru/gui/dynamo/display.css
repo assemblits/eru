@@ -1,5 +1,5 @@
 .display {
-    -fx-skin            : "com.eru.scene.control.skin.DisplaySkin";
+    -fx-skin            : "org.assemblits.eru.scene.control.skin.DisplaySkin";
     -background-color   : TRANSPARENT;
     -frame-color        : #8b8c8d;
     -warning-color      : #c94b4d;

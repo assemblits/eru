@@ -1,5 +1,5 @@
 .alarm {
-    -fx-skin          : "com.eru.scene.control.skin.AlarmSkin";
+    -fx-skin          : "org.assemblits.eru.scene.control.skin.AlarmSkin";
     -background-color : TRANSPARENT;
     -text-color       : #eeeeee;
 }

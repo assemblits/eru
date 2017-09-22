@@ -1,6 +1,7 @@
 package org.assemblits.eru.util;
 
 import org.assemblits.eru.entities.Connection;
+import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.dynamo.EruAlarm;
@@ -32,7 +33,54 @@ public class TagLinksManager {
 
     private ProjectModel projectModel;
 
-    public void linkToDisplay(Node anchorPane) {
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
+        addListeners();
+    }
+
+    private void addListeners() {
+        // For connections: To update Tags when a connection is been updated
+        // Current Connections
+        this.projectModel.getConnections().forEach(this::installListenerOnConnection);
+        // Future Connections
+        this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
+            while (c.next()) {
+                for (Connection newConnection : c.getAddedSubList()) {
+                    installListenerOnConnection(newConnection);
+                }
+            }
+        });
+
+        // For displays: To update displays when tags are been updated by a connection
+        this.projectModel.getDisplays().forEach(this::installListenerOnDisplay);
+        this.projectModel.getDisplays().addListener((ListChangeListener<Display>) c -> {
+            while (c.next()) {
+                for (Display newDisplay : c.getAddedSubList()) {
+                    installListenerOnDisplay(newDisplay);
+                }
+            }
+        });
+    }
+
+    private void installListenerOnDisplay(Display display){
+        display.fxNodeProperty().addListener((observable, oldNode, newNode) -> {
+            if(newNode != null){
+                linkToDisplay(newNode);
+            }
+        });
+    }
+
+    private void installListenerOnConnection(Connection connection){
+        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+            if(isConnected){
+                linkToConnection();
+            } else {
+                unlinkFromConnection();
+            }
+        });
+    }
+
+    private void linkToDisplay(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
             if (extractedControl instanceof EruAlarm) {
@@ -69,34 +117,6 @@ public class TagLinksManager {
                         .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
             }
         }
-    }
-
-    public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
-        addListeners();
-    }
-
-    private void addListeners() {
-        // Current Connections
-        this.projectModel.getConnections().forEach(this::installListenerOnConnection);
-        // Future Connections
-        this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
-            while (c.next()) {
-                for (Connection newConnection : c.getAddedSubList()) {
-                    installListenerOnConnection(newConnection);
-                }
-            }
-        });
-    }
-
-    private void installListenerOnConnection(Connection connection){
-        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-            if(isConnected){
-                linkToConnection();
-            } else {
-                unlinkFromConnection();
-            }
-        });
     }
 
     private void linkToConnection() {
