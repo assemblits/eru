@@ -70,7 +70,7 @@ mkdir eru
 # Go there
 cd eru/
 # Clone this repository
-git clone https://github.com/marlontrujillo1080/eru
+git clone https://github.com/assemblits/eru.git
 ```
 You can use IntelliJ IDE to have the same experience of the developers:
 
