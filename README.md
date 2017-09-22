@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/eru-scada/eru/develop/Eru/src/main/resources/com/eru/gui/Logo124x124.png" />
+  <img src="https://raw.githubusercontent.com/eru-scada/eru/develop/Eru/src/main/resources/images/Logo124x124.png" />
   Eru
   <br>
 </h1>
