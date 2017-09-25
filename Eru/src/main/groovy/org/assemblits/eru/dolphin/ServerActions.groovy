@@ -1,6 +1,6 @@
 package org.assemblits.eru.dolphin
 
-import org.assemblits.eru.util.CommunicationsManager
+
 import org.assemblits.eru.entities.Tag
 import org.assemblits.eru.entities.Alarm
 import org.assemblits.eru.alarming.Alarming
@@ -121,7 +121,7 @@ class ServerActions extends DolphinServerAction {
 
             // Status
             getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_SYSTEM_STATUS).setValue(LiveAppender.getLastLog())
-            getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_COMMUNICATIONS_CONNECTED).setValue(CommunicationsManager.getInstance().isRunning() ? "ONLINE" : "OFFLINE")
+//            getServerDolphin().getAt(SYSTEM_PM_ID).getAt(ATT_COMMUNICATIONS_CONNECTED).setValue(CommunicationsManager.getInstance().isRunning() ? "ONLINE" : "OFFLINE")
 
 
             // Update Alarms

@@ -1,9 +1,14 @@
 package org.assemblits.eru.util;
 
+import org.assemblits.eru.comm.actors.Communicator;
+import org.assemblits.eru.comm.actors.Director;
+import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
 import org.assemblits.eru.entities.Connection;
+import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
+import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.dynamo.EruAlarm;
 import org.assemblits.eru.gui.dynamo.EruDisplay;
 import org.assemblits.eru.gui.dynamo.EruGauge;
@@ -30,11 +35,13 @@ public class TagLinksManager {
 
     public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
+    private final Map<Device, Communicator> deviceCommunicatorMap = new HashMap<>();
 
     private ProjectModel projectModel;
 
     public void setProjectModel(ProjectModel projectModel) {
         this.projectModel = projectModel;
+
         addListeners();
     }
 
@@ -65,7 +72,7 @@ public class TagLinksManager {
     private void installListenerOnDisplay(Display display){
         display.fxNodeProperty().addListener((observable, oldNode, newNode) -> {
             if(newNode != null){
-                linkToDisplay(newNode);
+                linkTagsToFXNode(newNode);
             }
         });
     }
@@ -73,14 +80,21 @@ public class TagLinksManager {
     private void installListenerOnConnection(Connection connection){
         connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
             if(isConnected){
-                linkToConnection();
+                final Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
+                if (!commDirector.isAlive()) {
+                    commDirector.setDaemon(true);
+                    commDirector.start();
+                }
+                projectModel.getDevices().forEach(device -> linkDevicesToConnections(device, connection));
+                projectModel.getTags().forEach(this::linkTagsToDevices);
             } else {
-                unlinkFromConnection();
+                projectModel.getDevices().forEach(device -> unlinkDevicesFromConnections(device, connection));
+                projectModel.getTags().forEach(this::unlinkTagsFromDevices);
             }
         });
     }
 
-    private void linkToDisplay(Node anchorPane) {
+    private void linkTagsToFXNode(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
             if (extractedControl instanceof EruAlarm) {
@@ -119,15 +133,7 @@ public class TagLinksManager {
         }
     }
 
-    private void linkToConnection() {
-        projectModel.getTags().forEach(this::installUpdaterLink);
-    }
-
-    private void unlinkFromConnection() {
-        projectModel.getTags().forEach(this::removeUpdaterLink);
-    }
-
-    private void installUpdaterLink(Tag tag) {
+    private void linkTagsToDevices(Tag tag) {
         log.debug("Installing updater linkToConnections to {}", tag.getName());
         TagLink link;
         switch (tag.getType()) {
@@ -179,7 +185,7 @@ public class TagLinksManager {
         }
     }
 
-    private void removeUpdaterLink(Tag tag) {
+    private void unlinkTagsFromDevices(Tag tag) {
         for (TagLink link : TAG_LINK_MAP.get(tag)) {
             log.debug("Removing updater linkToConnections to {} with linkToConnections {}", tag.getName(), link);
             if (link instanceof AddressChangeLink) {
@@ -190,6 +196,22 @@ public class TagLinksManager {
         }
         TAG_LINK_MAP.remove(tag);
     }
+
+    private void linkDevicesToConnections(Device device, Connection conn){
+        final Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
+        if (device.getConnection().equals(conn)){
+            deviceCommunicatorMap.put(device, new ModbusDeviceReader(device));
+            commDirector.getCommunicators().add(deviceCommunicatorMap.get(device));
+        }
+    }
+
+    private void unlinkDevicesFromConnections(Device device, Connection conn) {
+        if (device.getConnection().equals(conn)) {
+            final Communicator deviceReader = deviceCommunicatorMap.get(device);
+            if (deviceReader != null) deviceReader.stop();
+        }
+    }
+
 }
 
 @Slf4j

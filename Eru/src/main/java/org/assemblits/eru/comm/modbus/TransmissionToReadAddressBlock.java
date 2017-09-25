@@ -1,10 +1,10 @@
-package org.assemblits.eru.comm.context;
+package org.assemblits.eru.comm.modbus;
 
+import org.assemblits.eru.comm.context.Transmission;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
-import org.assemblits.eru.comm.device.AddressesBlock;
 import org.assemblits.eru.entities.Device;
 import javafx.application.Platform;
 import net.wimpi.modbus.io.ModbusSerialTransaction;
@@ -17,20 +17,20 @@ import java.sql.Timestamp;
 /**
  * Created by mtrujillo on 3/10/2016.
  */
-public class MessageToReadAddressBlock implements Message {
+public class TransmissionToReadAddressBlock implements Transmission {
 
-    private Device              device;
-    private AddressesBlock      block;
-    private ModbusTransaction   transaction;
-    private ModbusRequest       request;
-    private boolean             wasSuccessful;
-    private DataModel           dataModel;
-    private int                 offset;
-    private int                 firstSlotToRead;
-    private int                 lastSlotToRead;
+    private final Device device;
+    private final AddressesBlock block;
+    private ModbusTransaction transaction;
+    private ModbusRequest request;
+    private boolean wasSuccessful;
+    private DataModel dataModel;
+    private int offset;
+    private int firstSlotToRead;
+    private int lastSlotToRead;
 
     /* ** Constructor ** */
-    public MessageToReadAddressBlock(Device device, AddressesBlock block) {
+    public TransmissionToReadAddressBlock(Device device, AddressesBlock block) {
         this.device     = device;
         this.block      = block;
     }
@@ -67,13 +67,12 @@ public class MessageToReadAddressBlock implements Message {
             transaction = new ModbusTCPTransaction(((TcpConnection) device.getConnection()).getCoreConnection());
         }
 
-//        transaction.setResponseDelayMS(device.getResponseDelay());
         transaction.setRetries(device.getRetries());
         transaction.setRequest(request);
     }
 
     @Override
-    public void send() throws Exception {
+    public void send() {
         try {
             transaction.execute();
             updateDeviceStatus("OK");
@@ -81,7 +80,6 @@ public class MessageToReadAddressBlock implements Message {
         } catch (Exception e) {
             wasSuccessful = false;
             updateDeviceStatus(e.getLocalizedMessage());
-            throw  e;
         }
     }
 
@@ -91,7 +89,7 @@ public class MessageToReadAddressBlock implements Message {
     }
 
     @Override
-    public void collectResponse() {
+    public void receive() {
         if (wasSuccessful){
             updateBlockWithResponse();
         }
