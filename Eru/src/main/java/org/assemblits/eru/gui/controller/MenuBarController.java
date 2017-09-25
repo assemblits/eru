@@ -9,10 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectModel;
-import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
-import org.assemblits.eru.util.TagLinksManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 

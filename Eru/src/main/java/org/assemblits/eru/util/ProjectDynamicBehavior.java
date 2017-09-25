@@ -31,7 +31,7 @@ import java.util.*;
  */
 @Slf4j
 @Component
-public class TagLinksManager {
+public class ProjectDynamicBehavior {
 
     public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();

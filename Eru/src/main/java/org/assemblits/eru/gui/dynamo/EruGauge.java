@@ -1,7 +1,7 @@
 package org.assemblits.eru.gui.dynamo;
 
 import org.assemblits.eru.scene.control.Gauge;
-import org.assemblits.eru.util.TagLinksManager;
+import org.assemblits.eru.util.ProjectDynamicBehavior;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -31,7 +31,7 @@ public class EruGauge extends Gauge {
     }
     public void setCurrentValueTagID(String currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
-        TagLinksManager.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
+        ProjectDynamicBehavior.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
     }
 
     public String getCurrentTitleTagID() {
