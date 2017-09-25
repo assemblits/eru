@@ -18,7 +18,7 @@
  * GAUGE class                                                                *
  *****************************************************************************/
 .gauge {
-    -fx-skin            : "com.eru.scene.control.skin.GaugeSkin";
+    -fx-skin            : "org.assemblits.eru.scene.control.skin.GaugeSkin";
     -base               : BLACK;
     -background         : TRANSPARENT;
     -border-color       : WHITE;

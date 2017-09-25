@@ -1,8 +1,17 @@
 package org.assemblits.eru.entities;
 
 import javafx.beans.property.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import org.assemblits.eru.gui.ApplicationContextHolder;
+import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
 import javax.persistence.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Entity
 @Table(name = "display", schema = "public")
@@ -13,6 +22,7 @@ public class Display {
     private StringProperty groupName;
     private BooleanProperty initialDisplay;
     private ObjectProperty<StageType> stageType;
+    private ObjectProperty<Node> fxNode;
 
     public Display() {
         this.id = new SimpleLongProperty(this, "display_id");
@@ -20,6 +30,7 @@ public class Display {
         this.groupName = new SimpleStringProperty(this, "name", "");
         this.initialDisplay = new SimpleBooleanProperty(this, "initial_display", false);
         this.stageType = new SimpleObjectProperty<>(this, "stageType", StageType.REPLACE);
+        this.fxNode = new SimpleObjectProperty<>(this, "fxNode", null);
     }
 
     @Id
@@ -98,5 +109,19 @@ public class Display {
         setStageType(name == null || name.isEmpty() ? StageType.REPLACE : StageType.valueOf(name));
     }
 
+    @Transient
+    public Node getFxNode() {
+        return fxNode.get();
+    }
+
+    public ObjectProperty<Node> fxNodeProperty() {
+        return fxNode;
+    }
+
+    public void setFxNode(Node fxNode) {
+        this.fxNode.set(fxNode);
+    }
+
     public enum StageType {REPLACE, NEW}
+
 }

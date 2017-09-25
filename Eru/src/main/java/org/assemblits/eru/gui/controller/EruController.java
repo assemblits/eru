@@ -4,7 +4,7 @@ import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.preferences.EruPreferences;
-import org.assemblits.eru.util.TagLinksManager;
+import org.assemblits.eru.util.ProjectDynamicBehavior;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,7 +26,7 @@ public class EruController {
     private final ProjectTreeController projectTreeController;
     private final CenterPaneController centerPaneController;
     private final MenuBarController menuBarController;
-    private final TagLinksManager tagLinksManager;
+    private final ProjectDynamicBehavior projectDynamicBehavior;
     private final EruPreferences eruPreferences;
     private ProjectModel projectModel;
 
@@ -38,7 +38,7 @@ public class EruController {
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);
-        tagLinksManager.setProjectModel(projectModel);
+        projectDynamicBehavior.setProjectModel(projectModel);
 
         stage.setScene(new Scene(parent));
         stage.setMaximized(true);

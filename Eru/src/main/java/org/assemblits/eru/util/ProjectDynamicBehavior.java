@@ -1,8 +1,14 @@
 package org.assemblits.eru.util;
 
+import org.assemblits.eru.comm.actors.Communicator;
+import org.assemblits.eru.comm.actors.Director;
+import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
 import org.assemblits.eru.entities.Connection;
+import org.assemblits.eru.entities.Device;
+import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
+import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.dynamo.EruAlarm;
 import org.assemblits.eru.gui.dynamo.EruDisplay;
 import org.assemblits.eru.gui.dynamo.EruGauge;
@@ -25,14 +31,70 @@ import java.util.*;
  */
 @Slf4j
 @Component
-public class TagLinksManager {
+public class ProjectDynamicBehavior {
 
     public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
     private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
+    private final Map<Device, Communicator> deviceCommunicatorMap = new HashMap<>();
 
     private ProjectModel projectModel;
 
-    public void linkToDisplay(Node anchorPane) {
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
+
+        addListeners();
+    }
+
+    private void addListeners() {
+        // For connections: To update Tags when a connection is been updated
+        // Current Connections
+        this.projectModel.getConnections().forEach(this::installListenerOnConnection);
+        // Future Connections
+        this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
+            while (c.next()) {
+                for (Connection newConnection : c.getAddedSubList()) {
+                    installListenerOnConnection(newConnection);
+                }
+            }
+        });
+
+        // For displays: To update displays when tags are been updated by a connection
+        this.projectModel.getDisplays().forEach(this::installListenerOnDisplay);
+        this.projectModel.getDisplays().addListener((ListChangeListener<Display>) c -> {
+            while (c.next()) {
+                for (Display newDisplay : c.getAddedSubList()) {
+                    installListenerOnDisplay(newDisplay);
+                }
+            }
+        });
+    }
+
+    private void installListenerOnDisplay(Display display){
+        display.fxNodeProperty().addListener((observable, oldNode, newNode) -> {
+            if(newNode != null){
+                linkTagsToFXNode(newNode);
+            }
+        });
+    }
+
+    private void installListenerOnConnection(Connection connection){
+        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+            if(isConnected){
+                final Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
+                if (!commDirector.isAlive()) {
+                    commDirector.setDaemon(true);
+                    commDirector.start();
+                }
+                projectModel.getDevices().forEach(device -> linkDevicesToConnections(device, connection));
+                projectModel.getTags().forEach(this::linkTagsToDevices);
+            } else {
+                projectModel.getDevices().forEach(device -> unlinkDevicesFromConnections(device, connection));
+                projectModel.getTags().forEach(this::unlinkTagsFromDevices);
+            }
+        });
+    }
+
+    private void linkTagsToFXNode(Node anchorPane) {
         for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
             Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
             if (extractedControl instanceof EruAlarm) {
@@ -71,43 +133,7 @@ public class TagLinksManager {
         }
     }
 
-    public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
-        addListeners();
-    }
-
-    private void addListeners() {
-        // Current Connections
-        this.projectModel.getConnections().forEach(this::installListenerOnConnection);
-        // Future Connections
-        this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
-            while (c.next()) {
-                for (Connection newConnection : c.getAddedSubList()) {
-                    installListenerOnConnection(newConnection);
-                }
-            }
-        });
-    }
-
-    private void installListenerOnConnection(Connection connection){
-        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-            if(isConnected){
-                linkToConnection();
-            } else {
-                unlinkFromConnection();
-            }
-        });
-    }
-
-    private void linkToConnection() {
-        projectModel.getTags().forEach(this::installUpdaterLink);
-    }
-
-    private void unlinkFromConnection() {
-        projectModel.getTags().forEach(this::removeUpdaterLink);
-    }
-
-    private void installUpdaterLink(Tag tag) {
+    private void linkTagsToDevices(Tag tag) {
         log.debug("Installing updater linkToConnections to {}", tag.getName());
         TagLink link;
         switch (tag.getType()) {
@@ -159,7 +185,7 @@ public class TagLinksManager {
         }
     }
 
-    private void removeUpdaterLink(Tag tag) {
+    private void unlinkTagsFromDevices(Tag tag) {
         for (TagLink link : TAG_LINK_MAP.get(tag)) {
             log.debug("Removing updater linkToConnections to {} with linkToConnections {}", tag.getName(), link);
             if (link instanceof AddressChangeLink) {
@@ -170,6 +196,22 @@ public class TagLinksManager {
         }
         TAG_LINK_MAP.remove(tag);
     }
+
+    private void linkDevicesToConnections(Device device, Connection conn){
+        final Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
+        if (device.getConnection().equals(conn)){
+            deviceCommunicatorMap.put(device, new ModbusDeviceReader(device));
+            commDirector.getCommunicators().add(deviceCommunicatorMap.get(device));
+        }
+    }
+
+    private void unlinkDevicesFromConnections(Device device, Connection conn) {
+        if (device.getConnection().equals(conn)) {
+            final Communicator deviceReader = deviceCommunicatorMap.get(device);
+            if (deviceReader != null) deviceReader.stop();
+        }
+    }
+
 }
 
 @Slf4j

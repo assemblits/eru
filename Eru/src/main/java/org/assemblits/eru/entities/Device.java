@@ -1,7 +1,6 @@
 package org.assemblits.eru.entities;
 
-import org.assemblits.eru.util.CommunicationsManager;
-import org.assemblits.eru.comm.device.AddressesBlock;
+import org.assemblits.eru.comm.modbus.AddressesBlock;
 import javafx.beans.property.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -41,20 +40,6 @@ public class  Device {
         zeroBased           = new SimpleBooleanProperty(true);
         connection          = new SimpleObjectProperty<>();
         groupName           = new SimpleStringProperty("");
-    }
-
-    /* ********** Private Methods ********** */
-    private void listenIfConnect(ObjectProperty<Connection> connection) {
-        if(connection.get() == null) return;
-        connection.get().connectedProperty().addListener((observable, wasConnected, isConnected) -> {
-            if (isConnected && getEnabled()){
-                CommunicationsManager.getInstance().startUpdating(this);
-                setStatus("Connected");
-            } else if (!isConnected){
-                CommunicationsManager.getInstance().stopUpdating(this);
-                setStatus("Disconnected");
-            }
-        });
     }
 
     /* ********** Setters and Getters ********** */
@@ -174,7 +159,6 @@ public class  Device {
     }
     public void setConnection(Connection connection) {
         this.connection.set(connection);
-        listenIfConnect(this.connection);
     }
 
     @Column(name = "group_name")

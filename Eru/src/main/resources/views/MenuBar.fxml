@@ -14,9 +14,6 @@
     <Menu text="_Edit">
         <MenuItem onAction="#preferencesMenuItemSelected" text="_Preferences" />
     </Menu>
-    <Menu text="_Scada">
-        <MenuItem onAction="#launchScadaMenuItemSelected" text="_Launch" />
-    </Menu>
     <Menu text="_Help">
         <MenuItem onAction="#aboutMenuItemSelected" text="_About" />
     </Menu>

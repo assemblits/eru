@@ -1,43 +1,58 @@
 package org.assemblits.eru.gui.component;
 
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ChoiceBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.TreeElementsGroup;
 import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.ChoiceBoxTableCell;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.GridPane;
-import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Slf4j
-public class DisplayTable extends EruTableView<Display> {
+public class DisplayTableView extends EruTableView<Display> {
 
-    public DisplayTable() {
+    public DisplayTableView() {
+        TableColumn<Display, Void> actionColumn = new TableColumn<>("Action");
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> nameColumn = new TableColumn<>("Name");
         TableColumn<Display, Display.StageType> stageTypeColumn = new TableColumn<>("Stage type");
         TableColumn<Display, Boolean> initialDisplayColumn = new TableColumn<>("Initial");
 
+        actionColumn.setCellFactory(param -> new ShowActionCell<>(this::showDisplay));
+        actionColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
+
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+        groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.35));
 
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+        nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.35));
 
-        stageTypeColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+        stageTypeColumn.prefWidthProperty().bind(widthProperty().multiply(0.15));
         stageTypeColumn.setCellValueFactory(param -> param.getValue().stageTypeProperty());
         stageTypeColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
                 FXCollections.observableArrayList(Display.StageType.values())
@@ -45,9 +60,10 @@ public class DisplayTable extends EruTableView<Display> {
 
         initialDisplayColumn.setCellValueFactory(param -> param.getValue().initialDisplayProperty());
         initialDisplayColumn.setCellFactory(CheckBoxTableCell.forTableColumn(initialDisplayColumn));
-        initialDisplayColumn.prefWidthProperty().bind(widthProperty().multiply(0.25));
+        initialDisplayColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
 
         getColumns().addAll(
+                actionColumn,
                 groupColumn,
                 nameColumn,
                 stageTypeColumn,
@@ -57,6 +73,28 @@ public class DisplayTable extends EruTableView<Display> {
         setEditable(true);
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         addGraphicEditorMenuItem();
+    }
+
+    private void showDisplay(Integer displayIndexInTable) {
+        try {
+            log.info("Launching displays.");
+            final Display display = getItems().get(displayIndexInTable);
+            final SceneFxmlManager sceneFxmlManager = ApplicationContextHolder.getApplicationContext().getBean(SceneFxmlManager.class);
+            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
+            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+            final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
+            final Scene SCADA_SCENE = new Scene(displayNode);
+            final Stage SCADA_STAGE = new Stage();
+            display.setFxNode(displayNode);
+            SCADA_STAGE.setScene(SCADA_SCENE);
+            SCADA_STAGE.show();
+        } catch (Exception e) {
+            log.error("Error launching display", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error in SCADA launching process.");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
     private void addGraphicEditorMenuItem() {
@@ -151,5 +189,32 @@ public class DisplayTable extends EruTableView<Display> {
     @Override
     protected List<Display> getItemsFromProjectModel(ProjectModel projectModel) {
         return projectModel.getDisplays();
+    }
+
+
+}
+
+@Slf4j
+class ShowActionCell<S> extends TableCell<S, Void> {
+    private Button toggleButton;
+    private ImageView buttonImageView = new ImageView(new Image(getClass().getResource("/images/show-display.png").toExternalForm()));
+
+    public ShowActionCell(Consumer<Integer> onButtonPressedAction) {
+        toggleButton = new Button();
+
+        toggleButton.setGraphic(buttonImageView);
+        toggleButton.setOnAction(event -> {
+            log.info("launching");
+            onButtonPressedAction.accept(getIndex());
+        });
+        setAlignment(Pos.CENTER);
+    }
+
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        setGraphic(null);
+        if (!empty) {
+            setGraphic(toggleButton);
+        }
     }
 }
