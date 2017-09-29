@@ -42,7 +42,7 @@ public class EruController {
 
         stage.setScene(new Scene(mainNode));
         stage.setMaximized(true);
-        stage.setTitle("Eru 2.0");
+        stage.setTitle("Eru - The open JavaFX SCADA");
         stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
         eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
             stage.getScene().getStylesheets().clear();

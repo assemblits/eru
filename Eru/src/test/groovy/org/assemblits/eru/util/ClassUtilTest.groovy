@@ -34,7 +34,7 @@ class ClassUtilTest extends Specification {
 
     def 'loadClass should load existent class'() {
         when:
-        def clazz = ClassUtil.loadClass("ClassUtilTest")
+        def clazz = ClassUtil.loadClass('ClassUtilTest')
         then:
         clazz != null
         clazz.name == 'ClassUtilTest'
