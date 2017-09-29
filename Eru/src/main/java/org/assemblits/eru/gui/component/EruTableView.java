@@ -23,7 +23,7 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     FilteredList<Item> filteredItems;
     ContextMenu contextMenu;
 
-    public EruTableView() {
+    EruTableView() {
         createContextMenu();
         addDefaultMenuItems();
         listenSearchBar();
@@ -47,7 +47,7 @@ public abstract class EruTableView<Item> extends TableView<Item> {
         contextMenu.getItems().add(deleteMenuItem);
     }
 
-    public void listenSearchBar(){
+    private void listenSearchBar(){
         final SearchBarController searchBarController = ApplicationContextHolder.getApplicationContext().getBean(SearchBarController.class);
         final StringProperty searchBarText = searchBarController.getSearchTextField().textProperty();
         final InvalidationListener searchBarTextListener = textProperty -> {
