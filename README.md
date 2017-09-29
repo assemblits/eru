@@ -94,12 +94,15 @@ This software uses code from several open source packages like:
 - [Jamod](http://jamod.sourceforge.net/index.html)
 - [RXTX for Java](http://mfizz.com/oss/rxtx-for-java). Courtesy of [Mfizz, Inc. ](http://mfizz.com/)
 
-And skills from:
+Skills from:
 - [Marlon Trujillo](https://github.com/marlontrujillo1080)
 - [Gilberto Requena](https://github.com/gilbertojrequena)
 - [Rafael Robles](https://github.com/Rafaelsk)
 - [Lucio Guerchi](https://github.com/luHub)
 - [Ronald Vera](https://www.linkedin.com/in/ronald-vera-2185b382/)
+
+Contributions from:
+- [Comelecinca Power Systems](www.comelecinca.com). Specially from [Octavio Casado](https://www.linkedin.com/in/octavio-casado-gonzalez-phd-2b1b2266/)
 
 ## In real world
 [![Take a look!](https://img.youtube.com/vi/8DUAf9TrJuI/0.jpg)](https://www.youtube.com/watch?v=FHph2jrS0EU=47s)
