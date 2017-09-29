@@ -34,7 +34,12 @@ public class CenterPaneController implements SceneBuilderStarter {
         DevicesTableView devicesTableView = new DevicesTableView();
         TagsTableView tagsTableView = new TagsTableView();
         DisplayTableView displayTableViewView = new DisplayTableView();
-        centerPane.getChildren().addAll(usersTableView, connectionsTableView, devicesTableView, tagsTableView,
+
+        centerPane.getChildren().addAll(
+                usersTableView,
+                connectionsTableView,
+                devicesTableView,
+                tagsTableView,
                 displayTableViewView);
         centerPane.getChildren().forEach(this::adjustToAnchorPaneAndHide);
     }
@@ -50,13 +55,11 @@ public class CenterPaneController implements SceneBuilderStarter {
     }
 
     private void setVisible(TreeElementsGroup.Type type) {
-        centerPane.getChildren().stream().forEach(eruTableView -> eruTableView.setVisible(false));
+        centerPane.getChildren().forEach(eruTableView -> eruTableView.setVisible(false));
         Optional<Node> table = centerPane.getChildren().stream().filter(node -> node instanceof EruTableView)
                 .filter(node -> type.equals(((EruTableView) node).getItemType()))
                 .findFirst();
-        if (table.isPresent()) {
-            table.get().setVisible(true);
-        }
+        table.ifPresent(node -> node.setVisible(true));
     }
 
     private void adjustToAnchorPaneAndHide(Node node) {

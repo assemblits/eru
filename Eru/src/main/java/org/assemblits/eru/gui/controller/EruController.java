@@ -23,24 +23,24 @@ import java.io.IOException;
 public class EruController {
 
     private final ConfigurableApplicationContext applicationContext;
-    private final ProjectTreeController projectTreeController;
-    private final CenterPaneController centerPaneController;
     private final MenuBarController menuBarController;
+    private final CenterPaneController centerPaneController;
+    private final ProjectTreeController projectTreeController;
     private final ProjectDynamicBehavior projectDynamicBehavior;
     private final EruPreferences eruPreferences;
     private ProjectModel projectModel;
 
     public void startEru(Project project, Stage stage) {
         log.info("Starting Eru");
-        Parent parent = loadMainScene();
 
+        Parent mainNode = loadMainScene();
         projectModel = ProjectModel.from(project);
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);
         projectDynamicBehavior.setProjectModel(projectModel);
 
-        stage.setScene(new Scene(parent));
+        stage.setScene(new Scene(mainNode));
         stage.setMaximized(true);
         stage.setTitle("Eru 2.0");
         stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());

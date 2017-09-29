@@ -174,6 +174,6 @@ public class  Device {
 
     @Override
     public String toString() {
-        return this.getName();
+        return getGroupName()+":"+getName();
     }
 }

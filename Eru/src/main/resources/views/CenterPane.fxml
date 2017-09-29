@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<ScrollPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.assemblits.eru.gui.controller.CenterPaneController"
-            fitToHeight="true" fitToWidth="true">
+            fitToHeight="true"
+            fitToWidth="true">
 
     <AnchorPane fx:id="centerPane"/>
 </ScrollPane>

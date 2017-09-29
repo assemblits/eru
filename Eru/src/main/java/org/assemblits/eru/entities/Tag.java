@@ -347,7 +347,7 @@ public class Tag {
     /* ********** Getters and Setters ********** */
     @Override
     public String toString() {
-        return getName();
+        return getGroupName()+":"+getName();
     }
 
     public enum Type {INPUT, MASK, MATH, STATUS, OUTPUT, LOGICAL}

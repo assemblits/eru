@@ -129,6 +129,6 @@ public abstract class Connection {
 
     @Override
     public String toString() {
-        return  name.get();
+        return  getGroupName()+":"+getName();
     }
 }

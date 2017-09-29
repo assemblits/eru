@@ -124,4 +124,8 @@ public class Display {
 
     public enum StageType {REPLACE, NEW}
 
+    @Override
+    public String toString() {
+        return getGroupName()+":"+getName();
+    }
 }

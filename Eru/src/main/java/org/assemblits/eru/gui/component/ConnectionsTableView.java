@@ -357,23 +357,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
         //Wrap ObservableList into FilteredList
         super.filteredItems = new FilteredList<>(this.items);
         super.setItems(this.filteredItems);
-
-        // Check if a textToFilter is setted
-        if (super.textToFilter != null) {
-            setTextToFilter(textToFilter);
-        }
         // *******************************************************************************
-    }
-
-    @Override
-    public void setTextToFilter(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->
-                this.filteredItems.setPredicate(connection ->
-                        (textToFilter.getValue() == null
-                                || textToFilter.getValue().isEmpty()
-                                || connection.getName().startsWith(textToFilter.getValue())
-                                || connection.getGroupName().startsWith(textToFilter.getValue()))
-                ));
     }
 
     @Override

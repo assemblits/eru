@@ -1,7 +1,6 @@
 package org.assemblits.eru.gui.component;
 
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.gui.model.ProjectModel;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,30 +10,32 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import org.assemblits.eru.entities.TreeElementsGroup;
+import org.assemblits.eru.gui.ApplicationContextHolder;
+import org.assemblits.eru.gui.controller.SearchBarController;
+import org.assemblits.eru.gui.model.ProjectModel;
 
 import java.util.List;
 
 public abstract class EruTableView<Item> extends TableView<Item> {
 
-    protected StringProperty textToFilter;
-    protected ObservableList<Item> items;
-    protected FilteredList<Item> filteredItems;
-    protected ContextMenu contextMenu;
+    ObservableList<Item> items;
+    FilteredList<Item> filteredItems;
+    ContextMenu contextMenu;
 
-    EruTableView() {
-        AnchorPane.setTopAnchor(this, 0.0);
-        AnchorPane.setBottomAnchor(this, 0.0);
-        AnchorPane.setRightAnchor(this, 0.0);
-        AnchorPane.setLeftAnchor(this, 0.0);
+    public EruTableView() {
+        createContextMenu();
+        addDefaultMenuItems();
+        listenSearchBar();
+    }
 
+    private void createContextMenu(){
         this.contextMenu = new ContextMenu();
         addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {
             if (t.getButton() == MouseButton.SECONDARY) {
                 contextMenu.show(this, t.getScreenX(), t.getScreenY());
             }
         });
-        addDefaultMenuItems();
     }
 
     private void addDefaultMenuItems(){
@@ -44,6 +45,20 @@ public abstract class EruTableView<Item> extends TableView<Item> {
         deleteMenuItem.setOnAction(event -> deleteSelectedItems());
         contextMenu.getItems().add(addMenuItem);
         contextMenu.getItems().add(deleteMenuItem);
+    }
+
+    public void listenSearchBar(){
+        final SearchBarController searchBarController = ApplicationContextHolder.getApplicationContext().getBean(SearchBarController.class);
+        final StringProperty searchBarText = searchBarController.getSearchTextField().textProperty();
+        final InvalidationListener searchBarTextListener = textProperty -> {
+            if (textProperty == null) return;
+            filteredItems.setPredicate(item ->
+                    searchBarText.getValue() == null ||
+                            searchBarText.isEmpty().get() ||
+                            item.toString().contains(searchBarText.getValue()));
+        };
+
+        searchBarController.getSearchTextField().textProperty().addListener(searchBarTextListener);
     }
 
     private void deleteSelectedItems() {
@@ -59,8 +74,6 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     }
 
     public abstract void addNewItem();
-
-    public abstract void setTextToFilter(StringProperty textToFilter);
 
     public abstract TreeElementsGroup.Type getItemType();
 

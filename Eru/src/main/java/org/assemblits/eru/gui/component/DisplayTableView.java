@@ -1,6 +1,5 @@
 package org.assemblits.eru.gui.component;
 
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
@@ -163,22 +162,7 @@ public class DisplayTableView extends EruTableView<Display> {
         //Wrap ObservableList into FilteredList
         super.filteredItems = new FilteredList<>(items);
         super.setItems(filteredItems);
-
-        if (super.textToFilter != null) {
-            setTextToFilter(textToFilter);
-        }
-    }
-
-    @Override
-    public void setTextToFilter(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->
-                filteredItems.setPredicate(user ->
-                        (textToFilter.getValue() == null
-                                || textToFilter.getValue().isEmpty()
-                                || user.getName().startsWith(textToFilter.getValue())
-                                || user.getGroupName().startsWith(textToFilter.getValue()))
-                )
-        );
+        // *******************************************************************************
     }
 
     @Override

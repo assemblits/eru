@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
-<VBox prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="500.0"
+      prefWidth="500.0"
+      xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1">
     <StackPane fx:id="topPane" VBox.vgrow="NEVER">
         <fx:include source="MenuBar.fxml"/>
     </StackPane>
@@ -15,15 +15,11 @@
             <fx:include source="ProjectTree.fxml"/>
         </ScrollPane>
         <AnchorPane>
-            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            <VBox AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0"
                   AnchorPane.topAnchor="0.0">
-                <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="10.0" VBox.vgrow="NEVER">
-                    <Label text="Search: "/>
-                    <TextField fx:id="searchTextField" HBox.hgrow="ALWAYS"/>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                    </padding>
-                </HBox>
+                <fx:include source="SearchBar.fxml"  VBox.vgrow="NEVER"/>
                 <fx:include source="CenterPane.fxml" VBox.vgrow="ALWAYS"/>
             </VBox>
         </AnchorPane>

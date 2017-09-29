@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UsersTableView extends EruTableView<User> {
 
-    public UsersTableView() {
+    public UsersTableView()     {
         TableColumn<User, String> groupColumn = new TableColumn<>("Group");
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
@@ -83,24 +83,7 @@ public class UsersTableView extends EruTableView<User> {
         //Wrap ObservableList into FilteredList
         super.filteredItems = new FilteredList<>(items);
         super.setItems(filteredItems);
-
-        // Check if a textToFilter is setted
-        if (super.textToFilter != null) {
-            setTextToFilter(textToFilter);
-        }
         // *******************************************************************************
-    }
-
-    @Override
-    public void setTextToFilter(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->
-                filteredItems.setPredicate(user ->
-                        (textToFilter.getValue() == null
-                                || textToFilter.getValue().isEmpty()
-                                || user.getUserName().startsWith(textToFilter.getValue())
-                                || user.getGroupName().startsWith(textToFilter.getValue()))
-                )
-        );
     }
 
     @Override

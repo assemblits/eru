@@ -227,22 +227,7 @@ public class TagsTableView extends EruTableView<Tag> {
         //Wrap ObservableList into FilteredList
         super.filteredItems = new FilteredList<>(items);
         super.setItems(filteredItems);
-
-        if (super.textToFilter != null) {
-            setTextToFilter(textToFilter);
-        }
-    }
-
-    @Override
-    public void setTextToFilter(StringProperty textToFilter) {
-        textToFilter.addListener(observable ->
-                filteredItems.setPredicate(device ->
-                        (textToFilter.getValue() == null
-                                || textToFilter.getValue().isEmpty()
-                                || device.getName().startsWith(textToFilter.getValue())
-                                || device.getGroupName().startsWith(textToFilter.getValue()))
-                )
-        );
+        // *******************************************************************************
     }
 
     @Override
