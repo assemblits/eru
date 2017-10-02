@@ -88,7 +88,10 @@ public class ProjectDynamicBehavior {
                         .stream()
                         .filter(Device::getEnabled)
                         .forEach(device -> linkDevicesToConnections(device, connection));
-                projectModel.getTags().forEach(this::linkTagsToDevices);
+                projectModel.getTags()
+                        .stream()
+                        .filter(Tag::getEnabled)
+                        .forEach(this::linkTagsToDevices);
             } else {
                 projectModel.getDevices().forEach(device -> unlinkDevicesFromConnections(device, connection));
                 projectModel.getTags().forEach(this::unlinkTagsFromDevices);
