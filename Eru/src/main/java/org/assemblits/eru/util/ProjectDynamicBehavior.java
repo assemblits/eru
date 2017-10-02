@@ -84,7 +84,10 @@ public class ProjectDynamicBehavior {
                     commDirector.setDaemon(true);
                     commDirector.start();
                 }
-                projectModel.getDevices().forEach(device -> linkDevicesToConnections(device, connection));
+                projectModel.getDevices()
+                        .stream()
+                        .filter(Device::getEnabled)
+                        .forEach(device -> linkDevicesToConnections(device, connection));
                 projectModel.getTags().forEach(this::linkTagsToDevices);
             } else {
                 projectModel.getDevices().forEach(device -> unlinkDevicesFromConnections(device, connection));
