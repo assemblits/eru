@@ -1,11 +1,5 @@
 package org.assemblits.eru.gui.component;
 
-import org.assemblits.eru.entities.Address;
-import org.assemblits.eru.entities.Device;
-import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.gui.model.ProjectModel;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
@@ -15,6 +9,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import org.assemblits.eru.entities.Address;
+import org.assemblits.eru.entities.Device;
+import org.assemblits.eru.entities.Tag;
+import org.assemblits.eru.entities.TreeElementsGroup;
+import org.assemblits.eru.gui.model.ProjectModel;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,7 +23,6 @@ public class TagsTableView extends EruTableView<Tag> {
     private TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
     private TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
     private TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
-    private TableColumn<Tag, Tag> linkedTagColumn = new TableColumn<>("Source");
     private TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
     private TableColumn<Tag, String> descriptionColumn = new TableColumn<>("Description");
     private TableColumn<Tag, String> valueColumn = new TableColumn<>("Value");
@@ -32,6 +30,7 @@ public class TagsTableView extends EruTableView<Tag> {
     private TableColumn<Tag, Tag.Type> tagTypeColumn = new TableColumn<>("Type");
     private TableColumn<Tag, String> statusColumn = new TableColumn<>("Status");
     private TableColumn<Tag, Address> addressColumn = new TableColumn<>("Address");
+    private TableColumn<Tag, Tag> linkedTagColumn = new TableColumn<>("Tag Source");
     private TableColumn<Tag, String> scriptColumn = new TableColumn<>("Script");
     private TableColumn<Tag, Integer> maskColumn = new TableColumn<>("Mask");
     private TableColumn<Tag, Double> scaleFactorColumn = new TableColumn<>("Factor");
@@ -53,10 +52,6 @@ public class TagsTableView extends EruTableView<Tag> {
         nameColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
         nameColumn.setCellValueFactory(param -> param.getValue().nameProperty());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
-        linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
-        linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
 
         enabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
@@ -111,6 +106,10 @@ public class TagsTableView extends EruTableView<Tag> {
 
         addressColumn.prefWidthProperty().bind(widthProperty().multiply(0.12));
         addressColumn.setCellValueFactory(param -> param.getValue().linkedAddressProperty());
+
+        linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
+        linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
+        linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
