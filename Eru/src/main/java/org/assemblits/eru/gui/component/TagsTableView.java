@@ -20,26 +20,27 @@ import java.util.List;
 
 public class TagsTableView extends EruTableView<Tag> {
 
-    private TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
-    private TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
-    private TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
-    private TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
-    private TableColumn<Tag, String> descriptionColumn = new TableColumn<>("Description");
-    private TableColumn<Tag, String> valueColumn = new TableColumn<>("Value");
-    private TableColumn<Tag, Integer> decimalsColumn = new TableColumn<>("Decimals");
-    private TableColumn<Tag, Tag.Type> tagTypeColumn = new TableColumn<>("Type");
-    private TableColumn<Tag, String> statusColumn = new TableColumn<>("Status");
-    private TableColumn<Tag, Address> addressColumn = new TableColumn<>("Address");
-    private TableColumn<Tag, Tag> linkedTagColumn = new TableColumn<>("Tag Source");
-    private TableColumn<Tag, String> scriptColumn = new TableColumn<>("Script");
-    private TableColumn<Tag, Integer> maskColumn = new TableColumn<>("Mask");
-    private TableColumn<Tag, Double> scaleFactorColumn = new TableColumn<>("Factor");
-    private TableColumn<Tag, Double> scaleOffsetColumn = new TableColumn<>("Offset");
-    private TableColumn<Tag, Boolean> alarmEnabledColumn = new TableColumn<>("Alarming");
-    private TableColumn<Tag, String> alarmColumn = new TableColumn<>("Alarm");
-    private TableColumn<Tag, Boolean> alarmedColumn = new TableColumn<>("Alarmed");
-    private TableColumn<Tag, Boolean> historianColumn = new TableColumn<>("Historian");
-    private TableColumn<Tag, Timestamp> timestampTableColumn = new TableColumn<>("Timestamp");
+    private final TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
+    private final TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
+    private final TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
+    private final TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
+    private final TableColumn<Tag, String> descriptionColumn = new TableColumn<>("Description");
+    private final TableColumn<Tag, String> valueColumn = new TableColumn<>("Value");
+    private final TableColumn<Tag, Integer> decimalsColumn = new TableColumn<>("Decimals");
+    private final TableColumn<Tag, Tag.Type> tagTypeColumn = new TableColumn<>("Type");
+    private final TableColumn<Tag, String> statusColumn = new TableColumn<>("Status");
+    private final TableColumn<Tag, Address> addressColumn = new TableColumn<>("Address");
+    private final TableColumn<Tag, Tag> linkedTagColumn = new TableColumn<>("Tag Source");
+    private final TableColumn<Tag, String> scriptColumn = new TableColumn<>("Script");
+    private final TableColumn<Tag, Integer> maskColumn = new TableColumn<>("Mask");
+    private final TableColumn<Tag, Double> scaleFactorColumn = new TableColumn<>("Factor");
+    private final TableColumn<Tag, Double> scaleOffsetColumn = new TableColumn<>("Offset");
+    private final TableColumn<Tag, Boolean> alarmEnabledColumn = new TableColumn<>("Alarming");
+    private final TableColumn<Tag, String> alarmColumn = new TableColumn<>("Alarm");
+    private final TableColumn<Tag, Boolean> alarmedColumn = new TableColumn<>("Alarmed");
+    private final TableColumn<Tag, Boolean> historianColumn = new TableColumn<>("Historian");
+    private final TableColumn<Tag, Timestamp> timestampTableColumn = new TableColumn<>("Timestamp");
+    private final TableColumn<Tag, String> valueMapColumn = new TableColumn<>("Value Map");
 
     public TagsTableView() {
         idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
@@ -110,6 +111,7 @@ public class TagsTableView extends EruTableView<Tag> {
         linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
         linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
         linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
+        linkedTagColumn.setVisible(false);
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -179,6 +181,10 @@ public class TagsTableView extends EruTableView<Tag> {
         historianColumn.setCellValueFactory(param -> param.getValue().historicalEnabledProperty());
         historianColumn.setCellFactory(CheckBoxTableCell.forTableColumn(historianColumn));
 
+        valueMapColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
+        valueMapColumn.setCellValueFactory(param -> param.getValue().valueMapProperty());
+        valueMapColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
         getColumns().addAll(
                 idColumn,
                 groupColumn,
@@ -199,7 +205,8 @@ public class TagsTableView extends EruTableView<Tag> {
                 alarmEnabledColumn,
                 alarmColumn,
                 alarmedColumn,
-                historianColumn
+                historianColumn,
+                valueMapColumn
         );
 
         setEditable(true);
