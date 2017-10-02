@@ -95,7 +95,7 @@ class JFXClassUtilTest extends Specification {
         when(JarExplorer.instantiateWithFXMLLoader(Matchers.any(Class), Matchers.any(ClassLoader)))
                 .thenReturn(new Object())
         when:
-        def isJFXComponentClass = jfxClassUtil.isJFXComponentClass('EruAlarm', 'EruAlarm')
+        def isJFXComponentClass = jfxClassUtil.isJFXComponentClass('EruAlarm', 'org.assemblits.eru.gui.dynamo.EruAlarm')
         then:
         isJFXComponentClass
     }
