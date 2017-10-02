@@ -57,7 +57,7 @@ public class TagsTableView extends EruTableView<Tag> {
         enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
-        descriptionColumn.prefWidthProperty().bind(widthProperty().multiply(0.1));
+        descriptionColumn.prefWidthProperty().bind(widthProperty().multiply(0.12));
         descriptionColumn.setCellValueFactory(param -> param.getValue().descriptionProperty());
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -79,7 +79,7 @@ public class TagsTableView extends EruTableView<Tag> {
             }
         }));
 
-        decimalsColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
+        decimalsColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
         decimalsColumn.setCellValueFactory(param -> param.getValue().decimalsProperty().asObject());
         decimalsColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
             @Override
@@ -109,7 +109,7 @@ public class TagsTableView extends EruTableView<Tag> {
 
         linkedTagColumn.setCellValueFactory(param -> param.getValue().linkedTagProperty());
         linkedTagColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(getItems()));
-        linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
+        linkedTagColumn.prefWidthProperty().bind(widthProperty().multiply(0.08));
 
         scriptColumn.setCellValueFactory(param -> param.getValue().scriptProperty());
         scriptColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -161,7 +161,7 @@ public class TagsTableView extends EruTableView<Tag> {
         }));
         scaleOffsetColumn.setVisible(false);
 
-        alarmEnabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
+        alarmEnabledColumn.prefWidthProperty().bind(widthProperty().multiply(0.07));
         alarmEnabledColumn.setCellValueFactory(param -> param.getValue().alarmEnabledProperty());
         alarmEnabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(alarmEnabledColumn));
         alarmEnabledColumn.setVisible(false);
@@ -183,7 +183,6 @@ public class TagsTableView extends EruTableView<Tag> {
                 idColumn,
                 groupColumn,
                 nameColumn,
-                linkedTagColumn,
                 enabledColumn,
                 descriptionColumn,
                 valueColumn,
@@ -192,6 +191,7 @@ public class TagsTableView extends EruTableView<Tag> {
                 tagTypeColumn,
                 statusColumn,
                 addressColumn,
+                linkedTagColumn,
                 scriptColumn,
                 maskColumn,
                 scaleFactorColumn,
