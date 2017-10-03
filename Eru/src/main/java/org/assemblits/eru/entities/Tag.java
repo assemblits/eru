@@ -385,6 +385,6 @@ public class Tag {
         return getGroupName()+":"+getName();
     }
 
-    public enum Type {INPUT, MATH, OUTPUT, LOGICAL}
+    public enum Type {INPUT, SCRIPT, OUTPUT, LOGICAL}
 
 }

@@ -148,7 +148,7 @@ public class ProjectDynamicBehavior {
                 tag.getLinkedAddress().timestampProperty().addListener(link);
                 registerLink(tag, link);
                 break;
-            case MATH:
+            case SCRIPT:
                 projectModel.getTags().stream()
                         .filter(t -> tag.getScript().contains(t.getName()))
                         .forEach(tagInScript -> {            // Find tags in the script
