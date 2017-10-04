@@ -1,5 +1,6 @@
 package org.assemblits.eru.comm.modbus;
 
+import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTransaction;
@@ -11,7 +12,6 @@ import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
 import org.assemblits.eru.entities.Device;
 import javafx.application.Platform;
-
 import java.sql.Timestamp;
 
 /**
@@ -77,9 +77,9 @@ public class TransmissionToReadAddressBlock implements Transmission {
             transaction.execute();
             updateDeviceStatus("OK");
             wasSuccessful = true;
-        } catch (Exception e) {
+        } catch (ModbusException e) {
+            updateDeviceStatus(e.getMessage());
             wasSuccessful = false;
-            updateDeviceStatus(e.getLocalizedMessage());
         }
     }
 

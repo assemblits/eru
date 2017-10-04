@@ -30,7 +30,7 @@ public class TcpConnection extends Connection {
 
     @Override
     public void connect() {
-        if (!isEnabled() || (coreConnection != null && coreConnection.isConnected())) return;
+        if (!isEnabled()) return;
         try {
             log.info("Starting connection <{}>", getName());
             coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname.get()));
@@ -41,10 +41,9 @@ public class TcpConnection extends Connection {
             setStatus("Connected");
             log.info("<{}> connected.", getName());
         } catch (Exception e) {
-            e.printStackTrace();
             setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error("<{}> connection failure.", getName(), e);
+            log.error("<{}> connection failure.", getName());
         }
     }
 

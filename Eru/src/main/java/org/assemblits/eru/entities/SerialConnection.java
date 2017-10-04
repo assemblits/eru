@@ -56,10 +56,9 @@ public class SerialConnection extends Connection {
             setStatus("Connected");
             log.info("<{}> connected", getName());
         } catch (Exception e) {
-            e.printStackTrace();
             setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error("{} connection failure.", getName(), e);
+            log.error("{} connection failure.", getName());
         }
     }
 
