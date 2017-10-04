@@ -34,7 +34,7 @@ import java.util.*;
 public class ProjectDynamicBehavior {
 
     public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
-    private final Map<Tag, List<TagLink>> TAG_LINK_MAP = new HashMap<>();
+    private final Map<Tag, List<TagLink>> tagLinksMap = new HashMap<>();
     private final Map<Device, Communicator> deviceCommunicatorMap = new HashMap<>();
 
     private ProjectModel projectModel;
@@ -91,10 +91,10 @@ public class ProjectDynamicBehavior {
                 projectModel.getTags()
                         .stream()
                         .filter(Tag::getEnabled)
-                        .forEach(this::linkTagsToDevices);
+                        .forEach(this::linkTag);
             } else {
                 projectModel.getDevices().forEach(device -> unlinkDevicesFromConnections(device, connection));
-                projectModel.getTags().forEach(this::unlinkTagsFromDevices);
+                projectModel.getTags().forEach(this::unlinkTag);
             }
         });
     }
@@ -138,11 +138,10 @@ public class ProjectDynamicBehavior {
         }
     }
 
-    private void linkTagsToDevices(Tag tag) {
-        log.debug("Installing updater linkToConnections to {}", tag.getName());
-        TagLink link;
+    private void linkTag(Tag tag) {
         switch (tag.getType()) {
             case INPUT:
+                TagLink link;
                 if (tag.getLinkedAddress() == null) return;
                 link = new AddressChangeLink(tag);
                 tag.getLinkedAddress().timestampProperty().addListener(link);
@@ -165,23 +164,21 @@ public class ProjectDynamicBehavior {
     }
 
     private void registerLink(Tag tag, TagLink link) {
-        if (TAG_LINK_MAP.keySet().contains(tag)) {
-            TAG_LINK_MAP.get(tag).add(link);
+        if (tagLinksMap.keySet().contains(tag)) {
+            tagLinksMap.get(tag).add(link);
         } else {
-            TAG_LINK_MAP.put(tag, new ArrayList<>(Arrays.asList(link)));
+            tagLinksMap.put(tag, new ArrayList<>(Arrays.asList(link)));
         }
     }
 
-    private void unlinkTagsFromDevices(Tag tag) {
-        for (TagLink link : TAG_LINK_MAP.get(tag)) {
-            log.debug("Removing updater linkToConnections to {} with linkToConnections {}", tag.getName(), link);
+    private void unlinkTag(Tag tag) {
+        if (!tagLinksMap.containsKey(tag)) return;
+        for (TagLink link : tagLinksMap.get(tag)) {
             if (link instanceof AddressChangeLink) {
                 tag.getLinkedAddress().timestampProperty().removeListener(link);
-            } else {
-                tag.timestampProperty().removeListener(link);
             }
         }
-        TAG_LINK_MAP.remove(tag);
+        tagLinksMap.remove(tag);
     }
 
     private void linkDevicesToConnections(Device device, Connection conn){
