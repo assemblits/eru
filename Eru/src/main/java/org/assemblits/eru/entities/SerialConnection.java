@@ -39,7 +39,7 @@ public class SerialConnection extends Connection {
 
     @Override
     public void connect() {
-        if (!isEnabled() || (coreConnection != null && coreConnection.isOpen())) return;
+        if (!isEnabled()) return;
         try {
             log.info("Starting connection <{}>", getName());
             SerialParameters connectionParameters = new SerialParameters();
