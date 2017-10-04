@@ -1,5 +1,9 @@
 package org.assemblits.eru.comm.modbus;
 
+import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
+import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
+import com.ghgande.j2mod.modbus.io.ModbusTransaction;
+import com.ghgande.j2mod.modbus.msg.*;
 import org.assemblits.eru.comm.context.Transmission;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
@@ -7,10 +11,6 @@ import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
 import org.assemblits.eru.entities.Device;
 import javafx.application.Platform;
-import net.wimpi.modbus.io.ModbusSerialTransaction;
-import net.wimpi.modbus.io.ModbusTCPTransaction;
-import net.wimpi.modbus.io.ModbusTransaction;
-import net.wimpi.modbus.msg.*;
 
 import java.sql.Timestamp;
 

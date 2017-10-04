@@ -384,11 +384,9 @@ class ConnectActionCell<S> extends TableCell<S, Void> {
         toggleButton.setGraphic(connectImageView);
         toggleButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
             if (isSelected) {
-                log.info("Connecting");
                 selectedAction.accept(getIndex());
                 toggleButton.setGraphic(disconnectImageView);
             } else {
-                log.info("Disconnecting");
                 deselectedAction.accept(getIndex());
                 toggleButton.setGraphic(connectImageView);
             }

@@ -1,11 +1,11 @@
 package org.assemblits.eru.entities;
 
+import com.ghgande.j2mod.modbus.util.SerialParameters;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
-import net.wimpi.modbus.util.SerialParameters;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -26,7 +26,7 @@ public class SerialConnection extends Connection {
     private StringProperty parity;
     private IntegerProperty stopsBits;
     private StringProperty frameEncoding;
-    private net.wimpi.modbus.net.SerialConnection coreConnection;
+    private com.ghgande.j2mod.modbus.net.SerialConnection coreConnection;
 
     public SerialConnection() {
         this.port = new SimpleStringProperty("COM1");
@@ -49,8 +49,8 @@ public class SerialConnection extends Connection {
             connectionParameters.setStopbits(stopsBits.get());
             connectionParameters.setParity(parity.get());
             connectionParameters.setDatabits(dataBits.get());
-            connectionParameters.setReceiveTimeout(getTimeout());
-            coreConnection = new net.wimpi.modbus.net.SerialConnection(connectionParameters);
+//            connectionParameters.setReceiveTimeout(getTimeout());
+            coreConnection = new com.ghgande.j2mod.modbus.net.SerialConnection(connectionParameters);
             coreConnection.open();
             setConnected(true);
             setStatus("Connected");
@@ -153,7 +153,7 @@ public class SerialConnection extends Connection {
     }
 
     @Transient
-    public net.wimpi.modbus.net.SerialConnection getCoreConnection() {
+    public com.ghgande.j2mod.modbus.net.SerialConnection getCoreConnection() {
         return coreConnection;
     }
 }
