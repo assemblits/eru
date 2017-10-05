@@ -87,7 +87,7 @@ public class Address implements Comparable<Address> {
         this.dataModel.set(dataModel);
     }
 
-    @Column(name = "current_value")
+    @Transient
     public int getCurrentValue() {
         return currentValue.get();
     }
@@ -98,7 +98,7 @@ public class Address implements Comparable<Address> {
         this.currentValue.set(currentValue);
     }
 
-    @Column(name = "connected")
+    @Transient
     public boolean getConnected() {
         return connected.get();
     }
@@ -109,7 +109,7 @@ public class Address implements Comparable<Address> {
         this.connected.set(connected);
     }
 
-    @Column(name = "status")
+    @Transient
     public String getStatus() {
         return status.get();
     }
@@ -120,7 +120,7 @@ public class Address implements Comparable<Address> {
         this.status.set(status);
     }
 
-    @Column(name = "time_stamp")
+    @Transient
     public Timestamp getTimestamp() {
         return timestamp.get();
     }

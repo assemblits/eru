@@ -94,7 +94,18 @@ public abstract class Connection {
         this.samplingTime.set(samplingTime);
     }
 
-    @Column(name = "connected")
+    @Column(name = "group_name")
+    public String getGroupName() {
+        return groupName.get();
+    }
+    public StringProperty groupNameProperty() {
+        return groupName;
+    }
+    public void setGroupName(String groupName) {
+        this.groupName.set(groupName);
+    }
+
+    @Transient
     public boolean isConnected() {
         return connected.get();
     }
@@ -105,7 +116,7 @@ public abstract class Connection {
         this.connected.set(connected);
     }
 
-    @Column(name = "status")
+    @Transient
     public String getStatus() {
         return status.get();
     }
@@ -114,17 +125,6 @@ public abstract class Connection {
     }
     public void setStatus(String status) {
         this.status.set(status);
-    }
-
-    @Column(name = "group_name")
-    public String getGroupName() {
-        return groupName.get();
-    }
-    public StringProperty groupNameProperty() {
-        return groupName;
-    }
-    public void setGroupName(String groupName) {
-        this.groupName.set(groupName);
     }
 
     @Override
