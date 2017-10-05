@@ -1,11 +1,11 @@
 package org.assemblits.eru.entities;
 
+import com.ghgande.j2mod.modbus.net.TCPMasterConnection;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
-import net.wimpi.modbus.net.TCPMasterConnection;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class TcpConnection extends Connection {
 
     @Override
     public void connect() {
-        if (!isEnabled() || (coreConnection != null && coreConnection.isConnected())) return;
+        if (!isEnabled()) return;
         try {
             log.info("Starting connection <{}>", getName());
             coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname.get()));
@@ -41,17 +41,15 @@ public class TcpConnection extends Connection {
             setStatus("Connected");
             log.info("<{}> connected.", getName());
         } catch (Exception e) {
-            e.printStackTrace();
             setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error("<{}> connection failure.", getName(), e);
+            log.error("<{}> connection failure.", getName());
         }
     }
 
     @Override
     public void disconnect() {
         if (coreConnection != null && coreConnection.isConnected()) {
-            log.info("Disconnecting TCP connection:\t{}", getName());
             coreConnection.close();
             setConnected(false);
             setStatus("Disconnected");
