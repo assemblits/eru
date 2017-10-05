@@ -4,8 +4,6 @@ buildscript {
         openDolphinVersion = '1.0-RC1'
         jbossLogginVersion = '1.0.1.Final'
         itextVersion = '2.1.7'
-        rxtxVersion = '2.1.7'
-        wimpiJamodVersion = '1.2'
         groovyVersion = '2.4.1'
         h2Version = '1.4.196'
         cglibNodepVersion = '2.2.2'
@@ -15,7 +13,7 @@ buildscript {
         controlsfxVersion = '8.40.13'
         spockVersion = '1.1-groovy-2.4'
         powerMockVersion = '1.7.1'
-        jamodVersion = '1.2'
+        j2modVersion = '2.3.6'
     }
     repositories {
         mavenCentral()
@@ -69,13 +67,11 @@ dependencies {
     compile "org.eclipse.jetty:jetty-webapp:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-xml:${jettyVersion}"
     compile "org.eclipse.jetty:jetty-io:${jettyVersion}"
-    compile "org.rxtx:rxtx:${rxtxVersion}"
-    compile "net.wimpi:jamod:${wimpiJamodVersion}"
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "cglib:cglib-nodep:${cglibNodepVersion}"
     compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
     compile "org.controlsfx:controlsfx:${controlsfxVersion}"
-    compile "net.wimpi:jamod:${jamodVersion}"
+    compile "com.ghgande:j2mod:${j2modVersion}"
 
 
     //Testing
