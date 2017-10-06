@@ -73,17 +73,6 @@ public class  Device {
         this.unitIdentifier.set(unitIdentifier);
     }
 
-    @Column(name = "status")
-    public String getStatus() {
-        return status.get();
-    }
-    public StringProperty statusProperty() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status.set(status);
-    }
-
     @Column(name = "retries")
     public int getRetries() {
         return retries.get();
@@ -170,6 +159,17 @@ public class  Device {
     }
     public void setGroupName(String groupName) {
         this.groupName.set(groupName);
+    }
+
+    @Transient
+    public String getStatus() {
+        return status.get();
+    }
+    public StringProperty statusProperty() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status.set(status);
     }
 
     @Override
