@@ -11,59 +11,45 @@
 | [![Build Status](https://travis-ci.org/assemblits/eru.svg?branch=develop)](https://travis-ci.org/assemblits/eru)  | [![Build Status](https://travis-ci.org/assemblits/eru.svg?branch=master)](https://travis-ci.org/assemblits/eru)  | [![Join the chat at https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby](https://badges.gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby.svg)](https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) | [![Apache 2.0 License](https://img.shields.io/badge/license-APACHE2.0-green.svg)](https://github.com/assemblits/eru/blob/develop/LICENSE) |
   
 ## Resume
-  This app has 4 main things:
+  There are 4 main components in Eru:
   - Connections.
   - Devices.
   - Tags.
-  - Users.
+  - Displays.
 
   Basically, in the normal workflow, you:
-  1) Create a "connection" to communicate with remote devices (Like PLC, Solar Panels, Engine controllers, Residence automation (Doors, Lights, Windows, etc) etc).
-  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want to read  the height of the window, so we have to add an linkedAddress called height in the window device).
-  3) Create a "tag" to represent the actual value of the linkedAddress of the device. (Using the same example, we adjust the value obtained from the window to "meters" adding a factor and scale).
-  4) Create a "user" this is to be sure that you have permissions to read the value (in construction).
-  5) Create a "display" to see visualizations linked to the tag. (To draw the windows and see graphically if is closed or open) (in construction)
-
-## Dependencies
-  * Database
-    - H2 database.
-  * Modbus:
-    - To be able to connect to the serial modbus devices (no necessary to run the app) install the drivers in the java environment. Linux (Debian) example:
-      1) Go to: _eru_home_directory / lib / serial / Rxtx-Serial-comms-Drivers /_
-      2) Choose your binary build: x86_64 or i386 (based on which version of the JVM you are installing to)
-      3) Extract.
-      4) For a JDK installation on architecturei386 (For a JDK installation on architecture=x86_64, just change the i386 to amd64)
-         * Copy RXTXcomm.jar        ---> <JAVA_HOME>/jre/lib/ext
-         * Copy librxtxSerial.so    ---> <JAVA_HOME>/jre/lib/i386/
-         * Copy librxtxParallel.so  ---> <JAVA_HOME>/jre/lib/i386/
-         
-         NOTE: You MUST match your architecture.  You can't install the i386version on a 64-bit version of the JDK and vice-versa.
+  1) Create a "connection" to communicate with remote devices (Like PLC, Solar Panels, Engine controllers, Residence 
+  automation (Doors, Lights, Windows, etc) etc).
+  2) Create a "device" that uses that connection and organize addresses to read (E.g. in the windows device we want 
+  to read  the current height of the window so we have to add an Address called *height* in the window device).
+  3) Create a "tag" to represent the actual value of the Address of the device. (Using the same example, 
+  we adjust the value obtained from the window to "meters" adding a factor and scale).
+  4) Create a "display" to see the current height of the window (tag) graphically.
 
 ## Key Features
 
 * Tag based
-  - Tags to read devices.
-  - Tags to make calc.
-  - Tags to have alarms.
-  - Tags to record historic values.
+  - Tags to read devices. You can scale the value using offset or factors, masks, and custom scripts.
 * JavaFX based
   - Use State of Art gauge creation techniques.
   - Remote clients using http tunnels.
 * Open source.
 * Dark/Light using CSS.
-* Embedded Modbus (Serial or TCP).
-* Save the historic preview as PDF
-* App will keep alive in tray for quick usage
+* Embedded Modbus (Serial or TCP). You do not need to get additional Modbus handler... It is embedded in Eru.
+* Save the historic preview as PDF.
 * Full screen mode
 * Cross platform
   - Windows, Mac and Linux ready.
   
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (which comes with [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Git](https://git-scm.com) and 
+[Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 
+(which comes with [JavaFX](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm)) installed on your computer. 
+From your command line:
 
 ```bash
-# Go to your workspace
+# Go to your workspace 
 cd ~/Workspace
 # Create a folder called "eru" (Recommended)
 mkdir eru
