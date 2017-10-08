@@ -31,4 +31,13 @@ public class DirectorTest {
         director.getCommunicators().add(communicator);
         assertTrue("Director accepts communicators", director.getCommunicators().contains(communicator));
     }
+
+    @Test (timeout = 250)
+    public void testStopping() throws Exception {
+        director.start();
+        director.interrupt();
+        while (director.isAlive()){
+            Thread.sleep(10);
+        }
+    }
 }

@@ -26,9 +26,12 @@ public class Director extends Thread {
                 if (!headParticipant.isPrepared()) headParticipant.prepare();
                 headParticipant.communicate();
                 if (headParticipant.isRepeatable()) communicators.put(headParticipant);
+            } catch (InterruptedException e) {
+                 log.info("Director stopped.");
             } catch (Exception e) {
-                log.error(e.getMessage());
+                log.error("Director halt", e);
             }
         }
     }
+    
 }
