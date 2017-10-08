@@ -1,4 +1,4 @@
-package org.assemblits.eru.gui.dynamo;
+package org.assemblits.eru.gui.dynamo.base;
 
 import javafx.beans.property.StringProperty;
 

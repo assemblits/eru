@@ -2,6 +2,7 @@ package org.assemblits.eru.gui.dynamo;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.assemblits.eru.scene.control.Gauge;
 
 /**

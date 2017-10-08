@@ -10,7 +10,7 @@ import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.dynamo.*;
+import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
