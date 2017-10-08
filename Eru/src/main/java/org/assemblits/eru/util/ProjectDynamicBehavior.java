@@ -1,5 +1,6 @@
 package org.assemblits.eru.util;
 
+import javafx.scene.Parent;
 import org.assemblits.eru.comm.actors.Communicator;
 import org.assemblits.eru.comm.actors.Director;
 import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
@@ -9,16 +10,12 @@ import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.dynamo.EruAlarm;
-import org.assemblits.eru.gui.dynamo.EruDisplay;
-import org.assemblits.eru.gui.dynamo.EruGauge;
-import org.assemblits.eru.gui.dynamo.EruLevelBar;
+import org.assemblits.eru.gui.dynamo.*;
 import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
-import javafx.scene.control.Control;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +30,6 @@ import java.util.*;
 @Component
 public class ProjectDynamicBehavior {
 
-    public static final Map<String, String> DYNAMO_ID_VS_TAG_ID = new HashMap<>();
     private final Map<Tag, List<TagLink>> tagLinksMap = new HashMap<>();
     private final Map<Device, Communicator> deviceCommunicatorMap = new HashMap<>();
 
@@ -71,7 +67,7 @@ public class ProjectDynamicBehavior {
     private void installListenerOnDisplay(Display display){
         display.fxNodeProperty().addListener((observable, oldNode, newNode) -> {
             if(newNode != null){
-                linkTagsToFXNode(newNode);
+                linkTagsToDisplayNode(newNode);
             }
         });
     }
@@ -99,41 +95,14 @@ public class ProjectDynamicBehavior {
         });
     }
 
-    private void linkTagsToFXNode(Node anchorPane) {
-        for (String dynamoID : DYNAMO_ID_VS_TAG_ID.keySet()) {
-            Control extractedControl = (Control) anchorPane.lookup("#".concat(dynamoID));
-            if (extractedControl instanceof EruAlarm) {
-                EruAlarm extractedAlarm = (EruAlarm) extractedControl;
+    private void linkTagsToDisplayNode(Parent displayNode) {
+        for (Node innerNode : displayNode.getChildrenUnmodifiable()) {
+            if (innerNode instanceof Taggable) {
+                Taggable dynamo = (Taggable) innerNode;
                 projectModel.getTags()
                         .stream()
-                        .filter(tag -> (!extractedAlarm.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedAlarm.getCurrentValueTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedAlarm.setCurrentValue(Boolean.parseBoolean(newValue))));
-            } else if (extractedControl instanceof EruDisplay) {
-                EruDisplay extractedDisplay = (EruDisplay) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> (!extractedDisplay.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedDisplay.getCurrentValueTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedDisplay.setCurrentText(newValue)));
-            } else if (extractedControl instanceof EruGauge) {
-                EruGauge extractedGauge = (EruGauge) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> (!extractedGauge.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedGauge.getCurrentValueTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setCurrentValue(Double.parseDouble(newValue))));
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> (!extractedGauge.getCurrentTitleTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedGauge.getCurrentTitleTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedGauge.setTitle(newValue)));
-            } else if (extractedControl instanceof EruLevelBar) {
-                EruLevelBar extractedLevelBar = (EruLevelBar) extractedControl;
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> (!extractedLevelBar.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentValueTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setCurrentValue(Double.parseDouble(newValue))));
-                projectModel.getTags()
-                        .stream()
-                        .filter(tag -> (!extractedLevelBar.getCurrentTitleTagID().isEmpty()) && (tag.getId() == Integer.valueOf(extractedLevelBar.getCurrentTitleTagID())))
-                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> extractedLevelBar.setTitle(newValue)));
+                        .filter(tag -> (!dynamo.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(dynamo.getCurrentValueTagID())))
+                        .forEach(tag -> tag.valueProperty().addListener((observable, oldValue, newValue) -> dynamo.setCurrentTagValue(newValue)));
             }
         }
     }

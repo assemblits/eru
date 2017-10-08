@@ -22,7 +22,7 @@ public class Display {
     private StringProperty groupName;
     private BooleanProperty initialDisplay;
     private ObjectProperty<StageType> stageType;
-    private ObjectProperty<Node> fxNode;
+    private ObjectProperty<Parent> fxNode;
 
     public Display() {
         this.id = new SimpleLongProperty(this, "display_id");
@@ -110,15 +110,15 @@ public class Display {
     }
 
     @Transient
-    public Node getFxNode() {
+    public Parent getFxNode() {
         return fxNode.get();
     }
 
-    public ObjectProperty<Node> fxNodeProperty() {
+    public ObjectProperty<Parent> fxNodeProperty() {
         return fxNode;
     }
 
-    public void setFxNode(Node fxNode) {
+    public void setFxNode(Parent fxNode) {
         this.fxNode.set(fxNode);
     }
 

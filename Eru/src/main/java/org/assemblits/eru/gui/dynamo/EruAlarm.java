@@ -1,14 +1,13 @@
 package org.assemblits.eru.gui.dynamo;
 
-import org.assemblits.eru.scene.control.Alarm;
-import org.assemblits.eru.util.ProjectDynamicBehavior;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.eru.scene.control.Alarm;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruAlarm extends Alarm {
+public class EruAlarm extends Alarm implements Taggable<Boolean>{
     /**
      * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for
      * finding a specific EruDisplay within the scene graph and get the setted tag. While the id of a Node
@@ -21,6 +20,16 @@ public class EruAlarm extends Alarm {
         this.currentValueTagID = new SimpleStringProperty(this, "currentValueTagID", "");
     }
 
+    @Override
+    public void setCurrentTagValue(String value) {
+        this.setCurrentValue(Boolean.parseBoolean(value));
+    }
+
+    @Override
+    public Boolean getCurrentTagValue() {
+        return getCurrentValue();
+    }
+
     public String getCurrentValueTagID() {
         return currentValueTagID.get();
     }
@@ -29,6 +38,5 @@ public class EruAlarm extends Alarm {
     }
     public void setCurrentValueTagID(String currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
-        ProjectDynamicBehavior.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
     }
 }

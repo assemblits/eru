@@ -1,12 +1,12 @@
 package org.assemblits.eru.scene.control;
 
-import org.assemblits.eru.scene.control.skin.GaugeSkin;
-import org.assemblits.eru.util.Section;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import org.assemblits.eru.scene.control.skin.GaugeSkin;
+import org.assemblits.eru.util.Section;
 
 import java.util.Arrays;
 import java.util.List;

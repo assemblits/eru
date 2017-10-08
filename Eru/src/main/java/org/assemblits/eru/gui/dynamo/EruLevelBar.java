@@ -1,46 +1,47 @@
 package org.assemblits.eru.gui.dynamo;
 
-import org.assemblits.eru.scene.control.LevelBar;
-import org.assemblits.eru.util.ProjectDynamicBehavior;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.eru.scene.control.LevelBar;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruLevelBar extends LevelBar{
+public class EruLevelBar extends LevelBar implements Taggable<Double>{
     /**
      * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for
      * finding a specific EruDisplay within the scene graph and get the setted tag. While the id of a Node
      * should be unique within the scene graph, this uniqueness is supported by the {@code ComponentsIdsGenerator}.
      */
     private StringProperty currentValueTagID;
-    private StringProperty currentTitleTagID;
 
     public EruLevelBar() {
         super();
         this.currentValueTagID = new SimpleStringProperty(this, "currentValueTagID", "");
-        this.currentTitleTagID = new SimpleStringProperty(this, "currentTitleTagID", "");
     }
 
+    @Override
+    public void setCurrentTagValue(String value) {
+        this.setCurrentValue(Double.parseDouble(value));
+    }
+
+    @Override
+    public Double getCurrentTagValue() {
+        return getCurrentValue();
+    }
+
+    @Override
     public String getCurrentValueTagID() {
         return currentValueTagID.get();
     }
+
+    @Override
     public StringProperty currentValueTagIDProperty() {
         return currentValueTagID;
     }
+
+    @Override
     public void setCurrentValueTagID(String currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
-        ProjectDynamicBehavior.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
-    }
-
-    public String getCurrentTitleTagID() {
-        return currentTitleTagID.get();
-    }
-    public StringProperty currentTitleTagIDProperty() {
-        return currentTitleTagID;
-    }
-    public void setCurrentTitleTagID(String currentTitleTagID) {
-        this.currentTitleTagID.set(currentTitleTagID);
     }
 }
