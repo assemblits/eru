@@ -1,14 +1,14 @@
 package org.assemblits.eru.gui.dynamo;
 
-import org.assemblits.eru.scene.control.Display;
-import org.assemblits.eru.util.ProjectDynamicBehavior;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.eru.gui.dynamo.base.Dynamo;
+import org.assemblits.eru.scene.control.Display;
 
 /**
  * Created by mtrujillo on 8/24/17.
  */
-public class EruDisplay extends Display {
+public class EruDisplay extends Display implements Dynamo<String> {
 
     /**
      * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for
@@ -22,14 +22,28 @@ public class EruDisplay extends Display {
         this.currentValueTagID = new SimpleStringProperty(this, "currentValueTagID", "");
     }
 
+    @Override
+    public void setCurrentTagValue(String value) {
+        setCurrentText(value);
+    }
+
+    @Override
+    public String getCurrentTagValue() {
+        return getCurrentText();
+    }
+
+    @Override
     public String getCurrentValueTagID() {
         return currentValueTagID.get();
     }
+
+    @Override
     public StringProperty currentValueTagIDProperty() {
         return currentValueTagID;
     }
+
+    @Override
     public void setCurrentValueTagID(String currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
-        ProjectDynamicBehavior.DYNAMO_ID_VS_TAG_ID.put(getId(), currentValueTagID);
     }
 }
