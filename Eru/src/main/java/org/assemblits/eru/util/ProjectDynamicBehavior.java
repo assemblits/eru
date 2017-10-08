@@ -97,8 +97,8 @@ public class ProjectDynamicBehavior {
 
     private void linkTagsToDisplayNode(Parent displayNode) {
         for (Node innerNode : displayNode.getChildrenUnmodifiable()) {
-            if (innerNode instanceof Taggable) {
-                Taggable dynamo = (Taggable) innerNode;
+            if (innerNode instanceof Dynamo) {
+                Dynamo dynamo = (Dynamo) innerNode;
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> (!dynamo.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(dynamo.getCurrentValueTagID())))

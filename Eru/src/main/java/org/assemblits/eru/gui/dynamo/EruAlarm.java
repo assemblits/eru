@@ -7,12 +7,7 @@ import org.assemblits.eru.scene.control.Alarm;
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruAlarm extends Alarm implements Taggable<Boolean>{
-    /**
-     * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for
-     * finding a specific EruDisplay within the scene graph and get the setted tag. While the id of a Node
-     * should be unique within the scene graph, this uniqueness is supported by the {@code ComponentsIdsGenerator}.
-     */
+public class EruAlarm extends Alarm implements Dynamo<Boolean> {
     private StringProperty currentValueTagID;
 
     public EruAlarm() {

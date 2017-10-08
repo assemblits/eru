@@ -7,12 +7,7 @@ import org.assemblits.eru.scene.control.LevelBar;
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruLevelBar extends LevelBar implements Taggable<Double>{
-    /**
-     * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for
-     * finding a specific EruDisplay within the scene graph and get the setted tag. While the id of a Node
-     * should be unique within the scene graph, this uniqueness is supported by the {@code ComponentsIdsGenerator}.
-     */
+public class EruLevelBar extends LevelBar implements Dynamo<Double> {
     private StringProperty currentValueTagID;
 
     public EruLevelBar() {
