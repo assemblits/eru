@@ -1,22 +1,20 @@
-package org.assemblits.eru.util;
+package org.assemblits.eru.gui.model;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import org.assemblits.eru.comm.actors.Communicator;
 import org.assemblits.eru.comm.actors.Director;
 import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
-import org.assemblits.eru.entities.Connection;
-import org.assemblits.eru.entities.Device;
-import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.entities.Tag;
+import org.assemblits.eru.entities.*;
 import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.dynamo.base.Dynamo;
-import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.util.EngineScriptUtil;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
@@ -28,7 +26,7 @@ import java.util.*;
  */
 @Slf4j
 @Component
-public class ProjectDynamicBehavior {
+public class ProjectChangesListener {
 
     private final Map<Tag, List<TagLink>> tagLinksMap = new HashMap<>();
     private final Map<Device, Communicator> deviceCommunicatorMap = new HashMap<>();
@@ -36,8 +34,32 @@ public class ProjectDynamicBehavior {
     private ProjectModel projectModel;
 
     public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
-        addListeners();
+        listenDevicesChanges(projectModel.getDevices());
+        listenConnectionsChanges(projectModel.getConnections());
+        listenTagsChanges(projectModel.getTags());
+        listenUsersChanges(projectModel.getUsers());
+        listenDisplaysChanges(projectModel.getDisplays());
+    }
+
+    private void listenDevicesChanges(ObservableList<Device> devices){
+        DevicesListener devicesListener = ApplicationContextHolder.getApplicationContext().getBean(DevicesListener.class);
+        devices.addListener(devicesListener);
+    }
+
+    private void listenConnectionsChanges(ObservableList<Connection> connections){
+
+    }
+
+    private void listenTagsChanges(ObservableList<Tag> tags){
+
+    }
+
+    private void listenUsersChanges(ObservableList<User> users){
+
+    }
+
+    private void listenDisplaysChanges(ObservableList<Display> displays){
+
     }
 
     private void addListeners() {
