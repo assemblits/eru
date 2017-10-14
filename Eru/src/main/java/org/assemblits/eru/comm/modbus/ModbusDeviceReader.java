@@ -13,14 +13,14 @@ import java.util.List;
  * Created by mtrujillo on 3/9/2016.
  */
 @Slf4j
-public class ModbusDeviceReader extends Communicator {
+public class ModbusDeviceReader extends Communicator<Device> {
 
-    private final Device device;
+    private Device target;
     private final List<Transmission> transmissions;
     private boolean repeatCommunications;
 
-    public ModbusDeviceReader(Device device) {
-        this.device = device;
+    public ModbusDeviceReader(Device target) {
+        this.target = target;
         this.transmissions = new ArrayList<>();
         this.repeatCommunications = true;
     }
@@ -40,15 +40,15 @@ public class ModbusDeviceReader extends Communicator {
         final List<AddressesBlock> addressesBlocksToRead = new ArrayList<>();
 
         // Extract All AddressBlocks from device in order
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.COIL));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.DISCRETE_INPUT));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.INPUT_REGISTER));
-        addressesBlocksToRead.addAll(device.getAddressesBlocks(Address.DataModel.HOLDING_REGISTER));
+        addressesBlocksToRead.addAll(target.getAddressesBlocks(Address.DataModel.COIL));
+        addressesBlocksToRead.addAll(target.getAddressesBlocks(Address.DataModel.DISCRETE_INPUT));
+        addressesBlocksToRead.addAll(target.getAddressesBlocks(Address.DataModel.INPUT_REGISTER));
+        addressesBlocksToRead.addAll(target.getAddressesBlocks(Address.DataModel.HOLDING_REGISTER));
 
         // Create transmissions to read all that blocks
         for(AddressesBlock addressesBlock : addressesBlocksToRead){
             if(!addressesBlock.get().isEmpty()){
-                final TransmissionToReadAddressBlock transmissionToReadAddressBlock = new TransmissionToReadAddressBlock(device, addressesBlock);
+                final TransmissionToReadAddressBlock transmissionToReadAddressBlock = new TransmissionToReadAddressBlock(target, addressesBlock);
                 transmissionToReadAddressBlock.create();
                 transmissions.add(transmissionToReadAddressBlock);
             }

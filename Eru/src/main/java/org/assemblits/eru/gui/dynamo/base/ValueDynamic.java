@@ -1,6 +1,6 @@
 package org.assemblits.eru.gui.dynamo.base;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.IntegerProperty;
 
 /**
  * Created by mtrujillo on 10/8/17.
@@ -9,7 +9,7 @@ public interface ValueDynamic<T> {
     void setCurrentTagValue(String value);
     T getCurrentTagValue();
 
-    String getCurrentValueTagID();
-    StringProperty currentValueTagIDProperty();
-    void setCurrentValueTagID(String currentValueTagID);
+    Integer getCurrentValueTagID();
+    IntegerProperty currentValueTagIDProperty();
+    void setCurrentValueTagID(Integer currentValueTagID);
 }

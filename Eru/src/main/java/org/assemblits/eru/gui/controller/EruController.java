@@ -4,7 +4,7 @@ import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.preferences.EruPreferences;
-import org.assemblits.eru.gui.model.ProjectChangesListener;
+import org.assemblits.eru.gui.model.ProjectListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,7 +26,7 @@ public class EruController {
     private final MenuBarController menuBarController;
     private final CenterPaneController centerPaneController;
     private final ProjectTreeController projectTreeController;
-    private final ProjectChangesListener projectChangesListener;
+    private final ProjectListener projectListener;
     private final EruPreferences eruPreferences;
     private ProjectModel projectModel;
 
@@ -38,7 +38,8 @@ public class EruController {
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);
-        projectChangesListener.setProjectModel(projectModel);
+        projectListener.setProjectModel(projectModel);
+        projectListener.listen();
 
         stage.setScene(new Scene(mainNode));
         stage.setMaximized(true);
