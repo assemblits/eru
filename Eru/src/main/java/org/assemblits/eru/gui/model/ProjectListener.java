@@ -1,7 +1,5 @@
 package org.assemblits.eru.gui.model;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import lombok.extern.slf4j.Slf4j;
@@ -11,16 +9,16 @@ import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
 import org.assemblits.eru.gui.dynamo.base.Dynamo;
-import org.assemblits.eru.javafx.GenericLinker;
-import org.assemblits.eru.javafx.InvalidObservableLinker;
-import org.assemblits.eru.javafx.Linker;
+import org.assemblits.eru.jfx.links.GenericLinker;
+import org.assemblits.eru.jfx.links.InvalidObservableLinker;
+import org.assemblits.eru.jfx.links.Linker;
+import org.assemblits.eru.jfx.listeners.TagAddressInvalidationListener;
+
 import org.springframework.stereotype.Component;
 
-import javax.script.ScriptException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -130,35 +128,4 @@ public class ProjectListener {
     }
 }
 
-@Slf4j
-class TagAddressInvalidationListener implements InvalidationListener {
-    private Tag tagToUpdate;
 
-    TagAddressInvalidationListener(Tag tagToUpdate) {
-        this.tagToUpdate = tagToUpdate;
-    }
-
-    @Override
-    public void invalidated(Observable observable) {
-        try {
-            updateValueAndTimestamp();
-            updateAlarmStatus();
-            tagToUpdate.setStatus("OK");
-        } catch (Exception e) {
-            tagToUpdate.setStatus(e.getLocalizedMessage());
-            log.error("Error updating tag", e);
-        }
-    }
-
-    private void updateAlarmStatus() throws ScriptException {
-        if (tagToUpdate.getAlarmEnabled()) {
-            // TODO
-        }
-    }
-
-    private void updateValueAndTimestamp() throws Exception {
-        if ((tagToUpdate.getLinkedAddress() == null)) throw new TagLinkException(tagToUpdate + "has a no address");
-        tagToUpdate.setValue(String.valueOf(tagToUpdate.getLinkedAddress().getCurrentValue()));
-        tagToUpdate.setTimestamp(tagToUpdate.getLinkedAddress().getTimestamp());
-    }
-}

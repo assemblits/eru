@@ -1,7 +1,6 @@
-package org.assemblits.eru.javafx;
+package org.assemblits.eru.jfx.links;
 
-import org.assemblits.eru.entities.*;
-import org.assemblits.eru.javafx.Linker;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.Map;
 /**
  * Created by marlontrujillo1080 on 10/14/17.
  */
+@Component
 public class LinksContainer<T> {
 
     private Map<T, List<Linker>> links;

@@ -2,7 +2,7 @@ package org.assemblits.eru.gui.model;
 
 import lombok.Data;
 import org.assemblits.eru.entities.*;
-import org.assemblits.eru.javafx.LinksContainer;
+import org.assemblits.eru.jfx.links.LinksContainer;
 import org.springframework.stereotype.Component;
 
 /**

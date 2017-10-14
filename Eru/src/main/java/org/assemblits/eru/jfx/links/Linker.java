@@ -1,4 +1,4 @@
-package org.assemblits.eru.javafx;
+package org.assemblits.eru.jfx.links;
 
 /**
  * Created by marlontrujillo1080 on 10/13/17.

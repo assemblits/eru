@@ -1,4 +1,4 @@
-package org.assemblits.eru.javafx;
+package org.assemblits.eru.jfx.links;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
