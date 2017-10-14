@@ -39,7 +39,6 @@ public class EruController {
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);
         projectListener.setProjectModel(projectModel);
-        projectListener.listen();
 
         stage.setScene(new Scene(mainNode));
         stage.setMaximized(true);

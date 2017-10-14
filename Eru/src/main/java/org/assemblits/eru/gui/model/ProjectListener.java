@@ -4,8 +4,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.comm.actors.Director;
 import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -35,22 +32,10 @@ import java.util.function.BiConsumer;
 @Component
 public class ProjectListener {
 
-    private List<Linker> linkers;
     private ProjectModel projectModel;
-
-    public ProjectListener() {
-        linkers = new ArrayList<>();
-    }
 
     public void setProjectModel(ProjectModel projectModel) {
         this.projectModel = projectModel;
-    }
-
-    public ProjectModel getProjectModel(){
-        return projectModel;
-    }
-
-    public void listen(){
         listenDevicesChanges();
         listenConnectionsChanges();
         listenTagsChanges();
@@ -64,12 +49,12 @@ public class ProjectListener {
 
     private void listenConnectionsChanges(){
         // Current Connections
-        this.projectModel.getConnections().forEach(this::installConnectedListener);
+        this.projectModel.getConnections().forEach(this::installLink);
         // Future Connections
         this.projectModel.getConnections().addListener((ListChangeListener<Connection>) c -> {
             while (c.next()) {
                 for (Connection newConnection : c.getAddedSubList()) {
-                    installConnectedListener(newConnection);
+                    installLink(newConnection);
                 }
             }
         });
@@ -84,17 +69,19 @@ public class ProjectListener {
     }
 
     private void listenDisplaysChanges(){
-        this.projectModel.getDisplays().forEach(this::installFXNodeListener);
+        // Current Displays
+        this.projectModel.getDisplays().forEach(this::installLink);
+        // Future Displays
         this.projectModel.getDisplays().addListener((ListChangeListener<Display>) c -> {
             while (c.next()) {
                 for (Display newDisplay : c.getAddedSubList()) {
-                    installFXNodeListener(newDisplay);
+                    installLink(newDisplay);
                 }
             }
         });
     }
 
-    private void installFXNodeListener(Display display){
+    private void installLink(Display display){
         display.fxNodeProperty().addListener((o1, oldNode, newNode) -> {
             if(newNode != null){
                 DynamoExtractor extractor = new DynamoExtractor();
@@ -108,33 +95,36 @@ public class ProjectListener {
         });
     }
 
-    private void installConnectedListener(Connection connection){
+    private void installLink(Connection connection){
+        ProjectLinks projectLinks = ApplicationContextHolder.getApplicationContext().getBean(ProjectLinks.class);
         connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
             if (isConnected){
                 projectModel.getDevices()
                         .stream()
                         .filter(Device::getEnabled)
+                        .filter(device -> device.getConnection().equals(connection))
                         .forEach(device -> {
                             Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
-                            ModbusDeviceReader modbusDeviceReader = new ModbusDeviceReader(device);
-                            BiConsumer<Director, ModbusDeviceReader> link = (d, reader) -> d.getCommunicators().add(reader);
-                            BiConsumer<Director, ModbusDeviceReader> unlink = (d, reader) -> d.getCommunicators().remove(reader);
-                            GenericLinker<Director, ModbusDeviceReader> linker = new GenericLinker<>(commDirector, modbusDeviceReader, link, unlink);
-                            linker.link();
-                            linkers.add(linker);
+                            ModbusDeviceReader reader = new ModbusDeviceReader(device);
+                            BiConsumer<Director, ModbusDeviceReader> link = (d, r) -> d.getCommunicators().add(r);
+                            BiConsumer<Director, ModbusDeviceReader> unlink = (d, r) -> d.getCommunicators().remove(r);
+                            GenericLinker<Director, ModbusDeviceReader> linker = new GenericLinker<>(commDirector, reader, link, unlink);
+                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
                 projectModel.getTags()
                         .stream()
                         .filter(Tag::getEnabled)
+                        .filter(tag -> tag.getLinkedAddress() != null)
+                        .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
                         .forEach(tag -> {
                             ObjectProperty<Timestamp> object = tag.getLinkedAddress().timestampProperty();
                             TagAddressInvalidationListener listener = new TagAddressInvalidationListener(tag);
                             InvalidObservableLinker linker = new InvalidObservableLinker(object, listener);
-                            linker.link();
-                            linkers.add(linker);
+                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
+                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::link);
             } else {
-                linkers.forEach(Linker::unlink);
+                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::unlink);
             }
         });
     }
@@ -142,7 +132,7 @@ public class ProjectListener {
 
 @Slf4j
 class TagAddressInvalidationListener implements InvalidationListener {
-    Tag tagToUpdate;
+    private Tag tagToUpdate;
 
     TagAddressInvalidationListener(Tag tagToUpdate) {
         this.tagToUpdate = tagToUpdate;
