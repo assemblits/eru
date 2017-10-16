@@ -1,20 +1,18 @@
 package org.assemblits.eru.gui.model;
 
-
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Builder;
 import lombok.Value;
 import org.assemblits.eru.entities.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 @Value
 @Builder
-public class ProjectModel implements ObservableModel {
+public class ProjectModel {
 
     IntegerProperty id;
     StringProperty name;
@@ -50,19 +48,4 @@ public class ProjectModel implements ObservableModel {
                 .displays(displays).build();
     }
 
-    @Override
-    public ObservableList getElements(Class type) {
-        if (type == Device.class) {
-            return devices;
-        } else if (type == Connection.class) {
-            return connections;
-        } else if (type == Tag.class) {
-            return tags;
-        } else if (type == User.class) {
-            return  users;
-        } else if (type == Display.class) {
-            return displays;
-        }
-        return null;
-    }
 }

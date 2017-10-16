@@ -96,18 +96,18 @@ public class ProjectListener {
 
     private void installLink(Connection connection){
         ProjectLinks projectLinks = ApplicationContextHolder.getApplicationContext().getBean(ProjectLinks.class);
-        connection.connectedProperty().addListener((observable, wasConnected, isConnected) -> {
+        connection.connectedProperty().addListener((o, wasConnected, isConnected) -> {
             if (isConnected){
                 projectModel.getDevices()
                         .stream()
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
                         .forEach(device -> {
-                            Director commDirector = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
+                            Director director = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
                             ModbusDeviceReader reader = new ModbusDeviceReader(device);
-                            BiConsumer<Director, ModbusDeviceReader> link = (d, r) -> d.getCommunicators().add(r);
-                            BiConsumer<Director, ModbusDeviceReader> unlink = (d, r) -> d.getCommunicators().remove(r);
-                            GenericLinker<Director, ModbusDeviceReader> linker = new GenericLinker<>(commDirector, reader, link, unlink);
+                            BiConsumer<Director, ModbusDeviceReader> startReading = (d, r) -> d.getCommunicators().add(r);
+                            BiConsumer<Director, ModbusDeviceReader> stopReading = (d, r) -> {r.stop(); d.getCommunicators().remove(r);};
+                            GenericLinker<Director, ModbusDeviceReader> linker = new GenericLinker<>(director, reader, startReading, stopReading);
                             projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
                 projectModel.getTags()
@@ -116,16 +116,22 @@ public class ProjectListener {
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
                         .forEach(tag -> {
-                            ObjectProperty<Timestamp> object = tag.getLinkedAddress().timestampProperty();
+                            ObjectProperty<Timestamp> observable = tag.getLinkedAddress().timestampProperty();
                             TagAddressInvalidationListener listener = new TagAddressInvalidationListener(tag);
-                            InvalidObservableLinker linker = new InvalidObservableLinker(object, listener);
+                            InvalidObservableLinker linker = new InvalidObservableLinker(observable, listener);
                             projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
                 projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::link);
             } else {
                 projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::unlink);
+                projectLinks.getConnectionLinksContainer().removeAllLinks(connection);
             }
         });
+    }
+
+    public void setProjectModelAndListen(ProjectModel projectModel) {
+        setProjectModel(projectModel);
+        listen();
     }
 }
 

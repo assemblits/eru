@@ -1,5 +1,6 @@
 package org.assemblits.eru.jfx.links;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,8 +10,10 @@ import java.util.Map;
 
 /**
  * Created by marlontrujillo1080 on 10/14/17.
+ * One T can have many linkers...
  */
 @Component
+@Scope(value = "prototype")
 public class LinksContainer<T> {
 
     private Map<T, List<Linker>> links;
