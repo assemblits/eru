@@ -1,10 +1,13 @@
 package org.assemblits.eru.gui.model;
 
+import org.assemblits.eru.comm.actors.Director;
+import org.assemblits.eru.comm.bus.Fieldbus;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.entities.TcpConnection;
 import org.assemblits.eru.gui.service.ProjectCreator;
+import org.assemblits.eru.jfx.links.LinksContainer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -24,20 +27,28 @@ public class ProjectListenerTest {
         Project project = new Project();
         project.setId(0);
         projectModel = ProjectModel.from(project);
-//        projectListener = new ProjectListener();
+        projectListener = new ProjectListener(new Fieldbus(new Director(), new LinksContainer()));
         projectListener.setProjectModel(projectModel);
+        projectListener.listen();
     }
 
     @Test
     public void testDeviceListenConnection() throws Exception {
+        // [Given]
+        // Create device and connections
         Device device = new Device();
         Connection connection = new TcpConnection();
+        device.setEnabled(true);
         device.setConnection(connection);
 
+        // Set device and connections to the project
         projectModel.getConnections().add(connection);
         projectModel.getDevices().add(device);
 
+        // [When]
         connection.setConnected(true);
 
+        // [Check]
+        assertTrue("When connected, device should be added to the fieldbus.", projectListener.getFieldbus().contains(device));
     }
 }

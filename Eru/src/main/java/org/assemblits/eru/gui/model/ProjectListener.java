@@ -25,13 +25,16 @@ public class ProjectListener {
 
     private final Fieldbus fieldbus;
     private ProjectModel projectModel;
+    private boolean listening;
 
     public void listen(){
+        if (listening) return;
         listenDevicesChanges();
         listenConnectionsChanges();
         listenTagsChanges();
         listenUsersChanges();
         listenDisplaysChanges();
+        listening = true;
     }
 
     private void listenDevicesChanges(){
@@ -89,6 +92,7 @@ public class ProjectListener {
     private void installLink(Connection connection){
         connection.connectedProperty().addListener((o, wasConnected, isConnected) -> {
             if (isConnected){
+                fieldbus.startDirector();
                 projectModel.getDevices()
                         .stream()
                         .filter(Device::getEnabled)
@@ -105,7 +109,6 @@ public class ProjectListener {
 //                            InvalidObservableLinker linker = new InvalidObservableLinker(observable, listener);
 //                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
-//                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::link);
             } else {
                 projectModel.getDevices()
                         .stream()

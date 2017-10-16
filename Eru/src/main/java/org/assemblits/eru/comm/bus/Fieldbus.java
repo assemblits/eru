@@ -20,6 +20,18 @@ public class Fieldbus {
     private final Director director;
     private final LinksContainer<Device> deviceLinks;
 
+    public void startDirector(){
+        if (director.isAlive()) return;
+        director.setDaemon(true);
+        director.setName("Fieldbus communications director");
+        director.start();
+    }
+
+    public void stopDirector(){
+        director.getContexts().forEach(Context::stop);
+        director.getContexts().clear();
+    }
+
     public void add(Device device, Context context){
         context.setTarget(device);
         BiConsumer<Director, Context> startCommunication = (d, c) -> d.getContexts().add(c);
