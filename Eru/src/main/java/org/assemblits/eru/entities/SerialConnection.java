@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.comm.bus.Modbus;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -18,7 +19,7 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue(value = "SERIAL")
 @Slf4j
-public class SerialConnection extends Connection {
+public class SerialConnection extends Connection implements Modbus{
 
     private StringProperty port;
     private IntegerProperty bitsPerSeconds;

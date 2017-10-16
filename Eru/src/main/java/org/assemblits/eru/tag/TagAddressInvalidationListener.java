@@ -1,4 +1,4 @@
-package org.assemblits.eru.jfx.listeners;
+package org.assemblits.eru.tag;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;

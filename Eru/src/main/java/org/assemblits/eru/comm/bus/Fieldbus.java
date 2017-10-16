@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 @Data
 public class Fieldbus {
     private final Director director;
-    private final LinksContainer<Device> deviceLinks;
+    private final LinksContainer linksContainer;
 
     public void startDirector(){
         if (director.isAlive()) return;
@@ -38,15 +38,15 @@ public class Fieldbus {
         BiConsumer<Director, Context> stopCommunication = (d, c) -> {c.stop(); d.getContexts().remove(c);};
         GenericLinker<Director, Context> linker = new GenericLinker<>(director, context, startCommunication, stopCommunication);
         linker.link();
-        deviceLinks.addLink(device, linker);
+        linksContainer.addLink(device, linker);
     }
 
     public void remove(Device device){
-        deviceLinks.getLinksOf(device).forEach(Linker::unlink);
-        deviceLinks.removeAllLinks(device);
+        linksContainer.getLinksOf(device).forEach(Linker::unlink);
+        linksContainer.removeAllLinks(device);
     }
 
     public boolean contains(Device device) {
-        return (deviceLinks.getLinksOf(device) != null) && (!deviceLinks.getLinksOf(device).isEmpty());
+        return (linksContainer.getLinksOf(device) != null) && (!linksContainer.getLinksOf(device).isEmpty());
     }
 }

@@ -1,6 +1,5 @@
 package org.assemblits.eru.jfx.links;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,39 +12,45 @@ import java.util.Map;
  * One T can have many linkers...
  */
 @Component
-@Scope(value = "prototype")
-public class LinksContainer<T> {
+public class LinksContainer {
 
-    private Map<T, List<Linker>> links;
+    private Map<Object, List<Linker>> links;
 
     public LinksContainer() {
         this.links = new HashMap<>();
     }
 
-    public void addLink(T target, Linker linker){
+    public void addLink(Object target, Linker linker){
         if (!links.containsKey(target)) {
             links.put(target, new ArrayList<>());
         }
         links.get(target).add(linker);
     }
 
-    public void removeLink(T target, Linker linker){
+    public void removeLink(Object target, Linker linker){
         if(links.containsKey(target)){
             links.get(target).remove(linker);
         }
     }
 
-    public void removeAllLinks(T target){
+    public void removeAllLinks(Object target){
         if(links.containsKey(target)){
             links.get(target).clear();
         }
     }
 
-    public List<Linker> getLinksOf(T target){
+    public List<Linker> getLinksOf(Object target){
         return links.getOrDefault(target, null);
     }
 
-    public boolean containsLinksFor(T target) {
+    public boolean containsLinksFor(Object target) {
         return links.containsKey(target);
+    }
+
+    @Override
+    public String toString() {
+        return "LinksContainer{" +
+                "links=" + links +
+                '}';
     }
 }

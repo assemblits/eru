@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.comm.bus.Modbus;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import java.net.InetAddress;
 @Entity
 @DiscriminatorValue(value = "TCPIP")
 @Slf4j
-public class TcpConnection extends Connection {
+public class TcpConnection extends Connection implements Modbus{
     private StringProperty hostname;
     private IntegerProperty port;
     private TCPMasterConnection coreConnection;

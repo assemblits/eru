@@ -33,7 +33,7 @@ public class FieldbusTest {
         fieldbus.add(device, doThis);
         fieldbus.add(device, doThat);
 
-        assertEquals("Contexts must be added to the Links Container", fieldbus.getDeviceLinks().getLinksOf(device).size(), 2);
+        assertEquals("Contexts must be added to the Links Container", fieldbus.getLinksContainer().getLinksOf(device).size(), 2);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FieldbusTest {
         fieldbus.add(device, doThat);
         fieldbus.remove(device);
 
-        assertTrue("Contexts must be removed from the Links Container", fieldbus.getDeviceLinks().getLinksOf(device).isEmpty());
+        assertTrue("Contexts must be removed from the Links Container", fieldbus.getLinksContainer().getLinksOf(device).isEmpty());
     }
 
     @Test

@@ -6,11 +6,10 @@ import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.entities.TcpConnection;
-import org.assemblits.eru.gui.service.ProjectCreator;
 import org.assemblits.eru.jfx.links.LinksContainer;
+import org.assemblits.eru.tag.TagBus;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +26,8 @@ public class ProjectListenerTest {
         Project project = new Project();
         project.setId(0);
         projectModel = ProjectModel.from(project);
-        projectListener = new ProjectListener(new Fieldbus(new Director(), new LinksContainer()));
+        LinksContainer linksContainer = new LinksContainer();
+        projectListener = new ProjectListener(new Fieldbus(new Director(), linksContainer), new TagBus(linksContainer));
         projectListener.setProjectModel(projectModel);
         projectListener.listen();
     }
