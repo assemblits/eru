@@ -2,6 +2,7 @@ package org.assemblits.eru.gui.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.comm.actors.Director;
 import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
@@ -28,12 +29,12 @@ import java.util.function.BiConsumer;
  */
 @Slf4j
 @Component
+@Data
 public class ProjectListener {
 
     private ProjectModel projectModel;
 
-    public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
+    public void listen(){
         listenDevicesChanges();
         listenConnectionsChanges();
         listenTagsChanges();

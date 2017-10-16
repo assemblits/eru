@@ -3,6 +3,9 @@ package org.assemblits.eru.gui.service;
 import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.entities.TreeElementsGroup;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class ProjectCreator {
 
     public Project defaultProject() {

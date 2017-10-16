@@ -53,7 +53,7 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
                     project = projectCreator.defaultProject();
                     projectRepository.save(project);
                 } else {
-                    project = projects.get(0);
+                    project = projects.get(0); // TODO: Dialog to choose the project. Issue: #86
                 }
 
                 updateMessage("Loading custom components");

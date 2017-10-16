@@ -28,35 +28,38 @@ public class EruController {
     private final ProjectTreeController projectTreeController;
     private final ProjectListener projectListener;
     private final EruPreferences eruPreferences;
-    private ProjectModel projectModel;
 
     public void startEru(Project project, Stage stage) {
         log.info("Starting Eru");
+        setStage(stage);
+        setProject(project);
+        stage.show();
+    }
 
-        Parent mainNode = loadMainScene();
-        projectModel = ProjectModel.from(project);
+    private void setProject(Project project){
+        ProjectModel projectModel = ProjectModel.from(project);
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
         menuBarController.setProjectModel(projectModel);
         projectListener.setProjectModel(projectModel);
-
-        stage.setScene(new Scene(mainNode));
-        stage.setMaximized(true);
-        stage.setTitle("Eru - The open JavaFX SCADA");
-        stage.getScene().getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
-        eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
-            stage.getScene().getStylesheets().clear();
-            stage.getScene().getStylesheets().add(newTheme.getStyleSheetURL());
-        });
-        stage.getIcons().add(new Image(getClass().getResource("/images/Logo256x256.png").toExternalForm()));
-        stage.show();
     }
 
-    private Parent loadMainScene() {
+    private void setStage(Stage stage) {
         try {
             FXMLLoader fxmlLoader = createFxmlLoader();
             fxmlLoader.setLocation(getClass().getResource("/views/Main.fxml"));
-            return fxmlLoader.load();
+            Parent appRootNode = fxmlLoader.load();
+
+            Scene eruScene = new Scene(appRootNode);
+            eruScene.getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
+            eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
+                eruScene.getStylesheets().clear();
+                eruScene.getStylesheets().add(newTheme.getStyleSheetURL());
+            });
+            stage.setMaximized(true);
+            stage.setTitle("Eru - The open JavaFX SCADA");
+            stage.getIcons().add(new Image(getClass().getResource("/images/Logo256x256.png").toExternalForm()));
+            stage.setScene(eruScene);
         } catch (IOException e) {
             log.error("Error loading eru main screen");
             throw new EruException("Error loading eru main screen", e);
