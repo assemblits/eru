@@ -2,7 +2,7 @@ package org.assemblits.eru.comm.modbus;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.comm.context.Transmission;
-import org.assemblits.eru.comm.actors.Communicator;
+import org.assemblits.eru.comm.actors.Context;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Device;
 
@@ -13,16 +13,25 @@ import java.util.List;
  * Created by mtrujillo on 3/9/2016.
  */
 @Slf4j
-public class ModbusDeviceReader extends Communicator<Device> {
+public class ModbusDeviceReading extends Context<Device> {
 
     private Device target;
     private final List<Transmission> transmissions;
     private boolean repeatCommunications;
 
-    public ModbusDeviceReader(Device target) {
-        this.target = target;
+    public ModbusDeviceReading() {
         this.transmissions = new ArrayList<>();
         this.repeatCommunications = true;
+    }
+
+    @Override
+    public void setTarget(Device target) {
+        this.target = target;
+    }
+
+    @Override
+    public Device getTarget() {
+        return target;
     }
 
     @Override

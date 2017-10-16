@@ -15,17 +15,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 @EqualsAndHashCode(callSuper = true)
 @Component
 public class Director extends Thread {
-    private final LinkedBlockingQueue<Communicator> communicators = new LinkedBlockingQueue<>();
+    private final LinkedBlockingQueue<Context> contexts = new LinkedBlockingQueue<>();
 
     @Override
     public void run() {
-        log.info("Starting communicators updating...");
+        log.info("Starting contexts updating...");
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Communicator headParticipant = communicators.take();
+                Context headParticipant = contexts.take();
                 if (!headParticipant.isPrepared()) headParticipant.prepare();
                 headParticipant.communicate();
-                if (headParticipant.isRepeatable()) communicators.put(headParticipant);
+                if (headParticipant.isRepeatable()) contexts.put(headParticipant);
             } catch (InterruptedException e) {
                  log.info("Director stopped.");
             } catch (Exception e) {

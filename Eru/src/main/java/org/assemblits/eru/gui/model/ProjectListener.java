@@ -1,28 +1,19 @@
 package org.assemblits.eru.gui.model;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.comm.actors.Director;
-import org.assemblits.eru.comm.modbus.ModbusDeviceReader;
+import org.assemblits.eru.comm.bus.Fieldbus;
+import org.assemblits.eru.comm.modbus.ModbusDeviceReading;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
 import org.assemblits.eru.gui.dynamo.base.Dynamo;
-import org.assemblits.eru.jfx.links.GenericLinker;
-import org.assemblits.eru.jfx.links.InvalidObservableLinker;
-import org.assemblits.eru.jfx.links.Linker;
-import org.assemblits.eru.jfx.listeners.TagAddressInvalidationListener;
-
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 /**
  * Created by mtrujillo on 9/9/2015.
@@ -32,6 +23,7 @@ import java.util.function.BiConsumer;
 @Data
 public class ProjectListener {
 
+    private final Fieldbus fieldbus;
     private ProjectModel projectModel;
 
     public void listen(){
@@ -95,43 +87,33 @@ public class ProjectListener {
     }
 
     private void installLink(Connection connection){
-        ProjectLinks projectLinks = ApplicationContextHolder.getApplicationContext().getBean(ProjectLinks.class);
         connection.connectedProperty().addListener((o, wasConnected, isConnected) -> {
             if (isConnected){
                 projectModel.getDevices()
                         .stream()
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
-                        .forEach(device -> {
-                            Director director = ApplicationContextHolder.getApplicationContext().getBean(Director.class);
-                            ModbusDeviceReader reader = new ModbusDeviceReader(device);
-                            BiConsumer<Director, ModbusDeviceReader> startReading = (d, r) -> d.getCommunicators().add(r);
-                            BiConsumer<Director, ModbusDeviceReader> stopReading = (d, r) -> {r.stop(); d.getCommunicators().remove(r);};
-                            GenericLinker<Director, ModbusDeviceReader> linker = new GenericLinker<>(director, reader, startReading, stopReading);
-                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
-                        });
+                        .forEach(device -> fieldbus.add(device, new ModbusDeviceReading()));
                 projectModel.getTags()
                         .stream()
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
                         .forEach(tag -> {
-                            ObjectProperty<Timestamp> observable = tag.getLinkedAddress().timestampProperty();
-                            TagAddressInvalidationListener listener = new TagAddressInvalidationListener(tag);
-                            InvalidObservableLinker linker = new InvalidObservableLinker(observable, listener);
-                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
+//                            ObjectProperty<Timestamp> observable = tag.getLinkedAddress().timestampProperty();
+//                            TagAddressInvalidationListener listener = new TagAddressInvalidationListener(tag);
+//                            InvalidObservableLinker linker = new InvalidObservableLinker(observable, listener);
+//                            projectLinks.getConnectionLinksContainer().addLink(connection, linker);
                         });
-                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::link);
+//                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::link);
             } else {
-                projectLinks.getConnectionLinksContainer().getLinksOf(connection).forEach(Linker::unlink);
-                projectLinks.getConnectionLinksContainer().removeAllLinks(connection);
+                projectModel.getDevices()
+                        .stream()
+                        .filter(Device::getEnabled)
+                        .filter(device -> device.getConnection().equals(connection))
+                        .forEach(fieldbus::remove);
             }
         });
-    }
-
-    public void setProjectModelAndListen(ProjectModel projectModel) {
-        setProjectModel(projectModel);
-        listen();
     }
 }
 

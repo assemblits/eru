@@ -45,5 +45,7 @@ public class LinksContainer<T> {
         return links.getOrDefault(target, null);
     }
 
-
+    public boolean containsLinksFor(T target) {
+        return links.containsKey(target);
+    }
 }

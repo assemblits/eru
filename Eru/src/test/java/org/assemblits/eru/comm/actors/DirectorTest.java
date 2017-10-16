@@ -27,9 +27,9 @@ public class DirectorTest {
 
     @Test
     public void testAddingCommunicators() throws Exception {
-        Communicator communicator = Mockito.mock(Communicator.class);
-        director.getCommunicators().add(communicator);
-        assertTrue("Director accepts communicators", director.getCommunicators().contains(communicator));
+        Context context = Mockito.mock(Context.class);
+        director.getContexts().add(context);
+        assertTrue("Director accepts communicators", director.getContexts().contains(context));
     }
 
     @Test (timeout = 250)
