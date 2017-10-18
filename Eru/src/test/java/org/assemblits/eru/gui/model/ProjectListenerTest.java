@@ -51,6 +51,28 @@ public class ProjectListenerTest {
     }
 
     @Test
+    public void testDeviceReadingExecutorIsNotInDirector() throws Exception {
+        // [Given]
+        // Create device and connections
+        Device device = new Device();
+        Connection connection = new TcpConnection();
+        device.setEnabled(true);
+        device.setConnection(connection);
+
+        // Set device and connections to the project
+        projectModel.getConnections().add(connection);
+        projectModel.getDevices().add(device);
+
+        // [When]
+        connection.setConnected(true);
+        connection.setConnected(false);
+
+        // [Check]
+        assertNull("When disconnected, the reading contract and agent must be removed.",
+                projectContractor.getAgency().findAgentByClient(device));
+    }
+
+    @Test
     public void testTagListenConnections() throws Exception {
         // [Given]
         Connection connection = new TcpConnection();
@@ -79,5 +101,37 @@ public class ProjectListenerTest {
         // [Check]
         assertTrue("When connected, the tag contract must be accepted",
                 projectContractor.getAgency().findAgentByClient(tag).getContracts().get(0).isAccepted());
+    }
+
+    @Test
+    public void testTagStopListenConnections() throws Exception {
+        // [Given]
+        Connection connection = new TcpConnection();
+
+
+        Device device = new Device();
+        device.setEnabled(true);
+        device.setConnection(connection);
+
+        Address address = new Address();
+        address.setOwner(device);
+        device.getAddresses().add(address);
+
+        Tag tag = new Tag();
+        tag.setType(Tag.Type.INPUT);
+        tag.setEnabled(true);
+        tag.setLinkedAddress(address);
+
+        projectModel.getConnections().add(connection);
+        projectModel.getDevices().add(device);
+        projectModel.getTags().add(tag);
+
+        // [When]
+        connection.setConnected(true);
+        connection.setConnected(false);
+
+        // [Check]
+        assertNull("When connected, the tag contract must be accepted",
+                projectContractor.getAgency().findAgentByClient(tag));
     }
 }
