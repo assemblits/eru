@@ -30,6 +30,7 @@ public class Director extends Thread {
                  log.info("Director stopped.");
             } catch (Exception e) {
                 log.error("Director halt", e);
+                throw new RuntimeException("Director halt: " + e.getLocalizedMessage());
             }
         }
     }

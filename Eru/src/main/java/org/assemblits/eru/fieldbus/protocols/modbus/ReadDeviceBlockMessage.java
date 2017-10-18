@@ -1,17 +1,16 @@
 package org.assemblits.eru.fieldbus.protocols.modbus;
 
-import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTransaction;
 import com.ghgande.j2mod.modbus.msg.*;
-import org.assemblits.eru.fieldbus.context.Message;
-import org.assemblits.eru.entities.SerialConnection;
-import org.assemblits.eru.entities.TcpConnection;
+import javafx.application.Platform;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
 import org.assemblits.eru.entities.Device;
-import javafx.application.Platform;
+import org.assemblits.eru.entities.SerialConnection;
+import org.assemblits.eru.entities.TcpConnection;
+import org.assemblits.eru.fieldbus.context.Message;
 import sun.plugin.dom.exception.InvalidStateException;
 
 import java.sql.Timestamp;
@@ -80,7 +79,7 @@ public class ReadDeviceBlockMessage implements Message {
             transaction.execute();
             updateDeviceStatus("OK");
             wasSuccessful = true;
-        } catch (ModbusException e) {
+        } catch (Exception e) {
             updateDeviceStatus(e.getMessage());
             wasSuccessful = false;
         }
