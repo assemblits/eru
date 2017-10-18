@@ -16,7 +16,7 @@ public class GenericContract<O,L> implements Contract {
 
     private final BiConsumer<? super O, ? super L> unlink;
 
-    private boolean linked;
+    private boolean accepted;
 
     public GenericContract(O deviceToLink, L linker, BiConsumer<? super O, ? super L> link, BiConsumer<? super O, ? super L> unlink) {
         this.deviceToLink = deviceToLink;
@@ -27,16 +27,20 @@ public class GenericContract<O,L> implements Contract {
 
     @Override
     public void accept() {
-        if (linked) return;
+        if (accepted) return;
         this.link.accept(deviceToLink, linker);
-        this.linked = true;
+        this.accepted = true;
     }
 
     @Override
     public void revoke() {
-        if (!linked) return;
+        if (!accepted) return;
         this.unlink.accept(deviceToLink, linker);
-        this.linked = false;
+        this.accepted = false;
     }
 
+    @Override
+    public boolean isAccepted() {
+        return accepted;
+    }
 }

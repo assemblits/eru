@@ -12,7 +12,7 @@ public class InvalidObservableContract implements Contract {
 
     private final InvalidationListener listener;
 
-    private boolean linked;
+    private boolean accepted;
 
     public InvalidObservableContract(Observable observable, InvalidationListener listener) {
         this.observable = observable;
@@ -21,15 +21,20 @@ public class InvalidObservableContract implements Contract {
 
     @Override
     public void accept() {
-        if (linked) return;
+        if (accepted) return;
         this.observable.addListener(listener);
-        this.linked = true;
+        this.accepted = true;
     }
 
     @Override
     public void revoke() {
-        if (!linked) return;
+        if (!accepted) return;
         this.observable.removeListener(listener);
-        this.linked = false;
+        this.accepted = false;
+    }
+
+    @Override
+    public boolean isAccepted() {
+        return accepted;
     }
 }

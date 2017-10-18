@@ -1,8 +1,8 @@
-package org.assemblits.eru.bus.protocols.modbus;
+package org.assemblits.eru.fieldbus.protocols.modbus;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.bus.actors.BusExecutor;
-import org.assemblits.eru.bus.context.Message;
+import org.assemblits.eru.fieldbus.actors.Executor;
+import org.assemblits.eru.fieldbus.context.Message;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Device;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by mtrujillo on 3/9/2016.
  */
 @Slf4j
-public class DeviceBlocksReader implements BusExecutor {
+public class DeviceBlocksReader implements Executor {
 
     private Device device;
     private final List<Message> messages;

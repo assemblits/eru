@@ -3,7 +3,7 @@ package org.assemblits.eru.gui.model;
 import javafx.collections.ListChangeListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.bus.protocols.modbus.Modbus;
+import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
@@ -96,6 +96,7 @@ public class ProjectListener {
                         .forEach(projectContractor::startModbusDeviceReading);
                 projectModel.getTags()
                         .stream()
+                        .filter(tag -> tag.getType() == Tag.Type.INPUT)
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
@@ -109,6 +110,7 @@ public class ProjectListener {
                         .forEach(projectContractor::stopTasks);
                 projectModel.getTags()
                         .stream()
+                        .filter(tag -> tag.getType() == Tag.Type.INPUT)
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))

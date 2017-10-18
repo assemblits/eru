@@ -48,4 +48,17 @@ public class ProjectModel {
                 .displays(displays).build();
     }
 
+    @Override
+    public String toString() {
+        return "ProjectModel{" +
+                "id=" + id.getValue() +
+                ", name=" + name.getValue() +
+                ", group=" + group.getName() +
+                ", devices=" + devices +
+                ", connections=" + connections +
+                ", tags=" + tags +
+                ", users=" + users +
+                ", displays=" + displays +
+                '}';
+    }
 }

@@ -1,14 +1,13 @@
 package org.assemblits.eru.gui.model;
 
 import javafx.beans.Observable;
-import lombok.AllArgsConstructor;
-import org.assemblits.eru.bus.actors.BusDirector;
-import org.assemblits.eru.bus.actors.BusExecutor;
-import org.assemblits.eru.bus.protocols.modbus.DeviceBlocksReader;
+import lombok.Data;
+import org.assemblits.eru.fieldbus.actors.Director;
+import org.assemblits.eru.fieldbus.actors.Executor;
+import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlocksReader;
 import org.assemblits.eru.contract.*;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.tag.TagAddressInvalidationListener;
 import org.springframework.stereotype.Component;
 
@@ -20,18 +19,17 @@ import java.util.function.BiConsumer;
  * Created by marlontrujillo1080 on 10/17/17.
  */
 @Component
-@AllArgsConstructor
+@Data
 public class ProjectContractor {
 
     private final Agency agency;
+    private final Director fieldbusDirector;
 
     public void startModbusDeviceReading(Device device) {
-        BusDirector busDirector = ApplicationContextHolder.getApplicationContext().getBean(BusDirector.class);
-
-        if(!busDirector.isAlive()){
-            busDirector.setDaemon(true);
-            busDirector.setName("Fieldbus director");
-            busDirector.start();
+        if(!fieldbusDirector.isAlive()){
+            fieldbusDirector.setDaemon(true);
+            fieldbusDirector.setName("Fieldbus fieldbusDirector");
+            fieldbusDirector.start();
         }
 
         Agent agent = agency.findAgentByClient(device);
@@ -43,10 +41,10 @@ public class ProjectContractor {
             agent.getContracts().forEach(Contract::revoke);
         }
         List<Contract> contracts = new ArrayList<>();
-        BusExecutor executor = new DeviceBlocksReader(device);
-        BiConsumer<BusDirector, BusExecutor> startCommunication = (d, be) -> d.getContexts().add(be);
-        BiConsumer<BusDirector, BusExecutor> stopCommunication = (d, be) -> {be.stop(); d.getContexts().remove(be);};
-        contracts.add(new GenericContract<>(busDirector, executor, startCommunication, stopCommunication));
+        Executor executor = new DeviceBlocksReader(device);
+        BiConsumer<Director, Executor> startCommunication = (d, be) -> d.getExecutors().add(be);
+        BiConsumer<Director, Executor> stopCommunication = (d, be) -> {be.stop(); d.getExecutors().remove(be);};
+        contracts.add(new GenericContract<>(fieldbusDirector, executor, startCommunication, stopCommunication));
         agent.setClient(device);
         agent.setContracts(contracts);
         agent.getContracts().forEach(Contract::accept);

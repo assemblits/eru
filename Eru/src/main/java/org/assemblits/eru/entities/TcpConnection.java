@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.bus.protocols.modbus.Modbus;
+import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

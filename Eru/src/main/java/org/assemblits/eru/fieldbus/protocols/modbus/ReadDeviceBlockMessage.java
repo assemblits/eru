@@ -1,17 +1,19 @@
-package org.assemblits.eru.bus.protocols.modbus;
+package org.assemblits.eru.fieldbus.protocols.modbus;
 
 import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTransaction;
 import com.ghgande.j2mod.modbus.msg.*;
-import org.assemblits.eru.bus.context.Message;
+import org.assemblits.eru.fieldbus.context.Message;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
 import org.assemblits.eru.entities.Device;
 import javafx.application.Platform;
+import sun.plugin.dom.exception.InvalidStateException;
+
 import java.sql.Timestamp;
 
 /**
@@ -38,6 +40,7 @@ public class ReadDeviceBlockMessage implements Message {
     /* ** Methods ** */
     @Override
     public void create(){
+        if (device.getConnection() == null) throw new InvalidStateException("Device should have a connection.");
         offset              = device.isZeroBased() ? 1 : 0;
         firstSlotToRead     = block.getFirstAddressInBlock().getNetworkID() - offset;
         lastSlotToRead      = block.getLastAddressInBlock().getNetworkID() - offset;

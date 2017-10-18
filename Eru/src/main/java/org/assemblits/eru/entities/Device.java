@@ -1,6 +1,6 @@
 package org.assemblits.eru.entities;
 
-import org.assemblits.eru.bus.protocols.modbus.DeviceBlock;
+import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlock;
 import javafx.beans.property.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;

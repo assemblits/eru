@@ -6,4 +6,5 @@ package org.assemblits.eru.contract;
 public interface Contract {
     void accept();
     void revoke();
+    boolean isAccepted();
 }
