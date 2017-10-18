@@ -1,8 +1,10 @@
 package org.assemblits.eru.gui.component;
 
 import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ContextMenu;
@@ -17,6 +19,14 @@ import org.assemblits.eru.gui.model.ProjectModel;
 
 import java.util.List;
 
+
+/*
+TODO:
+    - Agregar un extractor a la lista para detectar cambios de actualizacion en el ListChangeListener
+    - Eliminar el public abstract TreeElementsGroup.Type getItemType(); metodo que agrega dependencia.
+    - Ver si es necesario el metodo getItemsFromProjectModel
+    - Refactor el metodo setProjectModel a algo mas generico como setItems<Items>
+ */
 public abstract class EruTableView<Item> extends TableView<Item> {
 
     ObservableList<Item> items;
@@ -61,6 +71,28 @@ public abstract class EruTableView<Item> extends TableView<Item> {
         searchBarController.getSearchTextField().textProperty().addListener(searchBarTextListener);
     }
 
+    private void setAutoSaveFeature(){
+        items.addListener((ListChangeListener<Item>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    System.out.println("Added:");
+                    c.getAddedSubList().forEach(System.out::println);
+                    System.out.println();
+                }
+                if (c.wasRemoved()) {
+                    System.out.println("Removed:");
+                    c.getRemoved().forEach(System.out::println);
+                    System.out.println();
+                }
+                if (c.wasUpdated()) {
+                    System.out.println("Updated:");
+//                    data.subList(c.getFrom(), c.getTo()).forEach(System.out::println);
+                    System.out.println();
+                }
+            }
+        });
+    }
+
     private void deleteSelectedItems() {
         final int CURRENT_INDEX = getSelectionModel().getSelectedIndex();
         items.removeAll(getSelectionModel().getSelectedItems());
@@ -68,9 +100,24 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     }
 
     public void setProjectModel(ProjectModel projectModel) {
+        switch (getItemType()) {
+            case ROOT:
+                break;
+            case CONNECTION:
+                break;
+            case DEVICE:
+                break;
+            case TAG:
+                break;
+            case USER:
+                break;
+            case DISPLAY:
+                break;
+        }
         items = FXCollections.observableList(getItemsFromProjectModel(projectModel));
         filteredItems = new FilteredList<>(this.items, t -> true);
         setItems(filteredItems);
+        setAutoSaveFeature();
     }
 
     public abstract void addNewItem();
