@@ -23,16 +23,10 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class MenuBarController {
 
-    private final ProjectRepository projectRepository;
     private final ApplicationContext applicationContext;
     private final EruPreferences eruPreferences;
 
     private ProjectModel projectModel;
-
-    public void saveMenuItemSelected() {
-        log.info("Saving {}", projectModel);
-        projectRepository.save(projectModel.get());
-    }
 
     public void exitMenuItemSelected() {
         Platform.exit();
