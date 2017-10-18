@@ -37,7 +37,6 @@ public class EruController {
         projectModel = ProjectModel.from(project);
         projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
         centerPaneController.setProjectModel(projectModel);
-        menuBarController.setProjectModel(projectModel);
         projectDynamicBehavior.setProjectModel(projectModel);
 
         stage.setScene(new Scene(mainNode));

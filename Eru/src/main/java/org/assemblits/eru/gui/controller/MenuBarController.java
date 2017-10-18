@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.gui.exception.EruException;
-import org.assemblits.eru.gui.model.ProjectModel;
-import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -24,9 +22,8 @@ import static java.lang.String.format;
 public class MenuBarController {
 
     private final ApplicationContext applicationContext;
-    private final EruPreferences eruPreferences;
 
-    private ProjectModel projectModel;
+    private final EruPreferences eruPreferences;
 
     public void exitMenuItemSelected() {
         Platform.exit();
@@ -48,10 +45,6 @@ public class MenuBarController {
         Stage aboutStage = new Stage();
         aboutStage.setScene(new Scene(loadNode("/views/About.fxml")));
         aboutStage.showAndWait();
-    }
-
-    public void setProjectModel(ProjectModel projectModel) {
-        this.projectModel = projectModel;
     }
 
     private Parent loadNode(String fxmlViewName) {
