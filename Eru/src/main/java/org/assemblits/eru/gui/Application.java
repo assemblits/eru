@@ -71,6 +71,7 @@ public class Application extends javafx.application.Application {
     }
 
     private Preloader loadService(ApplicationLoader applicationLoader) {
+        // TODO: Set Eru Icon to the preloader stage
         return new Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {
