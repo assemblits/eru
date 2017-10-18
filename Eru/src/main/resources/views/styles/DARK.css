@@ -5,8 +5,8 @@
      *                                                                         *
      **************************************************************************/
 
-    /* A dark grey that is the base color for objects.  Instead of using
-     * -fx-base directly, the sections in this file will typically use -fx-color.
+    /* A dark grey that is the eru color for objects.  Instead of using
+     * -fx-eru directly, the sections in this file will typically use -fx-color.
      */
     -fx-base: #252525;
 

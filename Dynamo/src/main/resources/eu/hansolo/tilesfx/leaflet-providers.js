@@ -386,12 +386,12 @@
 			 * These basemaps are free, but you need an API key. Please sign up at
 			 * http://developer.here.com/getting-started
 			 *
-			 * Note that the base urls contain '.cit' whichs is HERE's
+			 * Note that the eru urls contain '.cit' whichs is HERE's
 			 * 'Customer Integration Testing' environment. Please remove for production
 			 * envirionments.
 			 */
 			url:
-				'//{s}.{base}.maps.cit.api.here.com/maptile/2.1/' +
+				'//{s}.{eru}.maps.cit.api.here.com/maptile/2.1/' +
 				'{type}/{mapID}/{variant}/{z}/{x}/{y}/{size}/{format}?' +
 				'app_id={app_id}&app_code={app_code}&lg={language}',
 			options: {

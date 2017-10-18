@@ -2,7 +2,6 @@ package org.assemblits.eru.gui.component;
 
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.exception.FxmlFileReadException;
-import org.assemblits.eru.jfx.scenebuilder.ComponentsIdsGenerator;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 import org.assemblits.eru.jfx.scenebuilder.library.CustomLibraryLoader;
 import com.oracle.javafx.scenebuilder.kit.editor.EditorController;
@@ -35,13 +34,10 @@ public class EruSceneBuilder extends VBox {
     private File sceneFxmlFile;
     private EditorController editorController;
     private ChangeListener<Number> updateListener;
-    private ComponentsIdsGenerator componentsIdsGenerator;
 
-    public EruSceneBuilder(CustomLibraryLoader customLibraryLoader, SceneFxmlManager sceneFxmlManager,
-                           ComponentsIdsGenerator componentsIdsGenerator) {
+    public EruSceneBuilder(CustomLibraryLoader customLibraryLoader, SceneFxmlManager sceneFxmlManager) {
         this.customLibraryLoader = customLibraryLoader;
         this.sceneFxmlManager = sceneFxmlManager;
-        this.componentsIdsGenerator = componentsIdsGenerator;
 
         AnchorPane.setTopAnchor(this, 0.0);
         AnchorPane.setBottomAnchor(this, 0.0);
@@ -93,7 +89,6 @@ public class EruSceneBuilder extends VBox {
 
     private void startChangeListener() {
         updateListener = (observable, oldValue, newValue) -> {
-            componentsIdsGenerator.generateComponentsId(editorController.getFxomDocument());
             sceneFxmlManager.updateContent(sceneFxmlFile, editorController.getFxmlText());
         };
 

@@ -10,7 +10,8 @@ import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.exception.TagLinkException;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
+import org.assemblits.eru.gui.dynamo.Dynamo;
+import org.assemblits.eru.gui.dynamo.ValuableDynamo;
 import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -97,8 +98,8 @@ public class ProjectDynamicBehavior {
 
     private void linkTagsToDisplayNode(Parent displayNode) {
         for (Node innerNode : displayNode.getChildrenUnmodifiable()) {
-            if (innerNode instanceof Dynamo) {
-                Dynamo dynamo = (Dynamo) innerNode;
+            if (innerNode instanceof ValuableDynamo) {
+                ValuableDynamo dynamo = (ValuableDynamo) innerNode;
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> (!dynamo.getCurrentValueTagID().isEmpty()) && (tag.getId() == Integer.valueOf(dynamo.getCurrentValueTagID())))
