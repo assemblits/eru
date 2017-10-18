@@ -1,4 +1,4 @@
-package org.assemblits.eru.comm.modbus;
+package org.assemblits.eru.bus.protocols.modbus;
 
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.gui.ApplicationContextHolder;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by mtrujillo on 3/16/2016.
  */
-public class AddressesBlock {
+public class DeviceBlock {
 
     private static final int DEFAULT_MAXIMUM_CAPACITY = ApplicationContextHolder.getApplicationContext()
             .getBean(EruPreferences.class).getModbusBlockMaxLimit().getValue();
@@ -18,11 +18,11 @@ public class AddressesBlock {
     private int             capacity;
     private List<Address>   block;
 
-    public AddressesBlock() {
+    public DeviceBlock() {
         this(DEFAULT_MAXIMUM_CAPACITY);
     }
 
-    public AddressesBlock(int capacity) {
+    public DeviceBlock(int capacity) {
         this.block      = new ArrayList<>();
         this.capacity   = capacity;
     }

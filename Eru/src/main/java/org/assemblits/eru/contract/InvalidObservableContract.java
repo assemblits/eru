@@ -1,4 +1,4 @@
-package org.assemblits.eru.jfx.links;
+package org.assemblits.eru.contract;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -6,7 +6,7 @@ import javafx.beans.Observable;
 /**
  * Created by marlontrujillo1080 on 10/13/17.
  */
-public class InvalidObservableLinker implements Linker {
+public class InvalidObservableContract implements Contract {
 
     private final Observable observable;
 
@@ -14,20 +14,20 @@ public class InvalidObservableLinker implements Linker {
 
     private boolean linked;
 
-    public InvalidObservableLinker(Observable observable, InvalidationListener listener) {
+    public InvalidObservableContract(Observable observable, InvalidationListener listener) {
         this.observable = observable;
         this.listener = listener;
     }
 
     @Override
-    public void link() {
+    public void accept() {
         if (linked) return;
         this.observable.addListener(listener);
         this.linked = true;
     }
 
     @Override
-    public void unlink() {
+    public void revoke() {
         if (!linked) return;
         this.observable.removeListener(listener);
         this.linked = false;

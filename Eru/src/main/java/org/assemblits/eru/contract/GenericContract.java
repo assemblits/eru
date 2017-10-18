@@ -1,4 +1,4 @@
-package org.assemblits.eru.jfx.links;
+package org.assemblits.eru.contract;
 
 import java.util.function.BiConsumer;
 
@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
  * Created by marlontrujillo1080 on 10/13/17.
  */
 
-public class GenericLinker<O,L> implements Linker {
+public class GenericContract<O,L> implements Contract {
 
     private final O deviceToLink;
 
@@ -18,7 +18,7 @@ public class GenericLinker<O,L> implements Linker {
 
     private boolean linked;
 
-    public GenericLinker(O deviceToLink, L linker, BiConsumer<? super O, ? super L> link, BiConsumer<? super O, ? super L> unlink) {
+    public GenericContract(O deviceToLink, L linker, BiConsumer<? super O, ? super L> link, BiConsumer<? super O, ? super L> unlink) {
         this.deviceToLink = deviceToLink;
         this.linker = linker;
         this.link = link;
@@ -26,14 +26,14 @@ public class GenericLinker<O,L> implements Linker {
     }
 
     @Override
-    public void link() {
+    public void accept() {
         if (linked) return;
         this.link.accept(deviceToLink, linker);
         this.linked = true;
     }
 
     @Override
-    public void unlink() {
+    public void revoke() {
         if (!linked) return;
         this.unlink.accept(deviceToLink, linker);
         this.linked = false;

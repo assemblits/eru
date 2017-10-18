@@ -1,6 +1,6 @@
 package org.assemblits.eru.entities;
 
-import org.assemblits.eru.comm.modbus.AddressesBlock;
+import org.assemblits.eru.bus.protocols.modbus.DeviceBlock;
 import javafx.beans.property.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -109,22 +109,22 @@ public class  Device {
         return addresses.stream().filter(a -> a.getDataModel().equals(dataModel)).collect(Collectors.toList());
     }
     @Transient
-    public List<AddressesBlock> getAddressesBlocks(Address.DataModel dataModel){
+    public List<DeviceBlock> getAddressesBlocks(Address.DataModel dataModel){
         return getAddressBlocksFrom(getAddressesByModel(dataModel));
     }
     @Transient
-    private List<AddressesBlock> getAddressBlocksFrom(List<Address> addresses) {
-        List<AddressesBlock> addressesBlocks = new ArrayList<>();
-        addressesBlocks.add(new AddressesBlock());
+    private List<DeviceBlock> getAddressBlocksFrom(List<Address> addresses) {
+        List<DeviceBlock> deviceBlocks = new ArrayList<>();
+        deviceBlocks.add(new DeviceBlock());
         Collections.sort(addresses);
         for(Address address : addresses){
-            if ( !getLastBlockIn(addressesBlocks).isValidToAdd(address) ) addressesBlocks.add(new AddressesBlock());
-            getLastBlockIn(addressesBlocks).addAddressInBlock(address);
+            if ( !getLastBlockIn(deviceBlocks).isValidToAdd(address) ) deviceBlocks.add(new DeviceBlock());
+            getLastBlockIn(deviceBlocks).addAddressInBlock(address);
         }
-        return addressesBlocks;
+        return deviceBlocks;
     }
     @Transient
-    private AddressesBlock getLastBlockIn(List<AddressesBlock> blockList){
+    private DeviceBlock getLastBlockIn(List<DeviceBlock> blockList){
         return blockList.get(blockList.size() - 1);
     }
 

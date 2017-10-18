@@ -3,16 +3,13 @@ package org.assemblits.eru.gui.model;
 import javafx.collections.ListChangeListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.comm.bus.Fieldbus;
-import org.assemblits.eru.comm.bus.Modbus;
-import org.assemblits.eru.comm.modbus.ModbusDeviceReading;
+import org.assemblits.eru.bus.protocols.modbus.Modbus;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
 import org.assemblits.eru.gui.dynamo.base.Dynamo;
-import org.assemblits.eru.tag.TagBus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,19 +22,15 @@ import java.util.List;
 @Data
 public class ProjectListener {
 
-    private final Fieldbus fieldbus;
-    private final TagBus tagsHandler;
+    private final ProjectContractor projectContractor;
     private ProjectModel projectModel;
-    private boolean listening;
 
     public void listen(){
-        if (listening) return;
         listenDevicesChanges();
         listenConnectionsChanges();
         listenTagsChanges();
         listenUsersChanges();
         listenDisplaysChanges();
-        listening = true;
     }
 
     private void listenDevicesChanges(){
@@ -95,32 +88,31 @@ public class ProjectListener {
     private void installLink(Connection connection){
         connection.connectedProperty().addListener((o, wasConnected, isConnected) -> {
             if (isConnected){
-                fieldbus.startDirector();
                 projectModel.getDevices()
                         .stream()
-                        .filter(device -> device instanceof Modbus)
+                        .filter(device -> device.getConnection() instanceof Modbus)
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
-                        .forEach(device -> fieldbus.add(device, new ModbusDeviceReading()));
+                        .forEach(projectContractor::startModbusDeviceReading);
                 projectModel.getTags()
                         .stream()
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
-                        .forEach(tagsHandler::add);
+                        .forEach(projectContractor::startLinkedAddressListening);
             } else {
                 projectModel.getDevices()
                         .stream()
-                        .filter(device -> device instanceof Modbus)
+                        .filter(device -> device.getConnection() instanceof Modbus)
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
-                        .forEach(fieldbus::remove);
+                        .forEach(projectContractor::stopTasks);
                 projectModel.getTags()
                         .stream()
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
-                        .forEach(tagsHandler::remove);
+                        .forEach(projectContractor::stopTasks);
             }
         });
     }

@@ -1,11 +1,11 @@
-package org.assemblits.eru.comm.modbus;
+package org.assemblits.eru.bus.protocols.modbus;
 
 import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTransaction;
 import com.ghgande.j2mod.modbus.msg.*;
-import org.assemblits.eru.comm.context.Transmission;
+import org.assemblits.eru.bus.context.Message;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
 import org.assemblits.eru.entities.Address;
@@ -17,10 +17,10 @@ import java.sql.Timestamp;
 /**
  * Created by mtrujillo on 3/10/2016.
  */
-public class TransmissionToReadAddressBlock implements Transmission {
+public class ReadDeviceBlockMessage implements Message {
 
     private final Device device;
-    private final AddressesBlock block;
+    private final DeviceBlock block;
     private ModbusTransaction transaction;
     private ModbusRequest request;
     private boolean wasSuccessful;
@@ -30,7 +30,7 @@ public class TransmissionToReadAddressBlock implements Transmission {
     private int lastSlotToRead;
 
     /* ** Constructor ** */
-    public TransmissionToReadAddressBlock(Device device, AddressesBlock block) {
+    public ReadDeviceBlockMessage(Device device, DeviceBlock block) {
         this.device     = device;
         this.block      = block;
     }

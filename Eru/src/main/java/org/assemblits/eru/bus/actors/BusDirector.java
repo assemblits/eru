@@ -1,8 +1,9 @@
-package org.assemblits.eru.comm.actors;
+package org.assemblits.eru.bus.actors;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.bus.context.Context;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -14,17 +15,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Component
-public class Director extends Thread {
-    private final LinkedBlockingQueue<Context> contexts = new LinkedBlockingQueue<>();
+public class BusDirector extends Thread {
+    private final LinkedBlockingQueue<BusExecutor> contexts = new LinkedBlockingQueue<>();
 
     @Override
     public void run() {
         log.info("Starting contexts updating...");
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Context headParticipant = contexts.take();
+                BusExecutor headParticipant = contexts.take();
                 if (!headParticipant.isPrepared()) headParticipant.prepare();
-                headParticipant.communicate();
+                headParticipant.execute();
                 if (headParticipant.isRepeatable()) contexts.put(headParticipant);
             } catch (InterruptedException e) {
                  log.info("Director stopped.");
