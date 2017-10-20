@@ -1,10 +1,10 @@
 package org.assemblits.eru.jfx.scenebuilder;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.exception.FxmlFileWriteException;
 import org.assemblits.eru.preferences.EruPreferences;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -19,9 +19,8 @@ public class SceneFxmlManager {
     private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 
-    private final EruPreferences eruPreferences;
-
     public File createSceneFxmlFile(Display display) {
+        final EruPreferences eruPreferences = new EruPreferences();
         String fxmlFilesDirectoryPath = eruPreferences.getApplicationDirectory().getValue() + separator + "displays";
 
         String formattedSceneName = formatName(display);

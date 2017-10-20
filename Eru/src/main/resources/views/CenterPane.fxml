@@ -2,11 +2,23 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import org.assemblits.eru.gui.component.UsersTableView?>
+<?import org.assemblits.eru.gui.component.ConnectionsTableView?>
+<?import org.assemblits.eru.gui.component.DevicesTableView?>
+<?import org.assemblits.eru.gui.component.TagsTableView?>
+<?import org.assemblits.eru.gui.component.DisplayTableView?>
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.112"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.assemblits.eru.gui.controller.CenterPaneController"
             fitToHeight="true"
             fitToWidth="true">
 
-    <AnchorPane fx:id="centerPane"/>
+    <AnchorPane fx:id="tablesAnchorPane">
+        <UsersTableView fx:id="usersTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
+        <ConnectionsTableView fx:id="connectionsTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
+        <DevicesTableView fx:id="devicesTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
+        <TagsTableView fx:id="tagsTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
+        <DisplayTableView fx:id="displayTableViewView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
+    </AnchorPane>
+
 </ScrollPane>

@@ -42,7 +42,7 @@
        inkscape:vp_z="210 : 148.5 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 148.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
+       sodipodi:groupName="inkscape:persp3d" />
   </defs>
   <metadata
      id="metadata5">
@@ -50,7 +50,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:groupName
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title />
       </cc:Work>
@@ -166,7 +166,7 @@
        inkscape:export-xdpi="23.809999"
        inkscape:export-ydpi="23.809999" />
     <path
-       sodipodi:type="spiral"
+       sodipodi:groupName="spiral"
        style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332"
        id="path27"
        sodipodi:cx="31.617981"
@@ -181,7 +181,7 @@
        inkscape:export-xdpi="23.809999"
        inkscape:export-ydpi="23.809999" />
     <path
-       sodipodi:type="spiral"
+       sodipodi:groupName="spiral"
        style="fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:0.26458332"
        id="path27-6"
        sodipodi:cx="31.617981"
