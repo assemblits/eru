@@ -1,26 +1,26 @@
-package org.assemblits.eru.comm.modbus;
+package org.assemblits.eru.fieldbus.protocols.modbus;
 
-import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.io.ModbusSerialTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTCPTransaction;
 import com.ghgande.j2mod.modbus.io.ModbusTransaction;
 import com.ghgande.j2mod.modbus.msg.*;
-import org.assemblits.eru.comm.context.Transmission;
-import org.assemblits.eru.entities.SerialConnection;
-import org.assemblits.eru.entities.TcpConnection;
+import javafx.application.Platform;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Address.DataModel;
 import org.assemblits.eru.entities.Device;
-import javafx.application.Platform;
+import org.assemblits.eru.entities.SerialConnection;
+import org.assemblits.eru.entities.TcpConnection;
+import org.assemblits.eru.fieldbus.context.Message;
+
 import java.sql.Timestamp;
 
 /**
  * Created by mtrujillo on 3/10/2016.
  */
-public class TransmissionToReadAddressBlock implements Transmission {
+public class ReadDeviceBlockMessage implements Message {
 
     private final Device device;
-    private final AddressesBlock block;
+    private final DeviceBlock block;
     private ModbusTransaction transaction;
     private ModbusRequest request;
     private boolean wasSuccessful;
@@ -30,7 +30,7 @@ public class TransmissionToReadAddressBlock implements Transmission {
     private int lastSlotToRead;
 
     /* ** Constructor ** */
-    public TransmissionToReadAddressBlock(Device device, AddressesBlock block) {
+    public ReadDeviceBlockMessage(Device device, DeviceBlock block) {
         this.device     = device;
         this.block      = block;
     }
@@ -38,6 +38,7 @@ public class TransmissionToReadAddressBlock implements Transmission {
     /* ** Methods ** */
     @Override
     public void create(){
+        if (device.getConnection() == null) throw new IllegalStateException("Device should have a connection.");
         offset              = device.isZeroBased() ? 1 : 0;
         firstSlotToRead     = block.getFirstAddressInBlock().getNetworkID() - offset;
         lastSlotToRead      = block.getLastAddressInBlock().getNetworkID() - offset;
@@ -77,7 +78,7 @@ public class TransmissionToReadAddressBlock implements Transmission {
             transaction.execute();
             updateDeviceStatus("OK");
             wasSuccessful = true;
-        } catch (ModbusException e) {
+        } catch (Exception e) {
             updateDeviceStatus(e.getMessage());
             wasSuccessful = false;
         }

@@ -142,7 +142,7 @@ public class Alarming {
             removeAlarmListenerOnRegisteredTags();
         }
 
-        // Check if Alarming module is running, has to be running cause the listen create new alarms on database.
+        // Check if Alarming module is running, has to be running cause the observe create new alarms on database.
         if (running) {
             tagsToListen.stream()
                     .filter(Tag::getAlarmEnabled)
@@ -153,7 +153,7 @@ public class Alarming {
                     });
             log.info("Alarming: listeners on tags installed.");
         } else {
-            log.error("Alarming: Tags cannot be listen because there are no db connection in Alarming module.");
+            log.error("Alarming: Tags cannot be observe because there are no db connection in Alarming module.");
         }
     }
 

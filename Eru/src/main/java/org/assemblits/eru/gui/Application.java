@@ -44,7 +44,7 @@ public class Application extends javafx.application.Application {
             startUpWizard.startWizard();
         }
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
-        Preloader preloaderWindow = loadPreloader(applicationLoader);
+        Preloader preloaderWindow = loadService(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
             ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
 
@@ -70,7 +70,8 @@ public class Application extends javafx.application.Application {
         eruPreferences = new EruPreferences();
     }
 
-    private Preloader loadPreloader(ApplicationLoader applicationLoader) {
+    private Preloader loadService(ApplicationLoader applicationLoader) {
+        // TODO: Set Eru Icon to the preloader stage
         return new Preloader() {
             @Override
             public void start(Stage primaryStage) throws Exception {

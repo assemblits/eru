@@ -1,4 +1,4 @@
-package org.assemblits.eru.comm.actors;
+package org.assemblits.eru.fieldbus.actors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +27,20 @@ public class DirectorTest {
 
     @Test
     public void testAddingCommunicators() throws Exception {
-        Communicator communicator = Mockito.mock(Communicator.class);
-        director.getCommunicators().add(communicator);
-        assertTrue("Director accepts communicators", director.getCommunicators().contains(communicator));
+        Executor executor = Mockito.mock(Executor.class);
+        director.getExecutors().add(executor);
+        assertTrue("Director accepts communicators", director.getExecutors().contains(executor));
     }
 
-    @Test (timeout = 250)
+    @Test
+    public void testRemovingCommunicators() throws Exception {
+        Executor mockedExecutor = Mockito.mock(Executor.class);
+        director.getExecutors().add(mockedExecutor);
+        director.getExecutors().remove(mockedExecutor);
+        assertFalse("Director accepts communicators", director.getExecutors().contains(mockedExecutor));
+    }
+
+    @Test (timeout = 500)
     public void testStopping() throws Exception {
         director.start();
         director.interrupt();
