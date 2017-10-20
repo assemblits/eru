@@ -11,7 +11,6 @@ import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
 import org.assemblits.eru.fieldbus.context.Message;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import java.sql.Timestamp;
 
@@ -39,7 +38,7 @@ public class ReadDeviceBlockMessage implements Message {
     /* ** Methods ** */
     @Override
     public void create(){
-        if (device.getConnection() == null) throw new InvalidStateException("Device should have a connection.");
+        if (device.getConnection() == null) throw new IllegalStateException("Device should have a connection.");
         offset              = device.isZeroBased() ? 1 : 0;
         firstSlotToRead     = block.getFirstAddressInBlock().getNetworkID() - offset;
         lastSlotToRead      = block.getLastAddressInBlock().getNetworkID() - offset;
