@@ -1,22 +1,23 @@
 package org.assemblits.eru.gui.controller;
 
-import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.exception.FxmlFileReadException;
-import org.assemblits.eru.gui.component.*;
-import org.assemblits.eru.gui.model.ProjectModel;
-import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanFactory;
+import org.assemblits.eru.entities.Display;
+import org.assemblits.eru.entities.EruType;
+import org.assemblits.eru.exception.FxmlFileReadException;
+import org.assemblits.eru.gui.ApplicationContextHolder;
+import org.assemblits.eru.gui.component.*;
+import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
+import org.assemblits.eru.persistence.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,61 +25,66 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CenterPaneController implements SceneBuilderStarter {
 
-    private final BeanFactory beanFactory;
     @FXML
-    private AnchorPane centerPane;
+    private UsersTableView usersTableView;
+    @FXML
+    private ConnectionsTableView connectionsTableView;
+    @FXML
+    private DevicesTableView devicesTableView;
+    @FXML
+    private TagsTableView tagsTableView;
+    @FXML
+    private DisplayTableView displayTableViewView;
+    @FXML
+    private AnchorPane tablesAnchorPane;
+    @Autowired
+    private ProjectRepository projectRepository;
 
-    public void initialize() {
-        UsersTableView usersTableView = new UsersTableView();
-        ConnectionsTableView connectionsTableView = new ConnectionsTableView();
-        DevicesTableView devicesTableView = new DevicesTableView();
-        TagsTableView tagsTableView = new TagsTableView();
-        DisplayTableView displayTableViewView = new DisplayTableView();
-
-        centerPane.getChildren().addAll(
-                usersTableView,
-                connectionsTableView,
-                devicesTableView,
-                tagsTableView,
-                displayTableViewView);
-        centerPane.getChildren().forEach(this::adjustToAnchorPaneAndHide);
+    public void populateTables(ProjectModel project){
+        usersTableView.setUsers(project.getUsers());
+        connectionsTableView.setConnections(project.getConnections());
+        devicesTableView.setDevicesAndConnections(project.getDevices(), project.getConnections());
+        tagsTableView.setTagsAndDevices(project.getTags(), project.getDevices());
+        displayTableViewView.setDisplays(project.getDisplays());
+        usersTableView.setOnEditCommit(() -> projectRepository.save(project.get()));
+        connectionsTableView.setOnEditCommit(() -> projectRepository.save(project.get()));
+        devicesTableView.setOnEditCommit(() -> projectRepository.save(project.get()));
+        tagsTableView.setOnEditCommit(() -> projectRepository.save(project.get()));
+        displayTableViewView.setOnEditCommit(() -> projectRepository.save(project.get()));
     }
 
-    public void setProjectModel(ProjectModel projectModel) {
-        centerPane.getChildren().stream()
-                .filter(node -> node instanceof EruTableView)
-                .forEach(node -> ((EruTableView) node).setProjectModel(projectModel));
-    }
-
-    public void onTreeItemSelected(TreeElementsGroup.Type type) {
-        setVisible(type);
-    }
-
-    private void setVisible(TreeElementsGroup.Type type) {
-        centerPane.getChildren().forEach(eruTableView -> eruTableView.setVisible(false));
-        Optional<Node> table = centerPane.getChildren().stream().filter(node -> node instanceof EruTableView)
-                .filter(node -> type.equals(((EruTableView) node).getItemType()))
-                .findFirst();
-        table.ifPresent(node -> node.setVisible(true));
-    }
-
-    private void adjustToAnchorPaneAndHide(Node node) {
-        AnchorPane.setTopAnchor(node, 0.0);
-        AnchorPane.setBottomAnchor(node, 0.0);
-        AnchorPane.setRightAnchor(node, 0.0);
-        AnchorPane.setLeftAnchor(node, 0.0);
-        node.setVisible(false);
+    public void setVisibleTable(EruType type) {
+        tablesAnchorPane.getChildren().forEach(table -> table.setVisible(false));
+        switch (type) {
+            case DEVICE:
+                devicesTableView.setVisible(true);
+                break;
+            case CONNECTION:
+                connectionsTableView.setVisible(true);
+                break;
+            case TAG:
+                tagsTableView.setVisible(true);
+                break;
+            case USER:
+                usersTableView.setVisible(true);
+                break;
+            case DISPLAY:
+                displayTableViewView.setVisible(true);
+                break;
+            case UNKNOWN:
+                // Nothing
+                break;
+        }
     }
 
     @Override
     public void startSceneBuilder(Display display) {
         log.info("Starting display builder for '{}'", display.getName());
 
-        List<Node> oldSceneBuilders = centerPane.getChildren().stream()
+        List<Node> oldSceneBuilders = tablesAnchorPane.getChildren().stream()
                 .filter(node -> node instanceof EruSceneBuilder).collect(Collectors.toList());
-        centerPane.getChildren().removeAll(oldSceneBuilders);
-
-        EruSceneBuilder eruSceneBuilder = beanFactory.getBean(EruSceneBuilder.class);
+        tablesAnchorPane.getChildren().removeAll(oldSceneBuilders);
+        EruSceneBuilder eruSceneBuilder = ApplicationContextHolder.getApplicationContext().getBean(EruSceneBuilder.class);
         try {
             eruSceneBuilder.init(display);
         } catch (FxmlFileReadException e) {
@@ -88,6 +94,6 @@ public class CenterPaneController implements SceneBuilderStarter {
             log.error("Error starting scene builder", e);
         }
 
-        centerPane.getChildren().add(eruSceneBuilder);
+        tablesAnchorPane.getChildren().add(eruSceneBuilder);
     }
 }

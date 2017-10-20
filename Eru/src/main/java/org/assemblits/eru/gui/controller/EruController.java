@@ -1,5 +1,6 @@
 package org.assemblits.eru.gui.controller;
 
+import javafx.beans.Observable;
 import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectModel;
@@ -35,8 +36,9 @@ public class EruController {
 
         Parent mainNode = loadMainScene();
         projectModel = ProjectModel.from(project);
-        projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
-        centerPaneController.setProjectModel(projectModel);
+        centerPaneController.populateTables(projectModel);
+        projectTreeController.populateTree(projectModel);
+        projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
         projectDynamicBehavior.setProjectModel(projectModel);
 
         stage.setScene(new Scene(mainNode));

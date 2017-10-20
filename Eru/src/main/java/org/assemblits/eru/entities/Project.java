@@ -28,7 +28,7 @@ public class Project {
     String name;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    TreeElementsGroup group;
+    EruGroup group;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<Device> devices;
@@ -48,7 +48,7 @@ public class Project {
     public Project() {
         this.id = null;
         this.name = "";
-        this.group = new TreeElementsGroup();
+        this.group = new EruGroup();
         this.devices = new ArrayList<>();
         this.connections = new ArrayList<>();
         this.tags = new ArrayList<>();

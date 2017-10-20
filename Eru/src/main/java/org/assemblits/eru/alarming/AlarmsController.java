@@ -47,7 +47,7 @@ public class AlarmsController implements Initializable {
         table.getColumns().addAll(
                 makeTableColumn("Date", DolphinConstants.ATT_ALARM_DATE),
                 makeTableColumn("Description", DolphinConstants.ATT_ALARM_DESCRIPTION),
-                makeTableColumn("TreeElementsGroup", DolphinConstants.ATT_ALARM_GROUP),
+                makeTableColumn("EruGroup", DolphinConstants.ATT_ALARM_GROUP),
                 makeTableColumn("Acknowledge", DolphinConstants.ATT_ALARM_ACK)
         );
     }

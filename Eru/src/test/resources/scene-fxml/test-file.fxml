@@ -2,6 +2,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <fx:root
         fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-        prefHeight="250.0" prefWidth="500.0" styleClass="-fx-base: #444444;" type="javafx.scene.layout.BorderPane"
+        prefHeight="250.0" prefWidth="500.0" styleClass="-fx-base: #444444;" groupName="javafx.scene.layout.BorderPane"
         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
 </fx:root>

@@ -1,11 +1,14 @@
 package org.assemblits.eru.gui.controller;
 
-import org.assemblits.eru.entities.TreeElementsGroup;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.assemblits.eru.entities.*;
+import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.persistence.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,7 +18,9 @@ import java.util.function.Consumer;
 public class ProjectTreeController {
 
     @FXML
-    private TreeView<TreeElementsGroup> projectTree;
+    private TreeView<EruGroup> projectTree;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public void initialize() {
         projectTree.setEditable(true);
@@ -26,34 +31,34 @@ public class ProjectTreeController {
         AnchorPane.setLeftAnchor(projectTree, 0.0);
     }
 
-    public void populateTree(TreeElementsGroup treeElementsGroup, Consumer<TreeElementsGroup.Type> selectItem) {
-        setContent(treeElementsGroup);
+    public void populateTree(ProjectModel projectModel) {
+        if (projectTree.getRoot() != null) projectTree.getRoot().getChildren().clear();
+        projectTree.setRoot(createTree(projectModel.getGroup().getValue()));
+        projectTree.getRoot().setExpanded(true);
+        projectTree.setOnEditCommit(event -> projectRepository.save(projectModel.get()));
+    }
+
+    public void setOnSelectedItem(Consumer<EruType> onSelectedItem){
         projectTree.setCellFactory(c -> {
             GroupTreeCell groupTreeCell = new GroupTreeCell();
             groupTreeCell.selectedProperty().addListener((observable, wasSelected, isSelected) -> {
                 if (isSelected) {
-                    selectItem.accept(groupTreeCell.getItem().getType());
+                    onSelectedItem.accept(groupTreeCell.getItem().getType());
                 }
             });
             return groupTreeCell;
         });
     }
 
-    private void setContent(TreeElementsGroup treeElementsGroup) {
-        if (projectTree.getRoot() != null) projectTree.getRoot().getChildren().clear();
-        projectTree.setRoot(createTree(treeElementsGroup));
-        projectTree.getRoot().setExpanded(true);
-    }
-
-    private TreeItem<TreeElementsGroup> createTree(TreeElementsGroup treeElementsGroup) {
-        TreeItem<TreeElementsGroup> treeItem = new TreeItem<>(treeElementsGroup);
-        for (TreeElementsGroup t : treeElementsGroup.getChildren()) {
+    private TreeItem<EruGroup> createTree(EruGroup eruGroup) {
+        TreeItem<EruGroup> treeItem = new TreeItem<>(eruGroup);
+        for (EruGroup t : eruGroup.getChildren()) {
             treeItem.getChildren().add(createTree(t));
         }
         return treeItem;
     }
 
-    private class GroupTreeCell extends TreeCell<TreeElementsGroup> {
+    private class GroupTreeCell extends TreeCell<EruGroup> {
 
         private final Image rootIcon = new Image(getClass().getResourceAsStream("/images/project-icon.png"));
         private final Image connectionIcon = new Image(getClass().getResourceAsStream("/images/connection-icon.png"));
@@ -69,31 +74,28 @@ public class ProjectTreeController {
         private final ContextMenu displaysMenu = new ContextMenu();
 
         public GroupTreeCell() {
-            connectionsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
-            devicesMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
-            tagsMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.TAG), getMenuItemToRename(), getMenuItemToRemove());
-            usersMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.USER), getMenuItemToRename(), getMenuItemToRemove());
-            displaysMenu.getItems().addAll(getMenuItemToAdd(TreeElementsGroup.Type.DISPLAY), getMenuItemToRename(), getMenuItemToRemove());
+            connectionsMenu.getItems().addAll(getMenuItemToAdd(EruType.CONNECTION), getMenuItemToRename(), getMenuItemToRemove());
+            devicesMenu.getItems().addAll(getMenuItemToAdd(EruType.DEVICE), getMenuItemToRename(), getMenuItemToRemove());
+            tagsMenu.getItems().addAll(getMenuItemToAdd(EruType.TAG), getMenuItemToRename(), getMenuItemToRemove());
+            usersMenu.getItems().addAll(getMenuItemToAdd(EruType.USER), getMenuItemToRename(), getMenuItemToRemove());
+            displaysMenu.getItems().addAll(getMenuItemToAdd(EruType.DISPLAY), getMenuItemToRename(), getMenuItemToRemove());
         }
 
         @Override
-        protected void updateItem(TreeElementsGroup item, boolean empty) {
+        protected void updateItem(EruGroup item, boolean empty) {
             super.updateItem(item, empty);
             setGraphic(null);
             setText(null);
             if (item != null) {
                 setText(item.getName());
                 switch (item.getType()) {
-                    case ROOT:
-                        setGraphic(new ImageView(rootIcon));
+                    case DEVICE:
+                        setGraphic(new ImageView(deviceIcon));
+                        if (getTreeItem().getParent() != null) setContextMenu(devicesMenu);
                         break;
                     case CONNECTION:
                         setGraphic(new ImageView(connectionIcon));
                         if (getTreeItem().getParent() != null) setContextMenu(connectionsMenu);
-                        break;
-                    case DEVICE:
-                        setGraphic(new ImageView(deviceIcon));
-                        if (getTreeItem().getParent() != null) setContextMenu(devicesMenu);
                         break;
                     case TAG:
                         setGraphic(new ImageView(tagIcon));
@@ -107,6 +109,9 @@ public class ProjectTreeController {
                         setGraphic(new ImageView(displayIcon));
                         if (getTreeItem().getParent() != null) setContextMenu(displaysMenu);
                         break;
+                    case UNKNOWN:
+                        setGraphic(new ImageView(rootIcon));
+                        break;
                 }
             }
         }
@@ -116,16 +121,16 @@ public class ProjectTreeController {
             super.startEdit();
         }
 
-        private MenuItem getMenuItemToAdd(TreeElementsGroup.Type type) {
+        private MenuItem getMenuItemToAdd(EruType type) {
             MenuItem addMenuItem = new MenuItem("New group");
             addMenuItem.setOnAction(event -> {
-                TreeElementsGroup newTreeElementsGroup = new TreeElementsGroup();
-                newTreeElementsGroup.setName("new " + type.name().toLowerCase() + " group");
-                newTreeElementsGroup.setType(type);
-                newTreeElementsGroup.setParent(getItem());
+                EruGroup newEruGroup = new EruGroup();
+                newEruGroup.setName("new " + type + " group");
+                newEruGroup.setType(type);
+                newEruGroup.setParent(getItem());
 
-                getItem().getChildren().add(newTreeElementsGroup);
-                getTreeItem().getChildren().add(new TreeItem<>(newTreeElementsGroup));
+                getItem().getChildren().add(newEruGroup);
+                getTreeItem().getChildren().add(new TreeItem<>(newEruGroup));
             });
             return addMenuItem;
         }
@@ -155,15 +160,9 @@ public class ProjectTreeController {
                 if (result.get() == ButtonType.OK) {
                     try {
                         TreeItem parentItem = getTreeItem().getParent();
-                        TreeElementsGroup parentTreeElementsGroup = getItem().getParent();
-
-                        System.out.println("TreeElementsGroup " + parentTreeElementsGroup + " contains " + getItem() + "?:" + parentTreeElementsGroup.getChildren().contains(getItem()));
-
-
-                        boolean itemRemoved = parentItem.getChildren().remove(getTreeItem());
-                        boolean groupRemoved = parentTreeElementsGroup.getChildren().remove(getItem());
-
-                        System.out.println("Remove result: " + itemRemoved + groupRemoved);
+                        EruGroup parentEruGroup = getItem().getParent();
+                        parentItem.getChildren().remove(getTreeItem());
+                        parentEruGroup.getChildren().remove(getItem());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

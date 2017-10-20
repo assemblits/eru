@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.assemblits.eru.scene.control.Display?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root groupName="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity">
             <children>

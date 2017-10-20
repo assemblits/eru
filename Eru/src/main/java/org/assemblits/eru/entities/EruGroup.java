@@ -12,20 +12,20 @@ import java.util.List;
  * Created by mtrujillo on 7/25/17.
  */
 @Entity
-@Table(name = "tree_elements_group", schema = "public")
+@Table(name = "eru_group", schema = "public")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class TreeElementsGroup {
+public class EruGroup {
 
     private IntegerProperty id;
     private StringProperty name;
-    private StringProperty type;
-    private ObjectProperty<TreeElementsGroup> parent;
-    private List<TreeElementsGroup> children;
+    private ObjectProperty<EruType> type;
+    private ObjectProperty<EruGroup> parent;
+    private List<EruGroup> children;
 
-    public TreeElementsGroup() {
+    public EruGroup() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
-        this.type = new SimpleStringProperty();
+        this.type = new SimpleObjectProperty<>(EruType.UNKNOWN);
         this.parent = new SimpleObjectProperty<>();
         this.children = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
@@ -51,39 +51,39 @@ public class TreeElementsGroup {
         this.name.set(name);
     }
 
-    public String getType() {
+    public EruType getType() {
         return type.get();
     }
-    public StringProperty typeProperty() {
+    public ObjectProperty<EruType> typeProperty() {
         return type;
     }
-    public void setType(String type) {
+    public void setType(EruType type) {
         this.type.set(type);
     }
 
     @OneToOne(cascade= CascadeType.ALL, orphanRemoval = true)
-    public TreeElementsGroup getParent() {
+    public EruGroup getParent() {
         return parent.get();
     }
-    public ObjectProperty<TreeElementsGroup> parentProperty() {
+    public ObjectProperty<EruGroup> parentProperty() {
         return parent;
     }
-    public void setParent(TreeElementsGroup parent) {
+    public void setParent(EruGroup parent) {
         this.parent.set(parent);
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    public List<TreeElementsGroup> getChildren() {
+    public List<EruGroup> getChildren() {
         return children;
     }
-    public void setChildren(List<TreeElementsGroup> children) {
+    public void setChildren(List<EruGroup> children) {
         this.children = children;
     }
 
     @Override
     public String toString() {
-        return "TreeElementsGroup{" + getName() +
+        return "EruGroup{" + getName() +
                 "=" + super.toString() +
                 ", children= <" + children +
                 "> }";

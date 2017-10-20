@@ -14,7 +14,7 @@ public class ProjectModel {
 
     IntegerProperty id;
     StringProperty name;
-    ObjectProperty<TreeElementsGroup> group;
+    ObjectProperty<EruGroup> group;
     ObservableList<Device> devices;
     ObservableList<Connection> connections;
     ObservableList<Tag> tags;

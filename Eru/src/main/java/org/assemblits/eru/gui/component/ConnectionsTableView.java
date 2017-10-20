@@ -1,16 +1,11 @@
 package org.assemblits.eru.gui.component;
 
-import org.assemblits.eru.entities.Connection;
-import org.assemblits.eru.entities.SerialConnection;
-import org.assemblits.eru.entities.TcpConnection;
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -23,32 +18,41 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.entities.Connection;
+import org.assemblits.eru.entities.Project;
+import org.assemblits.eru.entities.SerialConnection;
+import org.assemblits.eru.entities.TcpConnection;
+import org.assemblits.eru.persistence.ProjectRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
 public class ConnectionsTableView extends EruTableView<Connection> {
 
-    public ConnectionsTableView() {
-        TableColumn<Connection, Void> actionColumn = new TableColumn<>("Action");
-        TableColumn<Connection, String> groupColumn = new TableColumn<>("Group");
-        TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
-        TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
-        TableColumn<Connection, Boolean> enabledColumn = new TableColumn<>("Enable");
-        TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
-        TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
-        TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
-        TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
+    private TableColumn<Connection, Void> actionColumn = new TableColumn<>("Action");
+    private TableColumn<Connection, String> groupColumn = new TableColumn<>("Group");
+    private TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
+    private TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
+    private TableColumn<Connection, Boolean> enabledColumn = new TableColumn<>("Enable");
+    private TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
+    private TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
+    private TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
+    private TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
+    private TableColumn<Connection, String> serialPortColumn = new TableColumn<>("Port");
+    private TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
+    private TableColumn<Connection, Integer> serialDatabitsColumn = new TableColumn<>("Databits");
+    private TableColumn<Connection, String> serialParityColumn = new TableColumn<>("Parity");
+    private TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
+    private TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
+    private TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
 
-        TableColumn<Connection, String> serialPortColumn = new TableColumn<>("Port");
-        TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
-        TableColumn<Connection, Integer> serialDatabitsColumn = new TableColumn<>("Databits");
-        TableColumn<Connection, String> serialParityColumn = new TableColumn<>("Parity");
-        TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
-        TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
-        TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
+    private TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
+    private TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
+    private TableColumn tcpgroupColumn = new TableColumn<>("Tcp Parameters");
+
+    public ConnectionsTableView() {
+        // **** Columns Group **** //
         serialgroupColumn.getColumns().addAll(
                 serialPortColumn,
                 serialBitsPerSecondsColumn,
@@ -57,11 +61,9 @@ public class ConnectionsTableView extends EruTableView<Connection> {
                 serialStopBitsColumn,
                 serialFrameEncodingColumn);
 
-        TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
-        TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
-        TableColumn tcpgroupColumn = new TableColumn<>("Tcp Parameters");
-        tcpgroupColumn.getColumns().addAll(tcpHostnameColumn, tcpPortColumn);
-
+        tcpgroupColumn.getColumns().addAll(
+                tcpHostnameColumn,
+                tcpPortColumn);
 
         // **** General Cells **** //
         actionColumn.setCellFactory(param -> new ConnectActionCell<>(
@@ -332,7 +334,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
                     SerialConnection newSerialConnection = new SerialConnection();
                     newSerialConnection.setName(results.getKey());
                     newSerialConnection.setGroupName("Connections");
-                    this.items.add(newSerialConnection);
+                    getItems().add(newSerialConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newSerialConnection);
                     break;
@@ -340,65 +342,44 @@ public class ConnectionsTableView extends EruTableView<Connection> {
                     TcpConnection newTcpConnection = new TcpConnection();
                     newTcpConnection.setName(results.getKey());
                     newTcpConnection.setGroupName("Connections");
-                    this.items.add(newTcpConnection);
+                    getItems().add(newTcpConnection);
                     this.getSelectionModel().clearSelection();
                     this.getSelectionModel().select(newTcpConnection);
                     break;
             }
         });
-
-        // *******************************************************************************
-        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
-        // When a new object is added to the table, a new filteredList has to be created
-        // and the items updated, because the filteredList is non-editable. So, despite the
-        // filtered List is setted to the tableview, a list is used in the background. The
-        // filtered list is only used to be able to filter using the textToFilter.
-        //
-        //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(this.items);
-        super.setItems(this.filteredItems);
-        // *******************************************************************************
     }
 
-    @Override
-    public TreeElementsGroup.Type getItemType() {
-        return TreeElementsGroup.Type.CONNECTION;
+    public void setConnections(ObservableList<Connection> connections) {
+        super.setItems(connections);
     }
 
-    @Override
-    protected List<Connection> getItemsFromProjectModel(ProjectModel projectModel) {
-        return projectModel.getConnections();
-    }
+    class ConnectActionCell<S> extends TableCell<S, Void> {
+        private ToggleButton toggleButton;
+        private ImageView connectImageView = new ImageView(new Image(getClass().getResource("/images/connect.png").toExternalForm()));
+        private ImageView disconnectImageView = new ImageView(new Image(getClass().getResource("/images/disconnect.png").toExternalForm()));
 
-}
+        public ConnectActionCell(Consumer<Integer> selectedAction, Consumer<Integer> deselectedAction) {
+            toggleButton = new ToggleButton();
+            toggleButton.setGraphic(connectImageView);
+            toggleButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
+                if (isSelected) {
+                    selectedAction.accept(getIndex());
+                    toggleButton.setGraphic(disconnectImageView);
+                } else {
+                    deselectedAction.accept(getIndex());
+                    toggleButton.setGraphic(connectImageView);
+                }
+            });
+            setAlignment(Pos.CENTER);
+        }
 
-@Slf4j
-class ConnectActionCell<S> extends TableCell<S, Void> {
-    private ToggleButton toggleButton;
-    private ImageView connectImageView = new ImageView(new Image(getClass().getResource("/images/connect.png").toExternalForm()));
-    private ImageView disconnectImageView = new ImageView(new Image(getClass().getResource("/images/disconnect.png").toExternalForm()));
-
-    public ConnectActionCell(Consumer<Integer> selectedAction, Consumer<Integer> deselectedAction) {
-        toggleButton = new ToggleButton();
-
-        toggleButton.setGraphic(connectImageView);
-        toggleButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
-            if (isSelected) {
-                selectedAction.accept(getIndex());
-                toggleButton.setGraphic(disconnectImageView);
-            } else {
-                deselectedAction.accept(getIndex());
-                toggleButton.setGraphic(connectImageView);
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            setGraphic(null);
+            if (!empty) {
+                setGraphic(toggleButton);
             }
-        });
-        setAlignment(Pos.CENTER);
-    }
-
-    @Override
-    protected void updateItem(Void item, boolean empty) {
-        setGraphic(null);
-        if (!empty) {
-            setGraphic(toggleButton);
         }
     }
 }

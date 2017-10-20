@@ -1,17 +1,10 @@
 package org.assemblits.eru.gui.component;
 
-import org.assemblits.eru.entities.Address;
-import org.assemblits.eru.entities.Connection;
-import org.assemblits.eru.entities.Device;
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.gui.model.ProjectModel;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -20,9 +13,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import org.assemblits.eru.entities.Address;
+import org.assemblits.eru.entities.Connection;
+import org.assemblits.eru.entities.Device;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public class DevicesTableView extends EruTableView<Device> {
 
@@ -138,167 +133,144 @@ public class DevicesTableView extends EruTableView<Device> {
         Device newDevice = new Device();
         newDevice.setName("New device");
         newDevice.setGroupName("Devices");
-        items.add(newDevice);
+        getItems().add(newDevice);
         getSelectionModel().clearSelection();
         getSelectionModel().select(newDevice);
-
-        // *******************************************************************************
-        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
-        // When a new object is added to the table, a new filteredList has to be created
-        // and the items updated, because the filteredList is non-editable. So, despite the
-        // filtered List is setted to the tableview, a list is used in the background. The
-        // filtered list is only used to be able to filter using the textToFilter.
-        //
-        //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(items);
-        super.setItems(filteredItems);
-        // *******************************************************************************
     }
 
-    @Override
-    public TreeElementsGroup.Type getItemType() {
-        return TreeElementsGroup.Type.DEVICE;
-    }
-
-    @Override
-    protected List<Device> getItemsFromProjectModel(ProjectModel projectModel) {
-        return projectModel.getDevices();
-    }
-
-    @Override
-    public void setProjectModel(ProjectModel projectModel) {
-        super.setProjectModel(projectModel);
+    public void setDevicesAndConnections(ObservableList<Device> devices, ObservableList<Connection> connections) {
+        super.setItems(devices);
         connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
-                FXCollections.observableList(projectModel.getConnections())
+                FXCollections.observableList(connections)
         ));
     }
-}
 
-class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<Address>> {
+    class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<Address>> {
 
-    @Override
-    protected void updateItem(ObservableList<Address> item, boolean empty) {
-        super.updateItem(item, empty);
-        updateViewMode();
-    }
+        @Override
+        protected void updateItem(ObservableList<Address> item, boolean empty) {
+            super.updateItem(item, empty);
+            updateViewMode();
+        }
 
-    private void updateViewMode() {
-        setGraphic(null);
-        setText(null);
-        if (isEditing()) {
-            VBox box = new VBox();
-            TableView<Address> addressesTableView = new TableView<>();
-            addressesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        private void updateViewMode() {
+            setGraphic(null);
+            setText(null);
+            if (isEditing()) {
+                VBox box = new VBox();
+                TableView<Address> addressesTableView = new TableView<>();
+                addressesTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-            TableColumn<Address, String> typeColumn = new TableColumn<>("Type");
-            typeColumn.setCellValueFactory(param -> param.getValue().dataModelProperty().asString());
-            typeColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.14));
+                TableColumn<Address, String> typeColumn = new TableColumn<>("Type");
+                typeColumn.setCellValueFactory(param -> param.getValue().dataModelProperty().asString());
+                typeColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.14));
 
-            TableColumn<Address, String> addressColumn = new TableColumn<>("ID");
-            addressColumn.setCellValueFactory(param -> param.getValue().networkIDProperty().asString());
-            addressColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
+                TableColumn<Address, String> addressColumn = new TableColumn<>("ID");
+                addressColumn.setCellValueFactory(param -> param.getValue().networkIDProperty().asString());
+                addressColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
-            TableColumn<Address, String> valueColumn = new TableColumn<>("Value");
-            valueColumn.setCellValueFactory(param -> param.getValue().currentValueProperty().asString());
-            valueColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
+                TableColumn<Address, String> valueColumn = new TableColumn<>("Value");
+                valueColumn.setCellValueFactory(param -> param.getValue().currentValueProperty().asString());
+                valueColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
-            TableColumn<Address, String> statusColumn = new TableColumn<>("Status");
-            statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
-            statusColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
+                TableColumn<Address, String> statusColumn = new TableColumn<>("Status");
+                statusColumn.setCellValueFactory(param -> param.getValue().statusProperty());
+                statusColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.12));
 
-            TableColumn<Address, Timestamp> timestampColumn = new TableColumn<>("Timestamp");
-            timestampColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
-            timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.45));
+                TableColumn<Address, Timestamp> timestampColumn = new TableColumn<>("Timestamp");
+                timestampColumn.setCellValueFactory(param -> param.getValue().timestampProperty());
+                timestampColumn.prefWidthProperty().bind(addressesTableView.widthProperty().multiply(0.45));
 
-            addressesTableView.getColumns().addAll(typeColumn, addressColumn, valueColumn, statusColumn, timestampColumn);
+                addressesTableView.getColumns().addAll(typeColumn, addressColumn, valueColumn, statusColumn, timestampColumn);
 
-            TextField startAddressTextField = new TextField();
-            startAddressTextField.setPromptText("Start");
-            TextField endAddressTextField = new TextField();
-            endAddressTextField.setPromptText("End");
-            ChoiceBox<Address.DataModel> typeChoiceBox = new ChoiceBox<>();
+                TextField startAddressTextField = new TextField();
+                startAddressTextField.setPromptText("Start");
+                TextField endAddressTextField = new TextField();
+                endAddressTextField.setPromptText("End");
+                ChoiceBox<Address.DataModel> typeChoiceBox = new ChoiceBox<>();
 
-            if (getItem() != null) {
-                addressesTableView.getItems().addAll(getItem());
-                typeChoiceBox.getItems().addAll(Address.DataModel.values());
-            }
+                if (getItem() != null) {
+                    addressesTableView.getItems().addAll(getItem());
+                    typeChoiceBox.getItems().addAll(Address.DataModel.values());
+                }
 
-            Button addAddressButton = new Button("Add");
-            addAddressButton.setOnAction(event -> {
-                try {
-                    final int firstAddress = Integer.parseInt(startAddressTextField.getText());
-                    final int lastAddress = Integer.parseInt(endAddressTextField.getText());
-                    if (firstAddress > lastAddress) throw new Exception("Last Address is minor than first.");
-                    final Address.DataModel dataType = typeChoiceBox.getSelectionModel().getSelectedItem();
+                Button addAddressButton = new Button("Add");
+                addAddressButton.setOnAction(event -> {
+                    try {
+                        final int firstAddress = Integer.parseInt(startAddressTextField.getText());
+                        final int lastAddress = Integer.parseInt(endAddressTextField.getText());
+                        if (firstAddress > lastAddress) throw new Exception("Last Address is minor than first.");
+                        final Address.DataModel dataType = typeChoiceBox.getSelectionModel().getSelectedItem();
 
-                    for (int i = firstAddress; i <= lastAddress; i++) {
-                        boolean isAlreadyInTable = false;
-                        for (Address address : addressesTableView.getItems()) {
-                            if ((address.getNetworkID() == i) && (address.getDataModel().equals(dataType))) {
-                                isAlreadyInTable = true;
-                                break;
+                        for (int i = firstAddress; i <= lastAddress; i++) {
+                            boolean isAlreadyInTable = false;
+                            for (Address address : addressesTableView.getItems()) {
+                                if ((address.getNetworkID() == i) && (address.getDataModel().equals(dataType))) {
+                                    isAlreadyInTable = true;
+                                    break;
+                                }
+                            }
+                            if (!isAlreadyInTable) {
+                                Address newAddress = new Address();
+                                newAddress.setNetworkID(i);
+                                newAddress.setDataModel(dataType);
+                                addressesTableView.getItems().add(newAddress);
                             }
                         }
-                        if (!isAlreadyInTable) {
-                            Address newAddress = new Address();
-                            newAddress.setNetworkID(i);
-                            newAddress.setDataModel(dataType);
-                            addressesTableView.getItems().add(newAddress);
-                        }
+                        // Clear the new addresses fields
+                        startAddressTextField.clear();
+                        endAddressTextField.clear();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    // Clear the new addresses fields
-                    startAddressTextField.clear();
-                    endAddressTextField.clear();
+                });
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Button deleteAddressButton = new Button("Remove");
+                deleteAddressButton.setOnAction(event -> {
+                    final int CURRENT_INDEX = addressesTableView.getSelectionModel().getSelectedIndex();
+                    addressesTableView.getItems().removeAll(addressesTableView.getSelectionModel().getSelectedItems());
+                    addressesTableView.getSelectionModel().select(CURRENT_INDEX - 1);
+                });
+
+                Button okButton = new Button("OK");
+                okButton.setOnAction(event -> commitEdit(addressesTableView.getItems()));
+                okButton.setDefaultButton(true);
+
+                ToolBar toolBar = new ToolBar(
+                        startAddressTextField,
+                        endAddressTextField,
+                        typeChoiceBox,
+                        new HBox(addAddressButton,
+                                deleteAddressButton,
+                                okButton));
+                toolBar.setOrientation(Orientation.VERTICAL);
+
+                box.getChildren().addAll(addressesTableView, toolBar);
+                setGraphic(box);
+            } else {
+                if (getItem() != null) {
+                    setText(getItem().toString());
                 }
-            });
-
-            Button deleteAddressButton = new Button("Remove");
-            deleteAddressButton.setOnAction(event -> {
-                final int CURRENT_INDEX = addressesTableView.getSelectionModel().getSelectedIndex();
-                addressesTableView.getItems().removeAll(addressesTableView.getSelectionModel().getSelectedItems());
-                addressesTableView.getSelectionModel().select(CURRENT_INDEX - 1);
-            });
-
-            Button okButton = new Button("OK");
-            okButton.setOnAction(event -> commitEdit(addressesTableView.getItems()));
-            okButton.setDefaultButton(true);
-
-            ToolBar toolBar = new ToolBar(
-                    startAddressTextField,
-                    endAddressTextField,
-                    typeChoiceBox,
-                    new HBox(addAddressButton,
-                            deleteAddressButton,
-                            okButton));
-            toolBar.setOrientation(Orientation.VERTICAL);
-
-            box.getChildren().addAll(addressesTableView, toolBar);
-            setGraphic(box);
-        } else {
-            if (getItem() != null) {
-                setText(getItem().toString());
             }
         }
-    }
 
-    @Override
-    public void startEdit() {
-        super.startEdit();
-        updateViewMode();
-    }
+        @Override
+        public void startEdit() {
+            super.startEdit();
+            updateViewMode();
+        }
 
-    @Override
-    public void cancelEdit() {
-        super.cancelEdit();
-        setText(getItem() == null ? null : getItem().toString());
-        setGraphic(null);
-    }
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setText(getItem() == null ? null : getItem().toString());
+            setGraphic(null);
+        }
 
-    @Override
-    public void commitEdit(ObservableList<Address> newValue) {
-        super.commitEdit(newValue);
+        @Override
+        public void commitEdit(ObservableList<Address> newValue) {
+            super.commitEdit(newValue);
+        }
     }
 }

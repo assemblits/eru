@@ -34,45 +34,50 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
         return new Task<Result>() {
             @Override
             protected Result call() throws Exception {
-                log.info("Starting application load");
-                updateMessage("Starting application");
-                updateProgress(5, 100);
-
                 ConfigurableApplicationContext applicationContext = startApplicationContext();
                 ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
                 ProjectRepository projectRepository = beanFactory.getBean(ProjectRepository.class);
                 CustomLibraryLoader customLibraryLoader = beanFactory.getBean(CustomLibraryLoader.class);
+                Project project = null;
 
-                Project project;
-                updateMessage("Loading project");
-                updateProgress(75, 100);
-                List<Project> projects = projectRepository.findAll();
+                try {
+                    log.info("Starting application load");
+                    updateMessage("Starting application");
+                    updateProgress(5, 100);
 
-                if (projects.isEmpty()) {
-                    log.info("There is no project created, creating a new one");
-                    project = projectCreator.defaultProject();
-                    projectRepository.save(project);
-                } else {
-                    project = projects.get(0);
+                    updateMessage("Loading project");
+                    updateProgress(75, 100);
+                    List<Project> projects = projectRepository.findAll();
+
+                    if (projects.isEmpty()) {
+                        log.info("There is no project created, creating a new one");
+                        project = projectCreator.defaultProject();
+                        projectRepository.save(project);
+                    } else {
+                        updateMessage("From database.");
+                        project = projects.get(0);
+                    }
+
+                    updateMessage("Loading custom components");
+                    updateProgress(85, 100);
+
+                    customLibraryLoader.loadFromClassPath();
+
+                    updateProgress(100, 100);
+                    updateMessage("Done");
+
+                    log.info("Application loaded successfully");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                updateMessage("Loading custom components");
-                updateProgress(85, 100);
-
-                customLibraryLoader.loadFromClassPath();
-
-                updateProgress(100, 100);
-                updateMessage("Done");
-
-                log.info("Application loaded successfully");
                 return new Result(applicationContext, project);
             }
         };
     }
 
     private ConfigurableApplicationContext startApplicationContext() {
-        ConfigurableApplicationContext applicationContext =
-                SpringApplication.run(appClass, appArgs);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(appClass, appArgs);
         applicationContext.getAutowireCapableBeanFactory().autowireBean(appObject);
         return applicationContext;
     }
