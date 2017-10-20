@@ -1,6 +1,5 @@
 package org.assemblits.eru.gui.model;
 
-
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,5 +43,19 @@ public class ProjectModel {
                 .tags(tags)
                 .users(users)
                 .displays(displays).build();
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectModel{" +
+                "id=" + id.getValue() +
+                ", name=" + name.getValue() +
+                ", group=" + group.getName() +
+                ", devices=" + devices +
+                ", connections=" + connections +
+                ", tags=" + tags +
+                ", users=" + users +
+                ", displays=" + displays +
+                '}';
     }
 }

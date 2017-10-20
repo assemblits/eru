@@ -34,6 +34,9 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
         return new Task<Result>() {
             @Override
             protected Result call() throws Exception {
+                log.info("Starting application context");
+                updateMessage("Starting application context");
+                updateProgress(5, 100);
                 ConfigurableApplicationContext applicationContext = startApplicationContext();
                 ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
                 ProjectRepository projectRepository = beanFactory.getBean(ProjectRepository.class);
@@ -41,10 +44,6 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
                 Project project = null;
 
                 try {
-                    log.info("Starting application load");
-                    updateMessage("Starting application");
-                    updateProgress(5, 100);
-
                     updateMessage("Loading project");
                     updateProgress(75, 100);
                     List<Project> projects = projectRepository.findAll();
@@ -65,7 +64,6 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
 
                     updateProgress(100, 100);
                     updateMessage("Done");
-
                     log.info("Application loaded successfully");
                 } catch (Exception e) {
                     e.printStackTrace();

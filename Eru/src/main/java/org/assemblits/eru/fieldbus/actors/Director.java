@@ -1,4 +1,4 @@
-package org.assemblits.eru.comm.actors;
+package org.assemblits.eru.fieldbus.actors;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,21 +15,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 @EqualsAndHashCode(callSuper = true)
 @Component
 public class Director extends Thread {
-    private final LinkedBlockingQueue<Communicator> communicators = new LinkedBlockingQueue<>();
+    private final LinkedBlockingQueue<Executor> executors = new LinkedBlockingQueue<>();
 
     @Override
     public void run() {
-        log.info("Starting communicators updating...");
+        log.info("Starting executors updating...");
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Communicator headParticipant = communicators.take();
+                Executor headParticipant = executors.take();
                 if (!headParticipant.isPrepared()) headParticipant.prepare();
-                headParticipant.communicate();
-                if (headParticipant.isRepeatable()) communicators.put(headParticipant);
+                headParticipant.execute();
+                if (headParticipant.isRepeatable()) executors.put(headParticipant);
             } catch (InterruptedException e) {
                  log.info("Director stopped.");
             } catch (Exception e) {
                 log.error("Director halt", e);
+                throw new RuntimeException("Director halt: " + e.getLocalizedMessage());
             }
         }
     }

@@ -1,19 +1,18 @@
 package org.assemblits.eru.gui.dynamo;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.assemblits.eru.gui.dynamo.Dynamo;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.assemblits.eru.scene.control.LevelBar;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
 public class EruLevelBar extends LevelBar implements ValuableDynamo<Double> {
-    private StringProperty currentValueTagID;
+    private IntegerProperty currentValueTagID;
 
     public EruLevelBar() {
         super();
-        this.currentValueTagID = new SimpleStringProperty(this, "currentValueTagID", "");
+        this.currentValueTagID = new SimpleIntegerProperty(this, "currentValueTagID", -1);
     }
 
     @Override
@@ -27,17 +26,17 @@ public class EruLevelBar extends LevelBar implements ValuableDynamo<Double> {
     }
 
     @Override
-    public String getCurrentValueTagID() {
+    public Integer getCurrentValueTagID() {
         return currentValueTagID.get();
     }
 
     @Override
-    public StringProperty currentValueTagIDProperty() {
+    public IntegerProperty currentValueTagIDProperty() {
         return currentValueTagID;
     }
 
     @Override
-    public void setCurrentValueTagID(String currentValueTagID) {
+    public void setCurrentValueTagID(Integer currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
     }
 }

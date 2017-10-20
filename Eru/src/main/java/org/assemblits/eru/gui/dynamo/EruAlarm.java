@@ -1,19 +1,18 @@
 package org.assemblits.eru.gui.dynamo;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.assemblits.eru.gui.dynamo.Dynamo;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.assemblits.eru.scene.control.Alarm;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
 public class EruAlarm extends Alarm implements ValuableDynamo<Boolean> {
-    private StringProperty currentValueTagID;
+    private IntegerProperty currentValueTagID;
 
     public EruAlarm() {
         super();
-        this.currentValueTagID = new SimpleStringProperty(this, "currentValueTagID", "");
+        this.currentValueTagID = new SimpleIntegerProperty(this, "currentValueTagID", -1);
     }
 
     @Override
@@ -26,13 +25,13 @@ public class EruAlarm extends Alarm implements ValuableDynamo<Boolean> {
         return getCurrentValue();
     }
 
-    public String getCurrentValueTagID() {
+    public Integer getCurrentValueTagID() {
         return currentValueTagID.get();
     }
-    public StringProperty currentValueTagIDProperty() {
+    public IntegerProperty currentValueTagIDProperty() {
         return currentValueTagID;
     }
-    public void setCurrentValueTagID(String currentValueTagID) {
+    public void setCurrentValueTagID(Integer currentValueTagID) {
         this.currentValueTagID.set(currentValueTagID);
     }
 }
