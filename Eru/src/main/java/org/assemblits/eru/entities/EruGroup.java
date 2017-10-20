@@ -16,18 +16,16 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class TreeElementsGroup {
 
-    public enum Type {ROOT, CONNECTION, DEVICE, TAG, USER, DISPLAY}
-
-    private IntegerProperty                     id;
-    private StringProperty                      name;
-    private ObjectProperty<Type>                type;
-    private ObjectProperty<TreeElementsGroup>   parent;
-    private List<TreeElementsGroup>             children;
+    private IntegerProperty id;
+    private StringProperty name;
+    private StringProperty type;
+    private ObjectProperty<TreeElementsGroup> parent;
+    private List<TreeElementsGroup> children;
 
     public TreeElementsGroup() {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
-        this.type = new SimpleObjectProperty<>();
+        this.type = new SimpleStringProperty();
         this.parent = new SimpleObjectProperty<>();
         this.children = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
@@ -53,13 +51,13 @@ public class TreeElementsGroup {
         this.name.set(name);
     }
 
-    public Type getType() {
+    public String getType() {
         return type.get();
     }
-    public ObjectProperty<Type> typeProperty() {
+    public StringProperty typeProperty() {
         return type;
     }
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type.set(type);
     }
 
