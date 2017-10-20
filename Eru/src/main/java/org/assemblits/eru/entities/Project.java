@@ -8,6 +8,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class Project {
 
     public Project() {
         this.id = null;
-        this.name = "";
+        this.name = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         this.group = new EruGroup();
         this.devices = new ArrayList<>();
         this.connections = new ArrayList<>();

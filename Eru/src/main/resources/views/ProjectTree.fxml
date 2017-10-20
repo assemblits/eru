@@ -4,5 +4,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"  xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.assemblits.eru.gui.controller.ProjectTreeController">
-    <TreeView fx:id="projectTree"/>
+    <TreeView fx:id="projectTree"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0"
+              editable="true"/>
 </AnchorPane>

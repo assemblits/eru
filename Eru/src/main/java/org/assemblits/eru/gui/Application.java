@@ -1,17 +1,17 @@
 package org.assemblits.eru.gui;
 
-import org.assemblits.eru.gui.component.StartUpWizard;
-import org.assemblits.eru.gui.controller.EruController;
-import org.assemblits.eru.gui.controller.EruPreloaderController;
-import org.assemblits.eru.gui.service.ApplicationArgsPreparer;
-import org.assemblits.eru.gui.service.ApplicationLoader;
-import org.assemblits.eru.preferences.EruPreferences;
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.gui.component.StartUpWizard;
+import org.assemblits.eru.gui.controller.EruController;
+import org.assemblits.eru.gui.controller.EruPreloaderController;
+import org.assemblits.eru.gui.service.ApplicationArgsPreparer;
+import org.assemblits.eru.gui.service.ApplicationLoader;
+import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -43,15 +43,12 @@ public class Application extends javafx.application.Application {
             StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
             startUpWizard.startWizard();
         }
+
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
         Preloader preloaderWindow = loadService(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
-            ApplicationLoader.Result loadResult = (ApplicationLoader.Result) event.getSource().getValue();
-
-            applicationContext = loadResult.getApplicationContext();
-            ApplicationContextHolder.setApplicationContext(applicationContext);
-            eruController.startEru(loadResult.getProject(), stage);
-
+            ApplicationContextHolder.setApplicationContext((ConfigurableApplicationContext) event.getSource().getValue());
+            eruController.startEru(stage);
             eruPreferences = applicationContext.getBeanFactory().getBean(EruPreferences.class);
         });
 

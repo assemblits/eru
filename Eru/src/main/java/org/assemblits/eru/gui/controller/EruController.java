@@ -7,10 +7,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -23,23 +23,33 @@ import java.io.IOException;
 public class EruController {
 
     private final ConfigurableApplicationContext applicationContext;
-    private final MenuBarController menuBarController;
     private final CenterPaneController centerPaneController;
     private final ProjectTreeController projectTreeController;
     private final ProjectListener projectListener;
     private final EruPreferences eruPreferences;
+    private final ProjectRepository projectRepository;
+    private final ProjectModel projectModel;
 
-    public void startEru(Project project, Stage stage) {
+    public void startEru(Stage stage) {
         log.info("Starting Eru");
         setStage(stage);
-        setProject(project);
+        populateControllers();
         stage.show();
     }
 
-    private void setProject(Project project){
-        ProjectModel projectModel = ProjectModel.from(project);
-        centerPaneController.populateTables(projectModel);
-        projectTreeController.populateTree(projectModel);
+    private void populateControllers(){
+        centerPaneController.getUsersTableView().setUsers(projectModel.getUsers());
+        centerPaneController.getUsersTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
+        centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
+        centerPaneController.getConnectionsTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
+        centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
+        centerPaneController.getDevicesTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
+        centerPaneController.getTagsTableView().setTagsAndDevices(projectModel.getTags(), projectModel.getDevices());
+        centerPaneController.getTagsTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
+        centerPaneController.getDisplayTableViewView().setDisplays(projectModel.getDisplays());
+        centerPaneController.getDisplayTableViewView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
+
+        projectTreeController.setRoot(projectModel.getGroup().getValue());
         projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
         projectListener.setProjectModel(projectModel);
         projectListener.listen();

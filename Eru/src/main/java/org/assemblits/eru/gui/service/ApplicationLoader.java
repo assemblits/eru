@@ -1,13 +1,13 @@
 package org.assemblits.eru.gui.service;
 
-import org.assemblits.eru.entities.Project;
-import org.assemblits.eru.persistence.ProjectRepository;
-import org.assemblits.eru.jfx.scenebuilder.library.CustomLibraryLoader;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.NonNull;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.entities.Project;
+import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.jfx.scenebuilder.library.CustomLibraryLoader;
+import org.assemblits.eru.persistence.ProjectRepository;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,7 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.util.List;
 
 @Slf4j
-public class ApplicationLoader extends Service<ApplicationLoader.Result> {
+public class ApplicationLoader extends Service<ConfigurableApplicationContext> {
 
     private final Object appObject;
     private final Class<?> appClass;
@@ -30,46 +30,51 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
     }
 
     @Override
-    protected Task<Result> createTask() {
-        return new Task<Result>() {
+    protected Task<ConfigurableApplicationContext> createTask() {
+        return new Task<ConfigurableApplicationContext>() {
             @Override
-            protected Result call() throws Exception {
-                log.info("Starting application context");
-                updateMessage("Starting application context");
-                updateProgress(5, 100);
+            protected ConfigurableApplicationContext call() throws Exception {
                 ConfigurableApplicationContext applicationContext = startApplicationContext();
-                ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
-                ProjectRepository projectRepository = beanFactory.getBean(ProjectRepository.class);
-                CustomLibraryLoader customLibraryLoader = beanFactory.getBean(CustomLibraryLoader.class);
-                Project project = null;
-
                 try {
-                    updateMessage("Loading project");
+                    log.info("Starting application context");
+                    updateMessage("Starting application context");
+                    updateProgress(5, 100);
+                    ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
+                    ProjectRepository projectRepository = beanFactory.getBean(ProjectRepository.class);
+                    CustomLibraryLoader customLibraryLoader = beanFactory.getBean(CustomLibraryLoader.class);
+                    ProjectModel projectModel = beanFactory.getBean(ProjectModel.class);
+
+                    log.info("Searching project");
+                    updateMessage("Searching project");
                     updateProgress(75, 100);
+                    Project project;
                     List<Project> projects = projectRepository.findAll();
 
                     if (projects.isEmpty()) {
-                        log.info("There is no project created, creating a new one");
+                        log.info("No project found, creating a new one...");
+                        updateMessage("No project found, creating a new one...");
                         project = projectCreator.defaultProject();
-                        projectRepository.save(project);
+                        projectRepository.save(projectModel.get());
                     } else {
-                        updateMessage("From database.");
-                        project = projects.get(0);
+                        project = projects.get(0); // TODO: Project picker: Issue #86
                     }
 
+                    log.info("Loading " + project.getName() + " project...");
+                    updateMessage("Loading " + project.getName() + " project...");
+                    projectModel.set(project);
+
+                    log.info("Loading custom components");
                     updateMessage("Loading custom components");
                     updateProgress(85, 100);
-
                     customLibraryLoader.loadFromClassPath();
 
-                    updateProgress(100, 100);
-                    updateMessage("Done");
                     log.info("Application loaded successfully");
+                    updateMessage("Application loaded successfully");
+                    updateProgress(100, 100);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                return new Result(applicationContext, project);
+                return applicationContext;
             }
         };
     }
@@ -80,9 +85,4 @@ public class ApplicationLoader extends Service<ApplicationLoader.Result> {
         return applicationContext;
     }
 
-    @Value
-    public class Result {
-        private final ConfigurableApplicationContext applicationContext;
-        private final Project project;
-    }
 }

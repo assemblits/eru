@@ -5,13 +5,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import org.assemblits.eru.entities.*;
-import org.assemblits.eru.gui.model.ProjectModel;
-import org.assemblits.eru.persistence.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.assemblits.eru.entities.EruGroup;
+import org.assemblits.eru.entities.EruType;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -20,31 +17,18 @@ public class ProjectTreeController {
 
     @FXML
     private TreeView<EruGroup> projectTree;
-    @Autowired
-    private ProjectRepository projectRepository;
 
-    public void initialize() {
-        projectTree.setEditable(true);
-
-        AnchorPane.setTopAnchor(projectTree, 0.0);
-        AnchorPane.setBottomAnchor(projectTree, 0.0);
-        AnchorPane.setRightAnchor(projectTree, 0.0);
-        AnchorPane.setLeftAnchor(projectTree, 0.0);
-    }
-
-    public void populateTree(ProjectModel projectModel) {
-        if (projectTree.getRoot() != null) projectTree.getRoot().getChildren().clear();
-        projectTree.setRoot(createTree(projectModel.getGroup().getValue()));
+    public void setRoot(EruGroup eruGroup){
+        projectTree.setRoot(createTree(eruGroup));
         projectTree.getRoot().setExpanded(true);
-        projectTree.setOnEditCommit(event -> projectRepository.save(projectModel.get()));
     }
 
-    public void setOnSelectedItem(Consumer<EruType> onSelectedItem){
+    public void setOnSelectedItem(Consumer<EruGroup> onSelectedItem){
         projectTree.setCellFactory(c -> {
             GroupTreeCell groupTreeCell = new GroupTreeCell();
             groupTreeCell.selectedProperty().addListener((observable, wasSelected, isSelected) -> {
                 if (isSelected) {
-                    onSelectedItem.accept(groupTreeCell.getItem().getType());
+                    onSelectedItem.accept(groupTreeCell.getItem());
                 }
             });
             return groupTreeCell;
