@@ -11,7 +11,6 @@ import org.assemblits.eru.gui.controller.EruController;
 import org.assemblits.eru.gui.controller.EruPreloaderController;
 import org.assemblits.eru.gui.service.ApplicationArgsPreparer;
 import org.assemblits.eru.gui.service.ApplicationLoader;
-import org.assemblits.eru.preferences.EruPreference;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
