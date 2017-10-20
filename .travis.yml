@@ -1,4 +1,10 @@
 language: java
+# enable last Java, see https://github.com/travis-ci/travis-ci/issues/4042
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 sudo: false
 jdk:
   - oraclejdk8
