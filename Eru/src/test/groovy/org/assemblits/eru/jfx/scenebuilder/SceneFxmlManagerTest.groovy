@@ -13,8 +13,8 @@ class SceneFxmlManagerTest extends Specification {
     def localPath = ClassLoader.getSystemClassLoader().getResource('').path
 
     def applicationDirectory = Mock(EruPreference)
-    def eruPreferences = Mock(EruPreferences)
-    def sceneFxmlManager = new SceneFxmlManager(eruPreferences)
+    def eruPreferences = new EruPreferences()
+    def sceneFxmlManager = new SceneFxmlManager()
 
     def 'should create scene fxml file with the formatted name and with the right content'() {
         given:
