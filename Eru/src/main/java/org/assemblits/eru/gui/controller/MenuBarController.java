@@ -23,13 +23,12 @@ public class MenuBarController {
 
     private final ApplicationContext applicationContext;
 
-    private final EruPreferences eruPreferences;
-
     public void exitMenuItemSelected() {
         Platform.exit();
     }
 
     public void preferencesMenuItemSelected() {
+        final EruPreferences eruPreferences = new EruPreferences();
         Stage preferencesStage = new Stage();
         preferencesStage.setTitle("Preferences");
         preferencesStage.setScene(new Scene(loadNode("/views/Preferences.fxml")));

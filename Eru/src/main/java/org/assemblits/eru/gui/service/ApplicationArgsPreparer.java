@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class ApplicationArgsPreparer {
 
-    public String[] prepare(String[] savedArgs, EruPreferences eruPreferences) {
-        boolean isProjectDirectoryArgPresent = Arrays.stream(savedArgs)
-                .filter(arg -> arg.contains("project.directory")).findFirst().isPresent();
+    public String[] prepare(String[] savedArgs) {
+        final EruPreferences eruPreferences = new EruPreferences();
+        final boolean isProjectDirectoryArgPresent = Arrays.stream(savedArgs).anyMatch(arg -> arg.contains("project.directory"));
         if (!isProjectDirectoryArgPresent) {
             savedArgs = Arrays.copyOf(savedArgs, savedArgs.length + 1);
             savedArgs[savedArgs.length - 1] = "--project.directory=" + eruPreferences.getApplicationDirectory().getValue();

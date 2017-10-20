@@ -26,7 +26,6 @@ public class EruController {
     private final CenterPaneController centerPaneController;
     private final ProjectTreeController projectTreeController;
     private final ProjectListener projectListener;
-    private final EruPreferences eruPreferences;
     private final ProjectRepository projectRepository;
     private final ProjectModel projectModel;
 
@@ -57,6 +56,7 @@ public class EruController {
 
     private void setStage(Stage stage) {
         try {
+            EruPreferences eruPreferences = new EruPreferences();
             FXMLLoader fxmlLoader = createFxmlLoader();
             fxmlLoader.setLocation(getClass().getResource("/views/Main.fxml"));
             Parent appRootNode = fxmlLoader.load();

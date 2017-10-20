@@ -1,15 +1,13 @@
 package org.assemblits.eru.preferences;
 
-import org.assemblits.eru.gui.Application;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import org.assemblits.eru.gui.Application;
 
 import java.util.prefs.Preferences;
 
 /**
  * Created by mtrujillo on 9/2/17.
  */
-@Component
 @Data
 public class EruPreferences {
 

@@ -11,6 +11,7 @@ import org.assemblits.eru.gui.controller.EruController;
 import org.assemblits.eru.gui.controller.EruPreloaderController;
 import org.assemblits.eru.gui.service.ApplicationArgsPreparer;
 import org.assemblits.eru.gui.service.ApplicationLoader;
+import org.assemblits.eru.preferences.EruPreference;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,6 @@ public class Application extends javafx.application.Application {
     private ConfigurableApplicationContext applicationContext;
     @Autowired
     private EruController eruController;
-    private EruPreferences eruPreferences;
 
     public static void main(String[] args) {
         launchApplication(Application.class, args);
@@ -39,6 +39,7 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        final EruPreferences eruPreferences = new EruPreferences();
         if (!eruPreferences.getApplicationConfigured().getValue()) {
             StartUpWizard startUpWizard = new StartUpWizard(stage, eruPreferences);
             startUpWizard.startWizard();
@@ -47,9 +48,9 @@ public class Application extends javafx.application.Application {
         ApplicationLoader applicationLoader = new ApplicationLoader(this, getClass(), getApplicationParameters());
         Preloader preloaderWindow = loadService(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
-            ApplicationContextHolder.setApplicationContext((ConfigurableApplicationContext) event.getSource().getValue());
+            applicationContext = (ConfigurableApplicationContext) event.getSource().getValue();
+            ApplicationContextHolder.setApplicationContext(applicationContext);
             eruController.startEru(stage);
-            eruPreferences = applicationContext.getBeanFactory().getBean(EruPreferences.class);
         });
 
         preloaderWindow.start(stage);
@@ -60,12 +61,6 @@ public class Application extends javafx.application.Application {
     public void stop() throws Exception {
         super.stop();
         applicationContext.close();
-    }
-
-    @Override
-    public void init() throws Exception {
-        super.init();
-        eruPreferences = new EruPreferences();
     }
 
     private Preloader loadService(ApplicationLoader applicationLoader) {
@@ -87,9 +82,8 @@ public class Application extends javafx.application.Application {
     private String[] getApplicationParameters() {
         ApplicationArgsPreparer environmentPreparer = new ApplicationArgsPreparer();
         final Parameters parametersObject = getParameters();
-        return environmentPreparer.prepare(parametersObject.getRaw().toArray(new String[0]), eruPreferences);
+        return environmentPreparer.prepare(parametersObject.getRaw().toArray(new String[0]));
     }
-
 
     public enum Theme {
         DEFAULT, DARK;
