@@ -2,15 +2,12 @@ package org.assemblits.eru.gui.dynamo;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.assemblits.eru.scene.control.Gauge;
 
 /**
  * Created by mtrujillo on 8/25/17.
  */
-public class EruGauge extends Gauge implements Dynamo<Double> {
+public class EruGauge extends Gauge implements ValuableDynamo<Double> {
     private IntegerProperty currentValueTagID;
 
     public EruGauge() {

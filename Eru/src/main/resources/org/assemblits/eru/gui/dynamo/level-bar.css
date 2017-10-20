@@ -23,7 +23,7 @@
 
 .level-bar .current-value-text {
     -fx-font-weight: bold;
-    /*-fx-fill: -fx-text-base-color;*/
+    /*-fx-fill: -fx-text-eru-color;*/
     -fx-fill: BLACK;
 }
 .level-bar .title {

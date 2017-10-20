@@ -2,15 +2,12 @@ package org.assemblits.eru.gui.dynamo;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.assemblits.eru.scene.control.Alarm;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruAlarm extends Alarm implements Dynamo<Boolean> {
+public class EruAlarm extends Alarm implements ValuableDynamo<Boolean> {
     private IntegerProperty currentValueTagID;
 
     public EruAlarm() {

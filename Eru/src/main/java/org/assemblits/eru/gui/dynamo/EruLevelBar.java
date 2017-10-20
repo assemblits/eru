@@ -2,15 +2,12 @@ package org.assemblits.eru.gui.dynamo;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.assemblits.eru.scene.control.LevelBar;
 
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruLevelBar extends LevelBar implements Dynamo<Double> {
+public class EruLevelBar extends LevelBar implements ValuableDynamo<Double> {
     private IntegerProperty currentValueTagID;
 
     public EruLevelBar() {

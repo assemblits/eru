@@ -2,7 +2,6 @@ package org.assemblits.eru.gui.dynamo;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
 
 import java.util.ArrayList;
 import java.util.List;

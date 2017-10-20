@@ -6,10 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;

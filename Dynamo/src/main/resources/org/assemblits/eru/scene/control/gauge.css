@@ -122,11 +122,11 @@
 }
 
 .gauge .unit {
-    /*-fx-fill: ladder(-base, #888888 49%, white 50%);*/
+    /*-fx-fill: ladder(-eru, #888888 49%, white 50%);*/
     -fx-fill: #e5e5e5;
 }
 
 .gauge .value {
-    /*-fx-fill: ladder(-base, derive(#444444, -20%) 49%, #444444 50%);*/
+    /*-fx-fill: ladder(-eru, derive(#444444, -20%) 49%, #444444 50%);*/
     -fx-fill: #e5e5e5;
 }

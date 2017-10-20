@@ -3,13 +3,14 @@ package org.assemblits.eru.gui.model;
 import javafx.collections.ListChangeListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
+import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
+import org.assemblits.eru.gui.dynamo.Dynamo;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
-import org.assemblits.eru.gui.dynamo.base.Dynamo;
+import org.assemblits.eru.gui.dynamo.ValuableDynamo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -78,8 +79,9 @@ public class ProjectListener {
                 List<Dynamo> dynamos = extractor.extractFrom(newNode);
                 projectModel.getTags().forEach(tag ->
                         dynamos.stream()
-                               .filter(dynamo  -> dynamo.getCurrentValueTagID() == tag.getId())
-                               .forEach(dynamo -> tag.valueProperty().addListener((obj, old, newValue) -> dynamo.setCurrentTagValue(newValue)))
+                                .filter(dynamo -> dynamo instanceof ValuableDynamo)
+                               .filter(dynamo  -> ((ValuableDynamo) dynamo).getCurrentValueTagID() == tag.getId())
+                               .forEach(dynamo -> tag.valueProperty().addListener((obj, old, newValue) -> ((ValuableDynamo) dynamo).setCurrentTagValue(newValue)))
                 );
             }
         });
