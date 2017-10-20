@@ -1,5 +1,6 @@
 package org.assemblits.eru.gui.dynamo;
 
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -24,6 +25,7 @@ public class DynamoExtractorTest {
     @Before
     public void startFXToolkit() throws Exception {
         JFXPanel fxPanel = new JFXPanel();
+        Platform.runLater(() -> fxPanel.setVisible(false));
     }
 
     @Test
