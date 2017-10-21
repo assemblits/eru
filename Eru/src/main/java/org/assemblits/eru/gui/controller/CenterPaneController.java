@@ -59,10 +59,7 @@ public class CenterPaneController implements SceneBuilderStarter {
     }
 
     public void setVisibleTable(EruGroup eruGroup) {
-        tablesAnchorPane.getChildren()
-                .stream()
-                .filter(node -> node instanceof EruTableView)
-                .forEach(node -> node.setVisible(false));
+        tablesAnchorPane.getChildren().forEach(node -> node.setVisible(false));
 
         switch (eruGroup.getType()) {
             case DEVICE:

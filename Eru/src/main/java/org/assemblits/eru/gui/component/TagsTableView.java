@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 
 public class TagsTableView extends EruTableView<Tag> {
 
-    private final TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
     private final TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
     private final TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
     private final TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
@@ -40,9 +39,6 @@ public class TagsTableView extends EruTableView<Tag> {
     private final TableColumn<Tag, String> valueMapColumn = new TableColumn<>("Value Map");
 
     public TagsTableView() {
-        idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
-        idColumn.prefWidthProperty().bind(widthProperty().multiply(0.04));
-
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
@@ -183,7 +179,6 @@ public class TagsTableView extends EruTableView<Tag> {
         valueMapColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         getColumns().addAll(
-                idColumn,
                 groupColumn,
                 nameColumn,
                 enabledColumn,

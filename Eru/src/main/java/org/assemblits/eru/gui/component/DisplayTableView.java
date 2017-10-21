@@ -71,7 +71,7 @@ public class DisplayTableView extends EruTableView<Display> {
 
         setEditable(true);
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-//        addGraphicEditorMenuItem();
+        addGraphicEditorMenuItem();
     }
 
     private void showDisplay(Integer displayIndexInTable) {
@@ -86,6 +86,7 @@ public class DisplayTableView extends EruTableView<Display> {
             final Stage SCADA_STAGE = new Stage();
             display.setFxNode(displayNode);
             SCADA_STAGE.setScene(SCADA_SCENE);
+            SCADA_STAGE.setTitle(display.getName());
             SCADA_STAGE.show();
         } catch (Exception e) {
             log.error("Error launching display", e);

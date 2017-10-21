@@ -80,8 +80,8 @@ public class ProjectListener {
                 projectModel.getTags().forEach(tag ->
                         dynamos.stream()
                                 .filter(dynamo -> dynamo instanceof ValuableDynamo)
-                               .filter(dynamo  -> ((ValuableDynamo) dynamo).getCurrentValueTagID() == tag.getId())
-                               .forEach(dynamo -> tag.valueProperty().addListener((obj, old, newValue) -> ((ValuableDynamo) dynamo).setCurrentTagValue(newValue)))
+                                .filter(dynamo  -> ((ValuableDynamo) dynamo).getCurrentValueTagName().equals(tag.getName()))
+                                .forEach(dynamo -> tag.valueProperty().addListener((obj, old, newValue) -> ((ValuableDynamo) dynamo).setCurrentTagValue(newValue)))
                 );
             }
         });
