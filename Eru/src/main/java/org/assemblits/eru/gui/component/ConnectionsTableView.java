@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +84,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
         typeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getClass().getSimpleName()));
 
         enabledColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
-        enabledColumn.setCellValueFactory(param -> param.getValue().enabledProperty());
+        enabledColumn.setCellValueFactory((TableColumn.CellDataFeatures<Connection, Boolean> param) -> param.getValue().enabledProperty());
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
         timeoutColumn.prefWidthProperty().bind(this.widthProperty().multiply(0.07));
@@ -380,6 +382,11 @@ public class ConnectionsTableView extends EruTableView<Connection> {
             if (!empty) {
                 setGraphic(toggleButton);
             }
+        }
+
+        @Override
+        public void commitEdit(Void newValue) {
+            super.commitEdit(newValue);
         }
     }
 }

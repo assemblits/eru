@@ -2,9 +2,14 @@ package org.assemblits.eru.gui.component;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public abstract class EruTableView<Item> extends TableView<Item> {
 
@@ -15,7 +20,13 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     public abstract void addNewItem();
 
     public void setOnEditCommit(Runnable onEditCommit) {
-        getColumns().forEach(column -> column.setOnEditCommit(event -> onEditCommit.run()));
+        // To be sure the runnable will be executed after commit event finish, we add a quick delay
+        int delayToRunOnEditCommit = 500;
+        getColumns().forEach(column -> column.addEventHandler(TableColumn.editCommitEvent(), event -> {
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+            executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
+            executor.shutdown();
+        }));
     }
 
     private void deleteSelectedItems() {

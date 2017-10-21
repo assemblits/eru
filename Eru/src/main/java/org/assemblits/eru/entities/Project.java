@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Data
 @Entity
-@Builder
 @ToString
 @AllArgsConstructor
 @Table(name = "project", schema = "public")

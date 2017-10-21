@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectModel {
 
+    private Project project;
     private IntegerProperty id;
     private StringProperty name;
     private ObjectProperty<EruGroup> group;
@@ -21,6 +22,7 @@ public class ProjectModel {
     private ObservableList<Display> displays;
 
     public void set(Project project) {
+        this.project = project;
         this.id = new SimpleIntegerProperty(project.getId());
         this.name = new SimpleStringProperty(project.getName());
         this.group = new SimpleObjectProperty<>(project.getGroup());
@@ -32,28 +34,20 @@ public class ProjectModel {
     }
 
     public Project get() {
-        return Project.builder()
-                .id(id.get())
-                .name(name.get())
-                .group(group.get())
-                .devices(devices)
-                .connections(connections)
-                .tags(tags)
-                .users(users)
-                .displays(displays).build();
+        return project;
     }
 
     @Override
     public String toString() {
-        return "ProjectModel{" +
-                "id=" + id.getValue() +
-                ", name=" + name.getValue() +
-                ", group=" + group.getName() +
-                ", devices=" + devices +
-                ", connections=" + connections +
-                ", tags=" + tags +
-                ", users=" + users +
-                ", displays=" + displays +
+        return "ProjectModel{" + "\n" +
+                "\tid=" + id.getValue() +"\n" +
+                "\tname=" + name.getValue() + "\n" +
+                "\tgroup=" + group.getName() + "\n" +
+                "\tdevices=" + devices + "\n" +
+                "\tconnections=" + connections + "\n" +
+                "\ttags=" + tags + "\n" +
+                "\tusers=" + users + "\n" +
+                "\tdisplays=" + displays + "\n" +
                 '}';
     }
 }
