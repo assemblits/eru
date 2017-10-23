@@ -24,7 +24,7 @@ public class User {
     private StringProperty groupName;
 
     public User() {
-        this.id         = new SimpleIntegerProperty(0);
+        this.id         = new SimpleIntegerProperty();
         this.userName   = new SimpleStringProperty("");
         this.firstName  = new SimpleStringProperty("");
         this.lastName   = new SimpleStringProperty("");

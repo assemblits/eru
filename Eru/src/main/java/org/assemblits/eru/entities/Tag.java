@@ -46,7 +46,7 @@ public class Tag {
 
     /* ********** Constructors ********** */
     public Tag() {
-        this.id = new SimpleIntegerProperty(this, "id", 0);
+        this.id = new SimpleIntegerProperty(this, "id");
         this.name = new SimpleStringProperty(this, "name", "");
         this.enabled = new SimpleBooleanProperty(this, "enabled", true);
         this.description = new SimpleStringProperty(this, "description", "");

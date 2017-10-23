@@ -42,7 +42,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     /* ********** Properties ********** */
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id.get();
     }

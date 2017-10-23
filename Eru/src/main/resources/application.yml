@@ -8,10 +8,10 @@ spring:
     properties:
       hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   datasource:
-    url: jdbc:h2:${project.directory}/eru
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/eru?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: eru
+    password: 951753
 logging:
   file: ${project.directory}/logs/eru.log
   level.org.springframework.web: INFO
