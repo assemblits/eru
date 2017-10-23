@@ -19,7 +19,7 @@ public abstract class EruTableView<Item> extends TableView<Item> {
 
     public abstract void addNewItem();
 
-    public void setOnEditCommit(Runnable onEditCommit) {
+    public void addActionOnEditCommit(Runnable onEditCommit) {
         // To be sure the runnable will be executed after commit event finish, we add a quick delay
         int delayToRunOnEditCommit = 500;
         getColumns().forEach(column -> column.addEventHandler(TableColumn.editCommitEvent(), event -> {

@@ -1,5 +1,6 @@
 package org.assemblits.eru.gui.model;
 
+
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectModel {
 
-    private Project project;
+    private ObjectProperty<Project> project;
     private IntegerProperty id;
     private StringProperty name;
     private ObjectProperty<EruGroup> group;
@@ -21,8 +22,11 @@ public class ProjectModel {
     private ObservableList<User> users;
     private ObservableList<Display> displays;
 
-    public void set(Project project) {
-        this.project = project;
+    public ProjectModel() {
+    }
+
+    public void load(Project project){
+        this.project = new SimpleObjectProperty<>(project);
         this.id = new SimpleIntegerProperty(project.getId());
         this.name = new SimpleStringProperty(project.getName());
         this.group = new SimpleObjectProperty<>(project.getGroup());
@@ -33,21 +37,7 @@ public class ProjectModel {
         this.displays = FXCollections.observableList(project.getDisplays());
     }
 
-    public Project get() {
-        return project;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectModel{" + "\n" +
-                "\tid=" + id.getValue() +"\n" +
-                "\tname=" + name.getValue() + "\n" +
-                "\tgroup=" + group.getName() + "\n" +
-                "\tdevices=" + devices + "\n" +
-                "\tconnections=" + connections + "\n" +
-                "\ttags=" + tags + "\n" +
-                "\tusers=" + users + "\n" +
-                "\tdisplays=" + displays + "\n" +
-                '}';
+    public Project getProject(){
+        return project.getValue();
     }
 }

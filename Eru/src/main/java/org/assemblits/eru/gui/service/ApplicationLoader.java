@@ -56,14 +56,14 @@ public class ApplicationLoader extends Service<ConfigurableApplicationContext> {
                         log.info("No project found, creating a new one...");
                         updateMessage("No project found, creating a new one...");
                         project = projectCreator.defaultProject();
-                        projectRepository.save(projectModel.get());
+                        projectRepository.save(project);
                     } else {
                         project = projects.get(0); // TODO: Project picker: Issue #86
                     }
 
                     log.info("Loading " + project.getName() + " project...");
                     updateMessage("Loading " + project.getName() + " project...");
-                    projectModel.set(project);
+                    projectModel.load(project);
 
                     log.info("Loading custom components");
                     updateMessage("Loading custom components");

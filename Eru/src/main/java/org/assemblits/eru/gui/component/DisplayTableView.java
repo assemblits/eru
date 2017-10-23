@@ -18,15 +18,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.entities.EruType;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 

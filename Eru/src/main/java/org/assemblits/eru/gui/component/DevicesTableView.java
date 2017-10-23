@@ -140,9 +140,7 @@ public class DevicesTableView extends EruTableView<Device> {
 
     public void setDevicesAndConnections(ObservableList<Device> devices, ObservableList<Connection> connections) {
         super.setItems(devices);
-        connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(
-                FXCollections.observableList(connections)
-        ));
+        connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(connections));
     }
 
     class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<Address>> {
