@@ -85,7 +85,6 @@ public class EruController {
     }
 
     private void saveProject(){
-        log.info("Saving " + projectModel.getProject());
         Project savedProject = projectRepository.save(projectModel.getProject());
     }
 

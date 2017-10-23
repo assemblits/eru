@@ -77,8 +77,8 @@ public class DevicesTableView extends EruTableView<Device> {
         enabledColumn.setCellFactory(CheckBoxTableCell.forTableColumn(enabledColumn));
 
         addressesColumn.prefWidthProperty().bind(widthProperty().multiply(0.33));
-        addressesColumn.setCellValueFactory(param -> {
-            final ListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableArrayList(param.getValue().getAddresses())); // Set initial values
+        addressesColumn.setCellValueFactory(param -> { // Custom Listener to set address owner:
+            SimpleListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableList(param.getValue().getAddresses()));// Set initial values
             addressesInDevice.addListener((ListChangeListener<Address>) c -> {                                                                            // Set updater
                 while (c.next()) {
                     if (c.wasPermutated()) {
@@ -88,13 +88,11 @@ public class DevicesTableView extends EruTableView<Device> {
                     } else {
                         for (Address remAddress : c.getRemoved()) {
                             remAddress.setOwner(null);
-                            param.getValue().getAddresses().remove(remAddress);
                         }
                         for (Address addAddress : c.getAddedSubList()) {
                             if (addAddress.getOwner() != getSelectionModel().getSelectedItem()) {
                                 addAddress.setOwner(getSelectionModel().getSelectedItem());
                             }
-                            param.getValue().getAddresses().add(addAddress);
                         }
                     }
                 }
