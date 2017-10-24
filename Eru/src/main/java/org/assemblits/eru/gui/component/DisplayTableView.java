@@ -15,6 +15,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +84,7 @@ public class DisplayTableView extends EruTableView<Display> {
             final Scene SCADA_SCENE = new Scene(displayNode);
             final Stage SCADA_STAGE = new Stage(StageStyle.TRANSPARENT);
             display.setFxNode(displayNode);
+            SCADA_SCENE.setFill(Color.TRANSPARENT);
             SCADA_STAGE.setScene(SCADA_SCENE);
             SCADA_STAGE.setTitle(display.getName());
             SCADA_STAGE.show();
