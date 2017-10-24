@@ -1,7 +1,7 @@
 package org.assemblits.eru.entities;
 
-import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlock;
 import javafx.beans.property.*;
+import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlock;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Table(name = "device", schema = "public")
 public class  Device {
     /* ********** Fields ********** */
-    private int                         id;
+    private final IntegerProperty       id;
     private final StringProperty        name;
     private final IntegerProperty       unitIdentifier;
     private final StringProperty        status;
@@ -31,6 +31,7 @@ public class  Device {
 
     /* ********** Constructors ********** */
     public Device() {
+        id                  = new SimpleIntegerProperty();
         name                = new SimpleStringProperty("");
         unitIdentifier      = new SimpleIntegerProperty(0);
         status              = new SimpleStringProperty("");
@@ -44,11 +45,14 @@ public class  Device {
 
     /* ********** Setters and Getters ********** */
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
+        return id.get();
+    }
+    public IntegerProperty idProperty() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.id.set(id);
     }
 
     @Column(name = "name")

@@ -24,7 +24,7 @@ public class User {
     private StringProperty groupName;
 
     public User() {
-        this.id         = new SimpleIntegerProperty(0);
+        this.id         = new SimpleIntegerProperty();
         this.userName   = new SimpleStringProperty("");
         this.firstName  = new SimpleStringProperty("");
         this.lastName   = new SimpleStringProperty("");
@@ -34,17 +34,16 @@ public class User {
         this.groupName  = new SimpleStringProperty("");
     }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    @Id @GeneratedValue
+    public Integer getId() {
         return id.get();
     }
     public IntegerProperty idProperty() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
-
 
     public String getUserName() {
         return userName.get();

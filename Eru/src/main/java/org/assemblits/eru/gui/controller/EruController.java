@@ -1,10 +1,5 @@
 package org.assemblits.eru.gui.controller;
 
-import org.assemblits.eru.entities.Project;
-import org.assemblits.eru.gui.exception.EruException;
-import org.assemblits.eru.gui.model.ProjectModel;
-import org.assemblits.eru.preferences.EruPreferences;
-import org.assemblits.eru.gui.model.ProjectListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +7,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.entities.Project;
+import org.assemblits.eru.gui.exception.EruException;
+import org.assemblits.eru.gui.model.ProjectListener;
+import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.persistence.ProjectRepository;
+import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -23,30 +24,23 @@ import java.io.IOException;
 public class EruController {
 
     private final ConfigurableApplicationContext applicationContext;
-    private final MenuBarController menuBarController;
     private final CenterPaneController centerPaneController;
     private final ProjectTreeController projectTreeController;
     private final ProjectListener projectListener;
-    private final EruPreferences eruPreferences;
+    private final ProjectRepository projectRepository;
+    private final ProjectModel projectModel;
 
-    public void startEru(Project project, Stage stage) {
+    public void startEru(Stage stage) {
         log.info("Starting Eru");
         setStage(stage);
-        setProject(project);
+        populateControllers();
+        configureAutoSave();
         stage.show();
-    }
-
-    private void setProject(Project project){
-        ProjectModel projectModel = ProjectModel.from(project);
-        projectTreeController.populateTree(project.getGroup(), centerPaneController::onTreeItemSelected);
-        centerPaneController.setProjectModel(projectModel);
-        menuBarController.setProjectModel(projectModel);
-        projectListener.setProjectModel(projectModel);
-        projectListener.listen();
     }
 
     private void setStage(Stage stage) {
         try {
+            EruPreferences eruPreferences = new EruPreferences();
             FXMLLoader fxmlLoader = createFxmlLoader();
             fxmlLoader.setLocation(getClass().getResource("/views/Main.fxml"));
             Parent appRootNode = fxmlLoader.load();
@@ -65,6 +59,34 @@ public class EruController {
             log.error("Error loading eru main screen");
             throw new EruException("Error loading eru main screen", e);
         }
+    }
+
+    private void populateControllers(){
+        centerPaneController.getUsersTableView().setUsers(projectModel.getUsers());
+        centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
+        centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
+        centerPaneController.getTagsTableView().setTagsAndDevices(projectModel.getTags(), projectModel.getDevices());
+        centerPaneController.getDisplayTableViewView().setDisplays(projectModel.getDisplays());
+
+        projectTreeController.setRoot(projectModel.getGroup().getValue());
+        projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
+
+        projectListener.setProjectModel(projectModel);
+        projectListener.listen();
+    }
+
+
+    private void configureAutoSave() {
+        centerPaneController.getUsersTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getConnectionsTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getDevicesTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getTagsTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getDisplayTableViewView().addActionOnEditCommit(this::saveProject);
+    }
+
+    void saveProject(){
+        log.info("Saving...");
+        Project savedProject = projectRepository.save(projectModel.getProject().getValue());
     }
 
     private FXMLLoader createFxmlLoader() {

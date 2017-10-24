@@ -40,13 +40,13 @@ public abstract class Connection {
     public abstract void disconnect();
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id.get();
     }
     public IntegerProperty idProperty() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

@@ -1,7 +1,6 @@
 package org.assemblits.eru.gui.service;
 
-import org.assemblits.eru.entities.Project;
-import org.assemblits.eru.entities.TreeElementsGroup;
+import org.assemblits.eru.entities.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,37 +11,37 @@ public class ProjectCreator {
         Project newProject = new Project();
         newProject.setName("Project");
 
-        TreeElementsGroup root = new TreeElementsGroup();
+        EruGroup root = new EruGroup();
         root.setName("Project");
-        root.setType(TreeElementsGroup.Type.ROOT);
+        root.setType(EruType.UNKNOWN);
 
-        TreeElementsGroup connections = new TreeElementsGroup();
+        EruGroup connections = new EruGroup();
         connections.setName("Connections");
-        connections.setType(TreeElementsGroup.Type.CONNECTION);
+        connections.setType(EruType.CONNECTION);
         connections.setParent(root);
         root.getChildren().add(connections);
 
-        TreeElementsGroup devices = new TreeElementsGroup();
+        EruGroup devices = new EruGroup();
         devices.setName("Devices");
-        devices.setType(TreeElementsGroup.Type.DEVICE);
+        devices.setType(EruType.DEVICE);
         devices.setParent(root);
         root.getChildren().add(devices);
 
-        TreeElementsGroup tags = new TreeElementsGroup();
+        EruGroup tags = new EruGroup();
         tags.setName("Tags");
-        tags.setType(TreeElementsGroup.Type.TAG);
+        tags.setType(EruType.TAG);
         tags.setParent(root);
         root.getChildren().add(tags);
 
-        TreeElementsGroup users = new TreeElementsGroup();
+        EruGroup users = new EruGroup();
         users.setName("Users");
-        users.setType(TreeElementsGroup.Type.USER);
+        users.setType(EruType.USER);
         users.setParent(root);
         root.getChildren().add(users);
 
-        TreeElementsGroup displays = new TreeElementsGroup();
+        EruGroup displays = new EruGroup();
         displays.setName("Displays");
-        displays.setType(TreeElementsGroup.Type.DISPLAY);
+        displays.setType(EruType.DISPLAY);
         displays.setParent(root);
         root.getChildren().add(displays);
 

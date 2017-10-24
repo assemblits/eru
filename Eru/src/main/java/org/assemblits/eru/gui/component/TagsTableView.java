@@ -1,7 +1,7 @@
 package org.assemblits.eru.gui.component;
 
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
@@ -12,15 +12,11 @@ import javafx.util.StringConverter;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.entities.TreeElementsGroup;
-import org.assemblits.eru.gui.model.ProjectModel;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public class TagsTableView extends EruTableView<Tag> {
 
-    private final TableColumn<Tag, Integer> idColumn = new TableColumn<>("ID");
     private final TableColumn<Tag, String> groupColumn = new TableColumn<>("Group");
     private final TableColumn<Tag, String> nameColumn = new TableColumn<>("Name");
     private final TableColumn<Tag, Boolean> enabledColumn = new TableColumn<>("Enabled");
@@ -43,9 +39,6 @@ public class TagsTableView extends EruTableView<Tag> {
     private final TableColumn<Tag, String> valueMapColumn = new TableColumn<>("Value Map");
 
     public TagsTableView() {
-        idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
-        idColumn.prefWidthProperty().bind(widthProperty().multiply(0.04));
-
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         groupColumn.prefWidthProperty().bind(widthProperty().multiply(0.06));
@@ -186,7 +179,6 @@ public class TagsTableView extends EruTableView<Tag> {
         valueMapColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         getColumns().addAll(
-                idColumn,
                 groupColumn,
                 nameColumn,
                 enabledColumn,
@@ -219,99 +211,77 @@ public class TagsTableView extends EruTableView<Tag> {
         Tag newTag = new Tag();
         newTag.setName("New tag");
         newTag.setGroupName("Tags");
-        items.add(newTag);
+        getItems().add(newTag);
         getSelectionModel().clearSelection();
         getSelectionModel().select(newTag);
-
-        // *******************************************************************************
-        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
-        // When a new object is added to the table, a new filteredList has to be created
-        // and the items updated, because the filteredList is non-editable. So, despite the
-        // filtered List is setted to the tableview, a list is used in the background. The
-        // filtered list is only used to be able to filter using the textToFilter.
-        //
-        //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(items);
-        super.setItems(filteredItems);
-        // *******************************************************************************
     }
 
-    @Override
-    public TreeElementsGroup.Type getItemType() {
-        return TreeElementsGroup.Type.TAG;
+    public void setTagsAndDevices(ObservableList<Tag> tags, ObservableList<Device> devices) {
+        setItems(tags);
+        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable(devices));
     }
 
-    @Override
-    protected List<Tag> getItemsFromProjectModel(ProjectModel projectModel) {
-        return projectModel.getTags();
-    }
+    // ** Table Cell to select Linked Addresses ** //
+    class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
 
-    @Override
-    public void setProjectModel(ProjectModel projectModel) {
-        super.setProjectModel(projectModel);
-        addressColumn.setCellFactory(param -> new AddressesTableCellForTagTable(projectModel));
-    }
-}
+        private ObservableList<Device> devices;
 
-class AddressesTableCellForTagTable extends TableCell<Tag, Address> {
+        public AddressesTableCellForTagTable(ObservableList<Device> devices) {
+            this.devices = devices;
+        }
 
-    private ProjectModel projectModel;
+        @Override
+        protected void updateItem(Address item, boolean empty) {
+            super.updateItem(item, empty);
+            updateViewMode();
+        }
 
-    public AddressesTableCellForTagTable(ProjectModel projectModel) {
-        this.projectModel = projectModel;
-    }
+        private void updateViewMode() {
+            setGraphic(null);
+            setText(null);
+            if (isEditing()) {
+                VBox box = new VBox();
 
-    @Override
-    protected void updateItem(Address item, boolean empty) {
-        super.updateItem(item, empty);
-        updateViewMode();
-    }
+                ListView<Device> deviceListView = new ListView<>();
+                ListView<Address> addressListView = new ListView<>();
 
-    private void updateViewMode() {
-        setGraphic(null);
-        setText(null);
-        if (isEditing()) {
-            VBox box = new VBox();
+                deviceListView.getItems().addAll(devices);
+                deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null)
+                        addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
+                });
 
-            ListView<Device> deviceListView = new ListView<>();
-            ListView<Address> addressListView = new ListView<>();
+                Button okButton = new Button("OK");
+                okButton.setDefaultButton(true);
+                okButton.setOnAction(event -> commitEdit(addressListView.getSelectionModel().getSelectedItem()));
 
-            deviceListView.getItems().addAll(projectModel.getDevices());
-            deviceListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null)
-                    addressListView.getItems().addAll(FXCollections.observableArrayList(newValue.getAddresses()));
-            });
+                ToolBar toolBar = new ToolBar(okButton);
 
-            Button okButton = new Button("OK");
-            okButton.setDefaultButton(true);
-            okButton.setOnAction(event -> commitEdit(addressListView.getSelectionModel().getSelectedItem()));
-
-            ToolBar toolBar = new ToolBar(okButton);
-
-            box.getChildren().addAll(new HBox(deviceListView, addressListView), toolBar);
-            setGraphic(box);
-        } else {
-            if (getItem() != null) {
-                setText(getItem().toString());
+                box.getChildren().addAll(new HBox(deviceListView, addressListView), toolBar);
+                setGraphic(box);
+            } else {
+                if (getItem() != null) {
+                    setText(getItem().toString());
+                }
             }
         }
-    }
 
-    @Override
-    public void startEdit() {
-        super.startEdit();
-        updateViewMode();
-    }
+        @Override
+        public void startEdit() {
+            super.startEdit();
+            updateViewMode();
+        }
 
-    @Override
-    public void cancelEdit() {
-        super.cancelEdit();
-        setText(getItem() == null ? null : getItem().toString());
-        setGraphic(null);
-    }
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setText(getItem() == null ? null : getItem().toString());
+            setGraphic(null);
+        }
 
-    @Override
-    public void commitEdit(Address newValue) {
-        super.commitEdit(newValue);
+        @Override
+        public void commitEdit(Address newValue) {
+            super.commitEdit(newValue);
+        }
     }
 }

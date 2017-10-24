@@ -22,9 +22,10 @@ public class ProjectListenerTest {
     public void setUp() throws Exception {
         Project project = new Project();
         project.setId(0);
-        projectModel = ProjectModel.from(project);
+        projectModel = new ProjectModel();
         projectContractor = new ProjectContractor(new Agency(), new Director());
         projectListener = new ProjectListener(projectContractor);
+        projectModel.load(project);
         projectListener.setProjectModel(projectModel);
         projectListener.listen();
     }

@@ -1,13 +1,13 @@
 package org.assemblits.eru.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +16,6 @@ import java.util.List;
  */
 @Data
 @Entity
-@Builder
-@ToString
 @AllArgsConstructor
 @Table(name = "project", schema = "public")
 public class Project {
@@ -28,7 +26,7 @@ public class Project {
     String name;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    TreeElementsGroup group;
+    EruGroup group;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<Device> devices;
@@ -47,12 +45,13 @@ public class Project {
 
     public Project() {
         this.id = null;
-        this.name = "";
-        this.group = new TreeElementsGroup();
+        this.name = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        this.group = new EruGroup();
         this.devices = new ArrayList<>();
         this.connections = new ArrayList<>();
         this.tags = new ArrayList<>();
         this.users = new ArrayList<>();
         this.displays = new ArrayList<>();
     }
+
 }

@@ -20,5 +20,4 @@ public class EruPreloaderController {
         statusLabel.textProperty().bind(applicationLoader.messageProperty());
     }
 
-
 }

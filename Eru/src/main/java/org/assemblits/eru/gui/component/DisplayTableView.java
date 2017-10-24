@@ -1,7 +1,7 @@
 package org.assemblits.eru.gui.component;
 
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,15 +18,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.entities.TreeElementsGroup;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -67,7 +64,7 @@ public class DisplayTableView extends EruTableView<Display> {
                 nameColumn,
                 stageTypeColumn,
                 initialDisplayColumn
-                );
+        );
 
         setEditable(true);
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -86,6 +83,7 @@ public class DisplayTableView extends EruTableView<Display> {
             final Stage SCADA_STAGE = new Stage();
             display.setFxNode(displayNode);
             SCADA_STAGE.setScene(SCADA_SCENE);
+            SCADA_STAGE.setTitle(display.getName());
             SCADA_STAGE.show();
         } catch (Exception e) {
             log.error("Error launching display", e);
@@ -102,7 +100,7 @@ public class DisplayTableView extends EruTableView<Display> {
                 getBean(SceneBuilderStarter.class);
         displayEditor.setOnAction(event ->
                 sceneBuilderStarter.startSceneBuilder(getSelectionModel().getSelectedItem()));
-        contextMenu.getItems().add(displayEditor);
+        getContextMenu().getItems().add(displayEditor);
     }
 
     @Override
@@ -148,57 +146,36 @@ public class DisplayTableView extends EruTableView<Display> {
 
 
         result.ifPresent(display -> {
-            items.add(display);
+            getItems().add(display);
             getSelectionModel().select(display);
         });
-
-        // *******************************************************************************
-        // Implemented to solve : https://javafx-jira.kenai.com/browse/RT-32091
-        // When a new object is added to the table, a new filteredList has to be created
-        // and the items updated, because the filteredList is non-editable. So, despite the
-        // filtered List is setted to the tableview, a list is used in the background. The
-        // filtered list is only used to be able to filter using the textToFilter.
-        //
-        //Wrap ObservableList into FilteredList
-        super.filteredItems = new FilteredList<>(items);
-        super.setItems(filteredItems);
-        // *******************************************************************************
     }
 
-    @Override
-    public TreeElementsGroup.Type getItemType() {
-        return TreeElementsGroup.Type.DISPLAY;
+    public void setDisplays(ObservableList<Display> displays) {
+        setItems(displays);
     }
 
-    @Override
-    protected List<Display> getItemsFromProjectModel(ProjectModel projectModel) {
-        return projectModel.getDisplays();
-    }
+    class ShowActionCell<S> extends TableCell<S, Void> {
+        private Button toggleButton;
+        private ImageView buttonImageView = new ImageView(new Image(getClass().getResource("/images/show-display.png").toExternalForm()));
 
+        public ShowActionCell(Consumer<Integer> onButtonPressedAction) {
+            toggleButton = new Button();
 
-}
+            toggleButton.setGraphic(buttonImageView);
+            toggleButton.setOnAction(event -> {
+                log.info("launching");
+                onButtonPressedAction.accept(getIndex());
+            });
+            setAlignment(Pos.CENTER);
+        }
 
-@Slf4j
-class ShowActionCell<S> extends TableCell<S, Void> {
-    private Button toggleButton;
-    private ImageView buttonImageView = new ImageView(new Image(getClass().getResource("/images/show-display.png").toExternalForm()));
-
-    public ShowActionCell(Consumer<Integer> onButtonPressedAction) {
-        toggleButton = new Button();
-
-        toggleButton.setGraphic(buttonImageView);
-        toggleButton.setOnAction(event -> {
-            log.info("launching");
-            onButtonPressedAction.accept(getIndex());
-        });
-        setAlignment(Pos.CENTER);
-    }
-
-    @Override
-    protected void updateItem(Void item, boolean empty) {
-        setGraphic(null);
-        if (!empty) {
-            setGraphic(toggleButton);
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            setGraphic(null);
+            if (!empty) {
+                setGraphic(toggleButton);
+            }
         }
     }
 }

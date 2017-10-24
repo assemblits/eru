@@ -1,19 +1,19 @@
 package org.assemblits.eru.gui.dynamo;
 
 import eu.hansolo.medusa.Gauge;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Created by marlontrujillo1080 on 10/24/17.
  */
 public class MedusaGauge extends Gauge implements ValuableDynamo {
 
-    private IntegerProperty currentValueTagID;
+    private StringProperty currentValueTagName;
 
     public MedusaGauge() {
         super();
-        this.currentValueTagID = new SimpleIntegerProperty(this, "currentValueTagID", -1);
+        this.currentValueTagName = new SimpleStringProperty(this, "currentValueTagID", "");
     }
 
     @Override
@@ -27,17 +27,17 @@ public class MedusaGauge extends Gauge implements ValuableDynamo {
     }
 
     @Override
-    public Integer getCurrentValueTagID() {
-        return currentValueTagID.get();
+    public String getCurrentValueTagName() {
+        return String.valueOf(currentValueTagName.get());
     }
 
     @Override
-    public IntegerProperty currentValueTagIDProperty() {
-        return currentValueTagID;
+    public StringProperty currentValueTagNameProperty() {
+        return currentValueTagName;
     }
 
     @Override
-    public void setCurrentValueTagID(Integer currentValueTagID) {
-        this.currentValueTagID.set(currentValueTagID);
+    public void setCurrentValueTagName(String currentValueTagName) {
+        this.currentValueTagName.set(currentValueTagName);
     }
 }
