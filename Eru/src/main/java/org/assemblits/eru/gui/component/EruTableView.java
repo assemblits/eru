@@ -23,19 +23,22 @@ public abstract class EruTableView<Item> extends TableView<Item> {
     public void addActionOnEditCommit(Runnable onEditCommit) {
         // To be sure the runnable will be executed after commit event finish, we add a quick delay
         int delayToRunOnEditCommit = 500;
+
+        // Add a trigger on cells edition commit
         getColumns().forEach(column -> column.addEventHandler(TableColumn.editCommitEvent(), event -> {
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
             executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
             executor.shutdown();
         }));
 
+        // Add a trigger when a new item is added or removed
         getItems().addListener((ListChangeListener<Item>) c -> {
             while (c.next()) {
                 if (c.wasPermutated()) {
                     // Nothing
                 } else if (c.wasUpdated()) {
                     // Nothing
-                } else {
+                } else { // An item was added or removed
                     ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
                     executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
                     executor.shutdown();

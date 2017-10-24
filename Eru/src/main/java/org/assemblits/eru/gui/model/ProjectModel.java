@@ -22,9 +22,6 @@ public class ProjectModel {
     private ObservableList<User> users;
     private ObservableList<Display> displays;
 
-    public ProjectModel() {
-    }
-
     public void load(Project project){
         this.project = new SimpleObjectProperty<>(project);
         this.id = new SimpleIntegerProperty(project.getId());
