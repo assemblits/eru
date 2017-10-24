@@ -7,7 +7,7 @@ import org.assemblits.eru.scene.control.Alarm;
 /**
  * Created by mtrujillo on 8/26/17.
  */
-public class EruAlarm extends Alarm implements ValuableDynamo<Boolean> {
+public class EruAlarm extends Alarm implements ValuableDynamo {
     private IntegerProperty currentValueTagID;
 
     public EruAlarm() {
@@ -21,8 +21,8 @@ public class EruAlarm extends Alarm implements ValuableDynamo<Boolean> {
     }
 
     @Override
-    public Boolean getCurrentTagValue() {
-        return getCurrentValue();
+    public String getCurrentTagValue() {
+        return String.valueOf(getCurrentValue());
     }
 
     public Integer getCurrentValueTagID() {

@@ -14,6 +14,8 @@ buildscript {
         spockVersion = '1.1-groovy-2.4'
         powerMockVersion = '1.7.1'
         j2modVersion = '2.3.6'
+        tilesfxVersion = '1.4.9'
+        medusaVersion = '7.9'
     }
     repositories {
         mavenCentral()
@@ -72,7 +74,8 @@ dependencies {
     compile "com.gluonhq.scenebuilder:scenebuilder-all:${sceneBuilderVersion}"
     compile "org.controlsfx:controlsfx:${controlsfxVersion}"
     compile "com.ghgande:j2mod:${j2modVersion}"
-
+    compile "eu.hansolo:tilesfx:${tilesfxVersion}"
+    compile "eu.hansolo:Medusa:${medusaVersion}"
 
     //Testing
     testCompile 'org.springframework.boot:spring-boot-starter-test'

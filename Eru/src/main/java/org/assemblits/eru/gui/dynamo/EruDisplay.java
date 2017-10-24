@@ -10,7 +10,7 @@ import org.assemblits.eru.scene.control.Display;
 /**
  * Created by mtrujillo on 8/24/17.
  */
-public class EruDisplay extends Display implements ValuableDynamo<String> {
+public class EruDisplay extends Display implements ValuableDynamo {
 
     /**
      * The map to linkToConnections {@code EruDisplay} and {@code Tags}. This map is useful for

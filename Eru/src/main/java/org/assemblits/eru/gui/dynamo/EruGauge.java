@@ -7,7 +7,7 @@ import org.assemblits.eru.scene.control.Gauge;
 /**
  * Created by mtrujillo on 8/25/17.
  */
-public class EruGauge extends Gauge implements ValuableDynamo<Double> {
+public class EruGauge extends Gauge implements ValuableDynamo {
     private IntegerProperty currentValueTagID;
 
     public EruGauge() {
@@ -21,8 +21,8 @@ public class EruGauge extends Gauge implements ValuableDynamo<Double> {
     }
 
     @Override
-    public Double getCurrentTagValue() {
-        return getCurrentValue();
+    public String getCurrentTagValue() {
+        return String.valueOf(getCurrentValue());
     }
 
     @Override

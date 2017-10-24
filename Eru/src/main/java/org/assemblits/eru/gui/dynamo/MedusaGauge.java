@@ -1,23 +1,24 @@
 package org.assemblits.eru.gui.dynamo;
 
+import eu.hansolo.medusa.Gauge;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import org.assemblits.eru.scene.control.LevelBar;
 
 /**
- * Created by mtrujillo on 8/26/17.
+ * Created by marlontrujillo1080 on 10/24/17.
  */
-public class EruLevelBar extends LevelBar implements ValuableDynamo {
+public class MedusaGauge extends Gauge implements ValuableDynamo {
+
     private IntegerProperty currentValueTagID;
 
-    public EruLevelBar() {
+    public MedusaGauge() {
         super();
         this.currentValueTagID = new SimpleIntegerProperty(this, "currentValueTagID", -1);
     }
 
     @Override
     public void setCurrentTagValue(String value) {
-        this.setCurrentValue(Double.parseDouble(value));
+        this.setValue(Double.parseDouble(value));
     }
 
     @Override
