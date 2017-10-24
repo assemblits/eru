@@ -77,7 +77,7 @@ public class DevicesTableView extends EruTableView<Device> {
 
         addressesColumn.prefWidthProperty().bind(widthProperty().multiply(0.33));
         addressesColumn.setCellValueFactory(param -> { // Custom Listener to set address owner:
-            SimpleListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableList(param.getValue().getAddresses()));// Set initial values
+            SimpleListProperty<Address> addressesInDevice = new SimpleListProperty<>(FXCollections.observableArrayList(param.getValue().getAddresses()));// Set initial values
             addressesInDevice.addListener((ListChangeListener<Address>) c -> {                                                                            // Set updater
                 while (c.next()) {
                     if (c.wasPermutated()) {
@@ -94,6 +94,7 @@ public class DevicesTableView extends EruTableView<Device> {
                             }
                         }
                     }
+                    getSelectionModel().getSelectedItem().setAddresses(addressesInDevice.getValue());
                 }
             });
             return addressesInDevice;
