@@ -39,4 +39,8 @@ public class EruLevelBar extends LevelBar implements ValuableDynamo {
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
+
+    @Override public String getUserAgentStylesheet() {
+        return LevelBar.class.getResource("level-bar.css").toExternalForm();
+    }
 }

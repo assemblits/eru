@@ -40,4 +40,6 @@ public class MedusaGauge extends Gauge implements ValuableDynamo {
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
+
+    @Override public String getUserAgentStylesheet() { return Gauge.class.getResource("gauge.css").toExternalForm(); }
 }

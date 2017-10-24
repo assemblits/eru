@@ -40,4 +40,7 @@ public class EruGauge extends Gauge implements ValuableDynamo {
         this.currentValueTagName.set(currentValueTagID);
     }
 
+    @Override public String getUserAgentStylesheet() {
+        return Gauge.class.getResource("gauge.css").toExternalForm();
+    }
 }

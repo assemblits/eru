@@ -35,4 +35,8 @@ public class EruAlarm extends Alarm implements ValuableDynamo {
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
+
+    @Override public String getUserAgentStylesheet() {
+        return Alarm.class.getResource("alarm.css").toExternalForm();
+    }
 }

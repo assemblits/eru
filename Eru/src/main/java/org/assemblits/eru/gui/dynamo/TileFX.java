@@ -39,4 +39,6 @@ public class TileFX extends Tile implements ValuableDynamo {
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
+
+    @Override public String getUserAgentStylesheet() { return Tile.class.getResource("tilesfx.css").toExternalForm(); }
 }

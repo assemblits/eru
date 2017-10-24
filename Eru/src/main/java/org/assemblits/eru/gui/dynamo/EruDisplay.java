@@ -40,4 +40,8 @@ public class EruDisplay extends Display implements ValuableDynamo {
     public void setCurrentValueTagName(String currentValueTagID) {
         this.currentValueTagName.set(currentValueTagID);
     }
+
+    @Override public String getUserAgentStylesheet() {
+        return Display.class.getResource("display.css").toExternalForm();
+    }
 }
