@@ -55,8 +55,7 @@ public class ApplicationLoader extends Service<ConfigurableApplicationContext> {
                     if (projects.isEmpty()) {
                         log.info("No project found, creating a new one...");
                         updateMessage("No project found, creating a new one...");
-                        project = projectCreator.defaultProject();
-                        projectRepository.save(project);
+                        project = projectRepository.save(projectCreator.defaultProject());
                     } else {
                         project = projects.get(0); // TODO: Project picker: Issue #86
                     }

@@ -44,13 +44,13 @@ public class Address implements Comparable<Address> {
     /* ********** Setters and Getters ********** */
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id.get();
     }
     public IntegerProperty idProperty() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

@@ -38,7 +38,7 @@ public class EruController {
         stage.show();
     }
 
-    private void setStage(Stage stage) {
+    public void setStage(Stage stage) {
         try {
             EruPreferences eruPreferences = new EruPreferences();
             FXMLLoader fxmlLoader = createFxmlLoader();
@@ -61,7 +61,7 @@ public class EruController {
         }
     }
 
-    private void populateControllers(){
+    public void populateControllers(){
         centerPaneController.getUsersTableView().setUsers(projectModel.getUsers());
         centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
         centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
@@ -76,7 +76,7 @@ public class EruController {
     }
 
 
-    private void configureAutoSave() {
+    public void configureAutoSave() {
         centerPaneController.getUsersTableView().addActionOnEditCommit(this::saveProject);
         centerPaneController.getConnectionsTableView().addActionOnEditCommit(this::saveProject);
         centerPaneController.getDevicesTableView().addActionOnEditCommit(this::saveProject);
@@ -84,8 +84,9 @@ public class EruController {
         centerPaneController.getDisplayTableViewView().addActionOnEditCommit(this::saveProject);
     }
 
-    private void saveProject(){
-        Project savedProject = projectRepository.save(projectModel.getProject());
+    public void saveProject(){
+        log.info("Saving...");
+        Project savedProject = projectRepository.save(projectModel.getProject().getValue());
     }
 
     private FXMLLoader createFxmlLoader() {

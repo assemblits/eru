@@ -72,11 +72,11 @@ public class Tag {
     /* ********** Properties ********** */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id.get();
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

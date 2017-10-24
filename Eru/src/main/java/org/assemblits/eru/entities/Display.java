@@ -17,7 +17,7 @@ import java.net.URL;
 @Table(name = "display", schema = "public")
 public class Display {
 
-    private final LongProperty id;
+    private final IntegerProperty id;
     private StringProperty name;
     private StringProperty groupName;
     private BooleanProperty initialDisplay;
@@ -25,7 +25,7 @@ public class Display {
     private ObjectProperty<Parent> fxNode;
 
     public Display() {
-        this.id = new SimpleLongProperty(this, "display_id");
+        this.id = new SimpleIntegerProperty(this, "display_id");
         this.name = new SimpleStringProperty(this, "name", "");
         this.groupName = new SimpleStringProperty(this, "name", "");
         this.initialDisplay = new SimpleBooleanProperty(this, "initial_display", false);
@@ -36,15 +36,15 @@ public class Display {
     @Id
     @Column(name = "display_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getId() {
+    public Integer getId() {
         return id.get();
     }
 
-    public LongProperty idProperty() {
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

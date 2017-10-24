@@ -37,7 +37,4 @@ public class ProjectModel {
         this.displays = FXCollections.observableList(project.getDisplays());
     }
 
-    public Project getProject(){
-        return project.getValue();
-    }
 }

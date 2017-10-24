@@ -6,7 +6,9 @@ spring:
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+      hibernate:
+        format_sql: false
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
   datasource:
     url: jdbc:mysql://localhost:3306/eru?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver

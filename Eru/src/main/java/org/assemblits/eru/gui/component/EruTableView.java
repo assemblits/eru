@@ -1,5 +1,6 @@
 package org.assemblits.eru.gui.component;
 
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -27,6 +28,20 @@ public abstract class EruTableView<Item> extends TableView<Item> {
             executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
             executor.shutdown();
         }));
+
+        getItems().addListener((ListChangeListener<Item>) c -> {
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    // Nothing
+                } else if (c.wasUpdated()) {
+                    // Nothing
+                } else {
+                    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                    executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
+                    executor.shutdown();
+                }
+            }
+        });
     }
 
     private void deleteSelectedItems() {

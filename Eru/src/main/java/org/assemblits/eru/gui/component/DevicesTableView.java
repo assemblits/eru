@@ -1,6 +1,5 @@
 package org.assemblits.eru.gui.component;
 
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
