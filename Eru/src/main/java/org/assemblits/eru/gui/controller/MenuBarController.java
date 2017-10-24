@@ -1,6 +1,8 @@
 package org.assemblits.eru.gui.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,12 +24,15 @@ import static java.lang.String.format;
 public class MenuBarController {
 
     private final ApplicationContext applicationContext;
+    private final EruController eruController;
 
-    public void exitMenuItemSelected() {
+    @FXML
+    private void exitMenuItemSelected() {
         Platform.exit();
     }
 
-    public void preferencesMenuItemSelected() {
+    @FXML
+    private void preferencesMenuItemSelected() {
         final EruPreferences eruPreferences = new EruPreferences();
         Stage preferencesStage = new Stage();
         preferencesStage.setTitle("Preferences");
@@ -40,7 +45,8 @@ public class MenuBarController {
         preferencesStage.showAndWait();
     }
 
-    public void aboutMenuItemSelected() {
+    @FXML
+    private void aboutMenuItemSelected() {
         Stage aboutStage = new Stage();
         aboutStage.setScene(new Scene(loadNode("/views/About.fxml")));
         aboutStage.showAndWait();
@@ -57,5 +63,10 @@ public class MenuBarController {
             log.error(errorMessage);
             throw new EruException(errorMessage, e);
         }
+    }
+
+    @FXML
+    private void saveMenuItemSelected(ActionEvent actionEvent) {
+        eruController.saveProject();
     }
 }

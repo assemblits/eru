@@ -1,10 +1,16 @@
 package org.assemblits.eru.gui.component;
 
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public abstract class EruTableView<Item> extends TableView<Item> {
 
@@ -14,8 +20,31 @@ public abstract class EruTableView<Item> extends TableView<Item> {
 
     public abstract void addNewItem();
 
-    public void setOnEditCommit(Runnable onEditCommit) {
-        getColumns().forEach(column -> column.setOnEditCommit(event -> onEditCommit.run()));
+    public void addActionOnEditCommit(Runnable onEditCommit) {
+        // To be sure the runnable will be executed after commit event finish, we add a quick delay
+        int delayToRunOnEditCommit = 500;
+
+        // Add a trigger on cells edition commit
+        getColumns().forEach(column -> column.addEventHandler(TableColumn.editCommitEvent(), event -> {
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+            executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
+            executor.shutdown();
+        }));
+
+        // Add a trigger when a new item is added or removed
+        getItems().addListener((ListChangeListener<Item>) c -> {
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    // Nothing
+                } else if (c.wasUpdated()) {
+                    // Nothing
+                } else { // An item was added or removed
+                    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                    executor.schedule(onEditCommit, delayToRunOnEditCommit, TimeUnit.MILLISECONDS);
+                    executor.shutdown();
+                }
+            }
+        });
     }
 
     private void deleteSelectedItems() {

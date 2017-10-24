@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
@@ -33,25 +34,8 @@ public class EruController {
         log.info("Starting Eru");
         setStage(stage);
         populateControllers();
+        configureAutoSave();
         stage.show();
-    }
-
-    private void populateControllers(){
-        centerPaneController.getUsersTableView().setUsers(projectModel.getUsers());
-        centerPaneController.getUsersTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
-        centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
-        centerPaneController.getConnectionsTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
-        centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
-        centerPaneController.getDevicesTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
-        centerPaneController.getTagsTableView().setTagsAndDevices(projectModel.getTags(), projectModel.getDevices());
-        centerPaneController.getTagsTableView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
-        centerPaneController.getDisplayTableViewView().setDisplays(projectModel.getDisplays());
-        centerPaneController.getDisplayTableViewView().setOnEditCommit(() -> projectRepository.save(projectModel.get()));
-
-        projectTreeController.setRoot(projectModel.getGroup().getValue());
-        projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
-        projectListener.setProjectModel(projectModel);
-        projectListener.listen();
     }
 
     private void setStage(Stage stage) {
@@ -75,6 +59,34 @@ public class EruController {
             log.error("Error loading eru main screen");
             throw new EruException("Error loading eru main screen", e);
         }
+    }
+
+    private void populateControllers(){
+        centerPaneController.getUsersTableView().setUsers(projectModel.getUsers());
+        centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
+        centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
+        centerPaneController.getTagsTableView().setTagsAndDevices(projectModel.getTags(), projectModel.getDevices());
+        centerPaneController.getDisplayTableViewView().setDisplays(projectModel.getDisplays());
+
+        projectTreeController.setRoot(projectModel.getGroup().getValue());
+        projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
+
+        projectListener.setProjectModel(projectModel);
+        projectListener.listen();
+    }
+
+
+    private void configureAutoSave() {
+        centerPaneController.getUsersTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getConnectionsTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getDevicesTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getTagsTableView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getDisplayTableViewView().addActionOnEditCommit(this::saveProject);
+    }
+
+    void saveProject(){
+        log.info("Saving...");
+        Project savedProject = projectRepository.save(projectModel.getProject().getValue());
     }
 
     private FXMLLoader createFxmlLoader() {

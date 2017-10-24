@@ -10,6 +10,7 @@ import org.assemblits.eru.entities.User;
 public class UsersTableView extends EruTableView<User> {
 
     public UsersTableView(){
+        TableColumn<User, Integer> idColumn = new TableColumn<>("ID");
         TableColumn<User, String> groupColumn = new TableColumn<>("Group");
         TableColumn<User, String> userNameColumn = new TableColumn<>("Username");
         TableColumn<User, String> firstNameColumn = new TableColumn<>("First name");
@@ -17,6 +18,8 @@ public class UsersTableView extends EruTableView<User> {
         TableColumn<User, String> emailColumn = new TableColumn<>("Email");
         TableColumn<User, String> passwordColumn = new TableColumn<>("Password");
         TableColumn<User, Boolean> onlineColumn = new TableColumn<>("Online");
+
+        idColumn.setCellValueFactory(param -> param.getValue().idProperty().asObject());
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
         groupColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -47,6 +50,7 @@ public class UsersTableView extends EruTableView<User> {
         onlineColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onlineColumn));
 
         getColumns().addAll(
+                idColumn,
                 groupColumn,
                 userNameColumn,
                 firstNameColumn,

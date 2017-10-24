@@ -22,7 +22,7 @@ class SceneFxmlManagerTest extends Specification {
         eruPreferences.getApplicationDirectory() >> applicationDirectory
         when:
         def display = new Display();
-        display.setId(1L);
+        display.setId(1);
         display.setName("Test Scene")
         display.setGroupName("group")
         display.setInitialDisplay(false)

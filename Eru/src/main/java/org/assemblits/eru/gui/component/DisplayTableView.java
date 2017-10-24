@@ -15,18 +15,17 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.entities.EruType;
 import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -71,7 +70,7 @@ public class DisplayTableView extends EruTableView<Display> {
 
         setEditable(true);
         getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-//        addGraphicEditorMenuItem();
+        addGraphicEditorMenuItem();
     }
 
     private void showDisplay(Integer displayIndexInTable) {
@@ -83,9 +82,11 @@ public class DisplayTableView extends EruTableView<Display> {
             final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
             final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
             final Scene SCADA_SCENE = new Scene(displayNode);
-            final Stage SCADA_STAGE = new Stage();
+            final Stage SCADA_STAGE = new Stage(StageStyle.TRANSPARENT);
             display.setFxNode(displayNode);
+            SCADA_SCENE.setFill(Color.TRANSPARENT);
             SCADA_STAGE.setScene(SCADA_SCENE);
+            SCADA_STAGE.setTitle(display.getName());
             SCADA_STAGE.show();
         } catch (Exception e) {
             log.error("Error launching display", e);

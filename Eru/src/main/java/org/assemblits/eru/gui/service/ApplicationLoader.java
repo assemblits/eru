@@ -34,11 +34,13 @@ public class ApplicationLoader extends Service<ConfigurableApplicationContext> {
         return new Task<ConfigurableApplicationContext>() {
             @Override
             protected ConfigurableApplicationContext call() throws Exception {
+                log.info("Starting application context");
+                updateMessage("Starting application context");
+                updateProgress(5, 100);
                 ConfigurableApplicationContext applicationContext = startApplicationContext();
                 try {
-                    log.info("Starting application context");
+                    log.info("Preparing database");
                     updateMessage("Starting application context");
-                    updateProgress(5, 100);
                     ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
                     ProjectRepository projectRepository = beanFactory.getBean(ProjectRepository.class);
                     CustomLibraryLoader customLibraryLoader = beanFactory.getBean(CustomLibraryLoader.class);
@@ -53,15 +55,14 @@ public class ApplicationLoader extends Service<ConfigurableApplicationContext> {
                     if (projects.isEmpty()) {
                         log.info("No project found, creating a new one...");
                         updateMessage("No project found, creating a new one...");
-                        project = projectCreator.defaultProject();
-                        projectRepository.save(projectModel.get());
+                        project = projectRepository.save(projectCreator.defaultProject());
                     } else {
                         project = projects.get(0); // TODO: Project picker: Issue #86
                     }
 
                     log.info("Loading " + project.getName() + " project...");
                     updateMessage("Loading " + project.getName() + " project...");
-                    projectModel.set(project);
+                    projectModel.load(project);
 
                     log.info("Loading custom components");
                     updateMessage("Loading custom components");

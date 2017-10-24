@@ -46,7 +46,7 @@ public class Tag {
 
     /* ********** Constructors ********** */
     public Tag() {
-        this.id = new SimpleIntegerProperty(this, "id", 0);
+        this.id = new SimpleIntegerProperty(this, "id");
         this.name = new SimpleStringProperty(this, "name", "");
         this.enabled = new SimpleBooleanProperty(this, "enabled", true);
         this.description = new SimpleStringProperty(this, "description", "");
@@ -72,11 +72,11 @@ public class Tag {
     /* ********** Properties ********** */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id.get();
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

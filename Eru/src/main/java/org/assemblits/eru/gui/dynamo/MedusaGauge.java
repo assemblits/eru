@@ -1,24 +1,24 @@
 package org.assemblits.eru.gui.dynamo;
 
+import eu.hansolo.medusa.Gauge;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.assemblits.eru.scene.control.Alarm;
 
 /**
- * Created by mtrujillo on 8/26/17.
+ * Created by marlontrujillo1080 on 10/24/17.
  */
-public class EruAlarm extends Alarm implements ValuableDynamo {
+public class MedusaGauge extends Gauge implements ValuableDynamo {
 
     private StringProperty currentValueTagName;
 
-    public EruAlarm() {
+    public MedusaGauge() {
         super();
-        this.currentValueTagName = new SimpleStringProperty(this, "currentValueTagName", "");
+        this.currentValueTagName = new SimpleStringProperty(this, "currentValueTagID", "");
     }
 
     @Override
     public void setCurrentTagValue(String value) {
-        this.setCurrentValue(Boolean.parseBoolean(value));
+        this.setValue(Double.parseDouble(value));
     }
 
     @Override
@@ -26,17 +26,20 @@ public class EruAlarm extends Alarm implements ValuableDynamo {
         return String.valueOf(getCurrentValue());
     }
 
+    @Override
     public String getCurrentValueTagName() {
-        return currentValueTagName.get();
+        return String.valueOf(currentValueTagName.get());
     }
+
+    @Override
     public StringProperty currentValueTagNameProperty() {
         return currentValueTagName;
     }
+
+    @Override
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
 
-    @Override public String getUserAgentStylesheet() {
-        return Alarm.class.getResource("alarm.css").toExternalForm();
-    }
+    @Override public String getUserAgentStylesheet() { return Gauge.class.getResource("gauge.css").toExternalForm(); }
 }

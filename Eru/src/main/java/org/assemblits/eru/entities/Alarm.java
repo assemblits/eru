@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class Alarm implements Comparable<Alarm>{
     public enum Priority{HIHI, HI, NOMINAL, LO, LOLO}
 
-    private final LongProperty                id;
+    private final IntegerProperty             id;
     private final ObjectProperty<Timestamp>   timeStamp;
     private final StringProperty              description;
     private final StringProperty              userInCharge;
@@ -32,7 +32,7 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     public Alarm() {
-        id              = new SimpleLongProperty(Alarm.this, "id", 0);
+        id              = new SimpleIntegerProperty(Alarm.this, "id", 0);
         timeStamp       = new SimpleObjectProperty<>(Alarm.this, "alarm", new Timestamp(System.currentTimeMillis()));
         description     = new SimpleStringProperty();
         userInCharge    = new SimpleStringProperty();
@@ -42,14 +42,14 @@ public class Alarm implements Comparable<Alarm>{
     }
 
     /* ********** Properties ********** */
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    public long getId() {
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getId() {
         return id.get();
     }
-    public LongProperty idProperty() {
+    public IntegerProperty idProperty() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

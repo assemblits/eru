@@ -25,7 +25,7 @@ public class ProjectListenerTest {
         projectModel = new ProjectModel();
         projectContractor = new ProjectContractor(new Agency(), new Director());
         projectListener = new ProjectListener(projectContractor);
-        projectModel.set(project);
+        projectModel.load(project);
         projectListener.setProjectModel(projectModel);
         projectListener.listen();
     }

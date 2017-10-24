@@ -1,9 +1,7 @@
 package org.assemblits.eru.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -18,8 +16,6 @@ import java.util.List;
  */
 @Data
 @Entity
-@Builder
-@ToString
 @AllArgsConstructor
 @Table(name = "project", schema = "public")
 public class Project {
@@ -57,4 +53,5 @@ public class Project {
         this.users = new ArrayList<>();
         this.displays = new ArrayList<>();
     }
+
 }
