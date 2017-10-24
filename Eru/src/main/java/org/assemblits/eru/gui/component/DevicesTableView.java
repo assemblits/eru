@@ -138,6 +138,7 @@ public class DevicesTableView extends EruTableView<Device> {
     public void setDevicesAndConnections(ObservableList<Device> devices, ObservableList<Connection> connections) {
         super.setItems(devices);
         connectionColumn.setCellFactory(ChoiceBoxTableCell.forTableColumn(connections));
+
     }
 
     class AddressesTableCellForDeviceTable extends TableCell<Device, ObservableList<Address>> {
@@ -261,11 +262,6 @@ public class DevicesTableView extends EruTableView<Device> {
             super.cancelEdit();
             setText(getItem() == null ? null : getItem().toString());
             setGraphic(null);
-        }
-
-        @Override
-        public void commitEdit(ObservableList<Address> newValue) {
-            super.commitEdit(newValue);
         }
     }
 }

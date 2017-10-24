@@ -86,7 +86,57 @@ public class EruController {
 
     void saveProject(){
         log.info("Saving...");
-        Project savedProject = projectRepository.save(projectModel.getProject().getValue());
+        Project lastProject = projectRepository.findOne(1);
+        lastProject.setName(projectModel.getName().getValue());
+        lastProject.setGroup(projectModel.getGroup().getValue());
+        lastProject.setConnections(projectModel.getConnections());
+        lastProject.setDevices(projectModel.getDevices());
+        lastProject.setDisplays(projectModel.getDisplays());
+        lastProject.setTags(projectModel.getTags());
+        lastProject.setUsers(projectModel.getUsers());
+        lastProject = projectRepository.save(lastProject);
+
+        boolean thereIsConnectionWhithoutPK = projectModel.getConnections()
+                .stream()
+                .anyMatch(conn -> conn.getId() == null || conn.getId() == 0);
+        boolean thereIsDeviceWhithoutPK = projectModel.getDevices()
+                .stream()
+                .anyMatch(dev -> dev.getId() == null || dev.getId() == 0);
+        boolean thereIsDisplayWhithoutPK = projectModel.getDisplays()
+                .stream()
+                .anyMatch(disp -> disp.getId() == null || disp.getId() == 0);
+        boolean thereIsTagWhithoutPK = projectModel.getTags()
+                .stream()
+                .anyMatch(tag -> tag.getId() == null || tag.getId() == 0);
+        boolean thereIsUserWhithoutPK = projectModel.getUsers()
+                .stream()
+                .anyMatch(user -> user.getId() == null || user.getId() == 0);
+
+        if (thereIsConnectionWhithoutPK) {
+            log.info("Updating connections PKs...");
+            projectModel.getConnections().clear();
+            projectModel.getConnections().setAll(lastProject.getConnections());
+        }
+        if (thereIsDeviceWhithoutPK) {
+            log.info("Updating devices PKs...");
+            projectModel.getDevices().clear();
+            projectModel.getDevices().setAll(lastProject.getDevices());
+        }
+        if (thereIsDisplayWhithoutPK) {
+            log.info("Updating Displays PKs...");
+            projectModel.getDisplays().clear();
+            projectModel.getDisplays().setAll(lastProject.getDisplays());
+        }
+        if (thereIsTagWhithoutPK) {
+            log.info("Updating Tags PKs...");
+            projectModel.getTags().clear();
+            projectModel.getTags().setAll(lastProject.getTags());
+        }
+        if (thereIsUserWhithoutPK) {
+            log.info("Updating users PKs...");
+            projectModel.getUsers().clear();
+            projectModel.getUsers().setAll(lastProject.getUsers());
+        }
     }
 
     private FXMLLoader createFxmlLoader() {
