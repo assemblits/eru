@@ -1,15 +1,33 @@
+/******************************************************************************
+ * Copyright (c) 2017 Assemblits contributors                                 *
+ *                                                                            *
+ * This file is part of Eru The open JavaFX SCADA by Assemblits Organization. *
+ *                                                                            *
+ * Eru The open JavaFX SCADA is free software: you can redistribute it        *
+ * and/or modify it under the terms of the GNU General Public License         *
+ *  as published by the Free Software Foundation, either version 3            *
+ *  of the License, or (at your option) any later version.                    *
+ *                                                                            *
+ * Eru is distributed in the hope that it will be useful,                     *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
+ * GNU General Public License for more details.                               *
+ *                                                                            *
+ * You should have received a copy of the GNU General Public License          *
+ * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.            *
+ ******************************************************************************/
 package org.assemblits.eru.util;
 
-import org.assemblits.eru.entities.Alarm;
-import org.assemblits.eru.entities.Tag;
-import org.assemblits.eru.historian.HistoricDao;
-import org.assemblits.eru.persistence.AlarmRepository;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import lombok.Builder;
 import lombok.Value;
+import org.assemblits.eru.entities.Alarm;
+import org.assemblits.eru.entities.Tag;
+import org.assemblits.eru.historian.HistoricDao;
+import org.assemblits.eru.persistence.AlarmRepository;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -21,22 +39,6 @@ import java.util.List;
 
 import static org.assemblits.eru.util.PdfReportCreator.Report.*;
 
-/**
- * FXML Controller class
- * <p>
- * Title: PdfReportCreator.java <br>
- * Company: Comelecinca Power Systems C.A.<br>
- *
- * @author Rafael Solorzano (RS), Lucio Guerchi (LG), Marlon Trujillo (MT)
- * @version 1.0
- *          <br><br>
- *          Changes:<br>
- *          <ul>
- *          <li> 2012-08-21 (RS) Creation </li>
- *          <li> 2013-08-21 (LG) Re-factor </li>
- *          <li> 2014-07-17 (MT) Re-factor </li>
- *          <ul>
- */
 @Component
 public class PdfReportCreator {
 

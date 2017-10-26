@@ -1,3 +1,4 @@
+
  ________
 /        |
 $$$$$$$$/   ______   __    __
@@ -7,3 +8,7 @@ $$$$$/    $$ |  $$/ $$ |  $$ |
 $$ |_____ $$ |      $$ \__$$ |
 $$       |$$ |      $$    $$/
 $$$$$$$$/ $$/        $$$$$$/
+
+Eru The open JavaFX SCADA  Copyright (C) 2017  Assemblits Organization
+This program comes with ABSOLUTELY NO WARRANTY; This is free software,
+and you are welcome to redistribute it under certain conditions.
