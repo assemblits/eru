@@ -9,7 +9,11 @@
 | Development  | Master |  Chat  |  License  |
 |:------:|:---------:|:---------:|:---------:|
 | [![Build Status](https://travis-ci.org/assemblits/eru.svg?branch=develop)](https://travis-ci.org/assemblits/eru)  | [![Build Status](https://travis-ci.org/assemblits/eru.svg?branch=master)](https://travis-ci.org/assemblits/eru)  | [![Join the chat at https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby](https://badges.gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby.svg)](https://gitter.im/eru_An_open_linux_SCADA_based_on_JavaFX/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) | [![Apache 2.0 License](https://img.shields.io/badge/license-GPL3.0-green.svg)](https://github.com/assemblits/eru/blob/develop/LICENSE) |
-  
+
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/eru-scada/eru/develop/Eru/src/main/resources/images/eru-screen-of-work.png" />
+</h1>
+
 ## Resume
   There are 4 main components in Eru:
   - Connections.
