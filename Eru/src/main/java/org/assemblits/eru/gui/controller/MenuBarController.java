@@ -27,7 +27,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.gui.exception.EruException;
+import org.assemblits.eru.exception.EruException;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
