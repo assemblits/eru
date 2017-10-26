@@ -1,5 +1,5 @@
 .switch {
-    -fx-skin            : "com.eru.scene.control.skin.SwitchSkin";
+    -fx-skin            : "org.assemblits.eru.scene.control.skin.SwitchSkin";
     -background-color   : TRANSPARENT;
     -de-energized-color : BLACK;
     -energized-color    : #c94b4d;

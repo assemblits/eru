@@ -15,7 +15,9 @@
 </h1>
 
 ## Resume
-  There are 4 main components in Eru:
+Eru allows easy monitoring of a process or machine operation by displaying a pictorial graphic that shows the operation of the process. It allows an operator to manipulate the process and system components in an easy intuitive manner. 
+
+There are 4 main components in Eru:
   - Connections.
   - Devices.
   - Tags.

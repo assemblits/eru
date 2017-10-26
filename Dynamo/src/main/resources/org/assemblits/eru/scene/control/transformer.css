@@ -1,5 +1,5 @@
 .transformer {
-    -fx-skin            : "com.eru.scene.control.skin.TransformerSkin";
+    -fx-skin            : "org.assemblits.eru.scene.control.skin.TransformerSkin";
     -background-color   : TRANSPARENT;
     -de-energized-color : BLACK;
     -energized-color    : #c94b4d;
