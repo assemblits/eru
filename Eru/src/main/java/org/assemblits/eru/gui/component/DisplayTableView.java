@@ -2,12 +2,9 @@ package org.assemblits.eru.gui.component;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
@@ -15,31 +12,30 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.entities.Display;
-import org.assemblits.eru.gui.ApplicationContextHolder;
-import org.assemblits.eru.jfx.scenebuilder.SceneBuilderStarter;
-import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 
-import java.io.File;
-import java.net.URL;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import org.assemblits.eru.entities.Display;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
+@Data
 public class DisplayTableView extends EruTableView<Display> {
 
+    private Consumer<Display> onDisplayPreview;
+    private Consumer<Display> onDisplayEdit;
+
     public DisplayTableView() {
-        TableColumn<Display, Void> actionColumn = new TableColumn<>("Action");
+        TableColumn<Display, Void> actionColumn = new TableColumn<>("Preview");
         TableColumn<Display, String> groupColumn = new TableColumn<>("Group");
         TableColumn<Display, String> nameColumn = new TableColumn<>("Name");
         TableColumn<Display, Display.StageType> stageTypeColumn = new TableColumn<>("Stage type");
         TableColumn<Display, Boolean> initialDisplayColumn = new TableColumn<>("Initial");
 
-        actionColumn.setCellFactory(param -> new ShowActionCell<>(this::showDisplay));
+        actionColumn.setCellFactory(param -> new PreviewActionCell<>(index -> onDisplayPreview.accept(getItems().get(index))));
         actionColumn.prefWidthProperty().bind(widthProperty().multiply(0.05));
 
         groupColumn.setCellValueFactory(param -> param.getValue().groupNameProperty());
@@ -73,36 +69,13 @@ public class DisplayTableView extends EruTableView<Display> {
         addGraphicEditorMenuItem();
     }
 
-    private void showDisplay(Integer displayIndexInTable) {
-        try {
-            log.info("Launching displays.");
-            final Display display = getItems().get(displayIndexInTable);
-            final SceneFxmlManager sceneFxmlManager = ApplicationContextHolder.getApplicationContext().getBean(SceneFxmlManager.class);
-            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
-            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
-            final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
-            final Scene SCADA_SCENE = new Scene(displayNode);
-            final Stage SCADA_STAGE = new Stage(StageStyle.TRANSPARENT);
-            display.setFxNode(displayNode);
-            SCADA_SCENE.setFill(Color.TRANSPARENT);
-            SCADA_STAGE.setScene(SCADA_SCENE);
-            SCADA_STAGE.setTitle(display.getName());
-            SCADA_STAGE.show();
-        } catch (Exception e) {
-            log.error("Error launching display", e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error in SCADA launching process.");
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+    public void setDisplays(ObservableList<Display> displays) {
+        setItems(displays);
     }
 
     private void addGraphicEditorMenuItem() {
         final MenuItem displayEditor = new MenuItem("Edit graphic");
-        final SceneBuilderStarter sceneBuilderStarter = ApplicationContextHolder.getApplicationContext().
-                getBean(SceneBuilderStarter.class);
-        displayEditor.setOnAction(event ->
-                sceneBuilderStarter.startSceneBuilder(getSelectionModel().getSelectedItem()));
+        displayEditor.setOnAction(event -> onDisplayEdit.accept(getSelectionModel().getSelectedItem()));
         getContextMenu().getItems().add(displayEditor);
     }
 
@@ -154,15 +127,11 @@ public class DisplayTableView extends EruTableView<Display> {
         });
     }
 
-    public void setDisplays(ObservableList<Display> displays) {
-        setItems(displays);
-    }
-
-    class ShowActionCell<S> extends TableCell<S, Void> {
+    class PreviewActionCell<S> extends TableCell<S, Void> {
         private Button toggleButton;
         private ImageView buttonImageView = new ImageView(new Image(getClass().getResource("/images/show-display.png").toExternalForm()));
 
-        public ShowActionCell(Consumer<Integer> onButtonPressedAction) {
+        public PreviewActionCell(Consumer<Integer> onButtonPressedAction) {
             toggleButton = new Button();
 
             toggleButton.setGraphic(buttonImageView);

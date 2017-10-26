@@ -1,22 +1,35 @@
 package org.assemblits.eru.gui.controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Project;
+import org.assemblits.eru.exception.FxmlFileReadException;
+import org.assemblits.eru.gui.ApplicationContextHolder;
+import org.assemblits.eru.gui.component.EruSceneBuilder;
 import org.assemblits.eru.gui.exception.EruException;
 import org.assemblits.eru.gui.model.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
+import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -29,6 +42,7 @@ public class EruController {
     private final ProjectListener projectListener;
     private final ProjectRepository projectRepository;
     private final ProjectModel projectModel;
+    private final SceneFxmlManager sceneFxmlManager;
 
     public void startEru(Stage stage) {
         log.info("Starting Eru");
@@ -66,7 +80,9 @@ public class EruController {
         centerPaneController.getConnectionsTableView().setConnections(projectModel.getConnections());
         centerPaneController.getDevicesTableView().setDevicesAndConnections(projectModel.getDevices(), projectModel.getConnections());
         centerPaneController.getTagsTableView().setTagsAndDevices(projectModel.getTags(), projectModel.getDevices());
-        centerPaneController.getDisplayTableViewView().setDisplays(projectModel.getDisplays());
+        centerPaneController.getDisplayTableView().setDisplays(projectModel.getDisplays());
+        centerPaneController.getDisplayTableView().setOnDisplayPreview(this::launchDisplayPreview);
+        centerPaneController.getDisplayTableView().setOnDisplayEdit(this::launchDisplayEditor);
 
         projectTreeController.setRoot(projectModel.getGroup().getValue());
         projectTreeController.setOnSelectedItem(centerPaneController::setVisibleTable);
@@ -75,13 +91,12 @@ public class EruController {
         projectListener.listen();
     }
 
-
     private void configureAutoSave() {
         centerPaneController.getUsersTableView().addActionOnEditCommit(this::saveProject);
         centerPaneController.getConnectionsTableView().addActionOnEditCommit(this::saveProject);
         centerPaneController.getDevicesTableView().addActionOnEditCommit(this::saveProject);
         centerPaneController.getTagsTableView().addActionOnEditCommit(this::saveProject);
-        centerPaneController.getDisplayTableViewView().addActionOnEditCommit(this::saveProject);
+        centerPaneController.getDisplayTableView().addActionOnEditCommit(this::saveProject);
     }
 
     void saveProject(){
@@ -136,6 +151,55 @@ public class EruController {
             log.info("Updating users PKs...");
             projectModel.getUsers().clear();
             projectModel.getUsers().setAll(lastProject.getUsers());
+        }
+    }
+
+    private void launchDisplayEditor(Display display){
+        log.info("Starting display builder for '{}'", display.getName());
+        final EruSceneBuilder eruSceneBuilder = ApplicationContextHolder
+                .getApplicationContext()
+                .getBean(EruSceneBuilder.class);
+
+        List<Node> oldSceneBuilders = centerPaneController.getTablesAnchorPane()
+                .getChildren()
+                .stream()
+                .filter(node -> node instanceof EruSceneBuilder)
+                .collect(Collectors.toList());
+
+        centerPaneController.getTablesAnchorPane().getChildren().removeAll(oldSceneBuilders);
+
+        try {
+            eruSceneBuilder.init(display);
+        } catch (FxmlFileReadException e) {
+            log.error("Error starting scene builder", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error on Eru Scene Builder initialization.");
+            alert.setContentText(e.getMessage());
+            alert.setContentText(e.getLocalizedMessage());
+        }
+
+        centerPaneController.getTablesAnchorPane().getChildren().add(eruSceneBuilder);
+    }
+
+    private void launchDisplayPreview(Display display){
+        try {
+            log.info("Launching displays.");
+            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
+            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+            final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
+            final Scene SCADA_SCENE = new Scene(displayNode);
+            final Stage SCADA_STAGE = new Stage(StageStyle.TRANSPARENT);
+            display.setFxNode(displayNode);
+            SCADA_SCENE.setFill(Color.TRANSPARENT);
+            SCADA_STAGE.setScene(SCADA_SCENE);
+            SCADA_STAGE.setTitle(display.getName());
+            SCADA_STAGE.show();
+        } catch (Exception e) {
+            log.error("Error launching display", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error in SCADA launching process.");
+            alert.setContentText(e.getMessage());
+            alert.show();
         }
     }
 

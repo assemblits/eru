@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.assemblits.eru.gui.component.EruTableView?>
+
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.assemblits.eru.gui.component.DisplayTableView">
+    <EruTableView fx:id="tableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+            <TableColumn fx:id="actionColumn" text="Action" />
+            <TableColumn fx:id="groupColumn" text="Group">
+                <cellValueFactory>
+                    <PropertyValueFactory property="description" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="nameColumn" text="Name">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="stageTypeColumn" text="Stage type">
+                <cellValueFactory>
+                    <PropertyValueFactory property="stageType" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="initialDisplayColumn" text="Initial">
+                <cellValueFactory>
+                    <PropertyValueFactory property="initialDisplay" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </EruTableView>
+</AnchorPane>
