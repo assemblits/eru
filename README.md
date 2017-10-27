@@ -30,7 +30,7 @@ There are 4 main components in Eru:
   to read  the current height of the window so we have to add an Address called *height* in the window device).
   3) Create a "tag" to represent the actual value of the Address of the device. (Using the same example, 
   we adjust the value obtained from the window to "meters" adding a factor and scale).
-  4) Create a "display" to see the current height of the window (tag) graphically.
+  4) Create a "displayName" to see the current height of the window (tag) graphically.
 
 ## Key Features
 

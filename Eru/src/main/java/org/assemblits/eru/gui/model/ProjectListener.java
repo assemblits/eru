@@ -26,6 +26,7 @@ import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Tag;
 import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
+import org.assemblits.eru.gui.dynamo.DisplayNavigator;
 import org.assemblits.eru.gui.dynamo.Dynamo;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
 import org.assemblits.eru.gui.dynamo.ValuableDynamo;
@@ -98,6 +99,11 @@ public class ProjectListener {
                                 .filter(dynamo  -> ((ValuableDynamo) dynamo).getCurrentValueTagName().equals(tag.getName()))
                                 .forEach(dynamo -> tag.valueProperty().addListener((obj, old, newValue) -> ((ValuableDynamo) dynamo).setCurrentTagValue(newValue)))
                 );
+                projectModel.getDisplays().forEach(displayInProjectModel ->
+                        dynamos.stream()
+                                .filter(dynamo -> dynamo instanceof DisplayNavigator)
+                                .filter(dynamo  -> ((DisplayNavigator) dynamo).getDisplayName().equals(displayInProjectModel.getName()))
+                                .forEach(dynamo -> ((DisplayNavigator) dynamo).setDisplay(displayInProjectModel)));
             }
         });
     }
