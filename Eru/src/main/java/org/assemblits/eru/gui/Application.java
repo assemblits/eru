@@ -32,18 +32,14 @@ import org.assemblits.eru.gui.service.ApplicationLoader;
 import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import static com.sun.javafx.application.LauncherImpl.launchApplication;
 
 @Slf4j
-@EntityScan("org.assemblits.eru")
 @SpringBootApplication
 @ComponentScan("org.assemblits.eru")
-@EnableJpaRepositories("org.assemblits.eru")
 public class Application extends javafx.application.Application {
 
     private ConfigurableApplicationContext applicationContext;
@@ -108,4 +104,5 @@ public class Application extends javafx.application.Application {
             return "/views/styles/" + name() + ".css";
         }
     }
+
 }
