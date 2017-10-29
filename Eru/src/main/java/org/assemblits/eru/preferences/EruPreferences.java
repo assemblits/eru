@@ -28,6 +28,9 @@ public class EruPreferences {
 
     private final Preferences appPreferences;
     private final EruPreference<Application.Theme> theme;
+    private final EruPreference<String> eruDatabaseURL;
+    private final EruPreference<String> eruDatabaseUsername;
+    private final EruPreference<String> eruDatabasePassword;
     private final EruPreference<Boolean> animationEnabled;
     private final EruPreference<Integer> animationDuration;
     private final EruPreference<Integer> modbusBlockMaxLimit;
@@ -43,6 +46,18 @@ public class EruPreferences {
 
     public EruPreferences() {
         appPreferences = Preferences.userNodeForPackage(Application.class);
+
+        eruDatabaseURL = new EruPreference<>(this, "eru.database.url", "jdbc:mysql://localhost:3306/eru?useSSL=false");
+        eruDatabaseURL.setValue(appPreferences.get(eruDatabaseURL.getName(), eruDatabaseURL.getDefaultValue()));
+        eruDatabaseURL.addListener(observable -> save(eruDatabaseURL.getName(), eruDatabaseURL.getValue()));
+
+        eruDatabaseUsername = new EruPreference<>(this, "eru.database.username", "eru");
+        eruDatabaseUsername.setValue(appPreferences.get(eruDatabaseUsername.getName(), eruDatabaseUsername.getDefaultValue()));
+        eruDatabaseUsername.addListener(observable -> save(eruDatabaseUsername.getName(), eruDatabaseUsername.getValue()));
+
+        eruDatabasePassword = new EruPreference<>(this, "eru.database.password", "951753");
+        eruDatabasePassword.setValue(appPreferences.get(eruDatabasePassword.getName(), eruDatabasePassword.getDefaultValue()));
+        eruDatabasePassword.addListener(observable -> save(eruDatabasePassword.getName(), eruDatabasePassword.getValue()));
 
         theme = new EruPreference<>(this, "theme", Application.Theme.DEFAULT);
         theme.setValue(Application.Theme.valueOf(appPreferences.get(theme.getName(), theme.getDefaultValue().name())));

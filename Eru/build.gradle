@@ -17,6 +17,7 @@ buildscript {
         tilesfxVersion = '1.4.9'
         medusaVersion = '7.9'
         mysqlVersion = '5.1.40'
+        h2Version = '1.4.196'
     }
     repositories {
         mavenCentral()
@@ -78,6 +79,7 @@ dependencies {
     compile "eu.hansolo:tilesfx:${tilesfxVersion}"
     compile "eu.hansolo:Medusa:${medusaVersion}"
     compile "mysql:mysql-connector-java:${mysqlVersion}"
+    compile "com.h2database:h2:${h2Version}"
 
     //Testing
     testCompile 'org.springframework.boot:spring-boot-starter-test'
