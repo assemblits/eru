@@ -38,9 +38,6 @@ import javax.sql.DataSource;
 
 public class DataSourceConfig {
 
-    private static final String USERNAME = "eru";
-    private static final String PASSWORD = "951753";
-
     @Bean
     @Primary
     public DataSource dataSource() {
@@ -56,11 +53,12 @@ public class DataSourceConfig {
     }
 
     private DataSource getMainDataSource() {
+        final EruPreferences eruPreferences = new EruPreferences();
         return DataSourceBuilder.create()
                 .driverClassName("com.mysql.jdbc.Driver")
-                .username(USERNAME)
-                .password(PASSWORD)
-                .url("jdbc:mysql://localhost:3306/eru?useSSL=false")
+                .username(eruPreferences.getEruDatabaseUsername().get())
+                .password(eruPreferences.getEruDatabasePassword().get())
+                .url(eruPreferences.getEruDatabaseURL().get())
                 .build();
     }
 
@@ -68,8 +66,8 @@ public class DataSourceConfig {
         final EruPreferences eruPreferences = new EruPreferences();
         return DataSourceBuilder.create()
                 .driverClassName("org.h2.Driver")
-                .username(USERNAME)
-                .password(PASSWORD)
+                .username(eruPreferences.getEruDatabaseUsername().get())
+                .password(eruPreferences.getEruDatabasePassword().get())
                 .url("jdbc:h2:" + eruPreferences.getApplicationDirectory().get() + "/eru;DB_CLOSE_ON_EXIT=FALSE")
                 .build();
     }
