@@ -12,20 +12,6 @@ spring:
         format_sql: false
         current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
 
-# Main database: MySQL
-main.datasource:
-  url: jdbc:mysql://localhost:3306/eru?useSSL=false
-  driver-class-name: com.mysql.jdbc.Driver
-  username: eru
-  password: 951753
-
-# Backup database: H2
-backup.datasource:
-  url: jdbc:h2:${project.directory}/eru;DB_CLOSE_ON_EXIT=FALSE
-  driver-class-name: org.h2.Driver
-  username: eru
-  password: 951753
-
 # Logging database
 logging:
   file: ${project.directory}/logs/eru.log
