@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright (c) 2017 Assemblits contributors                                ~
   ~                                                                           ~
@@ -20,41 +31,78 @@
   ~ You should have received a copy of the GNU General Public License         ~
   ~ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.           ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<AnchorPane minWidth="563.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.assemblits.eru.gui.controller.PreferencesWindowController">
-    <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+<AnchorPane minWidth="563.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.assemblits.eru.gui.controller.PreferencesWindowController">
+    <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Tab text="General">
             <AnchorPane>
                 <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <Label text="Theme: "/>
+                    <AnchorPane>
+                        <Label text="Theme: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
                     <AnchorPane GridPane.columnIndex="1">
-                        <ChoiceBox fx:id="themeChoiceBox"
-                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <ChoiceBox fx:id="themeChoiceBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </AnchorPane>
                 </GridPane>
             </AnchorPane>
         </Tab>
-        <Tab text="Historian">
-            <AnchorPane/>
+        <Tab text="Database">
+            <AnchorPane>
+                <GridPane hgap="5.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" maxHeight="7.0" minHeight="7.0" prefHeight="7.0" vgrow="NEVER" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <AnchorPane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label text="URL: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
+                    <AnchorPane GridPane.columnIndex="1">
+                        <TextField text="jdbc:mysql://localhost:3306/eru?useSSL=false" promptText="jdbc:driver://ip:port/database" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </AnchorPane>
+                    <AnchorPane GridPane.rowIndex="2">
+                        <Label text="User: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
+                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField text="eru" promptText="username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </AnchorPane>
+                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use this URL to connect to your custom database. For example: jdbc:mysql://ip:port/database" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Text>
+                    </AnchorPane>
+                    <AnchorPane GridPane.rowIndex="3">
+                        <Label text="Password: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </AnchorPane>
+                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <PasswordField promptText="password" text="951753" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </AnchorPane>
+                </GridPane>
+            </AnchorPane>
         </Tab>
         <Tab text="User">
-            <AnchorPane/>
+            <AnchorPane />
         </Tab>
         <Tab text="Alarming">
-            <AnchorPane/>
+            <AnchorPane />
         </Tab>
         <Tab text="Servlet">
-            <AnchorPane/>
+            <AnchorPane />
         </Tab>
     </TabPane>
 </AnchorPane>
