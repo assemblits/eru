@@ -35,7 +35,6 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories("org.assemblits.eru")
 @EntityScan("org.assemblits.eru")
-
 public class DataSourceConfig {
 
     @Bean

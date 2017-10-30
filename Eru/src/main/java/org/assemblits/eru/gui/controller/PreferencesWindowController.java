@@ -18,16 +18,15 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.controller;
 
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import org.assemblits.eru.gui.Application.Theme;
-import org.assemblits.eru.preferences.EruPreference;
-import org.assemblits.eru.preferences.EruPreferences;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
+import org.assemblits.eru.gui.Application.Theme;
+import org.assemblits.eru.preferences.EruPreferences;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
