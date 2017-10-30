@@ -18,6 +18,8 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.controller;
 
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import org.assemblits.eru.gui.Application.Theme;
 import org.assemblits.eru.preferences.EruPreference;
 import org.assemblits.eru.preferences.EruPreferences;
@@ -36,12 +38,27 @@ public class PreferencesWindowController {
 
     @FXML
     private ChoiceBox<Theme> themeChoiceBox;
+    @FXML
+    private TextField databaseUrlTextField;
+    @FXML
+    private TextField databaseUsernameTextField;
+    @FXML
+    private PasswordField databasePasswordField;
 
     public void initialize() {
         final EruPreferences eruPreferences = new EruPreferences();
         themeChoiceBox.getItems().setAll(Arrays.asList(Theme.class.getEnumConstants()));
         themeChoiceBox.setValue(eruPreferences.getTheme().getValue());
         themeChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ThemeChangeListener());
+
+        databaseUrlTextField.setText(eruPreferences.getEruDatabaseURL().get());
+        databaseUrlTextField.setOnAction(event -> eruPreferences.getEruDatabaseURL().set(databaseUrlTextField.getText()));
+
+        databaseUsernameTextField.setText(eruPreferences.getEruDatabaseUsername().get());
+        databaseUsernameTextField.setOnAction(event -> eruPreferences.getEruDatabaseUsername().set(databaseUsernameTextField.getText()));
+
+        databasePasswordField.setText(eruPreferences.getEruDatabasePassword().get());
+        databasePasswordField.setOnAction(event -> eruPreferences.getEruDatabasePassword().set(databasePasswordField.getText()));
     }
 
     @RequiredArgsConstructor

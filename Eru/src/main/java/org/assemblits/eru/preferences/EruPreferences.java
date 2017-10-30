@@ -19,10 +19,12 @@
 package org.assemblits.eru.preferences;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.gui.Application;
 
 import java.util.prefs.Preferences;
 
+@Slf4j
 @Data
 public class EruPreferences {
 
@@ -113,6 +115,7 @@ public class EruPreferences {
     }
 
     private void save(String name, Object value){
+        log.info("Saving preferences...");
         if (value instanceof String){
             appPreferences.put(name, (String) value);
         } else if (value instanceof Integer){

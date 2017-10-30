@@ -64,11 +64,15 @@ public class DataSourceConfig {
 
     private DataSource getBackupDataSource() {
         final EruPreferences eruPreferences = new EruPreferences();
+        final String backupriver = "org.h2.Driver";
+        final String backupUsername = "eru";
+        final String backupPassword = "951753";
+        final String backupUrl = "jdbc:h2:" + eruPreferences.getApplicationDirectory().get() + "/eru;DB_CLOSE_ON_EXIT=FALSE";
         return DataSourceBuilder.create()
-                .driverClassName("org.h2.Driver")
-                .username(eruPreferences.getEruDatabaseUsername().get())
-                .password(eruPreferences.getEruDatabasePassword().get())
-                .url("jdbc:h2:" + eruPreferences.getApplicationDirectory().get() + "/eru;DB_CLOSE_ON_EXIT=FALSE")
+                .driverClassName(backupriver)
+                .username(backupUsername)
+                .password(backupPassword)
+                .url(backupUrl)
                 .build();
     }
 }

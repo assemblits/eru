@@ -71,13 +71,13 @@
                         <Label text="URL: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </AnchorPane>
                     <AnchorPane GridPane.columnIndex="1">
-                        <TextField text="jdbc:mysql://localhost:3306/eru?useSSL=false" promptText="jdbc:driver://ip:port/database" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="databaseUrlTextField" promptText="jdbc:mysql://ip:port/database" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </AnchorPane>
                     <AnchorPane GridPane.rowIndex="2">
                         <Label text="User: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </AnchorPane>
                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <TextField text="eru" promptText="username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="databaseUsernameTextField" promptText="username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </AnchorPane>
                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use this URL to connect to your custom database. For example: jdbc:mysql://ip:port/database" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -90,7 +90,7 @@
                         <Label text="Password: " AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </AnchorPane>
                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                        <PasswordField promptText="password" text="951753" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <PasswordField fx:id="databasePasswordField" promptText="password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </AnchorPane>
                 </GridPane>
             </AnchorPane>
