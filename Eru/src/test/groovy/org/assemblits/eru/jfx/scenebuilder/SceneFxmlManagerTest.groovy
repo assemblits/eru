@@ -14,7 +14,7 @@ class SceneFxmlManagerTest extends Specification {
 
     def applicationDirectory = Mock(EruPreference)
     def eruPreferences = new EruPreferences()
-    def sceneFxmlManager = new SceneFxmlManager()
+    def sceneFxmlManager = new SceneFxmlManager(eruPreferences)
 
     def 'should create scene fxml file with the formatted name and with the right content'() {
         given:

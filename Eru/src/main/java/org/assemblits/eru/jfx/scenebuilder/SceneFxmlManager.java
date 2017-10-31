@@ -35,8 +35,7 @@ import static java.io.File.separator;
 @RequiredArgsConstructor
 public class SceneFxmlManager {
 
-    @Autowired
-    private EruPreferences eruPreferences;
+    private final EruPreferences eruPreferences;
     private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 

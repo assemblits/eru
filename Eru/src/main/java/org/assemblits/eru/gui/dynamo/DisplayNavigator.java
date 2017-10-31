@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
+import org.assemblits.eru.preferences.EruPreferences;
 
 import java.io.File;
 import java.net.URL;
@@ -53,7 +54,7 @@ public class DisplayNavigator extends Button implements Dynamo {
                     displayStage = new Stage(StageStyle.DECORATED);
                     break;
             }
-            final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager();
+            final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager(new EruPreferences());
             final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
             final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
             final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
