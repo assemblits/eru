@@ -23,7 +23,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.exception.ConnectException;
 import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
 
 import javax.persistence.DiscriminatorValue;
@@ -33,7 +33,6 @@ import java.net.InetAddress;
 
 @Entity
 @DiscriminatorValue(value = "TCPIP")
-@Slf4j
 public class TcpConnection extends Connection implements Modbus{
     private StringProperty hostname;
     private IntegerProperty port;
@@ -45,21 +44,19 @@ public class TcpConnection extends Connection implements Modbus{
     }
 
     @Override
-    public void connect() {
+    public void connect() throws ConnectException{
         if (!isEnabled()) return;
         try {
-            log.info("Starting connection <{}>", getName());
             coreConnection = new TCPMasterConnection(InetAddress.getByName(hostname.get()));
             coreConnection.setPort(port.get());
             coreConnection.setTimeout(getTimeout());
             coreConnection.connect();
             setConnected(true);
             setStatus("Connected");
-            log.info("<{}> connected.", getName());
         } catch (Exception e) {
-            setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error("<{}> connection failure.", getName());
+            setStatus(e.getLocalizedMessage());
+            throw new ConnectException(e.getLocalizedMessage());
         }
     }
 
@@ -69,7 +66,6 @@ public class TcpConnection extends Connection implements Modbus{
             coreConnection.close();
             setConnected(false);
             setStatus("Disconnected");
-            log.info("<{}> disconnected.", getName());
         }
     }
 

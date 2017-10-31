@@ -19,6 +19,7 @@
 package org.assemblits.eru.entities;
 
 import javafx.beans.property.*;
+import org.assemblits.eru.exception.ConnectException;
 
 import javax.persistence.*;
 
@@ -28,6 +29,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "connection_type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "CONNECTION")
 public abstract class Connection {
+
     private IntegerProperty id;
     private StringProperty  name;
     private BooleanProperty enabled;
@@ -49,7 +51,7 @@ public abstract class Connection {
     }
 
     @Transient
-    public abstract void connect();
+    public abstract void connect() throws ConnectException;
 
     @Transient
     public abstract void disconnect();
