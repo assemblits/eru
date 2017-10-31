@@ -91,7 +91,15 @@ public class DisplayTableView extends EruTableView<Display> {
 
     private void addGraphicEditorMenuItem() {
         final MenuItem displayEditor = new MenuItem("Edit graphic");
-        displayEditor.setOnAction(event -> onDisplayEdit.accept(getSelectionModel().getSelectedItem()));
+        displayEditor.setOnAction(event -> {
+            final Display selectedDisplay = getSelectionModel().getSelectedItem();
+            if (selectedDisplay != null) onDisplayEdit.accept(selectedDisplay);
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Select a display to edit.");
+                alert.show();
+            }
+        });
         getContextMenu().getItems().add(displayEditor);
     }
 
