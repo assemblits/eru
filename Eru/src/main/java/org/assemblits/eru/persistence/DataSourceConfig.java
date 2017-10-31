@@ -46,10 +46,12 @@ public class DataSourceConfig {
     public DataSource dataSource() {
         DataSource dataSource;
         try {
+            log.info("Building main database connection.");
             dataSource = getMainDataSource();
             dataSource.getConnection().isValid(500);
         } catch (Exception e) {
-            log.error("Main database not valid.", e);
+            log.error("Main database not valid: {}", e.getMessage());
+            log.info("Building backup database connection.");
             dataSource =getBackupDataSource();
         }
         return dataSource;

@@ -278,6 +278,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
 
     private void activateConnection(Connection connection){
         try {
+            log.info("Connecting <{}>...", connection.getName());
             if (getItems().stream().anyMatch(Connection::isConnected)){
                 throw new ConnectException("There are another active connection.");
             } else {
@@ -288,6 +289,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
             alert.setTitle("Connection failure");
             alert.setContentText(ce.getMessage());
             alert.show();
+            log.error(ce.getMessage());
         }
     }
 
