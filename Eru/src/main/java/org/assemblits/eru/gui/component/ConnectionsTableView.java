@@ -286,7 +286,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
             }
         } catch (ConnectException ce) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Connection failure");
+            alert.setTitle(ce.getClass().getSimpleName());
             alert.setContentText(ce.getMessage());
             alert.show();
             log.error(ce.getMessage());
