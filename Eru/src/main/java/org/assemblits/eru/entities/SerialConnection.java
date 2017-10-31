@@ -23,7 +23,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.exception.ConnectException;
 import org.assemblits.eru.fieldbus.protocols.modbus.Modbus;
 
 import javax.persistence.Column;
@@ -33,7 +33,6 @@ import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue(value = "SERIAL")
-@Slf4j
 public class SerialConnection extends Connection implements Modbus{
 
     private StringProperty port;
@@ -54,10 +53,9 @@ public class SerialConnection extends Connection implements Modbus{
     }
 
     @Override
-    public void connect() {
+    public void connect() throws ConnectException {
         if (!isEnabled()) return;
         try {
-            log.info("Starting connection <{}>", getName());
             SerialParameters connectionParameters = new SerialParameters();
             connectionParameters.setPortName(port.get());
             connectionParameters.setBaudRate(bitsPerSeconds.get());
@@ -70,22 +68,19 @@ public class SerialConnection extends Connection implements Modbus{
             coreConnection.open();
             setConnected(true);
             setStatus("Connected");
-            log.info("<{}> connected", getName());
         } catch (Exception e) {
-            setStatus(e.getLocalizedMessage());
             setConnected(false);
-            log.error("{} connection failure.", getName());
+            setStatus(e.getLocalizedMessage());
+            throw new ConnectException(e.getLocalizedMessage());
         }
     }
 
     @Override
     public void disconnect() {
         if (coreConnection != null && coreConnection.isOpen()) {
-            log.info("Disconnecting Serial connection:\t{}", getName());
             coreConnection.close();
             setConnected(false);
             setStatus("Disconnected");
-            log.info("{} disconnected.", getName());
         }
     }
 

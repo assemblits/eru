@@ -38,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Connection;
 import org.assemblits.eru.entities.SerialConnection;
 import org.assemblits.eru.entities.TcpConnection;
+import org.assemblits.eru.exception.ConnectException;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -45,28 +46,28 @@ import java.util.function.Consumer;
 @Slf4j
 public class ConnectionsTableView extends EruTableView<Connection> {
 
-    private TableColumn<Connection, Void> actionColumn = new TableColumn<>("Action");
-    private TableColumn<Connection, String> groupColumn = new TableColumn<>("Group");
-    private TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
-    private TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
-    private TableColumn<Connection, Boolean> enabledColumn = new TableColumn<>("Enable");
-    private TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
-    private TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
-    private TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
-    private TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
-    private TableColumn<Connection, String> serialPortColumn = new TableColumn<>("Port");
-    private TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
-    private TableColumn<Connection, Integer> serialDatabitsColumn = new TableColumn<>("Databits");
-    private TableColumn<Connection, String> serialParityColumn = new TableColumn<>("Parity");
-    private TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
-    private TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
-    private TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
-
-    private TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
-    private TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
-    private TableColumn tcpgroupColumn = new TableColumn<>("Tcp Parameters");
-
     public ConnectionsTableView() {
+        TableColumn<Connection, Void> actionColumn = new TableColumn<>("Action");
+        TableColumn<Connection, String> groupColumn = new TableColumn<>("Group");
+        TableColumn<Connection, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Connection, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Connection, Boolean> enabledColumn = new TableColumn<>("Enable");
+        TableColumn<Connection, Integer> timeoutColumn = new TableColumn<>("Timeout");
+        TableColumn<Connection, Integer> samplingColumn = new TableColumn<>("Sampling");
+        TableColumn<Connection, Boolean> connectedColumn = new TableColumn<>("Connected");
+        TableColumn<Connection, String> statusColumn = new TableColumn<>("Status");
+        TableColumn<Connection, String> serialPortColumn = new TableColumn<>("Port");
+        TableColumn<Connection, Integer> serialBitsPerSecondsColumn = new TableColumn<>("Bps");
+        TableColumn<Connection, Integer> serialDatabitsColumn = new TableColumn<>("Databits");
+        TableColumn<Connection, String> serialParityColumn = new TableColumn<>("Parity");
+        TableColumn<Connection, Integer> serialStopBitsColumn = new TableColumn<>("Stop bits");
+        TableColumn<Connection, String> serialFrameEncodingColumn = new TableColumn<>("Frame");
+        TableColumn serialgroupColumn = new TableColumn<>("Serial Parameters");
+
+        TableColumn<Connection, String> tcpHostnameColumn = new TableColumn<>("Hostname");
+        TableColumn<Connection, Integer> tcpPortColumn = new TableColumn<>("Port");
+        TableColumn tcpgroupColumn = new TableColumn<>("Tcp Parameters");
+
         // **** Columns Group **** //
         serialgroupColumn.getColumns().addAll(
                 serialPortColumn,
@@ -276,18 +277,22 @@ public class ConnectionsTableView extends EruTableView<Connection> {
     }
 
     private void activateConnection(Connection connection){
-        final boolean isAnotherConnectionActivated = getItems().stream().anyMatch(Connection::isConnected);
-        if (isAnotherConnectionActivated){
+        try {
+            if (getItems().stream().anyMatch(Connection::isConnected)){
+                throw new ConnectException("There are another active connection.");
+            } else {
+                connection.connect();
+            }
+        } catch (ConnectException ce) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("There is another connection activated.");
+            alert.setTitle("Connection failure");
+            alert.setContentText(ce.getMessage());
             alert.show();
-        } else {
-            connection.connect();
         }
     }
 
     private void deactivateConnection(Connection connection){
-        if (connection.isConnected()) connection.disconnect();
+        connection.disconnect();
     }
 
     @Override
