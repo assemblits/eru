@@ -34,6 +34,7 @@ import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.exception.EruException;
 import org.assemblits.eru.exception.FxmlFileReadException;
 import org.assemblits.eru.gui.component.EruSceneBuilder;
+import org.assemblits.eru.logger.LabelAppender;
 import org.assemblits.eru.project.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
@@ -57,6 +58,7 @@ public class EruController {
     private final CenterPaneController centerPaneController;
     private final ProjectTreeController projectTreeController;
     private final ProjectListener projectListener;
+    private final LogLabelController logLabelController;
     private final ProjectRepository projectRepository;
     private final ProjectModel projectModel;
     private final SceneFxmlManager sceneFxmlManager;
@@ -107,6 +109,8 @@ public class EruController {
 
         projectListener.setProjectModel(projectModel);
         projectListener.listen();
+
+        logLabelController.getLogeLabel().textProperty().bind(LabelAppender.lastLog);
     }
 
     private void configureAutoSave() {

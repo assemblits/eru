@@ -21,12 +21,17 @@ package org.assemblits.eru.logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Slf4j
 public class LabelAppender extends AppenderBase<ILoggingEvent> {
-    public static volatile StringProperty lastLog;
+
+    public static volatile StringProperty lastLog = new SimpleStringProperty();
 
     @Override
     protected void append(ILoggingEvent eventObject) {
@@ -35,7 +40,7 @@ public class LabelAppender extends AppenderBase<ILoggingEvent> {
             Platform.runLater(() -> {
                 try {
                     if (lastLog != null) {
-                        lastLog.setValue(message);
+                        lastLog.setValue(LocalTime.now() + ": " + message);
                     }
                 } catch (final Throwable t) {
                     log.error("LabelAppender error:", t);
