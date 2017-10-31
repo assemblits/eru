@@ -21,11 +21,13 @@ package org.assemblits.eru.preferences;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.gui.Application;
+import org.springframework.stereotype.Component;
 
 import java.util.prefs.Preferences;
 
 @Slf4j
 @Data
+@Component
 public class EruPreferences {
 
     private final Preferences appPreferences;

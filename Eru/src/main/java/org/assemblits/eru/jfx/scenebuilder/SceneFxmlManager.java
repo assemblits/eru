@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.exception.FxmlFileWriteException;
 import org.assemblits.eru.preferences.EruPreferences;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -34,11 +35,12 @@ import static java.io.File.separator;
 @RequiredArgsConstructor
 public class SceneFxmlManager {
 
+    @Autowired
+    private EruPreferences eruPreferences;
     private static final String NEW_FXML_FILE_CONTENT = "";
     private static final String CHARSET_NAME = "utf-8";
 
     public File createSceneFxmlFile(Display display) {
-        final EruPreferences eruPreferences = new EruPreferences();
         String fxmlFilesDirectoryPath = eruPreferences.getApplicationDirectory().getValue() + separator + "displays";
 
         String formattedSceneName = formatName(display);

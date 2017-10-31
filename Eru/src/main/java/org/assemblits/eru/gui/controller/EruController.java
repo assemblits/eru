@@ -61,6 +61,7 @@ public class EruController {
     private final ProjectRepository projectRepository;
     private final ProjectModel projectModel;
     private final SceneFxmlManager sceneFxmlManager;
+    private final EruPreferences eruPreferences;
 
     public void startEru(Stage stage) {
         log.info("Starting Eru");
@@ -72,7 +73,6 @@ public class EruController {
 
     private void setStage(Stage stage) {
         try {
-            EruPreferences eruPreferences = new EruPreferences();
             FXMLLoader fxmlLoader = createFxmlLoader();
             fxmlLoader.setLocation(getClass().getResource("/views/Main.fxml"));
             Parent appRootNode = fxmlLoader.load();
@@ -80,6 +80,7 @@ public class EruController {
             Scene eruScene = new Scene(appRootNode);
             eruScene.getStylesheets().add(eruPreferences.getTheme().getValue().getStyleSheetURL());
             eruPreferences.getTheme().addListener((observable, oldTheme, newTheme) ->  {
+                log.info("Updating App Theme...");
                 eruScene.getStylesheets().clear();
                 eruScene.getStylesheets().add(newTheme.getStyleSheetURL());
             });

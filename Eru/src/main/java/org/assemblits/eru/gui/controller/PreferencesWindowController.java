@@ -18,8 +18,6 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
@@ -27,6 +25,7 @@ import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.assemblits.eru.gui.Application.Theme;
 import org.assemblits.eru.preferences.EruPreferences;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -43,12 +42,13 @@ public class PreferencesWindowController {
     private TextField databaseUsernameTextField;
     @FXML
     private PasswordField databasePasswordField;
+    @Autowired
+    private EruPreferences eruPreferences;
 
     public void initialize() {
-        final EruPreferences eruPreferences = new EruPreferences();
         themeChoiceBox.getItems().setAll(Arrays.asList(Theme.class.getEnumConstants()));
         themeChoiceBox.setValue(eruPreferences.getTheme().getValue());
-        themeChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ThemeChangeListener());
+        themeChoiceBox.setOnAction(event -> eruPreferences.getTheme().setValue(themeChoiceBox.getSelectionModel().getSelectedItem()));
 
         databaseUrlTextField.setText(eruPreferences.getEruDatabaseURL().get());
         databaseUrlTextField.setOnAction(event -> eruPreferences.getEruDatabaseURL().set(databaseUrlTextField.getText()));
@@ -60,12 +60,4 @@ public class PreferencesWindowController {
         databasePasswordField.setOnAction(event -> eruPreferences.getEruDatabasePassword().set(databasePasswordField.getText()));
     }
 
-    @RequiredArgsConstructor
-    private static class ThemeChangeListener implements ChangeListener<Theme> {
-        private final EruPreferences eruPreferences = new EruPreferences();
-        @Override
-        public void changed(ObservableValue<? extends Theme> observable, Theme oldValue, Theme newValue) {
-            eruPreferences.getTheme().setValue(newValue);
-        }
-    }
 }

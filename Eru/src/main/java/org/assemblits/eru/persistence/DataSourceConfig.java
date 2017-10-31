@@ -20,6 +20,7 @@ package org.assemblits.eru.persistence;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.preferences.EruPreferences;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,9 @@ import javax.sql.DataSource;
 @EntityScan("org.assemblits.eru")
 public class DataSourceConfig {
 
+    @Autowired
+    private EruPreferences eruPreferences;
+
     @Bean
     @Primary
     public DataSource dataSource() {
@@ -52,7 +56,6 @@ public class DataSourceConfig {
     }
 
     private DataSource getMainDataSource() {
-        final EruPreferences eruPreferences = new EruPreferences();
         return DataSourceBuilder.create()
                 .driverClassName("com.mysql.jdbc.Driver")
                 .username(eruPreferences.getEruDatabaseUsername().get())
@@ -62,7 +65,6 @@ public class DataSourceConfig {
     }
 
     private DataSource getBackupDataSource() {
-        final EruPreferences eruPreferences = new EruPreferences();
         final String backupriver = "org.h2.Driver";
         final String backupUsername = "eru";
         final String backupPassword = "951753";

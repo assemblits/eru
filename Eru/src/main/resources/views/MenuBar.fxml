@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.Region?>
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright (c) 2017 Assemblits contributors                                ~
@@ -22,15 +24,37 @@
   ~ You should have received a copy of the GNU General Public License         ~
   ~ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.           ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
 <MenuBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.assemblits.eru.gui.controller.MenuBarController">
     <Menu text="_File">
-        <MenuItem onAction="#saveMenuItemSelected" text="_Save" />
-        <MenuItem onAction="#exitMenuItemSelected" text="_Exit" />
+        <MenuItem onAction="#saveMenuItemSelected" text="_Save">
+         <accelerator>
+            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+         </accelerator>
+         <graphic>
+            <Region prefHeight="13.0" prefWidth="13.0" style="-fx-background-color: LIGHTBLUE; -fx-shape: &quot;M 15,9L 5,9L 5,5L 15,5M 12,19C 10.34,19 9,17.66 9,16C 9,14.34 10.34,13 12,13C 13.66,13 15,14.34 15,16C 15,17.66 13.66,19 12,19 Z M 17,3L 5,3C 3.89,3 3,3.9 3,5L 3,19C 3,20.1 3.89,21 5,21L 19,21C 20.1,21 21,20.1 21,19L 21,7L 17,3 Z &quot;;" />
+         </graphic></MenuItem>
+        <MenuItem onAction="#exitMenuItemSelected" text="_Quit">
+         <accelerator>
+            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+         </accelerator>
+         <graphic>
+            <Region prefHeight="13.0" prefWidth="13.0" style="-fx-background-color: LIGHTBLUE; -fx-shape: &quot;M 18.9994,2.99805L 4.99939,2.99805C 3.89439,2.99805 2.99939,3.89404 2.99939,4.99805L 2.99939,8.99805L 4.99939,8.99805L 4.99939,4.99805L 18.9994,4.99805L 18.9994,18.998L 4.99939,18.998L 4.99939,14.998L 2.99939,14.998L 2.99939,18.998C 2.99939,20.1021 3.89439,20.998 4.99939,20.998L 18.9994,20.998C 20.1034,20.998 20.9994,20.1021 20.9994,18.998L 20.9994,4.99805C 20.9994,3.89404 20.1034,2.99805 18.9994,2.99805 Z M 10.0844,15.584L 11.4994,16.998L 16.4994,11.998L 11.4994,6.99805L 10.0844,8.41205L 12.6704,10.998L 2.99939,10.998L 2.99939,12.998L 12.6704,12.998L 10.0844,15.584 Z &quot;;" />
+         </graphic></MenuItem>
     </Menu>
     <Menu text="_Edit">
-        <MenuItem onAction="#preferencesMenuItemSelected" text="_Preferences" />
+        <MenuItem onAction="#preferencesMenuItemSelected" text="_Preferences">
+         <accelerator>
+            <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+         </accelerator>
+         <graphic>
+            <Region prefHeight="13.0" prefWidth="13.0" style="-fx-background-color: LIGHTBLUE; -fx-shape: &quot;M 11.9994,15.498C 10.0664,15.498 8.49939,13.931 8.49939,11.998C 8.49939,10.0651 10.0664,8.49805 11.9994,8.49805C 13.9324,8.49805 15.4994,10.0651 15.4994,11.998C 15.4994,13.931 13.9324,15.498 11.9994,15.498 Z M 19.4284,12.9741C 19.4704,12.6531 19.4984,12.329 19.4984,11.998C 19.4984,11.6671 19.4704,11.343 19.4284,11.022L 21.5414,9.36804C 21.7294,9.21606 21.7844,8.94604 21.6594,8.73004L 19.6594,5.26605C 19.5354,5.05005 19.2734,4.96204 19.0474,5.04907L 16.5584,6.05206C 16.0424,5.65607 15.4774,5.32104 14.8684,5.06903L 14.4934,2.41907C 14.4554,2.18103 14.2484,1.99805 13.9994,1.99805L 9.99939,1.99805C 9.74939,1.99805 9.5434,2.18103 9.5054,2.41907L 9.1304,5.06805C 8.52039,5.32104 7.95538,5.65607 7.43939,6.05206L 4.95139,5.04907C 4.7254,4.96204 4.46338,5.05005 4.33939,5.26605L 2.33939,8.73004C 2.21439,8.94604 2.26938,9.21606 2.4574,9.36804L 4.5694,11.022C 4.5274,11.342 4.49939,11.6671 4.49939,11.998C 4.49939,12.329 4.5274,12.6541 4.5694,12.9741L 2.4574,14.6271C 2.26938,14.78 2.21439,15.05 2.33939,15.2661L 4.33939,18.73C 4.46338,18.946 4.7254,19.0341 4.95139,18.947L 7.4404,17.944C 7.95639,18.34 8.52139,18.675 9.1304,18.9271L 9.5054,21.577C 9.5434,21.8151 9.74939,21.998 9.99939,21.998L 13.9994,21.998C 14.2484,21.998 14.4554,21.8151 14.4934,21.577L 14.8684,18.9271C 15.4764,18.6741 16.0414,18.34 16.5574,17.9431L 19.0474,18.947C 19.2734,19.0341 19.5354,18.946 19.6594,18.73L 21.6594,15.2661C 21.7844,15.05 21.7294,14.78 21.5414,14.6271L 19.4284,12.9741 Z &quot;;" />
+         </graphic></MenuItem>
     </Menu>
     <Menu text="_Help">
-        <MenuItem onAction="#aboutMenuItemSelected" text="_About" />
+        <MenuItem onAction="#aboutMenuItemSelected" text="_About">
+         <graphic>
+            <Region prefHeight="13.0" prefWidth="13.0" style="-fx-background-color: LIGHTBLUE; -fx-shape: &quot;M -58.792969 -1416.666 C -59.175015 -1416.6617 -59.559581 -1416.6482 -59.945312 -1416.623 C -71.063585 -1415.8982 -80.175472 -1406.2097 -79.375 -1394.9336 C -78.661459 -1384.8822 -69.866938 -1376.6503 -59.658203 -1377.4473 C -50.673718 -1378.1487 -43.322618 -1386.0502 -44.117188 -1395.1914 L -51.953125 -1395.1328 C -51.142171 -1390.2664 -54.999221 -1385.9189 -59.716797 -1385.2832 C -65.653386 -1384.4833 -70.882646 -1389.2061 -71.539062 -1394.9902 C -72.334077 -1401.9956 -66.737554 -1408.1136 -59.886719 -1408.7871 C -51.813233 -1409.5808 -44.805415 -1403.1091 -44.117188 -1395.1914 L -36.283203 -1395.248 C -36.99583 -1407.0525 -46.949549 -1416.7999 -58.792969 -1416.666 z M -51.953125 -1395.1328 C -52.561563 -1398.784 -56.037272 -1401.7869 -59.830078 -1400.9531 C -62.414535 -1400.3849 -64.588935 -1397.7552 -63.705078 -1395.0469 C -63.210949 -1393.5328 -61.341763 -1392.1027 -59.773438 -1393.1172 C -59.194829 -1393.4915 -58.608628 -1395.0848 -59.787109 -1395.0762 L -51.953125 -1395.1328 z&quot;;" />
+         </graphic></MenuItem>
     </Menu>
 </MenuBar>

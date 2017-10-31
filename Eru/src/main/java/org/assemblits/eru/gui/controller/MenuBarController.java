@@ -43,6 +43,7 @@ public class MenuBarController {
 
     private final ApplicationContext applicationContext;
     private final EruController eruController;
+    private final EruPreferences eruPreferences;
 
     @FXML
     private void exitMenuItemSelected() {
@@ -51,7 +52,6 @@ public class MenuBarController {
 
     @FXML
     private void preferencesMenuItemSelected() {
-        final EruPreferences eruPreferences = new EruPreferences();
         Stage preferencesStage = new Stage();
         preferencesStage.setTitle("Preferences");
         preferencesStage.setScene(new Scene(loadNode("/views/Preferences.fxml")));
