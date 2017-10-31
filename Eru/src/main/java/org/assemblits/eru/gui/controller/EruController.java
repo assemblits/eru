@@ -33,9 +33,8 @@ import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.exception.EruException;
 import org.assemblits.eru.exception.FxmlFileReadException;
-import org.assemblits.eru.gui.ApplicationContextHolder;
 import org.assemblits.eru.gui.component.EruSceneBuilder;
-import org.assemblits.eru.gui.model.ProjectListener;
+import org.assemblits.eru.project.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
 import org.assemblits.eru.persistence.ProjectRepository;
@@ -175,10 +174,6 @@ public class EruController {
 
     private void launchDisplayEditor(Display display){
         log.info("Starting display builder for '{}'", display.getName());
-        final EruSceneBuilder eruSceneBuilder = ApplicationContextHolder
-                .getApplicationContext()
-                .getBean(EruSceneBuilder.class);
-
         List<Node> oldSceneBuilders = centerPaneController.getTablesAnchorPane()
                 .getChildren()
                 .stream()
@@ -188,7 +183,9 @@ public class EruController {
         centerPaneController.getTablesAnchorPane().getChildren().removeAll(oldSceneBuilders);
 
         try {
+            EruSceneBuilder eruSceneBuilder = applicationContext.getBeanFactory().getBean(EruSceneBuilder.class);
             eruSceneBuilder.init(display);
+            centerPaneController.getTablesAnchorPane().getChildren().add(eruSceneBuilder);
         } catch (FxmlFileReadException e) {
             log.error("Error starting scene builder", e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -196,8 +193,6 @@ public class EruController {
             alert.setContentText(e.getMessage());
             alert.setContentText(e.getLocalizedMessage());
         }
-
-        centerPaneController.getTablesAnchorPane().getChildren().add(eruSceneBuilder);
     }
 
     private void launchDisplayPreview(Display display){

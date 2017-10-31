@@ -26,11 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LabelAppender extends AppenderBase<ILoggingEvent> {
-    private static volatile StringProperty lastLog;
-
-    public static void setObservableString(StringProperty observableString) {
-        LabelAppender.lastLog = observableString;
-    }
+    public static volatile StringProperty lastLog;
 
     @Override
     protected void append(ILoggingEvent eventObject) {

@@ -95,14 +95,5 @@
                 </GridPane>
             </AnchorPane>
         </Tab>
-        <Tab text="User">
-            <AnchorPane />
-        </Tab>
-        <Tab text="Alarming">
-            <AnchorPane />
-        </Tab>
-        <Tab text="Servlet">
-            <AnchorPane />
-        </Tab>
     </TabPane>
 </AnchorPane>

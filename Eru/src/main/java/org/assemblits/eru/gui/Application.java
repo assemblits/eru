@@ -62,7 +62,6 @@ public class Application extends javafx.application.Application {
         Preloader preloaderWindow = loadService(applicationLoader);
         applicationLoader.setOnSucceeded(event -> {
             applicationContext = (ConfigurableApplicationContext) event.getSource().getValue();
-            ApplicationContextHolder.setApplicationContext(applicationContext);
             eruController.startEru(stage);
         });
 

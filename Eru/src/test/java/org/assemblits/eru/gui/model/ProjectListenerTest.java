@@ -3,6 +3,8 @@ package org.assemblits.eru.gui.model;
 import org.assemblits.eru.entities.*;
 import org.assemblits.eru.fieldbus.actors.Director;
 import org.assemblits.eru.contract.Agency;
+import org.assemblits.eru.project.ProjectActivities;
+import org.assemblits.eru.project.ProjectListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,15 +18,15 @@ public class ProjectListenerTest {
     private ProjectListener projectListener;
 
     private ProjectModel projectModel;
-    private ProjectContractor projectContractor;
+    private ProjectActivities projectActivities;
 
     @Before
     public void setUp() throws Exception {
         Project project = new Project();
         project.setId(0);
         projectModel = new ProjectModel();
-        projectContractor = new ProjectContractor(new Agency(), new Director());
-        projectListener = new ProjectListener(projectContractor);
+        projectActivities = new ProjectActivities(new Agency(), new Director());
+        projectListener = new ProjectListener(projectActivities);
         projectModel.load(project);
         projectListener.setProjectModel(projectModel);
         projectListener.listen();
@@ -48,7 +50,7 @@ public class ProjectListenerTest {
 
         // [Check]
         assertTrue("When connected, the reading contract must be accepted",
-                projectContractor.getAgency().findAgentByClient(device).getContracts().get(0).isAccepted());
+                projectActivities.getAgency().findAgentByClient(device).getContracts().get(0).isAccepted());
     }
 
     @Test
@@ -70,7 +72,7 @@ public class ProjectListenerTest {
 
         // [Check]
         assertNull("When disconnected, the reading contract and agent must be removed.",
-                projectContractor.getAgency().findAgentByClient(device));
+                projectActivities.getAgency().findAgentByClient(device));
     }
 
     @Test
@@ -101,7 +103,7 @@ public class ProjectListenerTest {
 
         // [Check]
         assertTrue("When connected, the tag contract must be accepted",
-                projectContractor.getAgency().findAgentByClient(tag).getContracts().get(0).isAccepted());
+                projectActivities.getAgency().findAgentByClient(tag).getContracts().get(0).isAccepted());
     }
 
     @Test
@@ -133,6 +135,6 @@ public class ProjectListenerTest {
 
         // [Check]
         assertNull("When connected, the tag contract must be accepted",
-                projectContractor.getAgency().findAgentByClient(tag));
+                projectActivities.getAgency().findAgentByClient(tag));
     }
 }

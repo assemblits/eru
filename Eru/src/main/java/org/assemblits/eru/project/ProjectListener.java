@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License          *
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.            *
  ******************************************************************************/
-package org.assemblits.eru.gui.model;
+package org.assemblits.eru.project;
 
 import javafx.collections.ListChangeListener;
 import lombok.Data;
@@ -30,6 +30,7 @@ import org.assemblits.eru.gui.dynamo.DisplayNavigator;
 import org.assemblits.eru.gui.dynamo.Dynamo;
 import org.assemblits.eru.gui.dynamo.DynamoExtractor;
 import org.assemblits.eru.gui.dynamo.ValuableDynamo;
+import org.assemblits.eru.gui.model.ProjectModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.List;
 @Data
 public class ProjectListener {
 
-    private final ProjectContractor projectContractor;
+    private final ProjectActivities projectActivities;
     private ProjectModel projectModel;
 
     public void listen(){
@@ -116,28 +117,28 @@ public class ProjectListener {
                         .filter(device -> device.getConnection() instanceof Modbus)
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
-                        .forEach(projectContractor::startModbusDeviceReading);
+                        .forEach(projectActivities::startModbusDeviceReading);
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> tag.getType() == Tag.Type.INPUT)
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
-                        .forEach(projectContractor::startLinkedAddressListening);
+                        .forEach(projectActivities::startLinkedAddressListening);
             } else {
                 projectModel.getDevices()
                         .stream()
                         .filter(device -> device.getConnection() instanceof Modbus)
                         .filter(Device::getEnabled)
                         .filter(device -> device.getConnection().equals(connection))
-                        .forEach(projectContractor::stopTasks);
+                        .forEach(projectActivities::stopTasks);
                 projectModel.getTags()
                         .stream()
                         .filter(tag -> tag.getType() == Tag.Type.INPUT)
                         .filter(Tag::getEnabled)
                         .filter(tag -> tag.getLinkedAddress() != null)
                         .filter(tag -> tag.getLinkedAddress().getOwner().getConnection().equals(connection))
-                        .forEach(projectContractor::stopTasks);
+                        .forEach(projectActivities::stopTasks);
             }
         });
     }

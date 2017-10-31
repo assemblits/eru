@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License          *
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.            *
  ******************************************************************************/
-package org.assemblits.eru.gui.model;
+package org.assemblits.eru.project;
 
 import javafx.beans.Observable;
 import lombok.Data;
@@ -35,7 +35,7 @@ import java.util.function.BiConsumer;
 
 @Component
 @Data
-public class ProjectContractor {
+public class ProjectActivities {
 
     private final Agency agency;
     private final Director fieldbusDirector;
