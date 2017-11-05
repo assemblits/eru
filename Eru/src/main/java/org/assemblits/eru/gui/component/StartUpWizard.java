@@ -36,7 +36,7 @@ import static java.lang.String.format;
 public class StartUpWizard extends Wizard {
 
     private static final String WELCOME_MESSAGE = "Welcome and thanks for using Eru.\n\n" +
-            "Before startDirector using the application\n " +
+            "Before start using the application\n " +
             "we need to set up a couple of things.\n\n" +
             "Click Next to continue.";
     private static final String SETUP_DIRECTORY_PAGE_MESSAGE = "You can select the directory in which all the application\n" +
