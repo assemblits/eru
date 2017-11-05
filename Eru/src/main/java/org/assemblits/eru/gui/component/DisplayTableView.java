@@ -31,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
 
@@ -39,6 +40,7 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class DisplayTableView extends EruTableView<Display> {
 
     private Consumer<Display> onDisplayPreview;

@@ -18,6 +18,7 @@ buildscript {
         medusaVersion = '7.9'
         mysqlVersion = '5.1.40'
         h2Version = '1.4.196'
+        dynamoVersion = '1.0.2'
     }
     repositories {
         mavenCentral()
@@ -80,6 +81,7 @@ dependencies {
     compile "eu.hansolo:Medusa:${medusaVersion}"
     compile "mysql:mysql-connector-java:${mysqlVersion}"
     compile "com.h2database:h2:${h2Version}"
+    compile "com.github.assemblits:dynamo:${dynamoVersion}"
 
     //Testing
     testCompile 'org.springframework.boot:spring-boot-starter-test'
