@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
+import com.eru.dynamo.control.LevelBar;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.assemblits.eru.scene.control.LevelBar;
 
 public class EruLevelBar extends LevelBar implements ValuableDynamo {
     private StringProperty currentValueTagName;
@@ -31,13 +31,13 @@ public class EruLevelBar extends LevelBar implements ValuableDynamo {
     }
 
     @Override
-    public void setCurrentTagValue(String value) {
-        this.setCurrentValue(Double.parseDouble(value));
+    public String getCurrentTagValue() {
+        return String.valueOf(getCurrentValue());
     }
 
     @Override
-    public String getCurrentTagValue() {
-        return String.valueOf(getCurrentValue());
+    public void setCurrentTagValue(String value) {
+        this.setCurrentValue(Double.parseDouble(value));
     }
 
     @Override
@@ -46,16 +46,17 @@ public class EruLevelBar extends LevelBar implements ValuableDynamo {
     }
 
     @Override
+    public void setCurrentValueTagName(String currentValueTagName) {
+        this.currentValueTagName.set(currentValueTagName);
+    }
+
+    @Override
     public StringProperty currentValueTagNameProperty() {
         return currentValueTagName;
     }
 
     @Override
-    public void setCurrentValueTagName(String currentValueTagName) {
-        this.currentValueTagName.set(currentValueTagName);
-    }
-
-    @Override public String getUserAgentStylesheet() {
+    public String getUserAgentStylesheet() {
         return LevelBar.class.getResource("level-bar.css").toExternalForm();
     }
 }

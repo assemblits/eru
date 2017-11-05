@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
+import com.eru.dynamo.control.Display;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.assemblits.eru.scene.control.Display;
 
 public class EruDisplay extends Display implements ValuableDynamo {
 
@@ -32,13 +32,13 @@ public class EruDisplay extends Display implements ValuableDynamo {
     }
 
     @Override
-    public void setCurrentTagValue(String value) {
-        setCurrentText(value);
+    public String getCurrentTagValue() {
+        return getCurrentText();
     }
 
     @Override
-    public String getCurrentTagValue() {
-        return getCurrentText();
+    public void setCurrentTagValue(String value) {
+        setCurrentText(value);
     }
 
     @Override
@@ -47,16 +47,17 @@ public class EruDisplay extends Display implements ValuableDynamo {
     }
 
     @Override
+    public void setCurrentValueTagName(String currentValueTagID) {
+        this.currentValueTagName.set(currentValueTagID);
+    }
+
+    @Override
     public StringProperty currentValueTagNameProperty() {
         return currentValueTagName;
     }
 
     @Override
-    public void setCurrentValueTagName(String currentValueTagID) {
-        this.currentValueTagName.set(currentValueTagID);
-    }
-
-    @Override public String getUserAgentStylesheet() {
+    public String getUserAgentStylesheet() {
         return Display.class.getResource("display.css").toExternalForm();
     }
 }

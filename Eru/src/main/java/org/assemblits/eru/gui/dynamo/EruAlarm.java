@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
+import com.eru.dynamo.control.Alarm;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.assemblits.eru.scene.control.Alarm;
 
 public class EruAlarm extends Alarm implements ValuableDynamo {
 
@@ -32,26 +32,29 @@ public class EruAlarm extends Alarm implements ValuableDynamo {
     }
 
     @Override
-    public void setCurrentTagValue(String value) {
-        this.setCurrentValue(Boolean.parseBoolean(value));
+    public String getCurrentTagValue() {
+        return String.valueOf(getCurrentValue());
     }
 
     @Override
-    public String getCurrentTagValue() {
-        return String.valueOf(getCurrentValue());
+    public void setCurrentTagValue(String value) {
+        this.setCurrentValue(Boolean.parseBoolean(value));
     }
 
     public String getCurrentValueTagName() {
         return currentValueTagName.get();
     }
-    public StringProperty currentValueTagNameProperty() {
-        return currentValueTagName;
-    }
+
     public void setCurrentValueTagName(String currentValueTagName) {
         this.currentValueTagName.set(currentValueTagName);
     }
 
-    @Override public String getUserAgentStylesheet() {
+    public StringProperty currentValueTagNameProperty() {
+        return currentValueTagName;
+    }
+
+    @Override
+    public String getUserAgentStylesheet() {
         return Alarm.class.getResource("alarm.css").toExternalForm();
     }
 }
