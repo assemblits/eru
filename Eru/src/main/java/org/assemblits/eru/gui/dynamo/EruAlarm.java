@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
-import com.eru.dynamo.control.Alarm;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.dynamo.control.Alarm;
 
 public class EruAlarm extends Alarm implements ValuableDynamo {
 

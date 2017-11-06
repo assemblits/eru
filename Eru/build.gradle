@@ -18,7 +18,7 @@ buildscript {
         medusaVersion = '7.9'
         mysqlVersion = '5.1.40'
         h2Version = '1.4.196'
-        dynamoVersion = '1.0.2'
+        dynamoVersion = '1.0.3'
     }
     repositories {
         mavenCentral()

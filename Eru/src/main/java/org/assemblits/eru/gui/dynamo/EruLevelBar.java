@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
-import com.eru.dynamo.control.LevelBar;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.dynamo.control.LevelBar;
 
 public class EruLevelBar extends LevelBar implements ValuableDynamo {
     private StringProperty currentValueTagName;

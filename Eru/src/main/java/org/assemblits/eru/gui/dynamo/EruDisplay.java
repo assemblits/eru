@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.dynamo;
 
-import com.eru.dynamo.control.Display;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.assemblits.dynamo.control.Display;
 
 public class EruDisplay extends Display implements ValuableDynamo {
 
