@@ -20,12 +20,12 @@ package org.assemblits.eru.project;
 
 import javafx.beans.Observable;
 import lombok.Data;
-import org.assemblits.eru.fieldbus.actors.Director;
-import org.assemblits.eru.fieldbus.actors.Executor;
-import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlocksReader;
 import org.assemblits.eru.contract.*;
 import org.assemblits.eru.entities.Device;
 import org.assemblits.eru.entities.Tag;
+import org.assemblits.eru.fieldbus.actors.Director;
+import org.assemblits.eru.fieldbus.actors.Executor;
+import org.assemblits.eru.fieldbus.protocols.modbus.DeviceBlocksReader;
 import org.assemblits.eru.tag.TagAddressInvalidationListener;
 import org.springframework.stereotype.Component;
 

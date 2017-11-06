@@ -1,8 +1,8 @@
 package org.assemblits.eru.jfx.scenebuilder
 
 import org.assemblits.eru.entities.Display
-import org.assemblits.eru.preferences.EruPreferences
 import org.assemblits.eru.preferences.EruPreference
+import org.assemblits.eru.preferences.EruPreferences
 import spock.lang.Specification
 
 import java.nio.file.Files

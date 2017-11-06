@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.*?>
-<?import org.assemblits.eru.gui.component.ConnectionsTableView?>
-<?import org.assemblits.eru.gui.component.DevicesTableView?>
-<?import org.assemblits.eru.gui.component.TagsTableView?>
-<?import org.assemblits.eru.gui.component.UsersTableView?>
-<?import org.assemblits.eru.gui.component.DisplayTableView?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright (c) 2017 Assemblits contributors                                ~
   ~                                                                           ~
@@ -25,6 +18,9 @@
   ~ You should have received a copy of the GNU General Public License         ~
   ~ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.           ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<?import org.assemblits.eru.gui.component.*?>
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.112"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.assemblits.eru.gui.controller.CenterPaneController"

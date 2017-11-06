@@ -18,16 +18,14 @@
  ******************************************************************************/
 package org.assemblits.eru.entities;
 
-import org.assemblits.eru.util.MathUtil;
 import javafx.beans.property.*;
+import org.assemblits.eru.util.MathUtil;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "tag", schema = "public")

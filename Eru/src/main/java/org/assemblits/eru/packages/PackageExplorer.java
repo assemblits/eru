@@ -18,9 +18,9 @@
  ******************************************************************************/
 package org.assemblits.eru.packages;
 
-import org.assemblits.eru.util.ClassUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assemblits.eru.util.ClassUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.assemblits.eru.entities.Display;
 import org.assemblits.eru.exception.FxmlFileWriteException;
 import org.assemblits.eru.preferences.EruPreferences;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;

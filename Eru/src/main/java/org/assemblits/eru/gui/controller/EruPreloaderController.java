@@ -18,11 +18,11 @@
  ******************************************************************************/
 package org.assemblits.eru.gui.controller;
 
-import org.assemblits.eru.gui.service.ApplicationLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import lombok.RequiredArgsConstructor;
+import org.assemblits.eru.gui.service.ApplicationLoader;
 
 @RequiredArgsConstructor
 public class EruPreloaderController {

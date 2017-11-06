@@ -34,12 +34,12 @@ import org.assemblits.eru.entities.Project;
 import org.assemblits.eru.exception.EruException;
 import org.assemblits.eru.exception.FxmlFileReadException;
 import org.assemblits.eru.gui.component.EruSceneBuilder;
-import org.assemblits.eru.logger.LabelAppender;
-import org.assemblits.eru.project.ProjectListener;
 import org.assemblits.eru.gui.model.ProjectModel;
 import org.assemblits.eru.jfx.scenebuilder.SceneFxmlManager;
+import org.assemblits.eru.logger.LabelAppender;
 import org.assemblits.eru.persistence.ProjectRepository;
 import org.assemblits.eru.preferences.EruPreferences;
+import org.assemblits.eru.project.ProjectListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 

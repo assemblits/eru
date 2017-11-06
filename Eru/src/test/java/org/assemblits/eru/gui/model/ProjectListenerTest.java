@@ -1,14 +1,15 @@
 package org.assemblits.eru.gui.model;
 
+import org.assemblits.eru.contract.Agency;
 import org.assemblits.eru.entities.*;
 import org.assemblits.eru.fieldbus.actors.Director;
-import org.assemblits.eru.contract.Agency;
 import org.assemblits.eru.project.ProjectActivities;
 import org.assemblits.eru.project.ProjectListener;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Created by marlontrujillo1080 on 10/13/17.

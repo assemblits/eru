@@ -19,10 +19,10 @@
 package org.assemblits.eru.fieldbus.protocols.modbus;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assemblits.eru.fieldbus.actors.Executor;
-import org.assemblits.eru.fieldbus.context.Message;
 import org.assemblits.eru.entities.Address;
 import org.assemblits.eru.entities.Device;
+import org.assemblits.eru.fieldbus.actors.Executor;
+import org.assemblits.eru.fieldbus.context.Message;
 
 import java.util.ArrayList;
 import java.util.List;
