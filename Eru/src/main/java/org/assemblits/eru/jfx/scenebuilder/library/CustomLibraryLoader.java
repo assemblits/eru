@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.io.File.separator;
+import static java.lang.String.*;
 
 @Slf4j
 @Component
@@ -39,7 +40,7 @@ import static java.io.File.separator;
 public class CustomLibraryLoader {
 
     private static final List<String> DYNAMO_CLASSES_LOCATION = new ArrayList<String>() {{
-        add("%sorg%sassemblits%seru%sgui%sdynamo".replaceAll("%s", separator));
+        add(join(separator, "", "org", "assemblits", "eru", "gui", "dynamo"));
     }};
 
     private final PackageExplorer packageExplorer;
