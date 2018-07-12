@@ -9,7 +9,12 @@ import java.nio.file.Files
 
 class SceneFxmlManagerTest extends Specification {
 
-    def NEW_FXML_FILE_CONTENT = ''
+    def NEW_FXML_FILE_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "\n" +
+            "<?import javafx.scene.layout.Pane?>\n" +
+            "\n" +
+            "\n" +
+            "<Pane maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/8.0.151\" xmlns:fx=\"http://javafx.com/fxml/1\" />\n";
     def localPath = ClassLoader.getSystemClassLoader().getResource('').path
 
     def applicationDirectory = Mock(EruPreference)
