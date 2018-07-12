@@ -35,7 +35,12 @@ import static java.io.File.separator;
 public class SceneFxmlManager {
 
     private final EruPreferences eruPreferences;
-    private static final String NEW_FXML_FILE_CONTENT = "";
+    private static final String NEW_FXML_FILE_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "\n" +
+            "<?import javafx.scene.layout.Pane?>\n" +
+            "\n" +
+            "\n" +
+            "<Pane maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/8.0.151\" xmlns:fx=\"http://javafx.com/fxml/1\" />";
     private static final String CHARSET_NAME = "utf-8";
 
     public File createSceneFxmlFile(Display display) {
