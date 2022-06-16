@@ -40,7 +40,7 @@ import static java.lang.String.*;
 public class CustomLibraryLoader {
 
     private static final List<String> DYNAMO_CLASSES_LOCATION = new ArrayList<String>() {{
-        add(join(separator, "", "org", "assemblits", "eru", "gui", "dynamo"));
+        add(join("/", "", "org", "assemblits", "eru", "gui", "dynamo"));
     }};
 
     private final PackageExplorer packageExplorer;
