@@ -206,7 +206,7 @@ public class EruController {
             final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
             final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
             final Scene SCADA_SCENE = new Scene(displayNode);
-            final Stage SCADA_STAGE = new Stage(StageStyle.TRANSPARENT);
+            final Stage SCADA_STAGE = new Stage(display.stageStyle());
             display.setFxNode(displayNode);
             SCADA_SCENE.setFill(Color.TRANSPARENT);
             SCADA_STAGE.setScene(SCADA_SCENE);

@@ -20,6 +20,8 @@ package org.assemblits.eru.entities;
 
 import javafx.beans.property.*;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import javax.persistence.*;
 
@@ -39,7 +41,7 @@ public class Display {
         this.name = new SimpleStringProperty(this, "name", "");
         this.groupName = new SimpleStringProperty(this, "name", "");
         this.initialDisplay = new SimpleBooleanProperty(this, "initial_display", false);
-        this.stageType = new SimpleObjectProperty<>(this, "stageType", StageType.REPLACE);
+        this.stageType = new SimpleObjectProperty<>(this, "stageType", StageType.NEW);
         this.fxNode = new SimpleObjectProperty<>(this, "fxNode", null);
     }
 
@@ -132,7 +134,20 @@ public class Display {
         this.fxNode.set(fxNode);
     }
 
-    public enum StageType {REPLACE, NEW}
+    @Transient
+    public StageStyle stageStyle(){
+        switch (getStageType()) {
+            case REPLACE:
+                return StageStyle.TRANSPARENT;
+            case NEW:
+                return StageStyle.DECORATED;
+            case UTILITY:
+                return  StageStyle.UTILITY;
+        }
+        return null;
+    }
+
+    public enum StageType {REPLACE, NEW, UTILITY}
 
     @Override
     public String toString() {

@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.assemblits.eru.entities.Display;
@@ -46,6 +47,12 @@ public class DisplayNavigator extends Button implements Dynamo {
     public void fire() {
         super.fire();
         try {
+            final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager(new EruPreferences());
+            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
+            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
+            final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
+            final Scene SCADA_SCENE = new Scene(displayNode);
+
             switch (display.getStageType()) {
                 case REPLACE:
                     displayStage = (Stage) this.getScene().getWindow();
@@ -53,12 +60,10 @@ public class DisplayNavigator extends Button implements Dynamo {
                 case NEW:
                     displayStage = new Stage(StageStyle.DECORATED);
                     break;
+                case UTILITY:
+                    displayStage = new Stage(StageStyle.UTILITY);
+                    break;
             }
-            final SceneFxmlManager sceneFxmlManager = new SceneFxmlManager(new EruPreferences());
-            final File sceneFxmlFile = sceneFxmlManager.createSceneFxmlFile(display);
-            final URL fxmlFileUrl = sceneFxmlFile.toURI().toURL();
-            final Parent displayNode = FXMLLoader.load(fxmlFileUrl);
-            final Scene SCADA_SCENE = new Scene(displayNode);
             display.setFxNode(displayNode);
             displayStage.setScene(SCADA_SCENE);
             displayStage.setTitle(display.getName());

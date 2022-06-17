@@ -145,7 +145,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
             return cellValue;
         });
         serialPortColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        serialPortColumn.setVisible(false);
+        serialPortColumn.setVisible(true);
 
         serialBitsPerSecondsColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
@@ -236,7 +236,7 @@ public class ConnectionsTableView extends EruTableView<Connection> {
             return cellValue;
         });
         tcpHostnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        tcpHostnameColumn.setVisible(false);
+        tcpHostnameColumn.setVisible(true);
 
         tcpPortColumn.setCellValueFactory(param -> {
             ObjectProperty<Integer> cellValue = null;
