@@ -1,7 +1,7 @@
 buildscript {
     ext {
         jettyVersion = '9.2.10.v20150310'
-        openDolphinVersion = '1.0-RC1'
+        openDolphinVersion = '1.0-RC3'
         jbossLogginVersion = '1.0.1.Final'
         itextVersion = '2.1.7'
         groovyVersion = '2.4.1'
