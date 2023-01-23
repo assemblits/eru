@@ -14,7 +14,7 @@ buildscript {
         spockVersion = '1.1-groovy-2.4'
         powerMockVersion = '1.7.1'
         j2modVersion = '2.3.6'
-        tilesfxVersion = '1.4.9'
+        tilesfxVersion = '17.1.17'
         medusaVersion = '7.9'
         mysqlVersion = '5.1.40'
         h2Version = '1.4.196'
